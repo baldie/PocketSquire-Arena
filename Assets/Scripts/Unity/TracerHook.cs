@@ -1,4 +1,5 @@
 using UnityEngine;
+using PocketSquire.Arena.Core;
 
 public class TracerHook : MonoBehaviour
 {
