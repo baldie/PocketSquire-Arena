@@ -38,6 +38,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Playwright
         run: npx playwright install --with-deps chromium
+      - name: Start WebServer
+        run: npx http-server webgl-build -p 8080 &
       - name: Run Playwright Tests
         run: |
           npm install

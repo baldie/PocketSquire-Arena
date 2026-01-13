@@ -41,10 +41,10 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npx http-server webgl-build -p 8080',
-    url: 'http://localhost:8080',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000,
-  },
+  // webServer: {
+  //   command: 'npx http-server webgl-build -p 8080',
+  //   url: 'http://localhost:8080',
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120000,
+  // },
 });
