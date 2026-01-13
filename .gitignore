@@ -111,3 +111,11 @@ Assets/Scripts/Unity/TrcerHook.cs
 
 # claude temp files
 tmpclaude-*
+
+# Playwright
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Unity WebGL build output
+webgl-build/

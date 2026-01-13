@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "A simple roguelike boss-rush game in Unity",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/baldie/PocketSquire-Arena.git"
@@ -18,6 +16,8 @@
   },
   "homepage": "https://github.com/baldie/PocketSquire-Arena#readme",
   "devDependencies": {
-    "@playwright/test": "^1.57.0"
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.7",
+    "http-server": "^14.1.1"
   }
 }
