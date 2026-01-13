@@ -11,6 +11,16 @@ test('Unity telemetry validation', async ({ page }) => {
     }
   });
 
+  // Inject script to capture console.log calls
+  await page.addInitScript(() => {
+    window.__telemetryLogs = [];
+    const oldLog = console.log;
+    console.log = (...args) => {
+      window.__telemetryLogs.push(args.join(" "));
+      oldLog(...args);
+    };
+  });
+
   // Navigate to the Unity WebGL build
   await page.goto('/index.html');
 
@@ -24,9 +34,6 @@ test('Unity telemetry validation', async ({ page }) => {
   ).catch(() => {
     // If waitForFunction times out, we'll rely on the console listener
   });
-
-  // Give Unity a bit more time to initialize and log
-  await page.waitForTimeout(5000);
 
   // Assert that we received at least one telemetry message
   expect(telemetryMessages.length).toBeGreaterThan(0);
