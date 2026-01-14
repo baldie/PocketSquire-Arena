@@ -125,7 +125,7 @@ jobs:
             Begin implementation now.
 
           claude_args: |
-            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git *),Edit,Write,Read,Glob,Grep"
+            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git *),Bash(gh *),Edit,Write,Read,Glob,Grep"
             --max-turns 50
 
           settings: |
