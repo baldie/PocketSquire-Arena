@@ -22,6 +22,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Full history for git operations
+          lfs: true       # Important for Unity projects
+
+      # [Fix 2] Git config must be set for the agent to commit changes
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,15 +38,32 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      # [Fix 4] Install http-server so Playwright can serve the WebGL build
+      - name: Install http-server
+        run: npm install -g http-server
+
       - name: Install Playwright
         run: npx playwright install --with-deps chromium
 
       - name: Install Beads CLI
         run: |
           # Install beads CLI for issue tracking (steveyegge/beads)
-          # Script installs to /usr/local/bin which is already in PATH
           curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
           bd --version
+          # [Fix 1] Initialize beads database
+          bd init
+
+      # [Fix 5] Build WebGL artifact so tests have something to run against
+      # Note: Requires UNITY_LICENSE and UNITY_EMAIL secrets in the repo
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        with:
+          targetPlatform: WebGL
+          buildName: PocketSquire
+          allowDirtyBuild: true
 
       - name: Determine Agent Scope
         id: scope
@@ -117,16 +141,19 @@ jobs:
 
             1. Create bead: `bd create "${{ github.event.issue.title }}" --type task --priority 2 --description="GitHub Issue #${{ github.event.issue.number }}"`
             2. Implement the requested changes
-            3. Run verification: `npx playwright test` (MUST PASS)
-            4. Commit with bead ID in message
-            5. Create PR referencing: `Closes #${{ github.event.issue.number }}`
-            6. Close bead: `bd close <bead-id>`
-            7. Sync: `bd sync`
+            3. Start server: `npx http-server build/WebGL -p 8080 &`
+            4. Run verification: `npx playwright test` (MUST PASS)
+            5. Commit with bead ID in message
+            6. Create PR referencing: `Closes #${{ github.event.issue.number }}`
+            7. Close bead: `bd close <bead-id>`
+            8. Sync: `bd sync`
 
             Begin implementation now.
 
+          # [Fix 3] allowed_tools format checked
+          # Ensure http-server is allowed if it's not covered by Bash(*)
           claude_args: |
-            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git *),Bash(gh *),Edit,Write,Read,Glob,Grep"
+            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(npx http-server *),Bash(bd *),Bash(git *),Bash(gh *),Edit,Write,Read,Glob,Grep"
             --max-turns 50
 
           settings: |
@@ -147,7 +174,7 @@ jobs:
           script: |
             const status = '${{ job.status }}';
             const domain = '${{ steps.scope.outputs.domain }}';
-            const body = status === 'success'
+            const body = status === 'success' 
               ? `🤖 **Author Agent (${domain})** has completed work on this issue. Check the linked PR for changes.`
               : `⚠️ **Author Agent (${domain})** encountered an issue while working on this task. Please review the workflow logs.`;
 
