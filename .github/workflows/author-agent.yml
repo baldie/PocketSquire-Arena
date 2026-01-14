@@ -60,46 +60,57 @@ jobs:
               ;;
           esac
 
+      - name: Load Agent Instructions
+        id: instructions
+        run: |
+          # Read the author agent instructions and escape for GitHub Actions
+          INSTRUCTIONS=$(cat author_agent_instructions.md)
+          # Use heredoc to handle multiline content
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$INSTRUCTIONS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Run Author Agent
         uses: anthropics/claude-code-action@v1
         with:
           prompt: |
             You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain (${{ steps.scope.outputs.description }}).
 
-            ## Your Task
-            Implement the following GitHub issue:
+            ---
+            ## AUTHOR AGENT CONSTITUTION
+            The following instructions are MANDATORY. Follow them exactly.
 
+            ${{ steps.instructions.outputs.content }}
+
+            ---
+            ## YOUR ASSIGNED TASK
+
+            **GitHub Issue #${{ github.event.issue.number }}**
             **Title:** ${{ github.event.issue.title }}
-            **Issue #:** ${{ github.event.issue.number }}
-            **Body:**
+
+            **Description:**
             ${{ github.event.issue.body }}
 
-            ## Critical Instructions
+            ---
+            ## DOMAIN-SPECIFIC SCOPE RESTRICTIONS
 
-            1. **Read `author_agent_instructions.md`** - This is your constitution. Follow it exactly.
+            - You may READ any file in the repository
+            - You may only WRITE to: `${{ steps.scope.outputs.write_paths }}`
+            - You may also write to: `tests/**` (for test files)
+            - Do NOT modify files outside your domain
 
-            2. **Bead Management:**
-               - Create a bead: `bd create "${{ github.event.issue.title }}" --type task --priority 2 --description="GitHub Issue #${{ github.event.issue.number }}"`
-               - Close the bead when done: `bd close <bead-id>`
-               - Sync before finishing: `bd sync`
+            ---
+            ## EXECUTION CHECKLIST
 
-            3. **Scope Restrictions:**
-               - You may READ any file in the repository
-               - You may only WRITE to: `${{ steps.scope.outputs.write_paths }}`
-               - You may also write to: `tests/**` (for test files)
-               - Do NOT modify files outside your domain
+            1. Create bead: `bd create "${{ github.event.issue.title }}" --type task --priority 2 --description="GitHub Issue #${{ github.event.issue.number }}"`
+            2. Implement the requested changes
+            3. Run verification: `npx playwright test` (MUST PASS)
+            4. Commit with bead ID in message
+            5. Create PR referencing: `Closes #${{ github.event.issue.number }}`
+            6. Close bead: `bd close <bead-id>`
+            7. Sync: `bd sync`
 
-            4. **Verification:**
-               - Run `npx playwright test` before completing
-               - Tests MUST pass before you finish
-
-            5. **Completion:**
-               - Create a Pull Request with your changes
-               - Include `Bead: <bead-id>` in the PR description
-               - Reference this issue: `Closes #${{ github.event.issue.number }}`
-
-            ## Begin Work
-            Start by reading `author_agent_instructions.md`, then proceed with the implementation.
+            Begin implementation now.
 
           claude_args: |
             --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git *),Edit,Write,Read,Glob,Grep"
