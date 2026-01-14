@@ -15,3 +15,7 @@ Run `bd prime` for workflow context, or install hooks (`bd hooks install`) for a
 - `bd sync` - Sync with git (run at session end)
 
 For full workflow details: `bd prime`
+
+## Author Agent Protocol
+
+For detailed Author Agent instructions including bead lifecycle, telemetry-driven development, and submission protocols, see: @author_agent_instructions.md
