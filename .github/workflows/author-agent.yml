@@ -63,11 +63,24 @@ jobs:
       - name: Load Agent Instructions
         id: instructions
         run: |
-          # Read the author agent instructions and escape for GitHub Actions
-          INSTRUCTIONS=$(cat author_agent_instructions.md)
-          # Use heredoc to handle multiline content
-          echo "content<<EOF" >> $GITHUB_OUTPUT
-          echo "$INSTRUCTIONS" >> $GITHUB_OUTPUT
+          # Load base instructions
+          BASE=$(cat author_agent_instructions.md)
+          echo "base<<EOF" >> $GITHUB_OUTPUT
+          echo "$BASE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Load domain-specific instructions
+          DOMAIN="${{ steps.scope.outputs.domain }}"
+          DOMAIN_FILE="author_agent_instructions_${DOMAIN}.md"
+
+          if [ -f "$DOMAIN_FILE" ]; then
+            DOMAIN_INSTRUCTIONS=$(cat "$DOMAIN_FILE")
+          else
+            DOMAIN_INSTRUCTIONS="No domain-specific instructions found."
+          fi
+
+          echo "domain<<EOF" >> $GITHUB_OUTPUT
+          echo "$DOMAIN_INSTRUCTIONS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Run Author Agent
@@ -80,7 +93,12 @@ jobs:
             ## AUTHOR AGENT CONSTITUTION
             The following instructions are MANDATORY. Follow them exactly.
 
-            ${{ steps.instructions.outputs.content }}
+            ${{ steps.instructions.outputs.base }}
+
+            ---
+            ## DOMAIN-SPECIFIC INSTRUCTIONS (${{ steps.scope.outputs.domain }})
+
+            ${{ steps.instructions.outputs.domain }}
 
             ---
             ## YOUR ASSIGNED TASK
@@ -90,14 +108,6 @@ jobs:
 
             **Description:**
             ${{ github.event.issue.body }}
-
-            ---
-            ## DOMAIN-SPECIFIC SCOPE RESTRICTIONS
-
-            - You may READ any file in the repository
-            - You may only WRITE to: `${{ steps.scope.outputs.write_paths }}`
-            - You may also write to: `tests/**` (for test files)
-            - Do NOT modify files outside your domain
 
             ---
             ## EXECUTION CHECKLIST
