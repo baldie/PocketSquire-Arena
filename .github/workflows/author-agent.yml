@@ -37,8 +37,9 @@ jobs:
       - name: Install Beads CLI
         run: |
           # Install beads CLI for issue tracking (steveyegge/beads)
-          npm install -g @beads/bd
-          bd --version
+          curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+          echo "$HOME/.beads/bin" >> $GITHUB_PATH
+          $HOME/.beads/bin/bd --version
 
       - name: Determine Agent Scope
         id: scope
