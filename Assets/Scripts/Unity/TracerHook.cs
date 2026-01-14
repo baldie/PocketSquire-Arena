@@ -10,6 +10,6 @@ public class TracerHook : MonoBehaviour
         string message = logic.GetHelloMessage();
         
         // This is the "Telemetry" the browser will look for
-        Debug.Log($"TELEMETRY_MESSAGE: {message}");
+        Application.ExternalEval($"console.log('TELEMETRY_MESSAGE: {message}')");
     }
 }
