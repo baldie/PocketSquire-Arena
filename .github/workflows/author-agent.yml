@@ -1,0 +1,136 @@
+name: Author Agent
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  author-agent:
+    # Only run when one of the author labels is applied
+    if: contains(fromJSON('["author-menu", "author-town", "author-arena"]'), github.event.label.name)
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git operations
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Beads CLI
+        run: |
+          # Install beads CLI for issue tracking
+          npm install -g @anthropic/beads || echo "Beads installation skipped"
+
+      - name: Determine Agent Scope
+        id: scope
+        run: |
+          LABEL="${{ github.event.label.name }}"
+          case "$LABEL" in
+            author-menu)
+              echo "domain=menu" >> $GITHUB_OUTPUT
+              echo "write_paths=Assets/Scripts/Menu/**,Assets/Scenes/Menu/**" >> $GITHUB_OUTPUT
+              echo "description=Menu and UI systems" >> $GITHUB_OUTPUT
+              ;;
+            author-town)
+              echo "domain=town" >> $GITHUB_OUTPUT
+              echo "write_paths=Assets/Scripts/Town/**,Assets/Scenes/Town/**" >> $GITHUB_OUTPUT
+              echo "description=Town gameplay and systems" >> $GITHUB_OUTPUT
+              ;;
+            author-arena)
+              echo "domain=arena" >> $GITHUB_OUTPUT
+              echo "write_paths=Assets/Scripts/Arena/**,Assets/Scripts/Core/**,Assets/Scenes/Arena/**" >> $GITHUB_OUTPUT
+              echo "description=Arena combat and core gameplay" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Run Author Agent
+        uses: anthropics/claude-code-action@v1
+        with:
+          prompt: |
+            You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain (${{ steps.scope.outputs.description }}).
+
+            ## Your Task
+            Implement the following GitHub issue:
+
+            **Title:** ${{ github.event.issue.title }}
+            **Issue #:** ${{ github.event.issue.number }}
+            **Body:**
+            ${{ github.event.issue.body }}
+
+            ## Critical Instructions
+
+            1. **Read `author_agent_instructions.md`** - This is your constitution. Follow it exactly.
+
+            2. **Bead Management:**
+               - Create a bead: `bd create "${{ github.event.issue.title }}" --type task --priority 2 --description="GitHub Issue #${{ github.event.issue.number }}"`
+               - Close the bead when done: `bd close <bead-id>`
+               - Sync before finishing: `bd sync`
+
+            3. **Scope Restrictions:**
+               - You may READ any file in the repository
+               - You may only WRITE to: `${{ steps.scope.outputs.write_paths }}`
+               - You may also write to: `tests/**` (for test files)
+               - Do NOT modify files outside your domain
+
+            4. **Verification:**
+               - Run `npx playwright test` before completing
+               - Tests MUST pass before you finish
+
+            5. **Completion:**
+               - Create a Pull Request with your changes
+               - Include `Bead: <bead-id>` in the PR description
+               - Reference this issue: `Closes #${{ github.event.issue.number }}`
+
+            ## Begin Work
+            Start by reading `author_agent_instructions.md`, then proceed with the implementation.
+
+          claude_args: |
+            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git *),Edit,Write,Read,Glob,Grep"
+            --max-turns 50
+
+          settings: |
+            {
+              "env": {
+                "CI": "true",
+                "PLAYWRIGHT_BROWSERS_PATH": "0"
+              }
+            }
+
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on Issue
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = '${{ job.status }}';
+            const domain = '${{ steps.scope.outputs.domain }}';
+            const body = status === 'success'
+              ? `🤖 **Author Agent (${domain})** has completed work on this issue. Check the linked PR for changes.`
+              : `⚠️ **Author Agent (${domain})** encountered an issue while working on this task. Please review the workflow logs.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
