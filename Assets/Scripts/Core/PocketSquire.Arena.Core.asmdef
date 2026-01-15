@@ -1,0 +1,14 @@
+{
+    "name": "PocketSquire.Arena.Core",
+    "rootNamespace": "PocketSquire.Arena.Core",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

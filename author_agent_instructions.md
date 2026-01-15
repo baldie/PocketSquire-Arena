@@ -38,9 +38,65 @@ bd sync                     # Sync with git (run at session end)
 
 ---
 
-## 2. Telemetry-Driven Development
+## 2. Unit Testing (Fail Fast)
 
-You must prove your C# logic works within the Unity engine before submitting work.
+All C# logic must have corresponding unit tests that pass before submitting work. Unit tests run in CI before the WebGL build, providing fast feedback.
+
+### Test Structure
+- **Location**: `Assets/Tests/Editor/` for Edit Mode tests
+- **Framework**: NUnit via Unity Test Framework
+- **Assembly**: Tests reference `PocketSquire.Arena.Core` assembly
+
+### Writing Unit Tests
+When adding or modifying C# code in `Assets/Scripts/Core/`:
+
+1. **Create or update tests** in `Assets/Tests/Editor/`
+2. **Follow naming convention**: `<ClassName>Tests.cs`
+3. **Use AAA pattern**: Arrange, Act, Assert
+
+Example test structure:
+```csharp
+using NUnit.Framework;
+using PocketSquire.Arena.Core;
+
+namespace PocketSquire.Arena.Tests
+{
+    [TestFixture]
+    public class MyClassTests
+    {
+        [Test]
+        public void MethodName_Scenario_ExpectedBehavior()
+        {
+            // Arrange
+            var sut = new MyClass();
+
+            // Act
+            var result = sut.MethodName();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+    }
+}
+```
+
+### Running Unit Tests Locally
+Run tests via Unity Editor or command line:
+```bash
+# Via Unity command line (headless)
+unity -runTests -testPlatform EditMode -projectPath . -testResults results.xml
+
+# Or open Unity Editor > Window > General > Test Runner
+```
+
+### Unit Test Completion Rule (MANDATORY)
+**All unit tests must pass locally before proceeding to integration testing or submitting a PR.**
+
+---
+
+## 3. Telemetry-Driven Development (Integration Tests)
+
+After unit tests pass, verify your C# logic works within the Unity engine.
 
 ### The Bridge
 Utilize the Playwright infrastructure in `tests/tracer.spec.ts`:
@@ -50,29 +106,31 @@ Utilize the Playwright infrastructure in `tests/tracer.spec.ts`:
 
 ### Verification Process
 1. Make C# changes in `Assets/Scripts/`
-2. Build WebGL (Unity builds automatically or via CI)
-3. Run verification:
+2. Ensure unit tests pass first
+3. Build WebGL (Unity builds automatically or via CI)
+4. Run integration verification:
    ```bash
    npx playwright test
    ```
 
-### Completion Rule (MANDATORY)
-**No bead can be marked as "Complete" unless the corresponding Playwright test passes locally.**
+### Integration Test Completion Rule (MANDATORY)
+**No bead can be marked as "Complete" unless both unit tests AND Playwright integration tests pass locally.**
 
 If adding new functionality, extend `tracer.spec.ts` or create new test files following the same pattern.
 
 ---
 
-## 3. Terminal State & PR Protocol
+## 4. Terminal State & PR Protocol
 
 Your lifecycle on a runner is finite. Efficiency is paramount.
 
 ### Definition of Done
 Your task is complete when:
 1. The code is written and follows the project's requirements
-2. The local Playwright test is **Green**
-3. A new bead is created, linked to its parent, and committed
-4. A Pull Request is submitted to main
+2. Unit tests are written and **pass locally**
+3. The local Playwright integration test is **Green**
+4. A new bead is created, linked to its parent, and committed
+5. A Pull Request is submitted to main
 
 ### Pull Request Requirements
 All work must be submitted via Pull Request with:
@@ -105,7 +163,7 @@ Examples:
 
 ---
 
-## 4. Interaction with Reviewer
+## 5. Interaction with Reviewer
 
 A separate **Reviewer Agent** will audit all submitted work.
 
@@ -121,13 +179,14 @@ If the Reviewer requests changes:
    bd create "Fix: <description>" --type task --priority 2 --description="Parent: PocketSquire-Arena-XXX (original task)"
    ```
 2. Implement the requested changes
-3. Run verification tests (`npx playwright test`)
-4. Update the PR
-5. Close the sub-bead when approved
+3. Run unit tests (must pass)
+4. Run integration tests (`npx playwright test`)
+5. Update the PR
+6. Close the sub-bead when approved
 
 ---
 
-## 5. Multi-Agent Awareness
+## 6. Multi-Agent Awareness
 
 ### Isolation
 - Each agent works on its own bead lineage
@@ -146,11 +205,13 @@ If you encounter a merge conflict in bead-related files:
 
 ```
 1. bd create "Task" --description="Parent: <previous-bead>"
-2. Implement changes
-3. npx playwright test (MUST PASS)
-4. git commit -m "type: description [Bead: XXX]"
-5. git push && create PR
-6. bd close <bead-id>
-7. bd sync
-8. Exit cleanly
+2. Implement changes in Assets/Scripts/
+3. Write/update unit tests in Assets/Tests/Editor/
+4. Run unit tests locally (MUST PASS)
+5. npx playwright test (MUST PASS)
+6. git commit -m "type: description [Bead: XXX]"
+7. git push && create PR
+8. bd close <bead-id>
+9. bd sync
+10. Exit cleanly
 ```

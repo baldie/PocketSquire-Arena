@@ -7,8 +7,35 @@ on:
     branches: [ main ]
 
 jobs:
+  test-unit:
+    name: Unit Tests (Fail Fast) 🧪
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Run Unity Editor Tests
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          testMode: EditMode
+          checkName: Unity Edit Mode Tests
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: artifacts
+
   build-webgl:
     name: Build Unity WebGL 🏗️
+    needs: test-unit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
