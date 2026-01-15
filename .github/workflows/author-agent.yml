@@ -136,6 +136,7 @@ jobs:
           claude_args: |
             --allowedTools "npm,git,gh,Edit,Write,Read,Glob,Grep"
             --max-turns 50
+            --auto-approve
 
           settings: |
             {
