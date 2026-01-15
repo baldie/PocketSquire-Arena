@@ -41,4 +41,8 @@ test('Unity telemetry validation', async ({ page }) => {
   // Assert that the message contains 'Hello Arena'
   const hasHelloArena = telemetryMessages.some(msg => msg.includes('Hello Arena'));
   expect(hasHelloArena).toBe(true);
+
+  // Assert that the message contains 'Pocket Squire Arena'
+  const hasPocketSquireArena = telemetryMessages.some(msg => msg.includes('Pocket Squire Arena'));
+  expect(hasPocketSquireArena).toBe(true);
 });

@@ -32,4 +32,31 @@ public class ArenaLogicTests
         Assert.That(result, Is.Not.Null);
         Assert.That(result, Is.Not.Empty);
     }
+
+    [Test]
+    public void GetArenaName_ReturnsPocketSquireArena()
+    {
+        // Arrange
+        var arenaLogic = new ArenaLogic();
+
+        // Act
+        var result = arenaLogic.GetArenaName();
+
+        // Assert
+        Assert.That(result, Is.EqualTo("Pocket Squire Arena"));
+    }
+
+    [Test]
+    public void GetArenaName_IsNotNullOrEmpty()
+    {
+        // Arrange
+        var arenaLogic = new ArenaLogic();
+
+        // Act
+        var result = arenaLogic.GetArenaName();
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.Not.Empty);
+    }
 }

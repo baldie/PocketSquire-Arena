@@ -6,5 +6,10 @@ namespace PocketSquire.Arena.Core
         {
             return "Hello Arena";
         }
+
+        public string GetArenaName()
+        {
+            return "Pocket Squire Arena";
+        }
     }
 }
