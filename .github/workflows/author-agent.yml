@@ -121,13 +121,11 @@ jobs:
             ---
             ## EXECUTION CHECKLIST
 
-            1. Create bead: `bd create "${{ github.event.issue.title }}" --type task --priority 2 --description="GitHub Issue #${{ github.event.issue.number }}"`
-            2. Implement the requested changes
-            3. Run verification: `npx playwright test` (MUST PASS)
-            4. Commit with bead ID in message
-            5. Create PR referencing: `Closes #${{ github.event.issue.number }}`
-            6. Close bead: `bd close <bead-id>`
-            7. Sync: `bd sync`
+            1. **Start**: Run `npm run task:start -- "${{ github.event.issue.title }}"` to track your work.
+            2. **Develop**: Write code to address the issue.
+            3. **Verify**:
+               - Run `npm run test:unit`
+            4. **Finish**: Run `npm run task:submit` to create a pull request and close the issue.
 
             Begin implementation now.
 
