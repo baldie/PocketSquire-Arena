@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "A simple roguelike boss-rush game in Unity",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "task:start": "bd create --type task --priority 2 --title",
+    "task:submit": "npm run test:unit && npm run test:integration && gh pr create --fill && bd close $(bd current) && bd sync",
+    "test:unit": "dotnet test tests/unit",
+    "test:integration": "npx playwright test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/baldie/PocketSquire-Arena.git"
