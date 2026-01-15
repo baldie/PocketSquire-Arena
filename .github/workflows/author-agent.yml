@@ -125,12 +125,16 @@ jobs:
             2. **Develop**: Write code to address the issue.
             3. **Verify**:
                - Run `npm run test:unit`
-            4. **Finish**: Run `npm run task:submit` to create a pull request and close the issue. After the PR is created, add the label 'domain-${{ steps.scope.outputs.domain }}' to the PR.
+            4. **Commit**: Commit the changes to the branch.
+            5. **Push**: Push the changes to the branch.
+            6. **Create PR**: Create a pull request from the current branch to main.
+            7. **Label PR**: Add the label 'domain-${{ steps.scope.outputs.domain }}' to the PR.
+            8. **Finish**: Run `npm run task:submit` to close the issue.
 
             Begin implementation now.
 
           claude_args: |
-            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git *),Bash(gh *),Edit,Write,Read,Glob,Grep"
+            --allowedTools "Bash(npm test),Bash(npm install),Bash(npx playwright test),Bash(npx playwright install),Bash(bd *),Bash(git add),Bash(git commit),Bash(git push),Bash(gh pr create),Bash(gh pr edit),Edit,Write,Read,Glob,Grep"
             --max-turns 50
 
           settings: |
