@@ -109,7 +109,8 @@ Assets/Scripts/Unity/TrcerHook.cs
 /playwright-report/
 /test-results/
 
-# claude temp files
+# Claude Code
+.claude/settings.local.json
 tmpclaude-*
 
 # Playwright
