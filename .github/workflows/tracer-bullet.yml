@@ -13,25 +13,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
-      - name: Run Unity Editor Tests
-        uses: game-ci/unity-test-runner@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          testMode: EditMode
-          checkName: Unity Edit Mode Tests
+          dotnet-version: '8.0.x'
 
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: artifacts
+      - name: Run Unit Tests
+        run: dotnet test tests/unit --verbosity normal
 
   build-webgl:
     name: Build Unity WebGL 🏗️

@@ -40,17 +40,17 @@ bd sync                     # Sync with git (run at session end)
 
 ## 2. Unit Testing (Fail Fast)
 
-All C# logic must have corresponding unit tests that pass before submitting work. Unit tests run in CI before the WebGL build, providing fast feedback.
+All pure C# logic in `Assets/Scripts/Core/` must have corresponding unit tests. These tests run via `dotnet test` without Unity, providing instant feedback in CI before the WebGL build.
 
 ### Test Structure
-- **Location**: `Assets/Tests/Editor/` for Edit Mode tests
-- **Framework**: NUnit via Unity Test Framework
-- **Assembly**: Tests reference `PocketSquire.Arena.Core` assembly
+- **Location**: `tests/unit/` (standalone .NET project)
+- **Framework**: NUnit 4.x via `dotnet test`
+- **Source**: Tests compile Core C# files directly (no Unity dependencies)
 
 ### Writing Unit Tests
 When adding or modifying C# code in `Assets/Scripts/Core/`:
 
-1. **Create or update tests** in `Assets/Tests/Editor/`
+1. **Create or update tests** in `tests/unit/`
 2. **Follow naming convention**: `<ClassName>Tests.cs`
 3. **Use AAA pattern**: Arrange, Act, Assert
 
@@ -59,34 +59,29 @@ Example test structure:
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
 
-namespace PocketSquire.Arena.Tests
+namespace PocketSquire.Arena.Tests;
+
+[TestFixture]
+public class MyClassTests
 {
-    [TestFixture]
-    public class MyClassTests
+    [Test]
+    public void MethodName_Scenario_ExpectedBehavior()
     {
-        [Test]
-        public void MethodName_Scenario_ExpectedBehavior()
-        {
-            // Arrange
-            var sut = new MyClass();
+        // Arrange
+        var sut = new MyClass();
 
-            // Act
-            var result = sut.MethodName();
+        // Act
+        var result = sut.MethodName();
 
-            // Assert
-            Assert.AreEqual(expected, result);
-        }
+        // Assert
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
 ```
 
 ### Running Unit Tests Locally
-Run tests via Unity Editor or command line:
 ```bash
-# Via Unity command line (headless)
-unity -runTests -testPlatform EditMode -projectPath . -testResults results.xml
-
-# Or open Unity Editor > Window > General > Test Runner
+dotnet test tests/unit
 ```
 
 ### Unit Test Completion Rule (MANDATORY)
@@ -205,9 +200,9 @@ If you encounter a merge conflict in bead-related files:
 
 ```
 1. bd create "Task" --description="Parent: <previous-bead>"
-2. Implement changes in Assets/Scripts/
-3. Write/update unit tests in Assets/Tests/Editor/
-4. Run unit tests locally (MUST PASS)
+2. Implement changes in Assets/Scripts/Core/
+3. Write/update unit tests in tests/unit/
+4. dotnet test tests/unit (MUST PASS)
 5. npx playwright test (MUST PASS)
 6. git commit -m "type: description [Bead: XXX]"
 7. git push && create PR
