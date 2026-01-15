@@ -92,6 +92,9 @@ jobs:
           echo "$DOMAIN_INSTRUCTIONS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Authenticate gh
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
       - name: Run Author Agent
         uses: anthropics/claude-code-action@v1
         with:
