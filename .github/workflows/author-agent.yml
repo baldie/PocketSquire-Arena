@@ -125,7 +125,7 @@ jobs:
             2. **Develop**: Write code to address the issue.
             3. **Verify**:
                - Run `npm run test:unit`
-            4. **Finish**: Run `npm run task:submit` to create a pull request and close the issue.
+            4. **Finish**: Run `npm run task:submit` to create a pull request and close the issue. After the PR is created, add the label 'domain-${{ steps.scope.outputs.domain }}' to the PR.
 
             Begin implementation now.
 

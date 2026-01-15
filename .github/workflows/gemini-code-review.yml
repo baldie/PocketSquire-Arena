@@ -20,6 +20,8 @@ jobs:
           fetch-depth: 0
 
       - name: Google Gemini Code Review
+        if: github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'
+        id: gemini-review
         uses: google-github-actions/run-gemini-cli@main
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
@@ -27,6 +29,8 @@ jobs:
             review $(gh pr diff ${{ github.event.pull_request.number }})
           prompt: |
             You are an expert code reviewer. Please review the pull request.
+            If the code is good and you have no suggestions, exit with a success code.
+            Otherwise, leave comments on the pull request with your suggestions and exit with a failure code.
             Use the GEMINI.md file for guidance on style and conventions. Be constructive and helpful in your feedback.
             
             REPO: ${{ github.repository }}
@@ -53,4 +57,37 @@ jobs:
             - Verify adequate test coverage
             - Review test quality and edge cases
             - Check for missing test scenarios
+
+      - name: Auto-merge if approved
+        if: steps.gemini-review.conclusion == 'success'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+        run: |
+          gh pr review $PR_NUMBER --approve -b "LGTM"
+          gh pr merge $PR_NUMBER --auto --squash --delete-branch
+
+      - name: Trigger Author Agent
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+        run: |
+          # Get the PR labels
+          PR_LABELS=$(gh pr view $PR_NUMBER --json labels --jq '.labels | .[].name')
+          echo "PR Labels: $PR_LABELS"
+          # Find the domain label
+          DOMAIN_LABEL=$(echo "$PR_LABELS" | grep "domain-")
+          echo "Domain Label: $DOMAIN_LABEL"
+          # Extract the domain
+          DOMAIN=$(echo "$DOMAIN_LABEL" | cut -d'-' -f2)
+          echo "Domain: $DOMAIN"
+          # Construct the author label
+          AUTHOR_LABEL="author-$DOMAIN"
+          echo "Author Label: $AUTHOR_LABEL"
+          # Find the linked issue
+          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+')
+          echo "Issue Number: $ISSUE_NUMBER"
+          # Add the author label to the issue
+          gh issue edit $ISSUE_NUMBER --add-label "$AUTHOR_LABEL"
 
