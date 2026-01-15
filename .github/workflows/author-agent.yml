@@ -37,9 +37,15 @@ jobs:
       - name: Install Beads CLI
         run: |
           # Install beads CLI for issue tracking (steveyegge/beads)
-          # Script installs to /usr/local/bin which is already in PATH
           curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
           bd --version
+          # Initialize beads if not already initialized
+          bd init || true
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Determine Agent Scope
         id: scope

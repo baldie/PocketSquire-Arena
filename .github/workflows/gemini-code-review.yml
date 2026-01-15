@@ -1,0 +1,56 @@
+name: Gemini Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+jobs:
+  gemini-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Google Gemini Code Review
+        uses: google-github-actions/run-gemini-cli@main
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          command: |
+            review $(gh pr diff ${{ github.event.pull_request.number }})
+          prompt: |
+            You are an expert code reviewer. Please review the pull request.
+            Use the GEMINI.md file for guidance on style and conventions. Be constructive and helpful in your feedback.
+            
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Perform a comprehensive code review with the following focus areas:
+
+            1. **Code Quality**
+            - Clean code principles and best practices
+            - Proper error handling and edge cases
+            - Code readability and maintainability
+
+            2. **Security**
+            - Check for potential security vulnerabilities
+            - Validate input sanitization
+            - Review authentication/authorization logic
+
+            3. **Performance**
+            - Identify potential performance bottlenecks
+            - Review database queries for efficiency
+            - Check for memory leaks or resource issues
+
+            4. **Testing**
+            - Verify adequate test coverage
+            - Review test quality and edge cases
+            - Check for missing test scenarios
+
