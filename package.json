@@ -4,7 +4,7 @@
   "description": "A simple roguelike boss-rush game in Unity",
   "main": "index.js",
   "scripts": {
-    "task:start": "bd config set current_bead $(bd create --silent --type task --priority 2)",
+    "task:start": "node scripts/task-start.js",
     "task:submit": "npm run test:unit && npm run test:integration && bd close $(bd config get current_bead) && bd config unset current_bead && bd sync",
     "test:unit": "dotnet test tests/unit",
     "test:integration": "npx playwright test"
