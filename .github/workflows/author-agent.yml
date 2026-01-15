@@ -124,7 +124,7 @@ jobs:
             ---
             ## EXECUTION CHECKLIST
 
-            1. **Start**: Run `npm run task:start -- "${{ github.event.issue.title }}"`
+            1. **Start**: Run `npm run task:start -- --title "${{ github.event.issue.title }}" --description "${{ github.event.issue.body }}"`
             2. **Develop**: Write code to address the issue.
             3. **Verify**:
                - Run `npm run test:unit`
