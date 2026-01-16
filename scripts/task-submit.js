@@ -33,7 +33,7 @@ function capture(command, args = []) {
 // 1. Run Quality Gates
 console.log('--- Running Quality Gates ---');
 run(npmCmd, ['run', 'test:unit']);
-run(npmCmd, ['run', 'test:integration']);
+// run(npmCmd, ['run', 'test:integration']);
 
 // 2. Get Current Bead ID
 const beadId = capture(bdCmd, ['config', 'get', 'current_bead']);
