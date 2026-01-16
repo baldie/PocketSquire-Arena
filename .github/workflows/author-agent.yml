@@ -94,12 +94,19 @@ jobs:
           echo "$DOMAIN_INSTRUCTIONS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Authenticate gh
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
       - name: Run Author Agent
         uses: anthropics/claude-code-action@v1
+        env:
+          # Tools running inside the agent (gh, playwright) need these in the environment
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PLAYWRIGHT_BROWSERS_PATH: "0"
+          CI: "true"
         with:
+          # The action wrapper specifically requests these as inputs
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
           prompt: |
             You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain (${{ steps.scope.outputs.description }}).
 
@@ -142,17 +149,6 @@ jobs:
             --allowedTools "npm,git,gh,Edit,Write,Read,Glob,Grep"
             --max-turns 50
             --dangerously-skip-permissions
-
-          settings: |
-            {
-              "env": {
-                "CI": "true",
-                "PLAYWRIGHT_BROWSERS_PATH": "0"
-              }
-            }
-
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment on Issue
         if: always()
