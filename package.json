@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "task:start": "node scripts/task-start.js",
-    "task:submit": "npm run test:unit && npm run test:integration && bd close $(bd config get current_bead) && bd config unset current_bead && bd sync",
+    "task:submit": "node scripts/task-submit.js",
     "test:unit": "dotnet test tests/unit",
     "test:integration": "npx playwright test"
   },

@@ -33,6 +33,8 @@ jobs:
 
       - name: Install Playwright
         run: npx playwright install --with-deps chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: "0"
 
       - name: Install Beads CLI
         run: |
