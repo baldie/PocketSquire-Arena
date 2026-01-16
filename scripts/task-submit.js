@@ -53,5 +53,16 @@ console.log('--- Pushing Changes ---');
 // Push current branch to origin
 run('git', ['push', 'origin', 'HEAD']);
 
-console.log('\n✅ Task submitted successfully!');
-console.log('Please create a Pull Request on GitHub.');
+console.log('\n--- Creating Pull Request ---');
+try {
+    console.log('Running: gh pr create --fill');
+    execFileSync('gh', ['pr', 'create', '--fill'], {
+        encoding: 'utf8',
+        stdio: 'inherit',
+        shell: isWin
+    });
+    console.log('\n✅ Task submitted & PR created successfully!');
+} catch (e) {
+    console.warn('\n⚠️  Task submitted, but PR creation failed (is `gh` installed and authenticated?).');
+    console.warn('Please create the PR manually.');
+}
