@@ -147,7 +147,9 @@ jobs:
             {
               "env": {
                 "CI": "true",
-                "PLAYWRIGHT_BROWSERS_PATH": "0"
+                "PLAYWRIGHT_BROWSERS_PATH": "0",
+                "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+              }
               }
             }
 
