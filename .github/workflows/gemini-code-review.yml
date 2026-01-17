@@ -8,9 +8,9 @@ jobs:
   gemini-review:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
-      issues: read
+      issues: write
       id-token: write
 
     steps:
