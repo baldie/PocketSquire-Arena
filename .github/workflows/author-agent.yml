@@ -48,9 +48,10 @@ jobs:
         run: |
           git config --global user.name "PocketSquire Author Bot"
           git config --global user.email "author-agent@pocketsquirearena.com"
+          # Clear the extraheader that actions/checkout adds, as it overrides our URL-based auth
+          git config --local --unset-all http.https://github.com/.extraheader || true
           git remote set-url origin \
             https://x-access-token:${{ secrets.AUTHOR_TOKEN }}@github.com/${{ github.repository }}.git
-
 
       - name: Determine Agent Scope
         id: scope
@@ -101,14 +102,14 @@ jobs:
         uses: anthropics/claude-code-action@v1
         env:
           # Tools running inside the agent (gh, playwright) need these in the environment
-          GITHUB_TOKEN: ${{ secrets.REVIEWER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AUTHOR_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PLAYWRIGHT_BROWSERS_PATH: "0"
           CI: "true"
         with:
           # The action wrapper specifically requests these as inputs
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.REVIEWER_TOKEN }}
+          github_token: ${{ secrets.AUTHOR_TOKEN }}
           
           prompt: |
             You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain (${{ steps.scope.outputs.description }}).
