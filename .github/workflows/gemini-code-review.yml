@@ -76,10 +76,12 @@ jobs:
           gh pr merge $PR_NUMBER --auto --squash --delete-branch
           
           # Find the linked issue
-          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+')
+          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+' || true)
           echo "Closing associated issue: #$ISSUE_NUMBER"
           if [ ! -z "$ISSUE_NUMBER" ]; then
             gh issue close $ISSUE_NUMBER -c "Closed via Gemini Code Review auto-merge"
+          else
+             echo "No linked issue found."
           fi
 
       - name: Trigger Author Agent
@@ -91,8 +93,20 @@ jobs:
           # Get the PR labels
           PR_LABELS=$(gh pr view $PR_NUMBER --json labels --jq '.labels | .[].name')
           echo "PR Labels: $PR_LABELS"
+          
+          if [ -z "$PR_LABELS" ]; then
+            echo "No labels found on PR."
+            exit 0
+          fi
+          
           # Find the domain label
-          DOMAIN_LABEL=$(echo "$PR_LABELS" | grep "domain-")
+          DOMAIN_LABEL=$(echo "$PR_LABELS" | grep "domain-" || true)
+          
+          if [ -z "$DOMAIN_LABEL" ]; then
+            echo "No domain label found."
+            exit 0
+          fi
+          
           echo "Domain Label: $DOMAIN_LABEL"
           # Extract the domain
           DOMAIN=$(echo "$DOMAIN_LABEL" | cut -d'-' -f2)
