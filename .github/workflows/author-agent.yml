@@ -131,19 +131,7 @@ jobs:
             ${{ github.event.issue.body }}
 
             ---
-            ## EXECUTION CHECKLIST
-
-            1. **Start**: Run `npm run task:start -- --title "${{ github.event.issue.title }}" --description "${{ github.event.issue.body }}"`
-            2. **Develop**: Write code to address the issue.
-            3. **Verify**:
-               - Run `npm run test:unit`
-            4. **Commit**: `git add .` and `git commit -m "..."`
-            5. **Create PR**: `gh pr create --fill`
-            6. **Push**: `git push`
-            7. **Label PR**: `gh pr edit --add-label "domain-${{ steps.scope.outputs.domain }}"`
-            8. **Finish**: Run `npm run task:submit`
-
-            Begin implementation now.
+            Begin implementation now by following the **Author Agent Protocol** provided above.
 
           claude_args: |
             --allowedTools "npm,git,gh,Edit,Write,Read,Glob,Grep"
