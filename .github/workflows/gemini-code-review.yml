@@ -69,7 +69,7 @@ jobs:
       - name: Auto-merge if approved
         if: steps.gemini-review.conclusion == 'success'
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.REVIEWER_TOKEN}}
           PR_NUMBER: ${{github.event.pull_request.number}}
         run: |
           gh pr review $PR_NUMBER --approve -b "LGTM"
