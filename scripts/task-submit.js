@@ -48,8 +48,30 @@ run(bdCmd, ['close', beadId]);
 run(bdCmd, ['config', 'unset', 'current_bead']);
 run(bdCmd, ['sync']);
 
-// 4. Push Branch
-console.log('--- Pushing Changes ---');
+// 4. Commit and Push Changes
+console.log('--- Committing Changes ---');
+try {
+    const status = capture('git', ['status', '--porcelain']);
+    if (status) {
+        console.log('Detected uncommitted changes. Committing...');
+        run('git', ['add', '.']);
+
+        // Try to generate a nice message from the branch name or bead ID
+        const branch = capture('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
+        const commitMsg = branch.startsWith('task/')
+            ? `feat: ${branch.replace('task/', '')}`
+            : `feat: complete work on ${beadId}`;
+
+        run('git', ['commit', '-m', commitMsg]);
+        console.log(`✅ Changes committed: ${commitMsg}`);
+    } else {
+        console.log('No changes to commit.');
+    }
+} catch (e) {
+    console.warn('⚠️  Commit failed or no changes to commit. Proceeding to push...');
+}
+
+console.log('\n--- Pushing Changes ---');
 // Push current branch to origin
 run('git', ['push', '--set-upstream', 'origin', 'HEAD']);
 
