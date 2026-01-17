@@ -19,43 +19,52 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install Gemini CLI
+        run: npm install -g @google/gemini-cli
+
       - name: Google Gemini Code Review
         if: github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'
         id: gemini-review
-        uses: google-github-actions/run-gemini-cli@main
-        with:
-          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          prompt: |
-            review $(gh pr diff ${{ github.event.pull_request.number }})
-            You are an expert code reviewer. Please review the pull request.
-            If the code is good and you have no suggestions, exit with a success code.
-            Otherwise, leave comments on the pull request with your suggestions and exit with a failure code.
-            Use the GEMINI.md file for guidance on style and conventions. Be constructive and helpful in your feedback.
-            
-            REPO: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_DIFF=$(gh pr diff ${{ github.event.pull_request.number }})
 
-            Perform a comprehensive code review with the following focus areas:
+          PROMPT=$(cat <<EOF
+          review $PR_DIFF
+          You are an expert code reviewer. Please review the pull request.
+          If the code is good and you have no suggestions, exit with a success code.
+          Otherwise, leave comments on the pull request with your suggestions and exit with a failure code.
+          
+          REPO: ${{ github.repository }}
+          PR NUMBER: ${{ github.event.pull_request.number }}
+          
+          Perform a comprehensive code review with the following focus areas:
+          
+          1. **Code Quality**
+          - Clean code principles and best practices
+          - Proper error handling and edge cases
+          - Code readability and maintainability
+          
+          2. **Security**
+          - Check for potential security vulnerabilities
+          - Validate input sanitization
+          - Review authentication/authorization logic
+          
+          3. **Performance**
+          - Identify potential performance bottlenecks
+          - Review database queries for efficiency
+          - Check for memory leaks or resource issues
+          
+          4. **Testing**
+          - Verify adequate test coverage
+          - Review test quality and edge cases
+          - Check for missing test scenarios
+          EOF
+          )
 
-            1. **Code Quality**
-            - Clean code principles and best practices
-            - Proper error handling and edge cases
-            - Code readability and maintainability
-
-            2. **Security**
-            - Check for potential security vulnerabilities
-            - Validate input sanitization
-            - Review authentication/authorization logic
-
-            3. **Performance**
-            - Identify potential performance bottlenecks
-            - Review database queries for efficiency
-            - Check for memory leaks or resource issues
-
-            4. **Testing**
-            - Verify adequate test coverage
-            - Review test quality and edge cases
-            - Check for missing test scenarios
+          gemini "$PROMPT"
 
       - name: Auto-merge if approved
         if: steps.gemini-review.conclusion == 'success'
@@ -65,6 +74,13 @@ jobs:
         run: |
           gh pr review $PR_NUMBER --approve -b "LGTM"
           gh pr merge $PR_NUMBER --auto --squash --delete-branch
+          
+          # Find the linked issue
+          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+')
+          echo "Closing associated issue: #$ISSUE_NUMBER"
+          if [ ! -z "$ISSUE_NUMBER" ]; then
+            gh issue close $ISSUE_NUMBER -c "Closed via Gemini Code Review auto-merge"
+          fi
 
       - name: Trigger Author Agent
         if: failure()
