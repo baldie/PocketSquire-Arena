@@ -43,7 +43,7 @@ public class ArenaLogicTests
         var result = arenaLogic.GetArenaName();
 
         // Assert
-        Assert.That(result, Is.EqualTo("Pocket Squire"));
+        Assert.That(result, Is.EqualTo("Pocket Squire Arena"));
     }
 
     [Test]
