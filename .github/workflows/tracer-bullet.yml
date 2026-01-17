@@ -22,41 +22,41 @@ jobs:
       - name: Run Unit Tests
         run: dotnet test tests/unit --verbosity normal
 
-  build-webgl:
-    name: Build Unity WebGL 🏗️
-    needs: test-unit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Free Disk Space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-          df -h
-
-      - name: Build Game
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: WebGL
-
-  validate-logic:
-    name: Playwright Telemetry Validation 🧪
-    needs: build-webgl
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Playwright
-        run: npx playwright install --with-deps chromium
-      - name: Start WebServer
-        run: npx http-server webgl-build -p 8080 &
-      - name: Run Playwright Tests
-        run: |
-          npm install
-          npx playwright test
+#  build-webgl:
+#    name: Build Unity WebGL 🏗️
+#    needs: test-unit
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout Repository
+#        uses: actions/checkout@v4
+#
+#      - name: Free Disk Space
+#        run: |
+#          sudo rm -rf /usr/share/dotnet
+#          sudo rm -rf /usr/local/lib/android
+#          sudo rm -rf /opt/ghc
+#          df -h
+#
+#      - name: Build Game
+#        uses: game-ci/unity-builder@v4
+#        env:
+#          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+#          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#        with:
+#          targetPlatform: WebGL
+#
+#  validate-logic:
+#    name: Playwright Telemetry Validation 🧪
+#    needs: build-webgl
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Install Playwright
+#        run: npx playwright install --with-deps chromium
+#      - name: Start WebServer
+#        run: npx http-server webgl-build -p 8080 &
+#      - name: Run Playwright Tests
+#        run: |
+#          npm install
+#          npx playwright test

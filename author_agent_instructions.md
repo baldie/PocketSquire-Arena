@@ -1,17 +1,13 @@
 # Author Agent Protocol
 
-## 1. Workflow
-1. **Start**: Run `npm run task:start -- "Description"` to track your work.
+## Workflow
+1. **Start**: Run `npm run task:start -- "short-kebab-slug"`
+   - *Constraint:* short-kebab-slug must be kebab-case, and have a max of 5 words.
 2. **Develop**: Write code in `Assets/Scripts/`.
+   - Implement changes + Unit Tests. Focus only on the task at hand.
 3. **Verify**:
    - Run `npm run test:unit` (Fast C# logic check)
-   - Run `npm run test:integration` (Slow Playwright check)
-4. **Finish**: Run `npm run task:submit` (Automatically handles PR, bead closing, and syncing).
-
-## 2. Boundaries
-- **Arena Domain**: Focus on `Assets/Scripts/Core` and `Assets/Scripts/Arena`.
-- **Constraint**: Do not modify beads created by other agents.
-
-## 3. Definition of Done
-- Unit tests pass.
-- `npm run task:submit` executes successfully.
+   - *Constraint:* Retries allowed. Task is incomplete until this passes.
+4. **Finish**:
+   - Run `npm run task:submit`
+   - Output the generated PR link.

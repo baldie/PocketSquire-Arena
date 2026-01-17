@@ -1,1 +1,1 @@
-@AGENTS.md
+C:/Users/David/pocketsquire-arena/AGENTS.md
