@@ -98,14 +98,14 @@ jobs:
         uses: anthropics/claude-code-action@v1
         env:
           # Tools running inside the agent (gh, playwright) need these in the environment
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REVIEWER_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PLAYWRIGHT_BROWSERS_PATH: "0"
           CI: "true"
         with:
           # The action wrapper specifically requests these as inputs
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.REVIEWER_TOKEN }}
           
           prompt: |
             You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain (${{ steps.scope.outputs.description }}).
