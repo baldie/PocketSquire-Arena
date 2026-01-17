@@ -51,7 +51,7 @@ run(bdCmd, ['sync']);
 // 4. Push Branch
 console.log('--- Pushing Changes ---');
 // Push current branch to origin
-run('git', ['push', 'origin', 'HEAD']);
+run('git', ['push', '--set-upstream', 'origin', 'HEAD']);
 
 console.log('\n--- Creating Pull Request ---');
 try {

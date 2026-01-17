@@ -44,10 +44,13 @@ jobs:
           # Initialize beads if not already initialized
           bd init || true
 
-      - name: Configure Git
+      - name: Configure git for author bot
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "PocketSquire Author Bot"
+          git config --global user.email "author-agent@pocketsquirearena.com"
+          git remote set-url origin \
+            https://x-access-token:${{ secrets.AUTHOR_TOKEN }}@github.com/${{ github.repository }}.git
+
 
       - name: Determine Agent Scope
         id: scope
