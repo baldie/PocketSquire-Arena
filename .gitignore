@@ -119,3 +119,8 @@ tmpclaude-*
 
 # Unity WebGL build output
 webgl-build/
+
+# Unity3D libraries
+Assets/MCPForUnity/
+Assets/Plugins/
+Assets/TextMesh Pro/
