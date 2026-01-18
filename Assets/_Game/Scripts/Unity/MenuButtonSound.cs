@@ -56,7 +56,7 @@ public class MenuButtonSound : MonoBehaviour, ISelectHandler, IPointerEnterHandl
         }
     }
 
-    private void PlayClick()
+    public void PlayClick()
     {
         if (source != null && clickSound != null)
         {

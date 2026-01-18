@@ -1,28 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace PocketSquire.Unity
 {
     public class SceneLoader : MonoBehaviour
     {
-        public void LoadCharacterCreation()
-        {
-            SceneManager.LoadScene("CharacterCreation");
-        }
-
         public void LoadMainMenu()
         {
             SceneManager.LoadScene("MainMenu");
-        }
-
-        public void ExitGame()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
         }
 
         private void Awake()
@@ -55,6 +42,35 @@ namespace PocketSquire.Unity
                 exitButton.onClick.AddListener(ExitGame);
                 Debug.Log("Wired up ExitButton");
             }
+        }
+
+        public void LoadCharacterCreation()
+        {
+            StartCoroutine(PlaySoundThenLoad());
+        }
+
+        IEnumerator PlaySoundThenLoad()
+        {
+            // 1. Play the sound
+            var playButton = GameObject.Find("Canvas/PlayButton");
+            var menuButtonSound = playButton.GetComponent<MenuButtonSound>();
+            menuButtonSound.PlayClick();
+
+            // 2. Wait for the clip to finish (or a set amount of time)
+            // Use real-time to ensure it works even if timeScale is 0
+            yield return new WaitForSecondsRealtime(menuButtonSound.clickSound.length);
+
+            // 3. Load the scene
+            SceneManager.LoadScene("CharacterCreation");
+        }
+
+        public void ExitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }
