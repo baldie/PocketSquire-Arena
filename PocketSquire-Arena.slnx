@@ -1,0 +1,6 @@
+﻿<Solution>
+  <Project Path="MCPForUnity.Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="MCPForUnity.Runtime.csproj" />
+  <Project Path="PocketSquire.Arena.Core.csproj" />
+</Solution>

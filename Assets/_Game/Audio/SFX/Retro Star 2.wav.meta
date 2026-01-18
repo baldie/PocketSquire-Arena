@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 1be2fcc16ab0da84f99ba7c633037620
+AssetOrigin:
+  serializedVersion: 1
+  productId: 295538
+  packageName: Hints Stars Points & Rewards Sound Effects - Lite Pack
+  packageVersion: 1.0
+  assetPath: Assets/HintsStarsLite/Retro Star 2.wav
+  uploadId: 690447
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 8
+  defaultSettings:
+    serializedVersion: 2
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+    preloadAudioData: 1
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  loadInBackground: 1
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
