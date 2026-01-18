@@ -7,11 +7,6 @@ namespace PocketSquire.Unity
 {
     public class SceneLoader : MonoBehaviour
     {
-        public void LoadMainMenu()
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
-
         private void Awake()
         {
             WireButtons();
@@ -19,12 +14,12 @@ namespace PocketSquire.Unity
 
         private void WireButtons()
         {
-            var playButton = GameObject.Find("Canvas/PlayButton")?.GetComponent<Button>();
-            if (playButton != null)
+            var newGameButton = GameObject.Find("Canvas/NewGameButton")?.GetComponent<Button>();
+            if (newGameButton != null)
             {
-                playButton.onClick.RemoveAllListeners();
-                playButton.onClick.AddListener(LoadCharacterCreation);
-                Debug.Log("Wired up PlayButton");
+                newGameButton.onClick.RemoveAllListeners();
+                newGameButton.onClick.AddListener(ChooseSaveSlot);
+                Debug.Log("Wired up NewGameButton");
             }
 
             var optionsButton = GameObject.Find("Canvas/OptionsButton")?.GetComponent<Button>();
@@ -44,7 +39,7 @@ namespace PocketSquire.Unity
             }
         }
 
-        public void LoadCharacterCreation()
+        public void ChooseSaveSlot()
         {
             StartCoroutine(PlaySoundThenLoad());
         }
@@ -52,8 +47,8 @@ namespace PocketSquire.Unity
         IEnumerator PlaySoundThenLoad()
         {
             // 1. Play the sound
-            var playButton = GameObject.Find("Canvas/PlayButton");
-            var menuButtonSound = playButton.GetComponent<MenuButtonSound>();
+            var newGameButton = GameObject.Find("Canvas/NewGameButton");
+            var menuButtonSound = newGameButton.GetComponent<MenuButtonSound>();
             menuButtonSound.PlayClick();
 
             // 2. Wait for the clip to finish (or a set amount of time)
@@ -61,7 +56,23 @@ namespace PocketSquire.Unity
             yield return new WaitForSecondsRealtime(menuButtonSound.clickSound.length);
 
             // 3. Load the scene
-            SceneManager.LoadScene("CharacterCreation");
+            SceneManager.LoadScene("SaveSlotSelection");
+        }
+
+        private void Update()
+        {
+            if (Input.GetButtonDown("Cancel"))
+            {
+                if (SceneManager.GetActiveScene().name == "SaveSlotSelection")
+                {
+                    LoadMainMenu();
+                }
+            }
+        }
+
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
         public void ExitGame()

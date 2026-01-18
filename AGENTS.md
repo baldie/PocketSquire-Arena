@@ -14,8 +14,16 @@
 - **Testing:** Mock all API calls. Logic changes require unit test updates.
 
 ## 3. DIRECTORY MAP
-- `Assets/Scripts/Core/`  -> Pure C# logic (Framework agnostic).
-- `Assets/Scripts/Unity/` -> MonoBehaviours & Unity-specific code.
+- `Assets/_Game/Scripts/Core/`  -> Pure C# logic (Framework agnostic).
+- `Assets/_Game/Scripts/Unity/` -> MonoBehaviours & 
+Unity-specific code.
+- `Assets/_Game/Art/` -> Art assets.
+- `Assets/_Game/Audio/` -> Audio assets.
+- `Assets/_Game/Scenes/` -> Scene assets.
+- `Assets/_Game/Prefabs/` -> Prefab assets.
+- `Assets/_Game/Scripts/Core/`  -> Pure C# logic (Framework agnostic).
+- `Assets/_Game/Scripts/Unity/` -> MonoBehaviours & 
+Unity-specific code.
 - `tests/unit/`           -> NUnit tests for Core logic.
 - `tests/`                -> Playwright integration tests.
 - `scripts/`              -> Node.js automation scripts.
