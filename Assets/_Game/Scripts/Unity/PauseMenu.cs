@@ -26,10 +26,9 @@ namespace PocketSquire.Unity
                     Pause();
                 }
             }
-
-            // 2. Optional: Allow "B" button (Cancel) to close the menu only
-            // Unity's default "Cancel" input is mapped to Escape and Joystick Button 1 (B/Circle)
-            if (isPaused && Input.GetButtonDown("Cancel"))
+            // 2. Allow "B" button (Cancel) to close the menu only, 
+            // but only if we didn't just handle the Pause input
+            else if (isPaused && Input.GetButtonDown("Cancel"))
             {
                 Resume();
             }
