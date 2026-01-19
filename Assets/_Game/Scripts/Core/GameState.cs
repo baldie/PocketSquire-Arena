@@ -34,5 +34,31 @@ namespace PocketSquire.Arena.Core
                 PlayTime = PlayTime.Value
             };   
         }
+
+        public static void LoadFromSaveData(SaveData data)
+        {
+            if (data == null) return;
+            
+            SelectedSaveSlot = data.SelectedSaveSlot;
+            CharacterCreationDate = data.CharacterCreationDate;
+            LastSaveDate = data.LastSaveDate;
+            PlayTime = data.PlayTime;
+        }
+
+        public static SaveData FindMostRecentSave(SaveData[] saves)
+        {
+            if (saves == null || saves.Length == 0) return null;
+            
+            SaveData mostRecent = null;
+            foreach (var save in saves)
+            {
+                if (save == null) continue;
+                if (mostRecent == null || save.LastSaveDate > mostRecent.LastSaveDate)
+                {
+                    mostRecent = save;
+                }
+            }
+            return mostRecent;
+        }
     }
 }

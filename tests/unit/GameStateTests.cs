@@ -63,4 +63,67 @@ public class GameStateTests
         Assert.That(saveData.LastSaveDate, Is.EqualTo(lastSaveDate));
         Assert.That(saveData.PlayTime, Is.EqualTo(playTime));
     }
+
+    [Test]
+    public void LoadFromSaveData_SetsCorrectValues()
+    {
+        // Arrange
+        var data = new SaveData
+        {
+            SelectedSaveSlot = SaveSlots.Slot3,
+            CharacterCreationDate = new DateTime(2023, 1, 1),
+            LastSaveDate = new DateTime(2023, 1, 5),
+            PlayTime = TimeSpan.FromHours(10)
+        };
+
+        // Act
+        GameState.LoadFromSaveData(data);
+
+        // Assert
+        Assert.That(GameState.SelectedSaveSlot, Is.EqualTo(data.SelectedSaveSlot));
+        Assert.That(GameState.CharacterCreationDate, Is.EqualTo(data.CharacterCreationDate));
+        Assert.That(GameState.LastSaveDate, Is.EqualTo(data.LastSaveDate));
+        Assert.That(GameState.PlayTime, Is.EqualTo(data.PlayTime));
+    }
+
+    [Test]
+    public void FindMostRecentSave_ReturnsLatestSave()
+    {
+        // Arrange
+        var save1 = new SaveData { LastSaveDate = new DateTime(2023, 1, 1) };
+        var save2 = new SaveData { LastSaveDate = new DateTime(2023, 1, 10) };
+        var save3 = new SaveData { LastSaveDate = new DateTime(2023, 1, 5) };
+        
+        var saves = new SaveData[] { save1, save2, save3 };
+
+        // Act
+        var result = GameState.FindMostRecentSave(saves);
+
+        // Assert
+        Assert.That(result, Is.SameAs(save2));
+    }
+
+    [Test]
+    public void FindMostRecentSave_WithEmptyArray_ReturnsNull()
+    {
+        // Act
+        var result = GameState.FindMostRecentSave(new SaveData[0]);
+
+        // Assert
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void FindMostRecentSave_WithNullElements_IgnoresThem()
+    {
+        // Arrange
+        var save1 = new SaveData { LastSaveDate = new DateTime(2023, 1, 1) };
+        var saves = new SaveData[] { null, save1, null };
+
+        // Act
+        var result = GameState.FindMostRecentSave(saves);
+
+        // Assert
+        Assert.That(result, Is.SameAs(save1));
+    }
 }

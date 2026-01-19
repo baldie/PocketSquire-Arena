@@ -71,19 +71,14 @@ namespace PocketSquire.Unity
             var existingData = SaveSystem.LoadGame(slot);
             if (existingData != null)
             {
-                // Put the data loaded from the file into the GameState
-                GameState.SelectedSaveSlot = slot;
-                GameState.CharacterCreationDate = existingData.CharacterCreationDate;
-                GameState.LastSaveDate = existingData.LastSaveDate;
-                GameState.PlayTime = existingData.PlayTime;
-                
+                GameState.LoadFromSaveData(existingData);
                 Debug.Log($"[SaveSlotSelector] Loaded Save Slot: {slot}");
             }
             else
             {
                 GameState.CreateNewGame(slot);
                 // Immediately save to reserve the slot
-                SaveSystem.SaveGame(GameState.GetSaveData());
+                SaveSystem.SaveGame(slot, GameState.GetSaveData());
                 Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
             }
 

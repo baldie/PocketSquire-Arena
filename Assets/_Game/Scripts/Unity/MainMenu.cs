@@ -19,8 +19,27 @@ namespace PocketSquire.Unity
             var continueButton = GameObject.Find("Canvas/ContinueButton")?.GetComponent<Button>();
             if (continueButton != null)
             {
-                continueButton.onClick.RemoveAllListeners();
-                continueButton.onClick.AddListener(() => GoToScene("Town", continueButton.gameObject));
+                SaveData[] saves = new SaveData[]
+                {
+                    SaveSystem.LoadGame(SaveSlots.Slot1),
+                    SaveSystem.LoadGame(SaveSlots.Slot2),
+                    SaveSystem.LoadGame(SaveSlots.Slot3)
+                };
+
+                var mostRecent = GameState.FindMostRecentSave(saves);
+                if (mostRecent == null)
+                {
+                    continueButton.interactable = false;
+                }
+                else
+                {
+                    continueButton.interactable = true;
+                    continueButton.onClick.RemoveAllListeners();
+                    continueButton.onClick.AddListener(() => {
+                        GameState.LoadFromSaveData(mostRecent);
+                        GoToScene("Town", continueButton.gameObject);
+                    });
+                }
             }
 
             var newGameButton = GameObject.Find("Canvas/NewGameButton")?.GetComponent<Button>();

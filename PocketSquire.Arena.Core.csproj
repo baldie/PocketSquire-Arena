@@ -49,6 +49,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.3f1-x86_64\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_Game\Scripts\Core\ArenaLogic.cs" />
     <Compile Include="Assets\_Game\Scripts\Core\SaveData.cs" />
     <Compile Include="Assets\_Game\Scripts\Core\GameState.cs" />
   </ItemGroup>
