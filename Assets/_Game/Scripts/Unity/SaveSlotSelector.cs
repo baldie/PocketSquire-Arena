@@ -44,7 +44,8 @@ namespace PocketSquire.Unity
             {
                 // PlayTime = #days, #hours, #minutes - MM/dd/YYYY ##:##:##
                 var playTimeStr = string.Format("Play time {0}d {1}h {2}m", data.PlayTime.Days, data.PlayTime.Hours, data.PlayTime.Minutes);
-                var dateStr = data.LastSaveDate.ToString("MM/dd/yyyy HH:mm:ss");
+                var parsedDate = DateTime.Parse(data.LastSaveDateString);
+                var dateStr = parsedDate.ToString("MM/dd/yyyy HH:mm:ss");
                 textMesh.text = $"{playTimeStr} - {dateStr}";
             }
         }

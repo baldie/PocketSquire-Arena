@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55574df18110a36409e5f6e2a3ed14c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoScrollTexture
-  windSpeed: {x: 0.1, y: 0}
+  windSpeed: {x: -0.01, y: 0}
 --- !u!114 &894551060
 MonoBehaviour:
   m_ObjectHideFlags: 0

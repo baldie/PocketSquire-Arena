@@ -9,9 +9,12 @@ public static class SaveSystem
         var saveFileName = String.Format("savefile_{0}.json", slot);
         return Path.Combine(Application.persistentDataPath, saveFileName);
     }
+
     public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot, SaveData data)
     {
-        data.LastSaveDate = DateTime.Now;
+        // 0. Set the last save date
+        data.LastSaveDateString = DateTime.Now.ToString();
+
         // 1. Convert the data object to a JSON string
         string json = JsonUtility.ToJson(data, true); // 'true' makes it pretty-print
 

@@ -13,7 +13,7 @@ namespace PocketSquire.Arena.Core
     {
         public static SaveSlots SelectedSaveSlot = SaveSlots.Unknown;
         public static DateTime? CharacterCreationDate = null;
-        public static DateTime? LastSaveDate = null;
+        public static string LastSaveDateString = null;
         public static TimeSpan? PlayTime = null;
 
         public static void CreateNewGame(SaveSlots slot)
@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Core
             SelectedSaveSlot = slot;
             CharacterCreationDate = DateTime.Now;
             PlayTime = new TimeSpan(0, 0, 0, 0, 0);
-            LastSaveDate = DateTime.Now;
+            LastSaveDateString = DateTime.Now.ToString();
         }
 
         public static SaveData GetSaveData()
@@ -30,7 +30,7 @@ namespace PocketSquire.Arena.Core
             {
                 SelectedSaveSlot = SelectedSaveSlot,
                 CharacterCreationDate = CharacterCreationDate.Value,
-                LastSaveDate = LastSaveDate.Value,
+                LastSaveDateString = LastSaveDateString,
                 PlayTime = PlayTime.Value
             };   
         }
@@ -41,24 +41,35 @@ namespace PocketSquire.Arena.Core
             
             SelectedSaveSlot = data.SelectedSaveSlot;
             CharacterCreationDate = data.CharacterCreationDate;
-            LastSaveDate = data.LastSaveDate;
+            LastSaveDateString = data.LastSaveDateString;
             PlayTime = data.PlayTime;
         }
 
         public static SaveData FindMostRecentSave(SaveData[] saves)
         {
             if (saves == null || saves.Length == 0) return null;
-            
-            SaveData mostRecent = null;
+
+            SaveData mostRecentSave = null;
+            // Track the actual DateTime object of the winner so we don't have to re-parse it constantly
+            DateTime mostRecentDate = DateTime.MinValue; 
+
             foreach (var save in saves)
             {
-                if (save == null) continue;
-                if (mostRecent == null || save.LastSaveDate > mostRecent.LastSaveDate)
+                if (save == null || string.IsNullOrEmpty(save.LastSaveDateString)) continue;
+
+                // 1. Convert string back to DateTime
+                // Note: This relies on the string being a valid date format
+                if (DateTime.TryParse(save.LastSaveDateString, out DateTime saveDate))
                 {
-                    mostRecent = save;
+                    // 2. Compare DateTimes directly
+                    if (mostRecentSave == null || saveDate > mostRecentDate)
+                    {
+                        mostRecentSave = save;
+                        mostRecentDate = saveDate;
+                    }
                 }
             }
-            return mostRecent;
+            return mostRecentSave;
         }
     }
 }
