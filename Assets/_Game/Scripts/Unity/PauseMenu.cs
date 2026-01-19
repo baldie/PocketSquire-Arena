@@ -14,8 +14,8 @@ namespace PocketSquire.Unity
 
         void Update()
         {
-            // Check for the Escape key
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // 1. Toggle Pause (Escape Key OR Gamepad Start)
+            if (Input.GetButtonDown("Pause")) 
             {
                 if (isPaused)
                 {
@@ -25,6 +25,13 @@ namespace PocketSquire.Unity
                 {
                     Pause();
                 }
+            }
+
+            // 2. Optional: Allow "B" button (Cancel) to close the menu only
+            // Unity's default "Cancel" input is mapped to Escape and Joystick Button 1 (B/Circle)
+            if (isPaused && Input.GetButtonDown("Cancel"))
+            {
+                Resume();
             }
         }
 
