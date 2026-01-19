@@ -13,7 +13,7 @@ namespace PocketSquire.Arena.Core
     {
         public static SaveSlots SelectedSaveSlot = SaveSlots.Unknown;
         public static DateTime? CharacterCreationDate = null;
-        public static string LastSaveDateString = null;
+        public static string? LastSaveDateString = null;
         public static TimeSpan? PlayTime = null;
 
         public static void CreateNewGame(SaveSlots slot)
@@ -29,9 +29,9 @@ namespace PocketSquire.Arena.Core
             return new SaveData
             {
                 SelectedSaveSlot = SelectedSaveSlot,
-                CharacterCreationDate = CharacterCreationDate.Value,
+                CharacterCreationDate = CharacterCreationDate ?? DateTime.MinValue,
                 LastSaveDateString = LastSaveDateString,
-                PlayTime = PlayTime.Value
+                PlayTime = PlayTime ?? TimeSpan.Zero
             };   
         }
 
@@ -45,11 +45,11 @@ namespace PocketSquire.Arena.Core
             PlayTime = data.PlayTime;
         }
 
-        public static SaveData FindMostRecentSave(SaveData[] saves)
+        public static SaveData? FindMostRecentSave(SaveData?[]? saves)
         {
             if (saves == null || saves.Length == 0) return null;
 
-            SaveData mostRecentSave = null;
+            SaveData? mostRecentSave = null;
             // Track the actual DateTime object of the winner so we don't have to re-parse it constantly
             DateTime mostRecentDate = DateTime.MinValue; 
 

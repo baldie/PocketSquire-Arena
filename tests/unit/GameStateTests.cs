@@ -34,8 +34,8 @@ public class GameStateTests
         Assert.That(GameState.PlayTime, Is.EqualTo(TimeSpan.Zero));
         
         // Check that dates are approximately now (within 5 seconds)
-        Assert.That((DateTime.Now - GameState.CharacterCreationDate.Value).TotalSeconds, Is.LessThan(5));
-        Assert.That((DateTime.Now - DateTime.Parse(GameState.LastSaveDateString)).TotalSeconds, Is.LessThan(5));
+        Assert.That((DateTime.Now - GameState.CharacterCreationDate!.Value).TotalSeconds, Is.LessThan(5));
+        Assert.That((DateTime.Now - DateTime.Parse(GameState.LastSaveDateString!)).TotalSeconds, Is.LessThan(5));
     }
 
     [Test]
@@ -107,7 +107,7 @@ public class GameStateTests
     public void FindMostRecentSave_WithEmptyArray_ReturnsNull()
     {
         // Act
-        var result = GameState.FindMostRecentSave(new SaveData[0]);
+        var result = GameState.FindMostRecentSave(new SaveData?[] { });
 
         // Assert
         Assert.That(result, Is.Null);
@@ -118,7 +118,7 @@ public class GameStateTests
     {
         // Arrange
         var save1 = new SaveData { LastSaveDateString = new DateTime(2023, 1, 1).ToString() };
-        var saves = new SaveData[] { null, save1, null };
+        var saves = new SaveData?[] { null, save1, null };
 
         // Act
         var result = GameState.FindMostRecentSave(saves);

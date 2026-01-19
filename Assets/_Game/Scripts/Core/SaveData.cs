@@ -6,6 +6,6 @@ public class SaveData
 {
     public SaveSlots SelectedSaveSlot;
     public DateTime CharacterCreationDate;
-    public string LastSaveDateString;
+    public string? LastSaveDateString;
     public TimeSpan PlayTime;
 }
