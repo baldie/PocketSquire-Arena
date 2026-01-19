@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Core
             SelectedSaveSlot = slot;
             CharacterCreationDate = DateTime.Now;
             PlayTime = new TimeSpan(0, 0, 0, 0, 0);
-            LastSaveDateString = DateTime.Now.ToString();
+            LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public static SaveData GetSaveData()

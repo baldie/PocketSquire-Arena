@@ -13,7 +13,7 @@ public static class SaveSystem
     public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot, SaveData data)
     {
         // 0. Set the last save date
-        data.LastSaveDateString = DateTime.Now.ToString();
+        data.LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
         // 1. Convert the data object to a JSON string
         string json = JsonUtility.ToJson(data, true); // 'true' makes it pretty-print
@@ -31,19 +31,14 @@ public static class SaveSystem
     {
         var path = GetSaveFilePath(slot);
 
-        if (File.Exists(path))
-        {
-            // 1. Read the text from the file
-            string json = File.ReadAllText(path);
-
-            // 2. Convert JSON back to the SaveData object
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-            return data;
-        }
-        else
-        {
-            Debug.LogWarning("Save file not found in " + path);
+        if (!File.Exists(path))
             return null;
-        }
+        
+        // 1. Read the text from the file
+        string json = File.ReadAllText(path);
+        Debug.Log("Save file JSON loaded:\n" + json);
+
+        // 2. Convert JSON back to the SaveData object
+        return JsonUtility.FromJson<SaveData>(json);
     }
 }
