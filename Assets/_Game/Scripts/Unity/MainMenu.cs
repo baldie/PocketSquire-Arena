@@ -1,0 +1,84 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
+using System;
+using PocketSquire.Arena.Core;
+
+namespace PocketSquire.Unity
+{
+    public class MainMenu : MonoBehaviour
+    {
+        private void Awake()
+        {
+            WireButtons();
+        }
+
+        private void WireButtons()
+        {
+            var continueButton = GameObject.Find("Canvas/ContinueButton")?.GetComponent<Button>();
+            if (continueButton != null)
+            {
+                continueButton.onClick.RemoveAllListeners();
+                continueButton.onClick.AddListener(() => GoToScene("Town", continueButton.gameObject));
+            }
+
+            var newGameButton = GameObject.Find("Canvas/NewGameButton")?.GetComponent<Button>();
+            if (newGameButton != null)
+            {
+                newGameButton.onClick.RemoveAllListeners();
+                newGameButton.onClick.AddListener(() => GoToScene("SaveSlotSelection", newGameButton.gameObject));
+            }
+
+            var optionsButton = GameObject.Find("Canvas/OptionsButton")?.GetComponent<Button>();
+            if (optionsButton != null)
+            {
+                optionsButton.onClick.RemoveAllListeners();
+                optionsButton.onClick.AddListener(() => Debug.Log("Options Clicked"));
+            }
+
+            var exitButton = GameObject.Find("Canvas/ExitButton")?.GetComponent<Button>();
+            if (exitButton != null)
+            {
+                exitButton.onClick.RemoveAllListeners();
+                exitButton.onClick.AddListener(ExitGame);
+            }
+        }
+
+        public void GoToScene(string sceneName, GameObject buttonObj)
+        {
+            StartCoroutine(PlaySoundThenLoad(sceneName, buttonObj));
+        }
+
+        IEnumerator PlaySoundThenLoad(string sceneName, GameObject buttonObj)
+        {
+            if (buttonObj != null)
+            {
+                var menuButtonSound = buttonObj.GetComponent<MenuButtonSound>();
+                if (menuButtonSound != null && menuButtonSound.clickSound != null)
+                {
+                    menuButtonSound.PlayClick();
+                    yield return new WaitForSecondsRealtime(menuButtonSound.clickSound.length);
+                }
+            }
+            
+            if (Application.CanStreamedLevelBeLoaded(sceneName))
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+            else
+            {
+                Debug.LogWarning($"[MainMenu] Scene '{sceneName}' could not be loaded. Please ensure it is in Build Settings.");
+            }
+        }
+
+        public void ExitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+    }
+}

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/_Game/Scenes/SaveSlotSelection.unity
     guid: e3270f8dba0cf0e47b9179551b8fb481
   - enabled: 1
-    path: Assets/_Game/Scenes/CharacterCreation.unity
+    path: Assets/_Game/Scenes/Town.unity
     guid: fa48af66d659247479df1ac09cb88395
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
