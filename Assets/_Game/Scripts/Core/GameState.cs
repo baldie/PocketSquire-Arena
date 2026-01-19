@@ -59,7 +59,10 @@ namespace PocketSquire.Arena.Core
 
                 // 1. Convert string back to DateTime
                 // Note: This relies on the string being a valid date format
-                if (DateTime.TryParse(save.LastSaveDateString, out DateTime saveDate))
+                if (DateTime.TryParse(save.LastSaveDateString, 
+                  System.Globalization.CultureInfo.InvariantCulture, 
+                  System.Globalization.DateTimeStyles.None, 
+                  out DateTime saveDate))
                 {
                     // 2. Compare DateTimes directly
                     if (mostRecentSave == null || saveDate > mostRecentDate)
