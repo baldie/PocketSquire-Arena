@@ -14,6 +14,19 @@ namespace PocketSquire.Unity
             WireButtons();
         }
 
+        private void Start()
+        {
+            var continueBtn = GameObject.Find("Canvas/ContinueButton")?.GetComponent<Button>();
+            if (continueBtn != null && continueBtn.interactable)
+            {
+                continueBtn.Select();
+            }
+            else
+            {
+                GameObject.Find("Canvas/NewGameButton")?.GetComponent<Button>()?.Select();
+            }
+        }
+
         private void WireButtons()
         {
             var continueButton = GameObject.Find("Canvas/ContinueButton")?.GetComponent<Button>();
@@ -30,10 +43,17 @@ namespace PocketSquire.Unity
                 if (mostRecent == null)
                 {
                     continueButton.interactable = false;
+                    var nav = continueButton.navigation;
+                    nav.mode = Navigation.Mode.None;
+                    continueButton.navigation = nav;
                 }
                 else
                 {
                     continueButton.interactable = true;
+                    var nav = continueButton.navigation;
+                    nav.mode = Navigation.Mode.Automatic;
+                    continueButton.navigation = nav;
+
                     continueButton.onClick.RemoveAllListeners();
                     continueButton.onClick.AddListener(() => {
                         GameState.LoadFromSaveData(mostRecent);
