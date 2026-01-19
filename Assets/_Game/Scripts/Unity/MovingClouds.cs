@@ -5,7 +5,7 @@ public class AutoScrollTexture : MonoBehaviour
 {
     // Speed of the wind (X = horizontal, Y = vertical)
     // Try small numbers like 0.05 or 0.1
-    public Vector2 windSpeed = new Vector2(0.1f, 0f);
+    public Vector2 windSpeed = new Vector2(-0.01f, 0f);
     
     private RawImage _rawImage;
 

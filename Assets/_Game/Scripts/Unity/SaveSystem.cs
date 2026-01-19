@@ -4,7 +4,7 @@ using System;
 
 public static class SaveSystem
 {
-    private static string GetSaveFilePath(PocketSquire.Arena.Core.SaveSlots slot)
+    public static string GetSaveFilePath(PocketSquire.Arena.Core.SaveSlots slot)
     {
         var saveFileName = String.Format("savefile_{0}.json", slot);
         return Path.Combine(Application.persistentDataPath, saveFileName);
