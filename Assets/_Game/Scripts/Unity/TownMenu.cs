@@ -35,7 +35,7 @@ namespace PocketSquire.Unity
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
             
-            // Wire other buttons as needed later
+            //TODO: Wire up town locations here
         }
 
         private IEnumerator PlaySoundThenLoad(string sceneName, GameObject buttonObj)
