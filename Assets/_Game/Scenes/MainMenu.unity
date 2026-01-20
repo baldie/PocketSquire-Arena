@@ -1007,6 +1007,7 @@ GameObject:
   - component: {fileID: 1183039137}
   - component: {fileID: 1183039140}
   - component: {fileID: 1183039139}
+  - component: {fileID: 1183039141}
   m_Layer: 5
   m_Name: MenuCursor
   m_TagString: Untagged
@@ -1071,6 +1072,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183039136}
   m_CullTransparentMesh: 1
+--- !u!114 &1183039141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183039136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -25, y: -100}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1307508858
 GameObject:
   m_ObjectHideFlags: 0

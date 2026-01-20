@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace PocketSquire.Unity
 {
@@ -9,6 +10,9 @@ namespace PocketSquire.Unity
         [Header("UI References")]
         public GameObject pauseMenuUI;
         public Button firstSelectedButton;
+        public GameObject mutuallyExclusiveButtonGroup;
+        private bool mutuallyExclusiveButtonGroupWasActive = false;
+        private GameObject selectedObj;
 
         private bool isPaused = false;
 
@@ -83,12 +87,26 @@ namespace PocketSquire.Unity
         public void Resume()
         {
             pauseMenuUI.SetActive(false); // Hide UI
+            if (mutuallyExclusiveButtonGroup != null)
+            {
+                mutuallyExclusiveButtonGroup.SetActive(mutuallyExclusiveButtonGroupWasActive);
+            }
+            if (selectedObj != null)
+            {
+                EventSystem.current.SetSelectedGameObject(selectedObj);
+            }
             Time.timeScale = 1f;          // Unfreeze time
             isPaused = false;
         }
 
         public void Pause()
         {
+            if (mutuallyExclusiveButtonGroup != null)
+            {
+                mutuallyExclusiveButtonGroupWasActive = mutuallyExclusiveButtonGroup.activeSelf;
+                mutuallyExclusiveButtonGroup.SetActive(false);
+                selectedObj = EventSystem.current.currentSelectedGameObject;
+            }
             pauseMenuUI.SetActive(true);  // Show UI
             Time.timeScale = 0f;          // Freeze time
             isPaused = true;
