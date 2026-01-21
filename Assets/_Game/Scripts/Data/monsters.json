@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Training Dummy",
+        "health": 50,
+        "maxHealth": 50,
+        "attributes": {
+            "Strength": 1,
+            "Constitution": 10,
+            "Intelligence": 1,
+            "Wisdom": 1,
+            "Luck": 1
+        }
+    }
+]

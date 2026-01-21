@@ -13,15 +13,16 @@ namespace PocketSquire.Arena.Core
     {
         public static SaveSlots SelectedSaveSlot = SaveSlots.Unknown;
         public static DateTime? CharacterCreationDate = null;
-        public static string? LastSaveDateString = null;
+        public static DateTime? LastSaveDate = null;
         public static TimeSpan? PlayTime = null;
+        public static Player? Player = null;
 
         public static void CreateNewGame(SaveSlots slot)
         {
             SelectedSaveSlot = slot;
             CharacterCreationDate = DateTime.Now;
-            PlayTime = new TimeSpan(0, 0, 0, 0, 0);
-            LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            PlayTime = TimeSpan.Zero;
+            LastSaveDate = DateTime.Now;
         }
 
         public static SaveData GetSaveData()
@@ -29,9 +30,10 @@ namespace PocketSquire.Arena.Core
             return new SaveData
             {
                 SelectedSaveSlot = SelectedSaveSlot,
-                CharacterCreationDate = CharacterCreationDate ?? DateTime.MinValue,
-                LastSaveDateString = LastSaveDateString,
-                PlayTime = PlayTime ?? TimeSpan.Zero
+                CharacterCreationDate = CharacterCreationDate?.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                LastSaveDate = LastSaveDate?.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                PlayTimeTicks = PlayTime?.Ticks ?? 0,
+                Player = Player
             };   
         }
 
@@ -40,9 +42,15 @@ namespace PocketSquire.Arena.Core
             if (data == null) return;
             
             SelectedSaveSlot = data.SelectedSaveSlot;
-            CharacterCreationDate = data.CharacterCreationDate;
-            LastSaveDateString = data.LastSaveDateString;
-            PlayTime = data.PlayTime;
+            
+            if (DateTime.TryParse(data.CharacterCreationDate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime creationDate))
+                CharacterCreationDate = creationDate;
+            
+            if (DateTime.TryParse(data.LastSaveDate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime lastSaveDate))
+                LastSaveDate = lastSaveDate;
+
+            PlayTime = TimeSpan.FromTicks(data.PlayTimeTicks);
+            Player = data.Player;
         }
 
         public static SaveData? FindMostRecentSave(SaveData?[]? saves)
@@ -50,21 +58,17 @@ namespace PocketSquire.Arena.Core
             if (saves == null || saves.Length == 0) return null;
 
             SaveData? mostRecentSave = null;
-            // Track the actual DateTime object of the winner so we don't have to re-parse it constantly
             DateTime mostRecentDate = DateTime.MinValue; 
 
             foreach (var save in saves)
             {
-                if (save == null || string.IsNullOrEmpty(save.LastSaveDateString)) continue;
+                if (save == null || string.IsNullOrEmpty(save.LastSaveDate)) continue;
 
-                // 1. Convert string back to DateTime
-                // Note: This relies on the string being a valid date format
-                if (DateTime.TryParse(save.LastSaveDateString, 
+                if (DateTime.TryParse(save.LastSaveDate, 
                   System.Globalization.CultureInfo.InvariantCulture, 
                   System.Globalization.DateTimeStyles.None, 
                   out DateTime saveDate))
                 {
-                    // 2. Compare DateTimes directly
                     if (mostRecentSave == null || saveDate > mostRecentDate)
                     {
                         mostRecentSave = save;

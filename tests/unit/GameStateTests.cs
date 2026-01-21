@@ -13,7 +13,7 @@ public class GameStateTests
         // Reset GameState before each test
         GameState.SelectedSaveSlot = SaveSlots.Unknown;
         GameState.CharacterCreationDate = null;
-        GameState.LastSaveDateString = null;
+        GameState.LastSaveDate = null;
         GameState.PlayTime = null;
     }
 
@@ -22,7 +22,6 @@ public class GameStateTests
     {
         // Arrange
         var slot = SaveSlots.Slot1;
-        var now = DateTime.Now;
 
         // Act
         GameState.CreateNewGame(slot);
@@ -30,12 +29,12 @@ public class GameStateTests
         // Assert
         Assert.That(GameState.SelectedSaveSlot, Is.EqualTo(slot));
         Assert.That(GameState.CharacterCreationDate, Is.Not.Null);
-        Assert.That(GameState.LastSaveDateString, Is.Not.Null);
+        Assert.That(GameState.LastSaveDate, Is.Not.Null);
         Assert.That(GameState.PlayTime, Is.EqualTo(TimeSpan.Zero));
         
         // Check that dates are approximately now (within 5 seconds)
         Assert.That((DateTime.Now - GameState.CharacterCreationDate!.Value).TotalSeconds, Is.LessThan(5));
-        Assert.That((DateTime.Now - DateTime.Parse(GameState.LastSaveDateString!)).TotalSeconds, Is.LessThan(5));
+        Assert.That((DateTime.Now - GameState.LastSaveDate!.Value).TotalSeconds, Is.LessThan(5));
     }
 
     [Test]
@@ -51,7 +50,7 @@ public class GameStateTests
         var playTime = TimeSpan.FromHours(5);
         
         GameState.CharacterCreationDate = creationDate;
-        GameState.LastSaveDateString = lastSaveDate.ToString();
+        GameState.LastSaveDate = lastSaveDate;
         GameState.PlayTime = playTime;
 
         // Act
@@ -59,21 +58,25 @@ public class GameStateTests
 
         // Assert
         Assert.That(saveData.SelectedSaveSlot, Is.EqualTo(slot));
-        Assert.That(saveData.CharacterCreationDate, Is.EqualTo(creationDate));
-        Assert.That(saveData.LastSaveDateString, Is.EqualTo(lastSaveDate.ToString()));
-        Assert.That(saveData.PlayTime, Is.EqualTo(playTime));
+        Assert.That(saveData.CharacterCreationDate, Is.EqualTo(creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+        Assert.That(saveData.LastSaveDate, Is.EqualTo(lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+        Assert.That(saveData.PlayTimeTicks, Is.EqualTo(playTime.Ticks));
     }
 
     [Test]
     public void LoadFromSaveData_SetsCorrectValues()
     {
         // Arrange
+        var creationDate = new DateTime(2023, 1, 1);
+        var lastSaveDate = new DateTime(2023, 1, 5);
+        var playTime = TimeSpan.FromHours(10);
+
         var data = new SaveData
         {
             SelectedSaveSlot = SaveSlots.Slot3,
-            CharacterCreationDate = new DateTime(2023, 1, 1),
-            LastSaveDateString = new DateTime(2023, 1, 5).ToString(),
-            PlayTime = TimeSpan.FromHours(10)
+            CharacterCreationDate = creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            LastSaveDate = lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            PlayTimeTicks = playTime.Ticks
         };
 
         // Act
@@ -81,18 +84,18 @@ public class GameStateTests
 
         // Assert
         Assert.That(GameState.SelectedSaveSlot, Is.EqualTo(data.SelectedSaveSlot));
-        Assert.That(GameState.CharacterCreationDate, Is.EqualTo(data.CharacterCreationDate));
-        Assert.That(GameState.LastSaveDateString, Is.EqualTo(data.LastSaveDateString));
-        Assert.That(GameState.PlayTime, Is.EqualTo(data.PlayTime));
+        Assert.That(GameState.CharacterCreationDate, Is.EqualTo(creationDate));
+        Assert.That(GameState.LastSaveDate, Is.EqualTo(lastSaveDate));
+        Assert.That(GameState.PlayTime, Is.EqualTo(playTime));
     }
 
     [Test]
     public void FindMostRecentSave_ReturnsLatestSave()
     {
         // Arrange
-        var save1 = new SaveData { LastSaveDateString = new DateTime(2023, 1, 1).ToString() };
-        var save2 = new SaveData { LastSaveDateString = new DateTime(2023, 1, 10).ToString() };
-        var save3 = new SaveData { LastSaveDateString = new DateTime(2023, 1, 5).ToString() };
+        var save1 = new SaveData { LastSaveDate = new DateTime(2023, 1, 1).ToString(System.Globalization.CultureInfo.InvariantCulture) };
+        var save2 = new SaveData { LastSaveDate = new DateTime(2023, 1, 10).ToString(System.Globalization.CultureInfo.InvariantCulture) };
+        var save3 = new SaveData { LastSaveDate = new DateTime(2023, 1, 5).ToString(System.Globalization.CultureInfo.InvariantCulture) };
         
         var saves = new SaveData[] { save1, save2, save3 };
 
@@ -117,7 +120,7 @@ public class GameStateTests
     public void FindMostRecentSave_WithNullElements_IgnoresThem()
     {
         // Arrange
-        var save1 = new SaveData { LastSaveDateString = new DateTime(2023, 1, 1).ToString() };
+        var save1 = new SaveData { LastSaveDate = new DateTime(2023, 1, 1).ToString(System.Globalization.CultureInfo.InvariantCulture) };
         var saves = new SaveData?[] { null, save1, null };
 
         // Act

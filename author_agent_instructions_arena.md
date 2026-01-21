@@ -16,5 +16,5 @@
 The Arena domain handles:
 - Combat gameplay
 - Boss encounters
-- Core game logic (ArenaLogic, etc.)
+- Core game logic
 - Telemetry and validation systems

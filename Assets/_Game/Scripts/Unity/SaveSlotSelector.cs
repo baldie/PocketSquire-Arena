@@ -43,9 +43,14 @@ namespace PocketSquire.Unity
             if (textMesh != null)
             {
                 // PlayTime = #days, #hours, #minutes - MM/dd/YYYY ##:##:##
-                var playTimeStr = string.Format("Play time {0}d {1}h {2}m", data.PlayTime.Days, data.PlayTime.Hours, data.PlayTime.Minutes);
-                var parsedDate = DateTime.Parse(data.LastSaveDateString);
-                var dateStr = parsedDate.ToString("MM/dd/yyyy HH:mm:ss");
+                var playTime = TimeSpan.FromTicks(data.PlayTimeTicks);
+                var playTimeStr = string.Format("Play time {0}d {1}h {2}m", playTime.Days, playTime.Hours, playTime.Minutes);
+                
+                DateTime parsedDate = DateTime.MinValue;
+                if (DateTime.TryParse(data.LastSaveDate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var d))
+                    parsedDate = d;
+                
+                var dateStr = (parsedDate != DateTime.MinValue) ? parsedDate.ToString("MM/dd/yyyy HH:mm:ss") : "N/A";
                 textMesh.text = $"{playTimeStr} - {dateStr}";
             }
         }

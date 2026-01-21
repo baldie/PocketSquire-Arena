@@ -1,11 +1,15 @@
 using System;
 using PocketSquire.Arena.Core;
 
-[Serializable]
-public class SaveData
+namespace PocketSquire.Arena.Core
 {
-    public SaveSlots SelectedSaveSlot;
-    public DateTime CharacterCreationDate;
-    public string? LastSaveDateString;
-    public TimeSpan PlayTime;
+    [Serializable]
+    public class SaveData
+    {
+        public SaveSlots SelectedSaveSlot;
+        public string? CharacterCreationDate;
+        public string? LastSaveDate;
+        public long PlayTimeTicks;
+        public Player? Player;
+    }
 }
