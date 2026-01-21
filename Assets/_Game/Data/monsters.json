@@ -13,6 +13,12 @@
             "Intelligence": 1,
             "Wisdom": 1,
             "Luck": 1
-        }
+        },
+        "posX": -330,
+        "posY": 450,
+        "width": 1920,
+        "height": 2240,
+        "scaleX": 0.4,
+        "scaleY": 0.35
     }
 ]

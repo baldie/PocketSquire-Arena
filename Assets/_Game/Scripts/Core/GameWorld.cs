@@ -12,6 +12,7 @@ namespace PocketSquire.Arena.Core
     public static class GameWorld
     {
         public static List<Monster> Monsters { get; set; } = new List<Monster>();
+        public static Battle? Battle { get; set; } = null;
 
         public static void Load(string? rootPath = null)
         {

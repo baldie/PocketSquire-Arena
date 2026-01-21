@@ -24,6 +24,7 @@ namespace PocketSquire.Arena.Core
             CharacterCreationDate = DateTime.Now;
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
+            Player = Player.GetDefaultPlayer();
         }
 
         public static SaveData GetSaveData()
@@ -52,6 +53,7 @@ namespace PocketSquire.Arena.Core
 
             PlayTime = TimeSpan.FromTicks(data.PlayTimeTicks);
             Player = data.Player;
+            Console.WriteLine("Loaded Player: " + Player?.Name);
         }
 
         public static SaveData? FindMostRecentSave(SaveData?[]? saves)

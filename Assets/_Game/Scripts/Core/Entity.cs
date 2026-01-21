@@ -10,6 +10,12 @@ namespace PocketSquire.Arena.Core
         public int Health;
         public int MaxHealth;
         public Attributes Attributes = new Attributes();
+        public float PosX;
+        public float PosY;
+        public float Width;
+        public float Height;
+        public float ScaleX = 1f;
+        public float ScaleY = 1f;
         public event Action? onDeath;
 
         public Entity() 
@@ -22,6 +28,14 @@ namespace PocketSquire.Arena.Core
             Health = health;
             MaxHealth = maxHealth;
             Attributes = attributes;
+        }
+
+        public bool IsDead
+        {
+            get
+            {
+                return Health <= 0;
+            }
         }
 
         public void Heal(int amount)

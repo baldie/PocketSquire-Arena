@@ -34,6 +34,12 @@ namespace PocketSquire.Arena.Tests
             Assert.That(dummy, Is.Not.Null);
             Assert.That(dummy!.MaxHealth, Is.EqualTo(50));
             Assert.That(dummy!.Attributes.Constitution, Is.EqualTo(10));
+            Assert.That(dummy!.PosX, Is.EqualTo(-330));
+            Assert.That(dummy!.PosY, Is.EqualTo(450));
+            Assert.That(dummy!.Width, Is.EqualTo(1920));
+            Assert.That(dummy!.Height, Is.EqualTo(2240));
+            Assert.That(dummy!.ScaleX, Is.EqualTo(0.4f).Within(0.001f));
+            Assert.That(dummy!.ScaleY, Is.EqualTo(0.35f).Within(0.001f));
         }
     }
 }
