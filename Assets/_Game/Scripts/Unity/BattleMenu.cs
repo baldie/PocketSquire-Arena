@@ -64,7 +64,7 @@ namespace PocketSquire.Unity
                 yieldButton.onClick.RemoveAllListeners();
                 yieldButton.onClick.AddListener(Yield);
 
-                var sound = itemButton.GetComponent<MenuButtonSound>();
+                var sound = yieldButton.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
         }
