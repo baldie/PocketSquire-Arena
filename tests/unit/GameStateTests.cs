@@ -15,6 +15,7 @@ public class GameStateTests
         GameState.CharacterCreationDate = null;
         GameState.LastSaveDate = null;
         GameState.PlayTime = null;
+        GameState.Player = null;
     }
 
     [Test]
@@ -35,6 +36,9 @@ public class GameStateTests
         // Check that dates are approximately now (within 5 seconds)
         Assert.That((DateTime.Now - GameState.CharacterCreationDate!.Value).TotalSeconds, Is.LessThan(5));
         Assert.That((DateTime.Now - GameState.LastSaveDate!.Value).TotalSeconds, Is.LessThan(5));
+        
+        Assert.That(GameState.Player, Is.Not.Null);
+        Assert.That(GameState.Player!.Name, Is.EqualTo("Squire"));
     }
 
     [Test]
@@ -61,6 +65,8 @@ public class GameStateTests
         Assert.That(saveData.CharacterCreationDate, Is.EqualTo(creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         Assert.That(saveData.LastSaveDate, Is.EqualTo(lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         Assert.That(saveData.PlayTimeTicks, Is.EqualTo(playTime.Ticks));
+        Assert.That(saveData.Player, Is.Not.Null);
+        Assert.That(saveData.Player!.Name, Is.EqualTo("Squire"));
     }
 
     [Test]
@@ -76,7 +82,8 @@ public class GameStateTests
             SelectedSaveSlot = SaveSlots.Slot3,
             CharacterCreationDate = creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             LastSaveDate = lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
-            PlayTimeTicks = playTime.Ticks
+            PlayTimeTicks = playTime.Ticks,
+            Player = new Player("Test Player", 20, 20, new Attributes())
         };
 
         // Act
@@ -87,6 +94,8 @@ public class GameStateTests
         Assert.That(GameState.CharacterCreationDate, Is.EqualTo(creationDate));
         Assert.That(GameState.LastSaveDate, Is.EqualTo(lastSaveDate));
         Assert.That(GameState.PlayTime, Is.EqualTo(playTime));
+        Assert.That(GameState.Player, Is.Not.Null);
+        Assert.That(GameState.Player!.Name, Is.EqualTo("Test Player"));
     }
 
     [Test]
