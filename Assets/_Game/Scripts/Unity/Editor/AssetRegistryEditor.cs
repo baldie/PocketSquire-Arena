@@ -10,8 +10,8 @@ public class AssetRegistryEditor : Editor {
         GameAssetRegistry registry = (GameAssetRegistry)target;
 
         if (GUILayout.Button("Sync Folders (Auto-Fill IDs)")) {
-            SyncAssets<Sprite>(registry.sprites, "Assets/Art/Monsters");
-            SyncAssets<AudioClip>(registry.sounds, "Assets/Audio/Monsters");
+            SyncAssets<Sprite>(registry.sprites, "Assets/_Game/Art/Monsters");
+            SyncAssets<AudioClip>(registry.sounds, "Assets/_Game/Audio/Monsters");
             EditorUtility.SetDirty(registry);
         }
     }

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 
 namespace PocketSquire.Arena.Core
@@ -5,13 +6,15 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Entity
     {
-        public string Name;
+        public string Name = string.Empty;
         public int Health;
         public int MaxHealth;
-        public Attributes Attributes;
+        public Attributes Attributes = new Attributes();
         public event Action? onDeath;
 
-        public Entity() { }
+        public Entity() 
+        { 
+        }
 
         public Entity(string name, int health, int maxHealth, Attributes attributes)
         {

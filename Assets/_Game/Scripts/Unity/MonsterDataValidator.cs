@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 using PocketSquire.Arena.Core;
+using Newtonsoft.Json;
 
 public class MonsterDataValidator : EditorWindow
 {
@@ -28,10 +29,8 @@ public class MonsterDataValidator : EditorWindow
 
         string jsonContent = File.ReadAllText(jsonPath);
         
-        // Wrap and deserialize using Unity's JsonUtility
-        string wrappedJson = "{\"monsters\":" + jsonContent + "}";
-        var wrapper = JsonUtility.FromJson<MonsterListWrapper>(wrappedJson);
-        List<Monster> monsters = wrapper?.monsters ?? new List<Monster>();
+        // Use Newtonsoft.Json for consistency with GameWorld
+        List<Monster> monsters = JsonConvert.DeserializeObject<List<Monster>>(jsonContent) ?? new List<Monster>();
 
         int errorCount = 0;
 
@@ -66,11 +65,5 @@ public class MonsterDataValidator : EditorWindow
             Debug.LogError($"[Data Error] Monster '{monsterName}' has invalid {type}SoundId: '{soundId}'");
             errorCount++;
         }
-    }
-
-    [System.Serializable]
-    private class MonsterListWrapper
-    {
-        public List<Monster> monsters;
     }
 }

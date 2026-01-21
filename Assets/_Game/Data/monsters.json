@@ -3,6 +3,10 @@
         "name": "Training Dummy",
         "health": 50,
         "maxHealth": 50,
+        "spriteId": "TrainingDummy",
+        "attackSoundId": "TrainingDummyAttack",
+        "blockSoundId": "TrainingDummyBlock",
+        "hitSoundId": "TrainingDummyHit",
         "attributes": {
             "Strength": 1,
             "Constitution": 10,

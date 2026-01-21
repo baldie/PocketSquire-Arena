@@ -5,10 +5,7 @@ using UnityEngine.EventSystems;
 public class TownSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [Header("Assignments")]
-    // CHANGED: We now reference a RawImage instead of a standard Image
     public RawImage backgroundRenderer; 
-    
-    // CHANGED: We now hold a Texture (the raw file) instead of a Sprite
     public Texture highlightedTexture;  
 
     private Texture defaultTexture;
