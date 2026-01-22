@@ -13,7 +13,7 @@ namespace PocketSquire.Arena.Tests
         [SetUp]
         public void Setup()
         {
-            _player = new Player("Squire", 10, 10, new Attributes(), Player.Gender.Male);
+            _player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.Male);
             _monster = new Monster("Test Monster", 10, 10, new Attributes());
         }
 

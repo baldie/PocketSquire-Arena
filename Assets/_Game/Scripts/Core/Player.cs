@@ -5,12 +5,12 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Player : Entity
     {
-        public enum Gender {
+        public enum CharGender {
             Male,
             Female
         }
 
-        private Gender gender;
+        public CharGender Gender;
 
         public int Experience;
         public int Gold;
@@ -24,9 +24,9 @@ namespace PocketSquire.Arena.Core
 
         public Player() : base() { }
 
-        public Player(string name, int health, int maxHealth, Attributes attributes, Gender gender) : base(name, health, maxHealth, attributes)
+        public Player(string name, int health, int maxHealth, Attributes attributes, CharGender gender) : base(name, health, maxHealth, attributes)
         {
-            this.gender = gender;
+            this.Gender = gender;
         }
 
         public void GainExperience(int amount)
@@ -43,7 +43,7 @@ namespace PocketSquire.Arena.Core
         {
             // TODO: eventually you will need to add class into this mix
             var sprite = "player_";
-            sprite += this.gender == Gender.Male ? "m_" : "f_";
+            sprite += this.Gender == CharGender.Male ? "m_" : "f_";
             sprite += "l" + this.Level.ToString();
             switch(context)
             {
@@ -61,13 +61,18 @@ namespace PocketSquire.Arena.Core
 
         public override string GetActionSoundId(ActionType actionType)
         {
-            return actionType switch
+            switch(actionType)
             {
-                ActionType.Attack => "player_attack",
-                ActionType.Block => "player_block",
-                ActionType.UseItem => "player_item",
-                ActionType.Yield => string.Empty,
-                _ => string.Empty
+                case ActionType.Attack:
+                    return !string.IsNullOrEmpty(AttackSoundId) ? AttackSoundId : "player_attack";
+                case ActionType.Block:
+                    return !string.IsNullOrEmpty(BlockSoundId) ? BlockSoundId : "player_block";
+                case ActionType.UseItem:
+                    return "player_item";
+                case ActionType.Yield:
+                    return string.Empty;
+                default:
+                    return string.Empty;
             };
         }
 

@@ -6,7 +6,7 @@ using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Unity
 {
-    public class BattleMenu : MonoBehaviour
+    public class BattleManager : MonoBehaviour
     {
         [Header("UI References")]
         public GameObject battleMenuUI;
@@ -23,6 +23,10 @@ namespace PocketSquire.Unity
 
         void Start()
         {
+            if (actionQueueProcessor == null)
+            {
+                Debug.LogError("BattleManager: ActionQueueProcessor not found");
+            }
             WireButtons();
         }
 

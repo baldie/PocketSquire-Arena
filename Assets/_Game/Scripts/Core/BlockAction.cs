@@ -20,7 +20,7 @@ namespace PocketSquire.Arena.Core
         public void ApplyEffect()
         {
             Actor.IsBlocking = true;
-            Console.WriteLine($"{Actor.Name} raises their shield!");
+            Console.WriteLine($"{Actor.Name} is defending!");
         }
     }
 }

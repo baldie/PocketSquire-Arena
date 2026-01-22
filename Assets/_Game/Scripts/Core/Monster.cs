@@ -4,11 +4,6 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Monster : Entity
     {
-        public string SpriteId = string.Empty;
-        public string AttackSoundId = string.Empty;
-        public string BlockSoundId = string.Empty;
-        public string HitSoundId = string.Empty;
-
         public Monster() : base() 
         { 
         }
@@ -37,6 +32,12 @@ namespace PocketSquire.Arena.Core
                 ActionType.Yield => "Yield",
                 _ => "Idle"
             };
+        }
+
+        public override IGameAction DetermineAction(Entity target)
+        {
+            // Basic AI: Always attack
+            return new AttackAction(this, target, 1);
         }
 
         public override string GetHitSoundId() => HitSoundId;

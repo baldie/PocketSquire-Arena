@@ -18,7 +18,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Luck = 1;
 
             // Act
-            var player = new Player("Squire", 10, 10, attributes, Player.Gender.Male);
+            var player = new Player("Squire", 10, 10, attributes, Player.CharGender.Male);
 
             // Assert
             Assert.That(player.Name, Is.EqualTo("Squire"));
@@ -36,7 +36,7 @@ namespace PocketSquire.Arena.Tests
         public void GainExperience_IncreasesExperience()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.Gender.Male);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.Male);
             
             // Act
             player.GainExperience(50);
@@ -49,7 +49,7 @@ namespace PocketSquire.Arena.Tests
         public void GainGold_IncreasesGold()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.Gender.Male);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.Male);
             
             // Act
             player.GainGold(100);

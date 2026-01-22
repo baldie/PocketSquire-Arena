@@ -21,7 +21,11 @@ namespace PocketSquire.Arena.Core
         public float Height;
         public float ScaleX = 1f;
         public float ScaleY = 1f;
-
+        public string SpriteId = string.Empty;
+        public string AttackSoundId = string.Empty;
+        public string BlockSoundId = string.Empty;
+        public string HitSoundId = string.Empty;
+        
         public bool IsBlocking { get; set; }
         public event Action? onDeath;
 
@@ -66,5 +70,6 @@ namespace PocketSquire.Arena.Core
         public virtual string GetActionAnimationId(ActionType actionType) => string.Empty;
         public virtual string GetHitSoundId() => string.Empty;
         public virtual string GetHitAnimationId() => string.Empty;
+        public virtual IGameAction DetermineAction(Entity target) => null;
     }
 }

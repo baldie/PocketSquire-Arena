@@ -27,117 +27,56 @@ public class ArenaSceneInitializer : MonoBehaviour
             actionQueueProcessor.OnActionComplete += HandleActionComplete;
         }
     }
-    
-    void OnDestroy()
-    {
-        // Unsubscribe to prevent memory leaks
-        if (actionQueueProcessor != null)
-        {
-            actionQueueProcessor.OnActionComplete -= HandleActionComplete;
-        }
-    }
-    
-    private void HandleActionComplete(IGameAction action)
-    {
-        if (GameWorld.Battle == null) return;
 
-        // Check for battle end
-        if (GameWorld.Battle.IsOver)
-        {
-            var winner = GameWorld.Battle.Player1.IsDead ? GameWorld.Battle.Player2 : GameWorld.Battle.Player1;
-            Debug.Log($"Battle Over! Winner: {winner.Name}");
-            // Use IsPlayerTurn based on who won? Or just stop.
-            // If the player died, game over screen.
-            // If monster died, victory screen.
-            return;
-        }
-
-        // After an action completes, if battle continues, end the current turn
-        if (GameWorld.Battle.CurrentTurn != null)
-        {
-            GameWorld.Battle.CurrentTurn.End();
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
+        #region Hide/Show Battle Menu
         if (GameWorld.Battle == null) return;
         if (GameWorld.Battle.CurrentTurn == null) return;
+
+        var battleMenu = GameObject.Find("BattleMenuPanel");
+        if (battleMenu == null) return;
+
+        var battleMenuCanvas = battleMenu.GetComponent<Canvas>();
+        if (battleMenuCanvas == null)
+        {
+            Debug.LogError("BattleMenu does not have a Canvas!");
+            return;
+        }
         
         bool shouldShowMenu = GameWorld.Battle.CurrentTurn.IsPlayerTurn && 
                              (actionQueueProcessor == null || (!actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0));
 
-        if (shouldShowMenu)
-        {
-            // Show battle menu
-            var battleMenu = GameObject.Find("BattleMenu");
-            if (battleMenu == null) return;
-            
-            var canvas = battleMenu.GetComponent<Canvas>();
-            if (canvas == null)
-            {
-                Debug.LogError("BattleMenu does not have a Canvas!");
-                return;
-            }
-            
-            if (!canvas.enabled) canvas.enabled = true;
-        }
-        else
-        {
-            // Hide battle menu
-            var battleMenu = GameObject.Find("BattleMenu");
-            if (battleMenu == null) return;
+        battleMenuCanvas.enabled = shouldShowMenu;
+        #endregion
 
-            var canvas = battleMenu.GetComponent<Canvas>();
-            if (canvas == null)
+        // Use the action queue for monster turn if processor is available
+        if (GameWorld.Battle.CurrentTurn.IsPlayerTurn == false)
+        {
+            if (actionQueueProcessor != null && !actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0)
             {
-                Debug.LogError("BattleMenu does not have a Canvas!");
-                return;
-            }
-            
-            if (canvas.enabled) canvas.enabled = false;
-
-            // Use the action queue for monster turn if processor is available
-            if (!GameWorld.Battle.CurrentTurn.IsPlayerTurn)
-            {
-                if (actionQueueProcessor != null && !actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0)
+                // Create and enqueue the monster's attack action
+                var monster = GameWorld.Battle.CurrentTurn.Actor;
+                var target = GameWorld.Battle.CurrentTurn.Target;
+                
+                if (monster != null && target != null)
                 {
-                    // Create and enqueue the monster's attack action
-                    var monster = GetCurrentActor();
-                    var target = GetCurrentTarget();
-                    
-                    if (monster != null && target != null)
-                    {
-                        int damage = CalculateDamage(monster, target);
-                        var attackAction = new AttackAction(monster, target, damage);
-                        actionQueueProcessor.EnqueueAction(attackAction);
-                    }
+                    var action = monster.DetermineAction(target);
+                    actionQueueProcessor.EnqueueAction(action);
                 }
-                else if (actionQueueProcessor == null)
+                else
                 {
-                    // Fallback to old behavior if no processor assigned
-                    GameWorld.Battle.CurrentTurn.Execute();
+                    Debug.LogError("Monster or target is null!");
                 }
             }
+            else if (actionQueueProcessor == null)
+            {
+                // Fallback to old behavior if no processor assigned
+                GameWorld.Battle.CurrentTurn.Execute();
+            }
         }
-    }
-    
-    private Entity GetCurrentActor()
-    {
-        return GameWorld.Battle?.CurrentTurn?.Actor;
-    }
-    
-    private Entity GetCurrentTarget()
-    {
-        return GameWorld.Battle?.CurrentTurn?.Target;
-    }
-    
-    private int CalculateDamage(Entity attacker, Entity target)
-    {
-        // Basic damage calculation - can be made more complex later
-        int baseDamage = attacker.Attributes.Strength;
-        return Mathf.Max(1, baseDamage); // Minimum 1 damage
     }
 
     private Player LoadPlayer(Player player)
@@ -221,5 +160,36 @@ public class ArenaSceneInitializer : MonoBehaviour
         }
 
         return monster;
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe to prevent memory leaks
+        if (actionQueueProcessor != null)
+        {
+            actionQueueProcessor.OnActionComplete -= HandleActionComplete;
+        }
+    }
+    
+    private void HandleActionComplete(IGameAction action)
+    {
+        if (GameWorld.Battle == null) return;
+
+        // Check for battle end
+        if (GameWorld.Battle.IsOver)
+        {
+            var winner = GameWorld.Battle.Player1.IsDead ? GameWorld.Battle.Player2 : GameWorld.Battle.Player1;
+            Debug.Log($"Battle Over! Winner: {winner.Name}");
+            // Use IsPlayerTurn based on who won? Or just stop.
+            // If the player died, game over screen.
+            // If monster died, victory screen.
+            return;
+        }
+
+        // After an action completes, if battle continues, end the current turn
+        if (GameWorld.Battle.CurrentTurn != null)
+        {
+            GameWorld.Battle.CurrentTurn.End();
+        }
     }
 }
