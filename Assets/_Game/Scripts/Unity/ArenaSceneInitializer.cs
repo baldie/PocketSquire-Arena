@@ -65,7 +65,10 @@ public class ArenaSceneInitializer : MonoBehaviour
         if (GameWorld.Battle == null) return;
         if (GameWorld.Battle.CurrentTurn == null) return;
         
-        if (GameWorld.Battle.CurrentTurn.IsPlayerTurn)
+        bool shouldShowMenu = GameWorld.Battle.CurrentTurn.IsPlayerTurn && 
+                             (actionQueueProcessor == null || (!actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0));
+
+        if (shouldShowMenu)
         {
             // Show battle menu
             var battleMenu = GameObject.Find("BattleMenu");
@@ -83,7 +86,10 @@ public class ArenaSceneInitializer : MonoBehaviour
         else
         {
             // Hide battle menu
-            var canvas = GameObject.Find("BattleMenu").GetComponent<Canvas>();
+            var battleMenu = GameObject.Find("BattleMenu");
+            if (battleMenu == null) return;
+
+            var canvas = battleMenu.GetComponent<Canvas>();
             if (canvas == null)
             {
                 Debug.LogError("BattleMenu does not have a Canvas!");
@@ -93,23 +99,26 @@ public class ArenaSceneInitializer : MonoBehaviour
             if (canvas.enabled) canvas.enabled = false;
 
             // Use the action queue for monster turn if processor is available
-            if (actionQueueProcessor != null && !actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0)
+            if (!GameWorld.Battle.CurrentTurn.IsPlayerTurn)
             {
-                // Create and enqueue the monster's attack action
-                var monster = GameWorld.Battle.CurrentTurn.IsPlayerTurn ? null : GetCurrentActor();
-                var target = GameWorld.Battle.CurrentTurn.IsPlayerTurn ? null : GetCurrentTarget();
-                
-                if (monster != null && target != null)
+                if (actionQueueProcessor != null && !actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0)
                 {
-                    int damage = CalculateDamage(monster, target);
-                    var attackAction = new AttackAction(monster, target, damage);
-                    actionQueueProcessor.EnqueueAction(attackAction);
+                    // Create and enqueue the monster's attack action
+                    var monster = GetCurrentActor();
+                    var target = GetCurrentTarget();
+                    
+                    if (monster != null && target != null)
+                    {
+                        int damage = CalculateDamage(monster, target);
+                        var attackAction = new AttackAction(monster, target, damage);
+                        actionQueueProcessor.EnqueueAction(attackAction);
+                    }
                 }
-            }
-            else if (actionQueueProcessor == null)
-            {
-                // Fallback to old behavior if no processor assigned
-                GameWorld.Battle.CurrentTurn.Execute();
+                else if (actionQueueProcessor == null)
+                {
+                    // Fallback to old behavior if no processor assigned
+                    GameWorld.Battle.CurrentTurn.Execute();
+                }
             }
         }
     }
