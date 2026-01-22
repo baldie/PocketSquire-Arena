@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core;
+using DG.Tweening;
 
 /// <summary>
 /// Manages a queue of game actions and processes them sequentially using coroutines.
@@ -154,6 +155,11 @@ public class ActionQueueProcessor : MonoBehaviour
         {
             var animator = go.GetComponent<Animator>();
             if (animator != null) animator.SetTrigger(animationTrigger);
+            
+            if (animationTrigger == "Hit") {
+                var rectTransform = go.GetComponent<RectTransform>();
+                rectTransform.DOShakeAnchorPos(0.4f, 15f, 20, 90f);
+            }
         }
     }
 
