@@ -6,6 +6,9 @@ public class ArenaSceneInitializer : MonoBehaviour
 {
     public GameAssetRegistry registry;
     
+    [Tooltip("Reference to the ActionQueueProcessor in the scene")]
+    public ActionQueueProcessor actionQueueProcessor;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,6 +20,30 @@ public class ArenaSceneInitializer : MonoBehaviour
         }
 
         GameWorld.Battle = new Battle(LoadPlayer(GameState.Player), LoadMonster("Training Dummy"));
+        
+        // Subscribe to action completion to handle turn changes
+        if (actionQueueProcessor != null)
+        {
+            actionQueueProcessor.OnActionComplete += HandleActionComplete;
+        }
+    }
+    
+    void OnDestroy()
+    {
+        // Unsubscribe to prevent memory leaks
+        if (actionQueueProcessor != null)
+        {
+            actionQueueProcessor.OnActionComplete -= HandleActionComplete;
+        }
+    }
+    
+    private void HandleActionComplete(IGameAction action)
+    {
+        // After an action completes, end the current turn
+        if (GameWorld.Battle?.CurrentTurn != null)
+        {
+            GameWorld.Battle.CurrentTurn.End();
+        }
     }
 
     // Update is called once per frame
@@ -52,8 +79,47 @@ public class ArenaSceneInitializer : MonoBehaviour
             
             if (canvas.enabled) canvas.enabled = false;
 
-            GameWorld.Battle.CurrentTurn.Execute();
+            // Use the action queue for monster turn if processor is available
+            if (actionQueueProcessor != null && !actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0)
+            {
+                // Create and enqueue the monster's attack action
+                var monster = GameWorld.Battle.CurrentTurn.IsPlayerTurn ? null : GetCurrentActor();
+                var target = GameWorld.Battle.CurrentTurn.IsPlayerTurn ? null : GetCurrentTarget();
+                
+                if (monster != null && target != null)
+                {
+                    int damage = CalculateDamage(monster, target);
+                    var attackAction = new AttackAction(monster, target, damage);
+                    actionQueueProcessor.EnqueueAction(attackAction);
+                }
+            }
+            else if (actionQueueProcessor == null)
+            {
+                // Fallback to old behavior if no processor assigned
+                GameWorld.Battle.CurrentTurn.Execute();
+            }
         }
+    }
+    
+    private Entity GetCurrentActor()
+    {
+        // The monster is player2 in the battle when it's the monster's turn
+        return GameWorld.Battle?.CurrentTurn?.IsPlayerTurn == false ? 
+            GameWorld.GetMonsterByName("Training Dummy") : null;
+    }
+    
+    private Entity GetCurrentTarget()
+    {
+        // The player is the target when it's the monster's turn
+        return GameWorld.Battle?.CurrentTurn?.IsPlayerTurn == false ? 
+            GameState.Player : null;
+    }
+    
+    private int CalculateDamage(Entity attacker, Entity target)
+    {
+        // Basic damage calculation - can be made more complex later
+        int baseDamage = attacker.Attributes.Strength;
+        return Mathf.Max(1, baseDamage); // Minimum 1 damage
     }
 
     private Player LoadPlayer(Player player)
