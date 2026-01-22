@@ -22,6 +22,8 @@ namespace PocketSquire.Arena.Core
         /// <param name="player1"></param>
         /// <param name="player2"></param>
         public Battle(Entity player1, Entity player2){
+            if (player1 == null) throw new ArgumentNullException(nameof(player1));
+            if (player2 == null) throw new ArgumentNullException(nameof(player2));
             this.player1 = player1;
             this.player2 = player2;
             Console.WriteLine("Creating new battle");

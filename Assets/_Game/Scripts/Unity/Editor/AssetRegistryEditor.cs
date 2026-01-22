@@ -10,14 +10,17 @@ public class AssetRegistryEditor : Editor {
         GameAssetRegistry registry = (GameAssetRegistry)target;
 
         if (GUILayout.Button("Sync Folders (Auto-Fill IDs)")) {
+            registry.sprites.Clear();
+            registry.sounds.Clear();
             SyncAssets<Sprite>(registry.sprites, "Assets/_Game/Art/Monsters");
+            SyncAssets<Sprite>(registry.sprites, "Assets/_Game/Art/Player");
             SyncAssets<AudioClip>(registry.sounds, "Assets/_Game/Audio/Monsters");
+            SyncAssets<AudioClip>(registry.sounds, "Assets/_Game/Audio/Player");
             EditorUtility.SetDirty(registry);
         }
     }
 
     void SyncAssets<T>(dynamic list, string path) where T : Object {
-        list.Clear();
         string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { path });
         foreach (string guid in guids) {
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);

@@ -20,7 +20,7 @@ public class MonsterDataValidator : EditorWindow
         }
 
         // 2. Load the JSON
-        string jsonPath = Path.Combine(Application.streamingAssetsPath, "monsters.json");
+        string jsonPath = Path.Combine(Application.streamingAssetsPath, "entities.json");
         if (!File.Exists(jsonPath))
         {
             Debug.LogError($"Validator: JSON file not found at {jsonPath}");

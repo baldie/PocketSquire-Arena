@@ -6,6 +6,11 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Entity
     {
+        public enum GameContext
+        {
+            Battle,
+            Town
+        }
         public string Name = string.Empty;
         public int Health;
         public int MaxHealth;

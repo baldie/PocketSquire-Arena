@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-public class ConsoleRedirector : TextWriter
+public class ConsoleLogRedirector : TextWriter
 {
     public override Encoding Encoding => Encoding.UTF8;
 
@@ -17,6 +17,6 @@ public class ConsoleRedirector : TextWriter
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Initialize()
     {
-        Console.SetOut(new ConsoleRedirector());
+        Console.SetOut(new ConsoleLogRedirector());
     }
 }

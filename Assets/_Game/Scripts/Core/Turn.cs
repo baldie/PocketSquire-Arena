@@ -16,6 +16,9 @@ namespace PocketSquire.Arena.Core
 
         public Turn(Entity actor, Entity target, Action changeTurns)
         {
+            if (actor == null) throw new ArgumentNullException(nameof(actor));
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (changeTurns == null) throw new ArgumentNullException(nameof(changeTurns));
             this.actor = actor;
             this.target = target;
             this.changeTurns = changeTurns;

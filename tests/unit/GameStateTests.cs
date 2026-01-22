@@ -83,7 +83,7 @@ public class GameStateTests
             CharacterCreationDate = creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             LastSaveDate = lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             PlayTimeTicks = playTime.Ticks,
-            Player = new Player("Test Player", 20, 20, new Attributes())
+            Player = new Player("Test Player", 20, 20, new Attributes(), Player.Gender.Male)
         };
 
         // Act

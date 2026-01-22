@@ -24,7 +24,7 @@ namespace PocketSquire.Arena.Core
             CharacterCreationDate = DateTime.Now;
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
-            Player = Player.GetDefaultPlayer();
+            Player = GameWorld.GetPlayerByName("player_m_l1");
         }
 
         public static SaveData GetSaveData()

@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Tests
                 root = parent.FullName;
             }
 
-            string path = Path.Combine(root, "Assets/_Game/Data/monsters.json");
+            string path = Path.Combine(root, "Assets/_Game/Data/entities.json");
             Assert.That(File.Exists(path), Is.True, $"Monster file not found at local resolved path: {path} (Started at {current})");
 
             // Act

@@ -1,0 +1,25 @@
+[
+    {
+        "name": "player_m_l1",
+        "health": 10,
+        "maxHealth": 10,
+        "spriteId": "player_m_l1_battle",
+        "attackSoundId": "m_physical_attack",
+        "blockSoundId": "m_block",
+        "hitSoundId": "m_hit",
+        "gender": "male",
+        "attributes": {
+            "Strength": 1,
+            "Constitution": 1,
+            "Intelligence": 1,
+            "Wisdom": 1,
+            "Luck": 1
+        },
+        "posX": 0,
+        "posY": -150,
+        "width": 345,
+        "height": 617,
+        "scaleX": 0.8,
+        "scaleY": 0.75
+    }
+]
