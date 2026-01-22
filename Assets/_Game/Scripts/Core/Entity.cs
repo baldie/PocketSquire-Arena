@@ -21,6 +21,8 @@ namespace PocketSquire.Arena.Core
         public float Height;
         public float ScaleX = 1f;
         public float ScaleY = 1f;
+
+        public bool IsBlocking { get; set; }
         public event Action? onDeath;
 
         public Entity() 
@@ -51,6 +53,10 @@ namespace PocketSquire.Arena.Core
 
         public void TakeDamage(int amount)
         {
+            if (IsBlocking)
+            {
+                amount = (int)Math.Ceiling(amount * 0.5f); // 50% damage reduction, rounded up
+            }
             Health -= amount;
             if (Health < 0) Health = 0;
             if (Health == 0) onDeath?.Invoke();

@@ -74,5 +74,32 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(wasCalled, Is.True);
         }
+    [Test]
+        public void TakeDamage_ReducesDamageWhenBlocking()
+        {
+            // Arrange
+            var entity = new Entity("Test", 100, 100, new Attributes());
+            entity.IsBlocking = true;
+
+            // Act
+            entity.TakeDamage(10);
+
+            // Assert
+            Assert.That(entity.Health, Is.EqualTo(95), "Damage should be reduced by 50%");
+        }
+
+        [Test]
+        public void TakeDamage_RoundingWhenBlocking_RoundsUp()
+        {
+            // Arrange
+            var entity = new Entity("Test", 100, 100, new Attributes());
+            entity.IsBlocking = true;
+
+            // Act - 5 / 2 = 2.5 -> Ceil(2.5) should be 3 damage taken
+            entity.TakeDamage(5);
+
+            // Assert
+            Assert.That(entity.Health, Is.EqualTo(97), "Blocking damage of 5 should result in 3 damage taken (2.5 rounded up)");
+        }
     }
 }

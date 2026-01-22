@@ -2,15 +2,15 @@ using System;
 namespace PocketSquire.Arena.Core
 {
     public class Turn{
-        private Entity actor;
-        private Entity target;
+        public Entity Actor { get; private set; }
+        public Entity Target { get; private set; }
         private Action changeTurns;
 
         public bool IsPlayerTurn
         {
             get
             {
-                return actor is Player;
+                return Actor is Player;
             }
         }
 
@@ -19,8 +19,8 @@ namespace PocketSquire.Arena.Core
             if (actor == null) throw new ArgumentNullException(nameof(actor));
             if (target == null) throw new ArgumentNullException(nameof(target));
             if (changeTurns == null) throw new ArgumentNullException(nameof(changeTurns));
-            this.actor = actor;
-            this.target = target;
+            this.Actor = actor;
+            this.Target = target;
             this.changeTurns = changeTurns;
         }
 
@@ -41,7 +41,7 @@ namespace PocketSquire.Arena.Core
             }
 
             // TODO: Implement monster turn
-            Console.WriteLine(actor.Name + " attacks " + target.Name);
+            Console.WriteLine(Actor.Name + " attacks " + Target.Name);
 
             if (this.changeTurns != null)
             {

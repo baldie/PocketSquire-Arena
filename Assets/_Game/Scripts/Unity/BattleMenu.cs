@@ -79,13 +79,13 @@ namespace PocketSquire.Unity
             
             if (actionQueueProcessor != null && GameWorld.Battle != null)
             {
-                var player = GameState.Player;
-                var monster = GameWorld.GetMonsterByName("Training Dummy"); // TODO: Get current battle target
+                var actor = GameWorld.Battle.CurrentTurn.Actor;
+                var target = GameWorld.Battle.CurrentTurn.Target;
                 
-                if (player != null && monster != null)
+                if (actor != null && target != null)
                 {
-                    int damage = CalculateDamage(player, monster);
-                    var attackAction = new AttackAction(player, monster, damage);
+                    int damage = CalculateDamage(actor, target);
+                    var attackAction = new AttackAction(actor, target, damage);
                     actionQueueProcessor.EnqueueAction(attackAction);
                 }
             }
@@ -106,7 +106,22 @@ namespace PocketSquire.Unity
         public void Defend()
         {
             Debug.Log("Defend");
-            GameWorld.Battle.CurrentTurn.End();
+
+            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            {
+                var player = GameState.Player;
+                
+                if (player != null)
+                {
+                    var blockAction = new BlockAction(player);
+                    actionQueueProcessor.EnqueueAction(blockAction);
+                }
+            }
+            else
+            {
+                // Fallback
+                GameWorld.Battle?.CurrentTurn?.End();
+            }
         }
 
         public void Item()

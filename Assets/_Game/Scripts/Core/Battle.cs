@@ -9,12 +9,12 @@ namespace PocketSquire.Arena.Core
         public bool IsOver {
             get
             {
-                return player1.IsDead || player2.IsDead;
+                return Player1.IsDead || Player2.IsDead;
             }
         }
 
-        private Entity player1;
-        private Entity player2;
+        public Entity Player1 { get; private set; }
+        public Entity Player2 { get; private set; }
 
         /// <summary>
         /// Creates a new battle. Player1 goes first. If both entities are monsters they fight each other
@@ -24,8 +24,8 @@ namespace PocketSquire.Arena.Core
         public Battle(Entity player1, Entity player2){
             if (player1 == null) throw new ArgumentNullException(nameof(player1));
             if (player2 == null) throw new ArgumentNullException(nameof(player2));
-            this.player1 = player1;
-            this.player2 = player2;
+            this.Player1 = player1;
+            this.Player2 = player2;
             Console.WriteLine("Creating new battle");
             CurrentTurn = new Turn(player1, player2, changeTurns);
         }
@@ -34,11 +34,13 @@ namespace PocketSquire.Arena.Core
         {
             if (CurrentTurn.IsPlayerTurn)
             {
-                CurrentTurn = new Turn(player2, player1, changeTurns);
+                Player2.IsBlocking = false; // Reset block for the new actor
+                CurrentTurn = new Turn(Player2, Player1, changeTurns);
             }
             else
             {
-                CurrentTurn = new Turn(player1, player2, changeTurns);
+                Player1.IsBlocking = false; // Reset block for the new actor
+                CurrentTurn = new Turn(Player1, Player2, changeTurns);
             }
         }
     }

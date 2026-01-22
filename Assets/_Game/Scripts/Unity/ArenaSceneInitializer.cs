@@ -39,8 +39,21 @@ public class ArenaSceneInitializer : MonoBehaviour
     
     private void HandleActionComplete(IGameAction action)
     {
-        // After an action completes, end the current turn
-        if (GameWorld.Battle?.CurrentTurn != null)
+        if (GameWorld.Battle == null) return;
+
+        // Check for battle end
+        if (GameWorld.Battle.IsOver)
+        {
+            var winner = GameWorld.Battle.Player1.IsDead ? GameWorld.Battle.Player2 : GameWorld.Battle.Player1;
+            Debug.Log($"Battle Over! Winner: {winner.Name}");
+            // Use IsPlayerTurn based on who won? Or just stop.
+            // If the player died, game over screen.
+            // If monster died, victory screen.
+            return;
+        }
+
+        // After an action completes, if battle continues, end the current turn
+        if (GameWorld.Battle.CurrentTurn != null)
         {
             GameWorld.Battle.CurrentTurn.End();
         }
@@ -103,16 +116,12 @@ public class ArenaSceneInitializer : MonoBehaviour
     
     private Entity GetCurrentActor()
     {
-        // The monster is player2 in the battle when it's the monster's turn
-        return GameWorld.Battle?.CurrentTurn?.IsPlayerTurn == false ? 
-            GameWorld.GetMonsterByName("Training Dummy") : null;
+        return GameWorld.Battle?.CurrentTurn?.Actor;
     }
     
     private Entity GetCurrentTarget()
     {
-        // The player is the target when it's the monster's turn
-        return GameWorld.Battle?.CurrentTurn?.IsPlayerTurn == false ? 
-            GameState.Player : null;
+        return GameWorld.Battle?.CurrentTurn?.Target;
     }
     
     private int CalculateDamage(Entity attacker, Entity target)
