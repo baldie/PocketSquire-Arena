@@ -9,7 +9,6 @@ namespace PocketSquire.Arena.Core
         Attack,
         Block,
         UseItem,
-        Flee,
-        Skill
+        Yield
     }
 }

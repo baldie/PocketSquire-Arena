@@ -61,5 +61,10 @@ namespace PocketSquire.Arena.Core
             if (Health < 0) Health = 0;
             if (Health == 0) onDeath?.Invoke();
         }
+
+        public virtual string GetActionSoundId(ActionType actionType) => string.Empty;
+        public virtual string GetActionAnimationId(ActionType actionType) => string.Empty;
+        public virtual string GetHitSoundId() => string.Empty;
+        public virtual string GetHitAnimationId() => string.Empty;
     }
 }

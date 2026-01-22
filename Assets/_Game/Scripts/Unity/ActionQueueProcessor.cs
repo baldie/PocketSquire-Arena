@@ -18,6 +18,10 @@ public class ActionQueueProcessor : MonoBehaviour
     [Tooltip("AudioSource to play sound effects")]
     public AudioSource audioSource;
 
+    [Header("Scene Object Lookups")]
+    public string playerObjectName = "PlayerSprite";
+    public string monsterObjectName = "MonsterSprite";
+
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
     private Dictionary<ActionType, ActionVisuals> visualsMap;
@@ -81,41 +85,78 @@ public class ActionQueueProcessor : MonoBehaviour
     {
         Debug.Log($"Processing action: {action.Type} by {action.Actor.Name} -> {action.Target.Name}");
 
-        // Look up visuals for this action type
+        // Look up visuals for timing context
         ActionVisuals visuals = null;
         visualsMap.TryGetValue(action.Type, out visuals);
-
         float duration = visuals?.duration ?? 0.5f;
 
-        // Play sound effect if available
-        if (visuals?.soundEffect != null && audioSource != null)
+        // 1. Trigger Actor Effects
+        PlayActionEffects(action.Actor, action.Type, visuals);
+
+        // 2. Wait for mid-point (impact)
+        yield return new WaitForSeconds(duration * 0.5f);
+
+        // 3. Trigger Target Hit Effects (if it was an attack)
+        if (action.Type == ActionType.Attack && action.Target != null)
         {
-            audioSource.PlayOneShot(visuals.soundEffect);
-        }
-        else if (assetRegistry != null && action.Actor != null)
-        {
-            // Fallback: Try to get sound from registry using actor's attack sound ID
-            var clip = assetRegistry.GetSound(action.Actor.AttackSoundId);
-            if (clip != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(clip);
-            }
+            PlayHitEffects(action.Target);
         }
 
-        // TODO: Play actor animation (if visuals.actorAnimation is set)
-        // TODO: Play target animation (if visuals.targetAnimation is set)
+        // 4. Wait for remainder of animation
+        yield return new WaitForSeconds(duration * 0.5f);
 
-        // Wait for the visual duration
-        yield return new WaitForSeconds(duration);
-
-        // Apply the actual game-state effect
+        // 5. Apply Effect and Cleanup
         action.ApplyEffect();
-        
-        Debug.Log($"Action complete: {action.Type} finished. {action.Target.Name} now has {action.Target.Health} HP.");
+        Debug.Log($"Action complete: {action.Type} finished. {action.Target?.Name} now has {action.Target?.Health} HP.");
 
-        // Fire completion event
         OnActionComplete?.Invoke(action);
-
         currentActionCoroutine = null;
+    }
+
+    private void PlayActionEffects(Entity actor, ActionType type, ActionVisuals visuals)
+    {
+        if (actor == null) return;
+
+        // Sound
+        string soundId = actor.GetActionSoundId(type);
+        AudioClip clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
+        if (clip == null) clip = visuals?.soundEffect;
+        
+        if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
+
+        // Animation
+        TriggerAnimation(actor, actor.GetActionAnimationId(type));
+    }
+
+    private void PlayHitEffects(Entity target)
+    {
+        if (target == null) return;
+
+        // Sound
+        string hitSoundId = target.GetHitSoundId();
+        AudioClip clip = !string.IsNullOrEmpty(hitSoundId) ? assetRegistry?.GetSound(hitSoundId) : null;
+        if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
+
+        // Animation
+        TriggerAnimation(target, target.GetHitAnimationId());
+    }
+
+    private void TriggerAnimation(Entity entity, string animationTrigger)
+    {
+        if (entity == null || string.IsNullOrEmpty(animationTrigger)) return;
+
+        GameObject go = FindGameObjectForEntity(entity);
+        if (go != null)
+        {
+            var animator = go.GetComponent<Animator>();
+            if (animator != null) animator.SetTrigger(animationTrigger);
+        }
+    }
+
+    private GameObject FindGameObjectForEntity(Entity entity)
+    {
+        if (entity is Player) return GameObject.Find(playerObjectName);
+        if (entity is Monster) return GameObject.Find(monsterObjectName);
+        return null;
     }
 }

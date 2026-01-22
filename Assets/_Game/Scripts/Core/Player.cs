@@ -58,5 +58,32 @@ namespace PocketSquire.Arena.Core
             };
             return sprite;
         }
+
+        public override string GetActionSoundId(ActionType actionType)
+        {
+            return actionType switch
+            {
+                ActionType.Attack => "player_attack",
+                ActionType.Block => "player_block",
+                ActionType.UseItem => "player_item",
+                ActionType.Yield => string.Empty,
+                _ => string.Empty
+            };
+        }
+
+        public override string GetActionAnimationId(ActionType actionType)
+        {
+            return actionType switch
+            {
+                ActionType.Attack => "Attack",
+                ActionType.Block => "Block",
+                ActionType.UseItem => "Item",
+                ActionType.Yield => "Yield",
+                _ => "Idle"
+            };
+        }
+
+        public override string GetHitSoundId() => "player_hit";
+        public override string GetHitAnimationId() => "Hit";
     }
 }
