@@ -16,6 +16,10 @@ public class GameStateTests
         GameState.LastSaveDate = null;
         GameState.PlayTime = null;
         GameState.Player = null;
+
+        // Ensure GameWorld has the expected player for CreateNewGame
+        GameWorld.Players.Clear();
+        GameWorld.Players.Add(new Player("player_m_l1", 10, 10, new Attributes(), Player.Gender.Male));
     }
 
     [Test]
@@ -38,7 +42,7 @@ public class GameStateTests
         Assert.That((DateTime.Now - GameState.LastSaveDate!.Value).TotalSeconds, Is.LessThan(5));
         
         Assert.That(GameState.Player, Is.Not.Null);
-        Assert.That(GameState.Player!.Name, Is.EqualTo("Squire"));
+        Assert.That(GameState.Player!.Name, Is.EqualTo("player_m_l1"));
     }
 
     [Test]
@@ -66,7 +70,7 @@ public class GameStateTests
         Assert.That(saveData.LastSaveDate, Is.EqualTo(lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         Assert.That(saveData.PlayTimeTicks, Is.EqualTo(playTime.Ticks));
         Assert.That(saveData.Player, Is.Not.Null);
-        Assert.That(saveData.Player!.Name, Is.EqualTo("Squire"));
+        Assert.That(saveData.Player!.Name, Is.EqualTo("player_m_l1"));
     }
 
     [Test]

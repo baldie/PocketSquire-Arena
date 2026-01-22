@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Tests
                 root = parent.FullName;
             }
 
-            string path = Path.Combine(root, "Assets/_Game/Data/entities.json");
+            string path = Path.Combine(root, "Assets/_Game/Data/monsters.json");
             Assert.That(File.Exists(path), Is.True, $"Monster file not found at local resolved path: {path} (Started at {current})");
 
             // Act
@@ -40,6 +40,29 @@ namespace PocketSquire.Arena.Tests
             Assert.That(dummy!.Height, Is.EqualTo(2240));
             Assert.That(dummy!.ScaleX, Is.EqualTo(0.4f).Within(0.001f));
             Assert.That(dummy!.ScaleY, Is.EqualTo(0.35f).Within(0.001f));
+        }
+        [Test]
+        public void Load_ShouldLoadPlayersFromFile()
+        {
+            // Find project root
+            string root = "";
+            string current = Environment.CurrentDirectory;
+            while (!Directory.Exists(Path.Combine(current, "Assets")) && Directory.GetParent(current) != null)
+            {
+                current = Directory.GetParent(current)!.FullName;
+            }
+            root = current;
+
+            // Act
+            GameWorld.Load(root);
+
+            // Assert
+            Assert.That(GameWorld.Players.Count, Is.GreaterThan(0), "Players list should not be empty");
+            
+            var player = GameWorld.GetPlayerByName("player_m_l1");
+            Assert.That(player, Is.Not.Null);
+            Assert.That(player!.Health, Is.EqualTo(10));
+            Assert.That(player!.Attributes.Strength, Is.EqualTo(1));
         }
     }
 }

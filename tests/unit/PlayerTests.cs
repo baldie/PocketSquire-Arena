@@ -7,10 +7,18 @@ namespace PocketSquire.Arena.Tests
     public class PlayerTests
     {
         [Test]
-        public void GetDefaultPlayer_ReturnsPlayerWithCorrectStats()
+        public void Player_Initialization_SetsStatsCorrectly()
         {
+            // Arrange
+            var attributes = new Attributes();
+            attributes.Strength = 1;
+            attributes.Constitution = 1;
+            attributes.Intelligence = 1;
+            attributes.Wisdom = 1;
+            attributes.Luck = 1;
+
             // Act
-            var player = Player.GetDefaultPlayer();
+            var player = new Player("Squire", 10, 10, attributes, Player.Gender.Male);
 
             // Assert
             Assert.That(player.Name, Is.EqualTo("Squire"));
@@ -28,7 +36,7 @@ namespace PocketSquire.Arena.Tests
         public void GainExperience_IncreasesExperience()
         {
             // Arrange
-            var player = Player.GetDefaultPlayer();
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Gender.Male);
             
             // Act
             player.GainExperience(50);
@@ -41,7 +49,7 @@ namespace PocketSquire.Arena.Tests
         public void GainGold_IncreasesGold()
         {
             // Arrange
-            var player = Player.GetDefaultPlayer();
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Gender.Male);
             
             // Act
             player.GainGold(100);
