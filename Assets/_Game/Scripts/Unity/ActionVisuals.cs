@@ -13,11 +13,11 @@ public class ActionVisuals : ScriptableObject
     public ActionType actionType;
     
     [Header("Animations")]
-    [Tooltip("Animation to play on the actor (attacker)")]
-    public AnimationClip actorAnimation;
+    [Tooltip("The trigger name to call on the actor's Animator")]
+    public string actorAnimationTrigger;
     
-    [Tooltip("Animation to play on the target (e.g., hurt animation)")]
-    public AnimationClip targetAnimation;
+    [Tooltip("The trigger name to call on the target's Animator (e.g., 'Hit')")]
+    public string targetAnimationTrigger;
     
     [Header("Audio")]
     [Tooltip("Sound effect to play when the action executes")]

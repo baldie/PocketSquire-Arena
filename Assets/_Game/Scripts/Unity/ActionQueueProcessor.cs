@@ -99,7 +99,7 @@ public class ActionQueueProcessor : MonoBehaviour
         // 3. Trigger Target Hit Effects (if it was an attack)
         if (action.Type == ActionType.Attack && action.Target != null)
         {
-            PlayHitEffects(action.Target);
+            PlayHitEffects(action.Target, visuals);
         }
 
         // 4. Wait for remainder of animation
@@ -125,10 +125,12 @@ public class ActionQueueProcessor : MonoBehaviour
         if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
 
         // Animation
-        TriggerAnimation(actor, actor.GetActionAnimationId(type));
+        string trigger = actor.GetActionAnimationId(type);
+        if (string.IsNullOrEmpty(trigger)) trigger = visuals?.actorAnimationTrigger;
+        TriggerAnimation(actor, trigger);
     }
 
-    private void PlayHitEffects(Entity target)
+    private void PlayHitEffects(Entity target, ActionVisuals visuals)
     {
         if (target == null) return;
 
@@ -138,7 +140,9 @@ public class ActionQueueProcessor : MonoBehaviour
         if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
 
         // Animation
-        TriggerAnimation(target, target.GetHitAnimationId());
+        string hitTrigger = target.GetHitAnimationId();
+        if (string.IsNullOrEmpty(hitTrigger)) hitTrigger = visuals?.targetAnimationTrigger;
+        TriggerAnimation(target, hitTrigger);
     }
 
     private void TriggerAnimation(Entity entity, string animationTrigger)
