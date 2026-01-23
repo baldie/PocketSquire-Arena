@@ -37,7 +37,7 @@ namespace PocketSquire.Arena.Core
         public override IGameAction DetermineAction(Entity target)
         {
             // Basic AI: Always attack
-            return new AttackAction(this, target, 1);
+            return new AttackAction(this, target, 1, () => { });
         }
 
         public override string GetHitSoundId() => HitSoundId;

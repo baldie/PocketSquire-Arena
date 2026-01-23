@@ -10,23 +10,26 @@ namespace PocketSquire.Arena.Core
         public ActionType Type => ActionType.Attack;
         public Entity Actor { get; }
         public Entity Target { get; }
+        private Action onComplete;
         
         /// <summary>
         /// The amount of damage this attack will deal.
         /// </summary>
         public int Damage { get; }
 
-        public AttackAction(Entity actor, Entity target, int damage)
+        public AttackAction(Entity actor, Entity target, int damage, Action onComplete)
         {
             Actor = actor ?? throw new ArgumentNullException(nameof(actor));
             Target = target ?? throw new ArgumentNullException(nameof(target));
             Damage = damage;
+            this.onComplete = onComplete;
         }
 
         public void ApplyEffect()
         {
             Target.TakeDamage(Damage);
             Console.WriteLine($"{Actor.Name} attacks {Target.Name} for {Damage} damage!");
+            this.onComplete?.Invoke();
         }
     }
 }

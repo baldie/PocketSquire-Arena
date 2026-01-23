@@ -11,6 +11,8 @@ namespace PocketSquire.Unity
         [Header("UI References")]
         public GameObject battleMenuUI;
         public Button firstSelectedButton;
+        public Image playerHealthBar;
+        public Image enemyHealthBar;
         
         [Header("Action Queue")]
         [Tooltip("Reference to the ActionQueueProcessor in the scene")]
@@ -89,8 +91,12 @@ namespace PocketSquire.Unity
                 if (actor != null && target != null)
                 {
                     int damage = CalculateDamage(actor, target);
-                    var attackAction = new AttackAction(actor, target, damage);
-                    actionQueueProcessor.EnqueueAction(attackAction);
+                    var healthbar = target is Player ? playerHealthBar : enemyHealthBar;
+                    var attackAction = new AttackAction(actor, target, damage, () => {
+                        healthbar.fillAmount = (float)target.Health / target.MaxHealth;
+                    });
+                    actionQueueProcessor.EnqueueAction(attackAction);               
+                    Debug.Log("Health: " + target.Health + " / " + target.MaxHealth + " = " + healthbar.fillAmount);
                 }
             }
             else
