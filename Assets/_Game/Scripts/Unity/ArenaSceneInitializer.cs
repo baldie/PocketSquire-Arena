@@ -92,7 +92,8 @@ public class ArenaSceneInitializer : MonoBehaviour
         var loadedSprite = registry.GetSprite(player.GetSpriteId(Entity.GameContext.Battle));
         if (loadedSprite != null)
         {
-            playerImage.overrideSprite = loadedSprite; 
+            playerImage.sprite = loadedSprite;
+            playerImage.material = new Material(playerImage.material); // create a copy so its not shared
         }
         else
         {
@@ -140,7 +141,8 @@ public class ArenaSceneInitializer : MonoBehaviour
         var loadedSprite = registry.GetSprite(monster.SpriteId);
         if (loadedSprite != null)
         {
-            monsterImage.overrideSprite = loadedSprite; 
+            monsterImage.sprite = loadedSprite; 
+            monsterImage.material = new Material(monsterImage.material); // create a copy so its not shared
         }
         else
         {

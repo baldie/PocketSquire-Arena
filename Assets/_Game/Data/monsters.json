@@ -4,6 +4,7 @@
         "health": 50,
         "maxHealth": 50,
         "spriteId": "TrainingDummy",
+        "hitSpriteId": "TrainingDummyHit",
         "attackSoundId": "TrainingDummyAttack",
         "blockSoundId": "TrainingDummyBlock",
         "hitSoundId": "TrainingDummyHit",

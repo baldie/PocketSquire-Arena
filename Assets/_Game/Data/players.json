@@ -4,6 +4,7 @@
         "health": 10,
         "maxHealth": 10,
         "spriteId": "player_m_l1_battle",
+        "hitSpriteId": "player_m_l1_battle_hit",
         "attackSoundId": "m_physical_attack",
         "blockSoundId": "m_block",
         "hitSoundId": "m_hit",

@@ -156,9 +156,31 @@ public class ActionQueueProcessor : MonoBehaviour
             var animator = go.GetComponent<Animator>();
             if (animator != null) animator.SetTrigger(animationTrigger);
             
-            if (animationTrigger == "Hit") {
+            if (animationTrigger == "Hit")
+            {
+                // 1. Shake
                 var rectTransform = go.GetComponent<RectTransform>();
                 rectTransform.DOShakeAnchorPos(0.4f, 15f, 20, 90f);
+
+                // 2. Flash using the Shader property
+                var imgComponent = go.GetComponent<UnityEngine.UI.Image>();
+                if (imgComponent != null && imgComponent.material != null)
+                {
+                    var hitSprite = assetRegistry.GetSprite(entity.HitSpriteId);
+                    var idleSprite = imgComponent.sprite;
+
+                    // Kill previous flash if it's still running
+                    DOTween.Kill(imgComponent.material);
+                    DOTween.Sequence()
+                        .AppendCallback(() => imgComponent.sprite = hitSprite) // Swap sprite
+                        .Append(imgComponent.material.DOFloat(1f, "_FlashAmount", 0))   // Flash white
+                        .AppendInterval(0.08f)                                // Hold
+                        .Append(imgComponent.material.DOFloat(0f, "_FlashAmount", 0))   // Flash back
+                        .OnComplete(() => {
+                            imgComponent.sprite = idleSprite;
+                        })
+                        .SetTarget(imgComponent.material);
+                }
             }
         }
     }
