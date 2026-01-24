@@ -6,8 +6,13 @@ public class ArenaSceneInitializer : MonoBehaviour
 {
     public GameAssetRegistry registry;
     
+    [Header("Action Queue")]
     [Tooltip("Reference to the ActionQueueProcessor in the scene")]
     public ActionQueueProcessor actionQueueProcessor;
+
+    [Header("Battle")]
+    [Tooltip("Reference to the BattleManager in the scene")]
+    public PocketSquire.Unity.BattleManager battleManager;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -63,8 +68,19 @@ public class ArenaSceneInitializer : MonoBehaviour
                 
                 if (monster != null && target != null)
                 {
-                    var action = monster.DetermineAction(target);
-                    actionQueueProcessor.EnqueueAction(action);
+                    switch(monster.DetermineAction(target)) {
+                        case ActionType.Attack:
+                            battleManager.Attack();
+                            break;
+                        case ActionType.Block:
+                            battleManager.Block();
+                            break;
+                        case ActionType.Yield:
+                            battleManager.Yield();
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
                 {

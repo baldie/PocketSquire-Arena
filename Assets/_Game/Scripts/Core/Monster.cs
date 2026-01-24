@@ -34,10 +34,10 @@ namespace PocketSquire.Arena.Core
             };
         }
 
-        public override IGameAction DetermineAction(Entity target)
+        public override ActionType DetermineAction(Entity target)
         {
-            // Basic AI: Always attack
-            return new AttackAction(this, target, 1, () => { });
+            // Basic AI: Always attack for now
+            return ActionType.Attack;
         }
 
         public override string GetHitSoundId() => HitSoundId;

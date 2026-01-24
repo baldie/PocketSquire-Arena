@@ -71,6 +71,6 @@ namespace PocketSquire.Arena.Core
         public virtual string GetActionAnimationId(ActionType actionType) => string.Empty;
         public virtual string GetHitSoundId() => string.Empty;
         public virtual string GetHitAnimationId() => string.Empty;
-        public virtual IGameAction DetermineAction(Entity target) => null;
+        public virtual ActionType DetermineAction(Entity target) => ActionType.Attack;
     }
 }

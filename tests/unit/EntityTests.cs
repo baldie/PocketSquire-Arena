@@ -101,5 +101,32 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(entity.Health, Is.EqualTo(97), "Blocking damage of 5 should result in 3 damage taken (2.5 rounded up)");
         }
+    [Test]
+        public void GetActionSoundId_ReturnsEmptyStringByDefault()
+        {
+            var entity = new Entity();
+            Assert.That(entity.GetActionSoundId(ActionType.Attack), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void GetActionAnimationId_ReturnsEmptyStringByDefault()
+        {
+            var entity = new Entity();
+            Assert.That(entity.GetActionAnimationId(ActionType.Attack), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void GetHitSoundId_ReturnsEmptyStringByDefault()
+        {
+            var entity = new Entity();
+            Assert.That(entity.GetHitSoundId(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void GetHitAnimationId_ReturnsEmptyStringByDefault()
+        {
+            var entity = new Entity();
+            Assert.That(entity.GetHitAnimationId(), Is.EqualTo(string.Empty));
+        }
     }
 }

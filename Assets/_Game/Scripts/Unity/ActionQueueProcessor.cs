@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core;
+using TMPro;
 using DG.Tweening;
 
 /// <summary>
@@ -22,6 +23,8 @@ public class ActionQueueProcessor : MonoBehaviour
     [Header("Scene Object Lookups")]
     public string playerObjectName = "PlayerSprite";
     public string monsterObjectName = "MonsterSprite";
+    public TextMeshProUGUI monsterEffectText;
+    public TextMeshProUGUI playerEffectText;
 
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
@@ -100,7 +103,7 @@ public class ActionQueueProcessor : MonoBehaviour
         // 3. Trigger Target Hit Effects (if it was an attack)
         if (action.Type == ActionType.Attack && action.Target != null)
         {
-            PlayHitEffects(action.Target, visuals);
+            PlayHitEffects(action as AttackAction, visuals);
         }
 
         // 4. Wait for remainder of animation
@@ -131,8 +134,10 @@ public class ActionQueueProcessor : MonoBehaviour
         TriggerAnimation(actor, trigger);
     }
 
-    private void PlayHitEffects(Entity target, ActionVisuals visuals)
+    private void PlayHitEffects(AttackAction action, ActionVisuals visuals)
     {
+        if (action == null) return;
+        var target = action.Target;
         if (target == null) return;
 
         // Sound
@@ -144,6 +149,10 @@ public class ActionQueueProcessor : MonoBehaviour
         string hitTrigger = target.GetHitAnimationId();
         if (string.IsNullOrEmpty(hitTrigger)) hitTrigger = visuals?.targetAnimationTrigger;
         TriggerAnimation(target, hitTrigger);
+
+        // Show Damage Number
+        var textControl = target is Player ? playerEffectText : monsterEffectText;
+        ShowNumberEffect(textControl, action.Damage, Color.red);
     }
 
     private void TriggerAnimation(Entity entity, string animationTrigger)
@@ -172,10 +181,11 @@ public class ActionQueueProcessor : MonoBehaviour
                     // Kill previous flash if it's still running
                     DOTween.Kill(imgComponent.material);
                     DOTween.Sequence()
-                        .AppendCallback(() => imgComponent.sprite = hitSprite) // Swap sprite
                         .Append(imgComponent.material.DOFloat(1f, "_FlashAmount", 0))   // Flash white
                         .AppendInterval(0.08f)                                // Hold
                         .Append(imgComponent.material.DOFloat(0f, "_FlashAmount", 0))   // Flash back
+                        .AppendCallback(() => imgComponent.sprite = hitSprite) // Swap sprite
+                        .AppendInterval(0.08f)                                // Hold
                         .OnComplete(() => {
                             imgComponent.sprite = idleSprite;
                         })
@@ -183,6 +193,47 @@ public class ActionQueueProcessor : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Use for big hits
+    public void HitStop()
+    {
+        // Temporarily set timeScale to 0.05 (near frozen) then snap back
+        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.05f, 0.01f)
+            .OnComplete(() => {
+                DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 1f, 0.1f)
+                        .SetUpdate(true); // Must be true so it works while time is slow!
+            }).SetUpdate(true);
+    }
+
+    public void ShowNumberEffect(TextMeshProUGUI textControl, int amount, Color textColor)
+    {
+        textControl.text = amount.ToString();
+        textControl.color = textColor;
+
+        // Reset properties before starting (important if reusing the object)
+        textControl.alpha = 0;
+        textControl.transform.localScale = Vector3.zero;
+        Vector3 originalPos = textControl.transform.localPosition;
+
+        // Create a Sequence
+        Sequence effectSequence = DOTween.Sequence();
+
+        // 1 & 2. Become visible and "Pop up"
+        effectSequence.Append(textControl.DOFade(1, 0.1f));
+        effectSequence.Join(textControl.transform.DOScale(4f, 0.2f).SetEase(Ease.OutBack));
+        effectSequence.Join(textControl.transform.DOLocalMoveY(originalPos.y + 150f, 0.3f).SetEase(Ease.OutQuad));
+
+        // 3. Fall back down and bounce twice
+        // We use Ease.OutBounce to handle the "bounce" automatically
+        effectSequence.Append(textControl.transform.DOLocalMoveY(originalPos.y, 0.5f).SetEase(Ease.OutBounce));
+
+        // 4. Fade away
+        effectSequence.AppendInterval(0.5f); // Small pause so the player can read it
+        effectSequence.Append(textControl.DOFade(0, 0.3f));
+        
+        // Optional: Reset scale back to 0 so it's ready for next time
+        effectSequence.OnComplete(() => textControl.transform.localScale = Vector3.zero);
     }
 
     private GameObject FindGameObjectForEntity(Entity entity)
