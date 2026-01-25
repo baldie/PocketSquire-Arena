@@ -1003,9 +1003,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.35534585, g: 0.91992575, b: 1, a: 1}
-    m_PressedColor: {r: 0.9389615, g: 0, b: 1, a: 1}
-    m_SelectedColor: {r: 0.50628924, g: 1, b: 0.5725948, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.695508, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 0.47975373, b: 0, a: 1}
+    m_SelectedColor: {r: 0, g: 1, b: 0.1349206, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1073,11 +1073,11 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
+  m_enableVertexGradient: 0
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.7019608, b: 0.3529412, a: 1}
-    topRight: {r: 1, g: 0.7019608, b: 0.3529412, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 0.5882353, b: 0.1372549, a: 1}
     bottomRight: {r: 1, g: 0.5882353, b: 0.1372549, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
@@ -1519,6 +1519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Unity.PauseMenu
   pauseMenuUI: {fileID: 1124521229}
   firstSelectedButton: {fileID: 712009011}
+  mutuallyExclusiveButtonGroup: {fileID: 0}
 --- !u!4 &775854515
 Transform:
   m_ObjectHideFlags: 0
@@ -1731,11 +1732,11 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
+  m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.7019608, b: 0.3529412, a: 1}
-    topRight: {r: 1, g: 0.7019608, b: 0.3529412, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 0.5882353, b: 0.1372549, a: 1}
     bottomRight: {r: 1, g: 0.5882353, b: 0.1372549, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
@@ -1822,9 +1823,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.35534585, g: 0.91992575, b: 1, a: 1}
-    m_PressedColor: {r: 0.9389615, g: 0, b: 1, a: 1}
-    m_SelectedColor: {r: 0.50628924, g: 1, b: 0.5725948, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.695508, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 0.47975373, b: 0, a: 1}
+    m_SelectedColor: {r: 0, g: 1, b: 0.1349206, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2089,6 +2090,7 @@ GameObject:
   - component: {fileID: 1025004710}
   - component: {fileID: 1025004712}
   - component: {fileID: 1025004711}
+  - component: {fileID: 1025004713}
   m_Layer: 0
   m_Name: Scroll
   m_TagString: Untagged
@@ -2105,15 +2107,15 @@ RectTransform:
   m_GameObject: {fileID: 1025004709}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9, y: 7.5, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1124521230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 1800, y: 1300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1025004711
 MonoBehaviour:
@@ -2136,7 +2138,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 79260daeea57ea14287f1ec19d9898b5, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2153,6 +2155,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025004709}
   m_CullTransparentMesh: 1
+--- !u!114 &1025004713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025004709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.37254903}
+  m_EffectDistance: {x: -80, y: -80}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1124521229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,11 +2835,11 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
+  m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.7019608, b: 0.3529412, a: 1}
-    topRight: {r: 1, g: 0.7019608, b: 0.3529412, a: 1}
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 0.5882353, b: 0.1372549, a: 1}
     bottomRight: {r: 1, g: 0.5882353, b: 0.1372549, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
@@ -2909,9 +2926,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.35534585, g: 0.91992575, b: 1, a: 1}
-    m_PressedColor: {r: 0.9389615, g: 0, b: 1, a: 1}
-    m_SelectedColor: {r: 0.50628924, g: 1, b: 0.5725948, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.695508, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 0.47975373, b: 0, a: 1}
+    m_SelectedColor: {r: 0, g: 1, b: 0.1349206, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

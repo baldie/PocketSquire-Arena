@@ -39,6 +39,6 @@ MonoBehaviour:
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
   - id: m_physical_defend
-    asset: {fileID: 8300000, guid: 72a9379215dc9904d9cda77a953bbdce, type: 3}
+    asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: m_physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
