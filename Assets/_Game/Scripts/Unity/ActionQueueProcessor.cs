@@ -229,7 +229,7 @@ public class ActionQueueProcessor : MonoBehaviour
                 
                 DOTween.Sequence()
                    .AppendCallback(() => imgComponent.sprite = defendSprite)
-                   .AppendInterval(1.5f) // Defend action duration context
+                   .AppendInterval(2.0f) // Defend action duration context
                    .OnComplete(() => {
                        // Only revert if we are done? 
                        // Actually, let's revert to keep it safe from getting stuck.
@@ -272,6 +272,20 @@ public class ActionQueueProcessor : MonoBehaviour
                     monsterGameObject.transform.parent.localScale = Vector3.zero;
                 });
                 deathSeq.SetLink(monsterGameObject);
+
+                // Create a new sequence
+                Sequence winSeq = DOTween.Sequence();
+
+                // 1. Add a 1 second silence/pause
+                winSeq.AppendInterval(1.0f);
+
+                // 2. Slide the background in
+                var winBackground = GameObject.Find("WinBackground");
+                var winBackgroundRect = winBackground.GetComponent<RectTransform>();
+                winSeq.Append(winBackgroundRect.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuad));
+
+                // 3. (Optional) You can add more things here that happen AFTER the slide
+                // winSeq.Append(victoryText.DOFade(1, 0.3f));
             }
             else if (actionType == ActionType.Lose) 
             {
