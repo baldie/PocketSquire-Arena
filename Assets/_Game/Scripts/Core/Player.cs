@@ -37,7 +37,7 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-        public string DefeatSpriteId {
+        public override string DefeatSpriteId {
             get
             {
                 return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_defeat";
@@ -69,6 +69,13 @@ namespace PocketSquire.Arena.Core
             get
             {
                 return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_item";
+            }
+        }
+
+        public override string WinSpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_win";
             }
         }
 
@@ -125,27 +132,5 @@ namespace PocketSquire.Arena.Core
                     return string.Empty;
             };
         }
-
-        public override string GetActionAnimationId(ActionType actionType)
-        {
-            switch(actionType)
-            {
-                case ActionType.Attack:
-                    return this.AttackSpriteId;
-                case ActionType.Defend:
-                    return this.DefendSpriteId;
-                case ActionType.UseItem:
-                    return this.ItemSpriteId;
-                case ActionType.Hit:
-                    return this.HitSpriteId;
-                case ActionType.Defeat:
-                    return this.DefeatSpriteId;
-                case ActionType.Yield:
-                    return this.YieldSpriteId;
-                default:
-                    return string.Empty;
-            };
-        }
-
     }
 }

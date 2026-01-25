@@ -109,19 +109,9 @@ namespace PocketSquire.Arena.Tests
             Assert.That(entity.GetActionSoundId(ActionType.Attack), Is.EqualTo(string.Empty));
         }
 
-        [Test]
-        public void GetActionAnimationId_ReturnsAttackForAttack()
-        {
-            var entity = new Entity();
-            Assert.That(entity.GetActionAnimationId(ActionType.Attack), Is.EqualTo("Attack"));
-        }
 
-        [Test]
-        public void GetActionAnimationId_ReturnsIdleByDefault()
-        {
-             var entity = new Entity();
-             Assert.That(entity.GetActionAnimationId(ActionType.UseItem), Is.EqualTo("Idle"));
-        }
+
+
 
         [Test]
         public void GetHitSoundId_ReturnsEmptyStringByDefault()
@@ -130,11 +120,6 @@ namespace PocketSquire.Arena.Tests
             Assert.That(entity.GetHitSoundId(), Is.EqualTo(string.Empty));
         }
 
-        [Test]
-        public void GetHitAnimationId_ReturnsEmptyStringByDefault()
-        {
-            var entity = new Entity();
-            Assert.That(entity.GetHitAnimationId(), Is.EqualTo("Hit"));
-        }
+
     }
 }

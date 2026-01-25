@@ -196,11 +196,16 @@ public class ArenaSceneInitializer : MonoBehaviour
         // Check for battle end
         if (GameWorld.Battle.IsOver)
         {
-            var winner = GameWorld.Battle.Player1.IsDead ? GameWorld.Battle.Player2 : GameWorld.Battle.Player1;
-            Debug.Log($"Battle Over! Winner: {winner.Name}");
-            // Use IsPlayerTurn based on who won? Or just stop.
-            // If the player died, game over screen.
-            // If monster died, victory screen.
+            if (GameWorld.Battle.Player1.IsDead)
+            {
+                var lose = new LoseAction(GameWorld.Battle.Player1, GameWorld.Battle.Player2);
+                actionQueueProcessor.EnqueueAction(lose);
+            }
+            else if (GameWorld.Battle.Player2.IsDead)
+            {
+                var win = new WinAction(GameWorld.Battle.Player1, GameWorld.Battle.Player2);
+                actionQueueProcessor.EnqueueAction(win);
+            }
             return;
         }
 

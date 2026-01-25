@@ -57,5 +57,18 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(player.Gold, Is.EqualTo(100));
         }
+
+        [Test]
+        public void Player_SpriteIds_ReturnCorrectFormattedStrings()
+        {
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.Experience = 0; // Level 1 is calculated as (Experience+1)/100 rounded up. 0 exp -> Level 1.
+
+            Assert.That(player.AttackSpriteId, Is.EqualTo("player_m_l1_attack"));
+            Assert.That(player.DefendSpriteId, Is.EqualTo("player_m_l1_defend"));
+            Assert.That(player.HitSpriteId, Is.EqualTo("player_m_l1_hit"));
+            Assert.That(player.DefeatSpriteId, Is.EqualTo("player_m_l1_defeat"));
+            Assert.That(player.WinSpriteId, Is.EqualTo("player_m_l1_win"));
+        }
     }
 }

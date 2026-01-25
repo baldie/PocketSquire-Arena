@@ -32,23 +32,9 @@ namespace PocketSquire.Arena.Tests
             Assert.That(monster.GetActionSoundId(ActionType.UseItem), Is.EqualTo(string.Empty));
         }
 
-        [Test]
-        public void GetActionAnimationId_ReturnsStandardAnimationNames()
-        {
-            var monster = new Monster();
-            
-            Assert.That(monster.GetActionAnimationId(ActionType.Attack), Is.EqualTo("Attack"));
-            Assert.That(monster.GetActionAnimationId(ActionType.Defend), Is.EqualTo("Defend"));
-            Assert.That(monster.GetActionAnimationId(ActionType.Yield), Is.EqualTo("Yield"));
-        }
+
         
-        [Test]
-        public void GetActionAnimationId_ReturnsIdleForByDefault()
-        {
-            var monster = new Monster();
-            // UseItem falls through to default "Idle" in Monster implementation
-            Assert.That(monster.GetActionAnimationId(ActionType.UseItem), Is.EqualTo("Idle"));
-        }
+
 
         [Test]
         public void GetHitSoundId_ReturnsConfiguredHitSound()
@@ -58,12 +44,15 @@ namespace PocketSquire.Arena.Tests
 
             Assert.That(monster.GetHitSoundId(), Is.EqualTo("squish"));
         }
-
         [Test]
-        public void GetHitAnimationId_ReturnsHit()
+        public void Monster_SpriteIds_ReturnCorrectFormattedStrings()
         {
-            var monster = new Monster();
-            Assert.That(monster.GetHitAnimationId(), Is.EqualTo("Hit"));
+            var monster = new Monster("Orc Warrior", 10, 10, new Attributes());
+
+            Assert.That(monster.SpriteId, Is.EqualTo("orc_warrior_battle"));
+            Assert.That(monster.AttackSpriteId, Is.EqualTo("orc_warrior_attack"));
+            Assert.That(monster.DefendSpriteId, Is.EqualTo("orc_warrior_defend"));
+            Assert.That(monster.HitSpriteId, Is.EqualTo("orc_warrior_hit"));
         }
     }
 }

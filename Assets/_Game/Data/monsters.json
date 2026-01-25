@@ -1,8 +1,8 @@
 [
     {
         "name": "Training Dummy",
-        "health": 50,
-        "maxHealth": 50,
+        "health": 5,
+        "maxHealth": 5,
         "attackSoundId": "TrainingDummyAttack",
         "defendSoundId": "TrainingDummyDefend",
         "hitSoundId": "TrainingDummyHit",

@@ -31,6 +31,8 @@ namespace PocketSquire.Arena.Core
         public virtual string AttackSpriteId => string.Empty;
         public virtual string DefendSpriteId => string.Empty;
         public virtual string YieldSpriteId => string.Empty;
+        public virtual string WinSpriteId => string.Empty;
+        public virtual string DefeatSpriteId => string.Empty;
 
         public Entity() 
         { 
@@ -80,26 +82,8 @@ namespace PocketSquire.Arena.Core
             };
         }
 
-        public virtual string GetActionAnimationId(ActionType actionType)
-        {
-            switch(actionType)
-            {
-                case ActionType.Attack:
-                    return "Attack";
-                case ActionType.Defend:
-                    return "Defend";
-                case ActionType.Yield:
-                    return "Yield";
-                default:
-                    return "Idle";
-            };
-        }
-        public virtual float GetActionDuration(ActionType actionType)
-        {
-            return actionType == ActionType.Attack ? 1f : 0.5f;
-        }
+
         public virtual string GetHitSoundId() => HitSoundId;
-        public virtual string GetHitAnimationId() => "Hit"; // Default to "Hit" as per previous Monster implementation
         public virtual ActionType DetermineAction(Entity target) => ActionType.Attack;
     }
 }

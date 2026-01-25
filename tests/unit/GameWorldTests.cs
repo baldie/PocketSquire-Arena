@@ -32,7 +32,7 @@ namespace PocketSquire.Arena.Tests
             
             var dummy = GameWorld.GetMonsterByName("Training Dummy");
             Assert.That(dummy, Is.Not.Null);
-            Assert.That(dummy!.MaxHealth, Is.EqualTo(50));
+            Assert.That(dummy!.MaxHealth, Is.EqualTo(5));
             Assert.That(dummy!.Attributes.Constitution, Is.EqualTo(10));
             Assert.That(dummy!.PosX, Is.EqualTo(-330));
             Assert.That(dummy!.PosY, Is.EqualTo(450));

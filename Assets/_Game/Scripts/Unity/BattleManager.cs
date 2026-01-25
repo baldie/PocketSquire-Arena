@@ -86,8 +86,6 @@ namespace PocketSquire.Unity
 
         public void Attack()
         {
-            Debug.Log("Attack");
-            
             if (actionQueueProcessor != null && GameWorld.Battle != null)
             {
                 var actor = GameWorld.Battle.CurrentTurn.Actor;

@@ -22,13 +22,17 @@ MonoBehaviour:
   - id: player_m_l1_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
   - id: player_m_l1_battle
-    asset: {fileID: -1825961191, guid: 34a778e3716944b46bb4bc82bdaab309, type: 3}
+    asset: {fileID: 21300000, guid: ec8a0f64caf7b8f4e9b5d9a8a89f27e3, type: 3}
   - id: player_m_l1_defeat
     asset: {fileID: 21300000, guid: e48a0b78bc47bb743bb2ea0ea0b7cdef, type: 3}
   - id: player_m_l1_defend
     asset: {fileID: 21300000, guid: 795d74c3f17505a408ea718377684e13, type: 3}
   - id: player_m_l1_hit
     asset: {fileID: 21300000, guid: 5eeb6db8622749940a6cbe698e2d9e1f, type: 3}
+  - id: player_m_l1_sprite_map
+    asset: {fileID: -1825961191, guid: 34a778e3716944b46bb4bc82bdaab309, type: 3}
+  - id: player_m_l1_win
+    asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
   sounds:
   - id: TrainingDummyHit
     asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}

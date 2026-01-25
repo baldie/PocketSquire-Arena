@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core;
@@ -73,13 +74,11 @@ public class ActionQueueProcessor : MonoBehaviour
     {
         Debug.Log($"Processing action: {action.Type} by {action.Actor.Name} -> {action.Target.Name}");
 
-        float duration = action.Actor?.GetActionDuration(action.Type) ?? 0.5f;
-
         // 1. Trigger Actor Effects
         PlayActionEffects(action.Actor, action.Type);
 
         // 2. Wait for mid-point (impact)
-        yield return new WaitForSeconds(duration * 0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         // 3. Trigger Target Hit Effects (if it was an attack)
         if (action.Type == ActionType.Attack && action.Target != null)
@@ -95,11 +94,10 @@ public class ActionQueueProcessor : MonoBehaviour
         }
 
         // 4. Wait for remainder of animation
-        yield return new WaitForSeconds(duration * 0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         // 5. Apply Effect and Cleanup
         action.ApplyEffect();
-        Debug.Log($"Action complete: {action.Type} finished. {action.Target?.Name} now has {action.Target?.Health} HP.");
 
         OnActionComplete?.Invoke(action);
         currentActionCoroutine = null;
@@ -161,11 +159,6 @@ public class ActionQueueProcessor : MonoBehaviour
         GameObject go = FindGameObjectForEntity(entity);
         if (go != null)
         {
-            // Trigger Animator (if used for generic states like "Hit" or "Idle")
-            var animator = go.GetComponent<Animator>();
-            string triggerName = actionType.ToString();
-            if (animator != null) animator.SetTrigger(triggerName);
-
             // Sprite Swapping Logic
             var imgComponent = go.GetComponent<UnityEngine.UI.Image>();
             if (imgComponent == null) return;
@@ -243,6 +236,46 @@ public class ActionQueueProcessor : MonoBehaviour
                        imgComponent.sprite = idleSprite;
                    })
                    .SetTarget(imgComponent.material);
+            }
+            else if (actionType == ActionType.UseItem) 
+            {
+                // TODO: Show item menu
+            }
+            else if (actionType == ActionType.Yield) 
+            {
+                // TODO: end battle early
+            }
+            else if (actionType == ActionType.Win) 
+            {
+                var monsterGameObject = FindGameObjectForEntity(GameWorld.Battle.Player2);
+                if (monsterGameObject == null){
+                    Debug.LogWarning("Monster GameObject not found for Player2");
+                    return;
+                }
+                var monsterImage = monsterGameObject.GetComponent<Image>();
+                if (monsterImage == null){
+                    Debug.LogWarning("Monster Image not found on monster game object");
+                    return;
+                }
+
+                // Create a sequence to group tweens
+                Sequence deathSeq = DOTween.Sequence();
+                RectTransform monsterRect = monsterImage.rectTransform;
+                deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.InQuint));
+                deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
+
+                deathSeq.OnComplete(() => {
+                    // Show win pose
+                    imgComponent.sprite = assetRegistry.GetSprite(GameWorld.Battle.Player1.WinSpriteId);
+
+                    // hide all monster objects
+                    monsterGameObject.transform.parent.localScale = Vector3.zero;
+                });
+                deathSeq.SetLink(monsterGameObject);
+            }
+            else if (actionType == ActionType.Lose) 
+            {
+                imgComponent.sprite = assetRegistry.GetSprite(GameWorld.Battle.Player1.DefeatSpriteId);
             }
         }
     }

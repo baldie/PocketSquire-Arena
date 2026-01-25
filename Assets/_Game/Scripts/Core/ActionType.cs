@@ -11,6 +11,8 @@ namespace PocketSquire.Arena.Core
         UseItem,
         Hit,
         Defeat,
-        Yield
+        Yield,
+        Win,
+        Lose
     }
 }
