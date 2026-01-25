@@ -3,12 +3,10 @@
         "name": "player_m_l1",
         "health": 10,
         "maxHealth": 10,
-        "spriteId": "player_m_l1_battle",
-        "hitSpriteId": "player_m_l1_battle_hit",
         "attackSoundId": "m_physical_attack",
-        "blockSoundId": "m_block",
-        "hitSoundId": "m_hit",
-        "gender": "male",
+        "defendSoundId": "m_physical_defend",
+        "hitSoundId": "m_physical_hit",
+        "gender": "m",
         "attributes": {
             "Strength": 1,
             "Constitution": 1,
@@ -16,11 +14,11 @@
             "Wisdom": 1,
             "Luck": 1
         },
-        "posX": 0,
+        "posX": 35,
         "posY": -150,
-        "width": 345,
-        "height": 617,
-        "scaleX": 0.8,
-        "scaleY": 0.75
+        "width": 512,
+        "height": 700,
+        "scaleX": 0.65,
+        "scaleY": 0.65
     }
 ]

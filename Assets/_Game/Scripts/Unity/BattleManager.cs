@@ -160,8 +160,8 @@ namespace PocketSquire.Unity
                 
                 if (player != null)
                 {
-                    var blockAction = new BlockAction(player);
-                    actionQueueProcessor.EnqueueAction(blockAction);
+                    var defendAction = new DefendAction(player);
+                    actionQueueProcessor.EnqueueAction(defendAction);
                 }
             }
             else
@@ -174,12 +174,6 @@ namespace PocketSquire.Unity
         public void Item()
         {
             Debug.Log("Item");
-            GameWorld.Battle.CurrentTurn.End();
-        }
-
-        public void Block()
-        {
-            Debug.Log("Block");
             GameWorld.Battle.CurrentTurn.End();
         }
 

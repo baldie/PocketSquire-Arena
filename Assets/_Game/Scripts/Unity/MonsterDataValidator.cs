@@ -46,7 +46,7 @@ public class MonsterDataValidator : EditorWindow
 
             // Check Sounds
             CheckSound(monster.Name, "Attack", monster.AttackSoundId, registry, ref errorCount);
-            CheckSound(monster.Name, "Block", monster.BlockSoundId, registry, ref errorCount);
+            CheckSound(monster.Name, "Defend", monster.DefendSoundId, registry, ref errorCount);
             CheckSound(monster.Name, "Hit", monster.HitSoundId, registry, ref errorCount);
         }
 

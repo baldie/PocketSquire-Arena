@@ -11,10 +11,10 @@ namespace PocketSquire.Arena.Tests
         {
             var monster = new Monster();
             monster.AttackSoundId = "roar_loud";
-            monster.BlockSoundId = "shield_clank";
+            monster.DefendSoundId = "shield_clank";
 
             Assert.That(monster.GetActionSoundId(ActionType.Attack), Is.EqualTo("roar_loud"));
-            Assert.That(monster.GetActionSoundId(ActionType.Block), Is.EqualTo("shield_clank"));
+            Assert.That(monster.GetActionSoundId(ActionType.Defend), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace PocketSquire.Arena.Tests
             var monster = new Monster();
             
             Assert.That(monster.GetActionAnimationId(ActionType.Attack), Is.EqualTo("Attack"));
-            Assert.That(monster.GetActionAnimationId(ActionType.Block), Is.EqualTo("Block"));
+            Assert.That(monster.GetActionAnimationId(ActionType.Defend), Is.EqualTo("Defend"));
             Assert.That(monster.GetActionAnimationId(ActionType.Yield), Is.EqualTo("Yield"));
         }
         

@@ -75,11 +75,11 @@ namespace PocketSquire.Arena.Tests
             Assert.That(wasCalled, Is.True);
         }
     [Test]
-        public void TakeDamage_ReducesDamageWhenBlocking()
+        public void TakeDamage_ReducesDamageWhenDefending()
         {
             // Arrange
             var entity = new Entity("Test", 100, 100, new Attributes());
-            entity.IsBlocking = true;
+            entity.IsDefending = true;
 
             // Act
             entity.TakeDamage(10);
@@ -89,30 +89,38 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void TakeDamage_RoundingWhenBlocking_RoundsUp()
+        public void TakeDamage_RoundingWhenDefending_RoundsUp()
         {
             // Arrange
             var entity = new Entity("Test", 100, 100, new Attributes());
-            entity.IsBlocking = true;
+            entity.IsDefending = true;
 
             // Act - 5 / 2 = 2.5 -> Ceil(2.5) should be 3 damage taken
             entity.TakeDamage(5);
 
             // Assert
-            Assert.That(entity.Health, Is.EqualTo(97), "Blocking damage of 5 should result in 3 damage taken (2.5 rounded up)");
+            Assert.That(entity.Health, Is.EqualTo(97), "Defending damage of 5 should result in 3 damage taken (2.5 rounded up)");
         }
     [Test]
         public void GetActionSoundId_ReturnsEmptyStringByDefault()
         {
             var entity = new Entity();
+            // Default entity has no sound IDs set, so it returns empty
             Assert.That(entity.GetActionSoundId(ActionType.Attack), Is.EqualTo(string.Empty));
         }
 
         [Test]
-        public void GetActionAnimationId_ReturnsEmptyStringByDefault()
+        public void GetActionAnimationId_ReturnsAttackForAttack()
         {
             var entity = new Entity();
-            Assert.That(entity.GetActionAnimationId(ActionType.Attack), Is.EqualTo(string.Empty));
+            Assert.That(entity.GetActionAnimationId(ActionType.Attack), Is.EqualTo("Attack"));
+        }
+
+        [Test]
+        public void GetActionAnimationId_ReturnsIdleByDefault()
+        {
+             var entity = new Entity();
+             Assert.That(entity.GetActionAnimationId(ActionType.UseItem), Is.EqualTo("Idle"));
         }
 
         [Test]
@@ -126,7 +134,7 @@ namespace PocketSquire.Arena.Tests
         public void GetHitAnimationId_ReturnsEmptyStringByDefault()
         {
             var entity = new Entity();
-            Assert.That(entity.GetHitAnimationId(), Is.EqualTo(string.Empty));
+            Assert.That(entity.GetHitAnimationId(), Is.EqualTo("Hit"));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(dummy!.Height, Is.EqualTo(2240));
             Assert.That(dummy!.ScaleX, Is.EqualTo(0.4f).Within(0.001f));
             Assert.That(dummy!.ScaleY, Is.EqualTo(0.35f).Within(0.001f));
-            Assert.That(dummy!.SpriteId, Is.EqualTo("TrainingDummy"));
+            Assert.That(dummy!.SpriteId, Is.EqualTo("training_dummy_battle"));
             Assert.That(dummy!.AttackSoundId, Is.EqualTo("TrainingDummyAttack"));
         }
         [Test]
@@ -67,7 +67,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player!.Attributes.Strength, Is.EqualTo(1));
             Assert.That(player!.SpriteId, Is.EqualTo("player_m_l1_battle"));
             Assert.That(player!.AttackSoundId, Is.EqualTo("m_physical_attack"));
-            Assert.That(player!.Gender, Is.EqualTo(Player.CharGender.Male));
+            Assert.That(player!.Gender, Is.EqualTo(Player.CharGender.m));
         }
     }
 }

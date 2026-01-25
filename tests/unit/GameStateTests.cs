@@ -19,7 +19,7 @@ public class GameStateTests
 
         // Ensure GameWorld has the expected player for CreateNewGame
         GameWorld.Players.Clear();
-        GameWorld.Players.Add(new Player("player_m_l1", 10, 10, new Attributes(), Player.CharGender.Male));
+        GameWorld.Players.Add(new Player("player_m_l1", 10, 10, new Attributes(), Player.CharGender.m));
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class GameStateTests
             CharacterCreationDate = creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             LastSaveDate = lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             PlayTimeTicks = playTime.Ticks,
-            Player = new Player("Test Player", 20, 20, new Attributes(), Player.CharGender.Male)
+            Player = new Player("Test Player", 20, 20, new Attributes(), Player.CharGender.m)
         };
 
         // Act

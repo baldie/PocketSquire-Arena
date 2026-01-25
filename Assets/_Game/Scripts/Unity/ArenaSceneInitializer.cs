@@ -72,8 +72,8 @@ public class ArenaSceneInitializer : MonoBehaviour
                         case ActionType.Attack:
                             battleManager.Attack();
                             break;
-                        case ActionType.Block:
-                            battleManager.Block();
+                        case ActionType.Defend:
+                            battleManager.Defend();
                             break;
                         case ActionType.Yield:
                             battleManager.Yield();

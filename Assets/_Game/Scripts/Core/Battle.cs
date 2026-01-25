@@ -34,12 +34,12 @@ namespace PocketSquire.Arena.Core
         {
             if (CurrentTurn.IsPlayerTurn)
             {
-                Player2.IsBlocking = false; // Reset block for the new actor
+                Player2.IsDefending = false; // Reset defend for the new actor
                 CurrentTurn = new Turn(Player2, Player1, changeTurns);
             }
             else
             {
-                Player1.IsBlocking = false; // Reset block for the new actor
+                Player1.IsDefending = false; // Reset defend for the new actor
                 CurrentTurn = new Turn(Player1, Player2, changeTurns);
             }
         }

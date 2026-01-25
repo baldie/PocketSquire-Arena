@@ -13,8 +13,8 @@ namespace PocketSquire.Arena.Tests
         [SetUp]
         public void Setup()
         {
-            _player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.Male);
-            _monster = new Monster("Test Monster", 10, 10, new Attributes());
+            _player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            _monster = new Monster("Training Dummy", 10, 10, new Attributes());
         }
 
         [Test]
@@ -91,21 +91,21 @@ namespace PocketSquire.Arena.Tests
             Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.True, "Execute should do nothing on player turn");
         }
         [Test]
-        public void Battle_ChangeTurns_ResetsBlockingState()
+        public void Battle_ChangeTurns_ResetsDefendingState()
         {
             // Arrange
             var battle = new Battle(_player, _monster);
-            _player.IsBlocking = true;
+            _player.IsDefending = true;
 
             // Act 1 - Player ends turn. It is now Monster's turn.
-            // Player should STILL be blocking to defend against Monster.
+            // Player should STILL be defending against Monster.
             battle.CurrentTurn.End();
-            Assert.That(_player.IsBlocking, Is.True, "Blocking should persist during opponent's turn");
+            Assert.That(_player.IsDefending, Is.True, "Defending should persist during opponent's turn");
 
             // Act 2 - Monster ends turn. It is now Player's turn again.
-            // Player's block should now reset.
+            // Player's defend should now reset.
             battle.CurrentTurn.Execute(); // Monster executes (attacks)
-            Assert.That(_player.IsBlocking, Is.False, "Blocking state should be reset when turn starts again");
+            Assert.That(_player.IsDefending, Is.False, "Defending state should be reset when turn starts again");
         }
     }
 }

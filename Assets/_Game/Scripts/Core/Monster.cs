@@ -12,26 +12,32 @@ namespace PocketSquire.Arena.Core
         {
         }
 
-        public override string GetActionSoundId(ActionType actionType)
-        {
-            return actionType switch
+        public override string SpriteId {
+            get
             {
-                ActionType.Attack => AttackSoundId,
-                ActionType.Block => BlockSoundId,
-                ActionType.Yield => string.Empty,
-                _ => string.Empty
-            };
+                return Name.ToLower().Replace(" ", "_") + "_battle";
+            }
         }
 
-        public override string GetActionAnimationId(ActionType actionType)
-        {
-            return actionType switch
+        public override string AttackSpriteId {
+            get
             {
-                ActionType.Attack => "Attack",
-                ActionType.Block => "Block",
-                ActionType.Yield => "Yield",
-                _ => "Idle"
-            };
+                return Name.ToLower().Replace(" ", "_") + "_attack";
+            }
+        }
+
+        public override string HitSpriteId {
+            get
+            {
+                return Name.ToLower().Replace(" ", "_") + "_hit";
+            }
+        }
+
+        public override string DefendSpriteId {
+            get
+            {
+                return Name.ToLower().Replace(" ", "_") + "_defend";
+            }
         }
 
         public override ActionType DetermineAction(Entity target)
@@ -39,8 +45,5 @@ namespace PocketSquire.Arena.Core
             // Basic AI: Always attack for now
             return ActionType.Attack;
         }
-
-        public override string GetHitSoundId() => HitSoundId;
-        public override string GetHitAnimationId() => "Hit";
     }
 }

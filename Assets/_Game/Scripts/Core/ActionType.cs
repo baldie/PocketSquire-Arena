@@ -7,8 +7,10 @@ namespace PocketSquire.Arena.Core
     public enum ActionType
     {
         Attack,
-        Block,
+        Defend,
         UseItem,
+        Hit,
+        Defeat,
         Yield
     }
 }

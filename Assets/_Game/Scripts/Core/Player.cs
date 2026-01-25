@@ -6,8 +6,8 @@ namespace PocketSquire.Arena.Core
     public class Player : Entity
     {
         public enum CharGender {
-            Male,
-            Female
+            m,
+            f
         }
 
         public CharGender Gender;
@@ -19,6 +19,56 @@ namespace PocketSquire.Arena.Core
             {
                 // TODO: fill in the actual values
                 return (int)Math.Ceiling((double)(Experience+1) / 100);
+            }
+        }
+
+        public override string SpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_battle";
+            }
+        }
+
+        public override string HitSpriteId
+        {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_hit";
+            }
+        }
+
+        public string DefeatSpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_defeat";
+            }
+        }
+
+        public override string YieldSpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_yield";
+            }
+        }
+
+        public override string AttackSpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_attack";
+            }
+        }
+
+        public override string DefendSpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_defend";
+            }
+        }
+
+        public string ItemSpriteId {
+            get
+            {
+                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_item";
             }
         }
 
@@ -41,15 +91,17 @@ namespace PocketSquire.Arena.Core
 
         public string GetSpriteId(GameContext context)
         {
-            // TODO: eventually you will need to add class into this mix
+            if (context == GameContext.Battle)
+            {
+                return this.SpriteId;
+            }
+
+            // TODO: eventually we will need to add class into this mix
             var sprite = "player_";
-            sprite += this.Gender == CharGender.Male ? "m_" : "f_";
+            sprite += this.Gender.ToString() + "_";
             sprite += "l" + this.Level.ToString();
             switch(context)
             {
-                case GameContext.Battle: 
-                    sprite += "_battle";
-                    break;
                 case GameContext.Town: 
                     sprite += "_town";
                     break;
@@ -65,8 +117,6 @@ namespace PocketSquire.Arena.Core
             {
                 case ActionType.Attack:
                     return !string.IsNullOrEmpty(AttackSoundId) ? AttackSoundId : "player_attack";
-                case ActionType.Block:
-                    return !string.IsNullOrEmpty(BlockSoundId) ? BlockSoundId : "player_block";
                 case ActionType.UseItem:
                     return "player_item";
                 case ActionType.Yield:
@@ -78,17 +128,24 @@ namespace PocketSquire.Arena.Core
 
         public override string GetActionAnimationId(ActionType actionType)
         {
-            return actionType switch
+            switch(actionType)
             {
-                ActionType.Attack => "Attack",
-                ActionType.Block => "Block",
-                ActionType.UseItem => "Item",
-                ActionType.Yield => "Yield",
-                _ => "Idle"
+                case ActionType.Attack:
+                    return this.AttackSpriteId;
+                case ActionType.Defend:
+                    return this.DefendSpriteId;
+                case ActionType.UseItem:
+                    return this.ItemSpriteId;
+                case ActionType.Hit:
+                    return this.HitSpriteId;
+                case ActionType.Defeat:
+                    return this.DefeatSpriteId;
+                case ActionType.Yield:
+                    return this.YieldSpriteId;
+                default:
+                    return string.Empty;
             };
         }
 
-        public override string GetHitSoundId() => "player_hit";
-        public override string GetHitAnimationId() => "Hit";
     }
 }
