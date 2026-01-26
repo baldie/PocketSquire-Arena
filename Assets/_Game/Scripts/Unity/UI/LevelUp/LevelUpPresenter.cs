@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PocketSquire.Arena.Core.LevelUp;
 using PocketSquire.Arena.Core;
 using DG.Tweening;
+using TMPro;
 
 namespace PocketSquire.Arena.Unity.UI.LevelUp
 {
@@ -11,6 +12,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
     {
         [SerializeField] private Button acceptButton;
         [SerializeField] private Transform levelUpBackground; // Parent containing rows and accept button
+        [SerializeField] private TextMeshProUGUI pointsLabel;
         
         private ILevelUpModel _model;
         private List<AttributeRow> _attributeRows = new List<AttributeRow>();
@@ -25,6 +27,15 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             Debug.Log("LevelUpPresenter.Initialize: availablePoints = " + availablePoints);
             _model = new LevelUpModel(currentAttributes, availablePoints, currentLevel);
             _model.OnStatsChanged += UpdateUI;
+
+            if (pointsLabel == null && levelUpBackground != null)
+            {
+                var labelTransform = levelUpBackground.Find("PointsLabel");
+                if (labelTransform != null)
+                {
+                    pointsLabel = labelTransform.GetComponent<TextMeshProUGUI>();
+                }
+            }
 
             InitializeRows();
             
@@ -127,6 +138,13 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
                 bool canDecrement = value > startingValue;
 
                 row.UpdateView(value, canIncrement, canDecrement);
+            }
+
+            if (pointsLabel != null)
+            {
+                pointsLabel.text = $"{_model.AvailablePoints}";
+                // Use a premium blue (vibrant but not generic)
+                pointsLabel.color = _model.AvailablePoints > 0 ? new Color(0.4f, 0.7f, 1.0f) : Color.white;
             }
 
             if (acceptButton != null)

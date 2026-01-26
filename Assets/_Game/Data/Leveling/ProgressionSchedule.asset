@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.ProgressionSchedule
   schedule:
   - level: 2
-    experienceRequired: 10
+    experienceRequired: 1
     statPoints: 1
     perkChoices:
     - {fileID: 11400000, guid: d8c7e2a86e304114d930e5db8f7a61f6, type: 2}
     - {fileID: 11400000, guid: 065ea54e17ba83248a6c1e31ec0f263f, type: 2}
+  - level: 3
+    experienceRequired: 5
+    statPoints: 1
+    perkChoices: []

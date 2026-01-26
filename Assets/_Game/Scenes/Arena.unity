@@ -3006,6 +3006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.UI.LevelUp.LevelUpPresenter
   acceptButton: {fileID: 365178345}
   levelUpBackground: {fileID: 878269543}
+  pointsLabel: {fileID: 579660441}
 --- !u!1 &909881565
 GameObject:
   m_ObjectHideFlags: 0
@@ -3990,7 +3991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: 10}
+  m_AnchoredPosition: {x: 110, y: 10}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1079120621
@@ -4591,7 +4592,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: 10}
+  m_AnchoredPosition: {x: 110, y: 10}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1182487162
@@ -5274,7 +5275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: 10}
+  m_AnchoredPosition: {x: 110, y: 10}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1398593863
@@ -7094,7 +7095,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bf62f586078aca4881a641eab274f21, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameInitializer
+  m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Unity.GameInitializer
+  _progressionAsset: {fileID: 11400000, guid: 4bdce86dddd5e944db0fbbcf20603b36, type: 2}
 --- !u!4 &1660825929
 Transform:
   m_ObjectHideFlags: 0
@@ -7437,7 +7439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: 10}
+  m_AnchoredPosition: {x: 110, y: 10}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1692681577
@@ -8660,7 +8662,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: 10}
+  m_AnchoredPosition: {x: 110, y: 10}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2136470086

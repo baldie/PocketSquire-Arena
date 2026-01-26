@@ -218,14 +218,6 @@ public class ActionQueueProcessor : MonoBehaviour
                 if (defendSprite == null) {
                     Debug.LogWarning($"Defend sprite `{entity.DefendSpriteId}` not found for {entity.Name}");
                 }
-                
-                // For Defend, we swap to the sprite. 
-                // IMPORTANT: The sprite should stay as long as IsDefending is true, 
-                // BUT determining when to swap back is tricky in this method.
-                // For now, let's just show it briefly for the action duration to signify the "Action" of defending.
-                // If we want a persistent stance, that would require state management in Update() or a separate system.
-                // Given the current architecture, let's treat it like Attack - a temporary visual cue.
-                
                 var idleSprite = imgComponent.sprite; // Assume current is idle/base
                 
                 DOTween.Sequence()
@@ -260,8 +252,8 @@ public class ActionQueueProcessor : MonoBehaviour
                 }
 
                 // Create a sequence to group tweens
-                Sequence deathSeq = DOTween.Sequence();
-                RectTransform monsterRect = monsterImage.rectTransform;
+                var deathSeq = DOTween.Sequence();
+                var monsterRect = monsterImage.rectTransform;
                 deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.InQuint));
                 deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
 
