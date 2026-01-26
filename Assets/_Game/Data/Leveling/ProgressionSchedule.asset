@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a89e0927c920343b95e41a00bc70a3, type: 3}
+  m_Name: ProgressionSchedule
+  m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.ProgressionSchedule
+  schedule:
+  - level: 2
+    experienceRequired: 10
+    statPoints: 1
+    perkChoices:
+    - {fileID: 11400000, guid: d8c7e2a86e304114d930e5db8f7a61f6, type: 2}
+    - {fileID: 11400000, guid: 065ea54e17ba83248a6c1e31ec0f263f, type: 2}

@@ -14,6 +14,7 @@ namespace PocketSquire.Arena.Core
         public string Name = string.Empty;
         public int Health;
         public int MaxHealth;
+        public int Experience;
         public Attributes Attributes = new Attributes();
         public float PosX;
         public float PosY;
@@ -81,7 +82,6 @@ namespace PocketSquire.Arena.Core
                     return string.Empty;
             };
         }
-
 
         public virtual string GetHitSoundId() => HitSoundId;
         public virtual ActionType DetermineAction(Entity target) => ActionType.Attack;

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Unity.UI.LevelUp;
 using TMPro;
 using DG.Tweening;
 
@@ -23,7 +24,7 @@ public class ActionQueueProcessor : MonoBehaviour
     public string monsterObjectName = "MonsterSprite";
     public TextMeshProUGUI monsterEffectText;
     public TextMeshProUGUI playerEffectText;
-
+        
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
 
@@ -273,17 +274,17 @@ public class ActionQueueProcessor : MonoBehaviour
                 });
                 deathSeq.SetLink(monsterGameObject);
 
-                // Create a new sequence
-                Sequence winSeq = DOTween.Sequence();
-
-                // 1. Add a 1 second silence/pause
-                winSeq.AppendInterval(1.0f);
-
-                // 2. Slide the background in
-                var winBackground = GameObject.Find("WinBackground");
-                var winBackgroundRect = winBackground.GetComponent<RectTransform>();
-                winSeq.Append(winBackgroundRect.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuad));
-
+                // Level up sequence
+                Debug.Log("Checking if player can level up");
+                if (GameState.Player.CanLevelUp()) {
+                    Debug.Log("Player can level up");
+                    var levelUpBackground = GameObject.Find("LevelUpBackground").GetComponent<RectTransform>();
+                    var levelUpPresenter = levelUpBackground.GetComponent<LevelUpPresenter>();
+                    LevelUpPresenter.Show(levelUpBackground, levelUpPresenter);
+                }
+                else {
+                    Debug.Log("Player cannot level up");
+                }
                 // 3. (Optional) You can add more things here that happen AFTER the slide
                 // winSeq.Append(victoryText.DOFade(1, 0.3f));
             }

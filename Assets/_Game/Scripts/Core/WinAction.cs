@@ -21,7 +21,12 @@ namespace PocketSquire.Arena.Core
 
         public void ApplyEffect()
         {
-            // TODO: loot and xp happens here
+            if (Actor is Player)
+            {
+                var player = Actor as Player;
+                Console.WriteLine("Player gained " + Target.Experience + " experience points");
+                player.Experience += Target.Experience;
+            }
         }
     }
 }

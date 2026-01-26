@@ -11,16 +11,8 @@ namespace PocketSquire.Arena.Core
         }
 
         public CharGender Gender;
-
-        public int Experience;
         public int Gold;
-        public int Level {
-            get
-            {
-                // TODO: fill in the actual values
-                return (int)Math.Ceiling((double)(Experience+1) / 100);
-            }
-        }
+        public int Level { get; private set; } = 1;
 
         public override string SpriteId {
             get
@@ -79,6 +71,12 @@ namespace PocketSquire.Arena.Core
             }
         }
 
+        public bool CanLevelUp() {
+            var nextLevel = GameWorld.Progression.GetLevelForExperience(this.Experience);
+
+            return this.Level < nextLevel;
+        }
+
         public Player() : base() { }
 
         public Player(string name, int health, int maxHealth, Attributes attributes, CharGender gender) : base(name, health, maxHealth, attributes)
@@ -94,6 +92,10 @@ namespace PocketSquire.Arena.Core
         public void GainGold(int amount)
         {
             Gold += amount;
+        }
+
+        public void AcceptNewLevel() {
+            this.Level = GameWorld.Progression.GetLevelForExperience(this.Experience);
         }
 
         public string GetSpriteId(GameContext context)
