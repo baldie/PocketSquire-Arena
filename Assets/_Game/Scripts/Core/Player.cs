@@ -126,7 +126,7 @@ namespace PocketSquire.Arena.Core
             {
                 case ActionType.Attack:
                     return !string.IsNullOrEmpty(AttackSoundId) ? AttackSoundId : "player_attack";
-                case ActionType.UseItem:
+                case ActionType.Item:
                     return "player_item";
                 case ActionType.Yield:
                     return string.Empty;

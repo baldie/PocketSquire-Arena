@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
 
 namespace PocketSquire.Arena.Core
 {
     public class Battle
     {
-        public Turn CurrentTurn { get; private set; }
-        public bool IsOver {
-            get
-            {
-                return Player1.IsDead || Player2.IsDead;
-            }
-        }
-
+        public Turn CurrentTurn { get; set; }
         public Entity Player1 { get; private set; }
         public Entity Player2 { get; private set; }
 
@@ -27,21 +19,62 @@ namespace PocketSquire.Arena.Core
             this.Player1 = player1;
             this.Player2 = player2;
             Console.WriteLine("Creating new battle");
-            CurrentTurn = new Turn(player1, player2, changeTurns);
+            CurrentTurn = new Turn(player1, player2);
         }
 
-        private void changeTurns()
+        public bool IsOver()
         {
-            if (CurrentTurn.IsPlayerTurn)
+            return CurrentTurn == null || Player1.IsDefeated || Player2.IsDefeated;
+        }
+
+        public void AdvanceTurn()
+        {
+            var action = new ChangeTurnsAction(this);
+            action.ApplyEffect();
+        }
+
+        /// <summary>
+        /// Determines the next action to be executed
+        /// </summary>
+        /// <param name="action">The action that was just completed</param>
+        /// <returns>The next action to be executed, or null if the battle is over</returns>
+        public IGameAction DetermineNextAction(IGameAction action)
+        {
+            // End of battle logic
+            var someoneHasLost = Player1.IsDefeated || Player2.IsDefeated;
+            var battleIsStillGoing = CurrentTurn != null;
+            if (someoneHasLost && battleIsStillGoing)
             {
-                Player2.IsDefending = false; // Reset defend for the new actor
-                CurrentTurn = new Turn(Player2, Player1, changeTurns);
+                CurrentTurn = null;
+                return Player1.IsDefeated
+                    ? (IGameAction)new LoseAction(Player1, Player2)
+                    : (IGameAction)new WinAction(Player1, Player2);
             }
-            else
+
+            if (battleIsStillGoing)
             {
-                Player1.IsDefending = false; // Reset defend for the new actor
-                CurrentTurn = new Turn(Player1, Player2, changeTurns);
+                // If it's the monster's turn, let it take an action
+                IGameAction nextAction = null;
+                if (action.Type == ActionType.ChangeTurns && CurrentTurn.Actor is Monster) {
+                    switch(CurrentTurn.Actor.DetermineAction(CurrentTurn.Target)) {
+                        case ActionType.Attack:
+                            nextAction = new AttackAction(CurrentTurn.Actor, CurrentTurn.Target);
+                            break;
+                        case ActionType.Defend:
+                            nextAction = new DefendAction(CurrentTurn.Actor);
+                            break;
+                        case ActionType.Yield:
+                            nextAction = new ChangeTurnsAction(this);
+                            break;
+                        default:
+                            Console.WriteLine("Monster took an invalid action");
+                            break;
+                    }
+                }
+                if (nextAction != null) return nextAction;
             }
+
+            return action.Type != ActionType.ChangeTurns ? new ChangeTurnsAction(this) : null;
         }
     }
 }

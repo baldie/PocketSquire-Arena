@@ -29,7 +29,7 @@ namespace PocketSquire.Arena.Tests
         {
             var monster = new Monster();
             // UseItem is not explicitly handled for sound in Monster, so it should be empty
-            Assert.That(monster.GetActionSoundId(ActionType.UseItem), Is.EqualTo(string.Empty));
+            Assert.That(monster.GetActionSoundId(ActionType.Item), Is.EqualTo(string.Empty));
         }
 
 

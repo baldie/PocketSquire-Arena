@@ -8,11 +8,12 @@ namespace PocketSquire.Arena.Core
     {
         Attack,
         Defend,
-        UseItem,
+        Item,
         Hit,
         Defeat,
         Yield,
         Win,
-        Lose
+        Lose,
+        ChangeTurns
     }
 }

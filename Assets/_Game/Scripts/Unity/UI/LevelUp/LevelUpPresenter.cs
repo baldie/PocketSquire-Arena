@@ -24,7 +24,6 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
         // This method will be called to start the level up process with real data
         public void Initialize(Dictionary<string, int> currentAttributes, int availablePoints, int currentLevel)
         {
-            Debug.Log("LevelUpPresenter.Initialize: availablePoints = " + availablePoints);
             _model = new LevelUpModel(currentAttributes, availablePoints, currentLevel);
             _model.OnStatsChanged += UpdateUI;
 
@@ -163,6 +162,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
 
         public static void Show(RectTransform levelUpBackground, LevelUpPresenter levelUpPresenter)
         {
+            Debug.Log("Showing level up screen");
             // Prepare the level up screen with the appropriate values
             int level = GameWorld.Progression.GetLevelForExperience(GameState.Player.Experience); 
             var reward = GameWorld.Progression.GetRewardForLevel(level);
@@ -174,7 +174,6 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             Sequence showSequence = DOTween.Sequence();
             showSequence.AppendInterval(1.0f);
             showSequence.Append(levelUpBackground.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuad));   
-            Debug.Log("Level up screen shown");
         }
 
         private static void HideLevelUpScreen(RectTransform levelUpBackground)

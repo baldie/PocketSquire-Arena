@@ -6742,6 +6742,10 @@ MonoBehaviour:
   monsterObjectName: MonsterSprite
   monsterEffectText: {fileID: 909881567}
   playerEffectText: {fileID: 338555211}
+  playerHealthBarActual: {fileID: 223831472}
+  playerHealthBarGhost: {fileID: 1881802425}
+  monsterHealthBarActual: {fileID: 1420314861}
+  monsterHealthBarGhost: {fileID: 1919282022}
 --- !u!4 &1505157163
 Transform:
   m_ObjectHideFlags: 0
@@ -8532,10 +8536,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Unity.BattleMenu
   battleMenuUI: {fileID: 501033743}
   firstSelectedButton: {fileID: 1472477475}
-  playerHealthBarActual: {fileID: 223831472}
-  playerHealthBarGhost: {fileID: 1881802425}
-  monsterHealthBarActual: {fileID: 1420314861}
-  monsterHealthBarGhost: {fileID: 1919282022}
   actionQueueProcessor: {fileID: 1505157162}
 --- !u!4 &2013372240
 Transform:

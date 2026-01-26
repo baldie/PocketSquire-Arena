@@ -9,7 +9,7 @@ namespace PocketSquire.Arena.Core
     public interface IGameAction
     {
         /// <summary>
-        /// The type of action, e.g., Attack, Defend, UseItem.
+        /// The type of action, e.g., Attack, Defend, Item.
         /// Used by the Unity layer to look up visual/audio assets.
         /// </summary>
         ActionType Type { get; }

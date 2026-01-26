@@ -25,7 +25,7 @@ namespace PocketSquire.Arena.Tests
 
             // Assert
             Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.True);
-            Assert.That(battle.IsOver, Is.False);
+            Assert.That(battle.IsOver(), Is.False);
         }
 
         [Test]
@@ -34,14 +34,14 @@ namespace PocketSquire.Arena.Tests
             // Arrange
             var battle = new Battle(_player, _monster);
 
-            // Act - Player ends turn
-            battle.CurrentTurn.End();
+            // Act - End turn
+            battle.AdvanceTurn();
 
             // Assert - Now monster turn
             Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.False);
 
-            // Act - Monster executes turn
-            battle.CurrentTurn.Execute();
+            // Act - End turn again
+            battle.AdvanceTurn();
 
             // Assert - Now player turn again
             Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.True);
@@ -57,8 +57,8 @@ namespace PocketSquire.Arena.Tests
             _player.TakeDamage(10);
 
             // Assert
-            Assert.That(_player.IsDead, Is.True);
-            Assert.That(battle.IsOver, Is.True);
+            Assert.That(_player.IsDefeated, Is.True);
+            Assert.That(battle.IsOver(), Is.True);
         }
 
         [Test]
@@ -71,24 +71,38 @@ namespace PocketSquire.Arena.Tests
             _monster.TakeDamage(10);
 
             // Assert
-            Assert.That(_monster.IsDead, Is.True);
-            Assert.That(battle.IsOver, Is.True);
+            Assert.That(_monster.IsDefeated, Is.True);
+            Assert.That(battle.IsOver(), Is.True);
         }
 
         [Test]
-        public void Turn_Execute_DoesNotAllowPlayerAction()
+        public void Battle_HandleActionComplete_ReturnsChangeTurnsAction()
         {
             // Arrange
             var battle = new Battle(_player, _monster);
-            // CurrentTurn is Player's turn
+            var dummyAction = new AttackAction(_player, _monster);
 
-            // Act & Assert
-            // Execute is for non-player entities. It should log and return.
-            // We can't easily assert the Console log here without redirecting, 
-            // but we can check that it doesn't change the turn.
-            battle.CurrentTurn.Execute();
-            
-            Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.True, "Execute should do nothing on player turn");
+            // Act
+            var result = battle.DetermineNextAction(dummyAction);
+
+            // Assert
+            Assert.That(result, Is.TypeOf<ChangeTurnsAction>());
+        }
+
+        [Test]
+        public void Battle_HandleActionComplete_ReturnsWinAction_WhenMonsterDies()
+        {
+            // Arrange
+            var battle = new Battle(_player, _monster);
+            _monster.TakeDamage(10);
+            var attackAction = new AttackAction(_player, _monster);
+
+            // Act
+            var result = battle.DetermineNextAction(attackAction);
+
+            // Assert
+            Assert.That(result, Is.TypeOf<WinAction>());
+            Assert.That(battle.IsOver(), Is.True);
         }
         [Test]
         public void Battle_ChangeTurns_ResetsDefendingState()
@@ -97,14 +111,14 @@ namespace PocketSquire.Arena.Tests
             var battle = new Battle(_player, _monster);
             _player.IsDefending = true;
 
-            // Act 1 - Player ends turn. It is now Monster's turn.
+            // Act 1 - End Turn. It is now Monster's turn.
             // Player should STILL be defending against Monster.
-            battle.CurrentTurn.End();
+            battle.AdvanceTurn();
             Assert.That(_player.IsDefending, Is.True, "Defending should persist during opponent's turn");
 
-            // Act 2 - Monster ends turn. It is now Player's turn again.
+            // Act 2 - End Turn again. It is now Player's turn again.
             // Player's defend should now reset.
-            battle.CurrentTurn.Execute(); // Monster executes (attacks)
+            battle.AdvanceTurn();
             Assert.That(_player.IsDefending, Is.False, "Defending state should be reset when turn starts again");
         }
     }

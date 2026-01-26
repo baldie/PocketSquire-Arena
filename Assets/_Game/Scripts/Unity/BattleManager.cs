@@ -1,9 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using PocketSquire.Arena.Core;
-using DG.Tweening;
 
 namespace PocketSquire.Unity
 {
@@ -12,21 +9,12 @@ namespace PocketSquire.Unity
         [Header("UI References")]
         public GameObject battleMenuUI;
         public Button firstSelectedButton;
-        public Image playerHealthBarActual;
-        public Image playerHealthBarGhost;
-        public Image monsterHealthBarActual;
-        public Image monsterHealthBarGhost;
         
         [Header("Action Queue")]
         [Tooltip("Reference to the ActionQueueProcessor in the scene")]
         public ActionQueueProcessor actionQueueProcessor;
 
-        private enum ShakeType { None, Hit, Heal }
 
-        void Update()
-        {
-
-        }
 
         void Start()
         {
@@ -86,65 +74,17 @@ namespace PocketSquire.Unity
 
         public void Attack()
         {
+            Debug.Log("Attack");
+
             if (actionQueueProcessor != null && GameWorld.Battle != null)
             {
-                var actor = GameWorld.Battle.CurrentTurn.Actor;
-                var target = GameWorld.Battle.CurrentTurn.Target;
+                var player = GameState.Player;
                 
-                if (actor != null && target != null)
+                if (player != null)
                 {
-                    int damage = CalculateDamage(actor, target);
-                    var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
-                    var healthbarGhost = target is Player ? playerHealthBarGhost : monsterHealthBarGhost;
-                    var attackAction = new AttackAction(actor, target, damage, () => {
-                        UpdateHealth(healthbarActual, healthbarGhost, target.Health, target.MaxHealth, ShakeType.Hit);
-                    });
+                    var attackAction = new AttackAction(player, GameWorld.Battle.CurrentTurn.Target);
                     actionQueueProcessor.EnqueueAction(attackAction);
                 }
-            }
-            else
-            {
-                // Fallback if no processor
-                GameWorld.Battle?.CurrentTurn?.End();
-            }
-        }
-        
-        private int CalculateDamage(Entity attacker, Entity target)
-        {
-            // Basic damage calculation - can be made more complex later
-            int baseDamage = attacker.Attributes.Strength;
-            return System.Math.Max(1, baseDamage); // Minimum 1 damage
-        }
-
-        private void UpdateHealth(Image healthBarActual, Image healthBarGhost, int currentHealth, int maxHealth, ShakeType shakeType)
-        {
-            float targetFill = (float)currentHealth / maxHealth;
-
-            // 1. Shake health bar
-            if (shakeType == ShakeType.Hit)
-            {
-                healthBarActual.transform.parent.DOKill(true); // Complete previous shake if hit again
-                healthBarActual.transform.parent.DOShakePosition(0.3f, strength: 10f, vibrato: 20);
-            }
-            
-            // 2. Snap the actual health bar instantly
-            healthBarActual.fillAmount = targetFill;
-
-            // 3. Animate the ghost bar
-            // Only start a new tween if the ghost is actually further ahead than the actual bar
-            if (healthBarGhost.fillAmount > targetFill) 
-            {
-                // Complete: false ensures we don't snap to the end before restarting
-                healthBarGhost.DOKill(false); 
-
-                healthBarGhost.DOFillAmount(targetFill, 0.5f)
-                    .SetDelay(0.5f)
-                    .SetEase(Ease.OutQuad);
-            }
-            else 
-            {
-                // If healing, just snap the ghost bar to match
-                healthBarGhost.fillAmount = targetFill;
             }
         }
 
@@ -162,23 +102,38 @@ namespace PocketSquire.Unity
                     actionQueueProcessor.EnqueueAction(defendAction);
                 }
             }
-            else
-            {
-                // Fallback
-                GameWorld.Battle?.CurrentTurn?.End();
-            }
         }
 
         public void Item()
         {
             Debug.Log("Item");
-            GameWorld.Battle.CurrentTurn.End();
+            
+            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            {
+                var player = GameState.Player;
+                
+                if (player != null)
+                {
+                    var itemAction = new ItemAction();
+                    actionQueueProcessor.EnqueueAction(itemAction);
+                }
+            }
         }
 
         public void Yield()
         {
             Debug.Log("Yield");
-            GameWorld.Battle.CurrentTurn.End();
+            
+            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            {
+                var player = GameState.Player;
+                
+                if (player != null)
+                {
+                    var yieldAction = new YieldAction();
+                    actionQueueProcessor.EnqueueAction(yieldAction);
+                }
+            }
         }
     }
 }

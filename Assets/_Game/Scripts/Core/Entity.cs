@@ -47,7 +47,7 @@ namespace PocketSquire.Arena.Core
             Attributes = attributes;
         }
 
-        public bool IsDead
+        public bool IsDefeated
         {
             get
             {

@@ -29,7 +29,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         // Subscribe to action completion to handle turn changes
         if (actionQueueProcessor != null)
         {
-            actionQueueProcessor.OnActionComplete += HandleActionComplete;
+            actionQueueProcessor.OnActionComplete += GameWorld.Battle.DetermineNextAction;
         }
     }
 
@@ -37,7 +37,7 @@ public class ArenaSceneInitializer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        #region Hide/Show Battle Menu
+        // TODO: don't do this on every update
         if (GameWorld.Battle == null) return;
         if (GameWorld.Battle.CurrentTurn == null) return;
 
@@ -55,44 +55,6 @@ public class ArenaSceneInitializer : MonoBehaviour
                              (actionQueueProcessor == null || (!actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0));
 
         battleMenuCanvas.enabled = shouldShowMenu;
-        #endregion
-
-        // Use the action queue for monster turn if processor is available
-        if (GameWorld.Battle.CurrentTurn.IsPlayerTurn == false)
-        {
-            if (actionQueueProcessor != null && !actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0)
-            {
-                // Create and enqueue the monster's attack action
-                var monster = GameWorld.Battle.CurrentTurn.Actor;
-                var target = GameWorld.Battle.CurrentTurn.Target;
-                
-                if (monster != null && target != null)
-                {
-                    switch(monster.DetermineAction(target)) {
-                        case ActionType.Attack:
-                            battleManager.Attack();
-                            break;
-                        case ActionType.Defend:
-                            battleManager.Defend();
-                            break;
-                        case ActionType.Yield:
-                            battleManager.Yield();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Monster or target is null!");
-                }
-            }
-            else if (actionQueueProcessor == null)
-            {
-                // Fallback to old behavior if no processor assigned
-                GameWorld.Battle.CurrentTurn.Execute();
-            }
-        }
     }
 
     private Player LoadPlayer(Player player)
@@ -185,34 +147,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         // Unsubscribe to prevent memory leaks
         if (actionQueueProcessor != null)
         {
-            actionQueueProcessor.OnActionComplete -= HandleActionComplete;
-        }
-    }
-    
-    private void HandleActionComplete(IGameAction action)
-    {
-        if (GameWorld.Battle == null) return;
-
-        // Check for battle end
-        if (GameWorld.Battle.IsOver)
-        {
-            if (GameWorld.Battle.Player1.IsDead)
-            {
-                var lose = new LoseAction(GameWorld.Battle.Player1, GameWorld.Battle.Player2);
-                actionQueueProcessor.EnqueueAction(lose);
-            }
-            else if (GameWorld.Battle.Player2.IsDead)
-            {
-                var win = new WinAction(GameWorld.Battle.Player1, GameWorld.Battle.Player2);
-                actionQueueProcessor.EnqueueAction(win);
-            }
-            return;
-        }
-
-        // After an action completes, if battle continues, end the current turn
-        if (GameWorld.Battle.CurrentTurn != null)
-        {
-            GameWorld.Battle.CurrentTurn.End();
+            actionQueueProcessor.OnActionComplete -= GameWorld.Battle.DetermineNextAction;
         }
     }
 }

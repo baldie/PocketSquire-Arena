@@ -17,7 +17,7 @@ namespace PocketSquire.Arena.Tests
 
             // Assert
             Assert.That(entity.Health, Is.EqualTo(6));
-            Assert.That(entity.IsDead, Is.False);
+            Assert.That(entity.IsDefeated, Is.False);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace PocketSquire.Arena.Tests
 
             // Assert
             Assert.That(entity.Health, Is.EqualTo(0));
-            Assert.That(entity.IsDead, Is.True);
+            Assert.That(entity.IsDefeated, Is.True);
         }
 
         [Test]

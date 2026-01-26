@@ -15,7 +15,7 @@ namespace PocketSquire.Arena.Core
         public static List<Monster> Monsters { get; set; } = new List<Monster>();
         public static List<Player> Players { get; set; } = new List<Player>();
         public static Battle? Battle { get; set; } = null;
-        public static ProgressionLogic Progression { get; set; }
+        public static ProgressionLogic? Progression { get; set; }
 
         public static void Load(string? rootPath = null)
         {

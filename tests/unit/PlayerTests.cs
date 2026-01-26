@@ -29,7 +29,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player.Attributes.Intelligence, Is.EqualTo(1));
             Assert.That(player.Attributes.Wisdom, Is.EqualTo(1));
             Assert.That(player.Attributes.Luck, Is.EqualTo(1));
-            Assert.That(player.IsDead, Is.False);
+            Assert.That(player.IsDefeated, Is.False);
         }
 
         [Test]

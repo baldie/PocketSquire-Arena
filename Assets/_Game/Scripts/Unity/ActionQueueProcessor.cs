@@ -24,14 +24,19 @@ public class ActionQueueProcessor : MonoBehaviour
     public string monsterObjectName = "MonsterSprite";
     public TextMeshProUGUI monsterEffectText;
     public TextMeshProUGUI playerEffectText;
+    public Image playerHealthBarActual;
+    public Image playerHealthBarGhost;
+    public Image monsterHealthBarActual;
+    public Image monsterHealthBarGhost;
         
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
+    private enum ShakeType { None, Hit, Heal }
 
     /// <summary>
     /// Event fired when an action completes. Can be used to trigger turn changes.
     /// </summary>
-    public event System.Action<IGameAction> OnActionComplete;
+    public event System.Func<IGameAction, IGameAction> OnActionComplete;
 
     /// <summary>
     /// Returns true if the queue is currently processing an action.
@@ -42,10 +47,6 @@ public class ActionQueueProcessor : MonoBehaviour
     /// Returns the number of actions currently in the queue.
     /// </summary>
     public int QueueCount => actionQueue.Count;
-
-    void Awake()
-    {
-    }
 
     void Update()
     {
@@ -68,18 +69,17 @@ public class ActionQueueProcessor : MonoBehaviour
             return;
         }
         actionQueue.Enqueue(action);
-        Debug.Log($"Action enqueued: {action.Type} by {action.Actor.Name}");
     }
 
     private IEnumerator ProcessAction(IGameAction action)
     {
-        Debug.Log($"Processing action: {action.Type} by {action.Actor.Name} -> {action.Target.Name}");
-
         // 1. Trigger Actor Effects
+        action.ApplyEffect();
+
         PlayActionEffects(action.Actor, action.Type);
 
         // 2. Wait for mid-point (impact)
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);       
 
         // 3. Trigger Target Hit Effects (if it was an attack)
         if (action.Type == ActionType.Attack && action.Target != null)
@@ -92,15 +92,16 @@ public class ActionQueueProcessor : MonoBehaviour
             {
                 PlayHitEffects(action as AttackAction);
             }
+            // 4. Wait for remainder of animation
+            yield return new WaitForSeconds(0.5f);
+        }       
+
+        // 6. Determine next action
+        IGameAction result = OnActionComplete?.Invoke(action);
+        if (result != null)
+        {
+            EnqueueAction(result);
         }
-
-        // 4. Wait for remainder of animation
-        yield return new WaitForSeconds(0.5f);
-
-        // 5. Apply Effect and Cleanup
-        action.ApplyEffect();
-
-        OnActionComplete?.Invoke(action);
         currentActionCoroutine = null;
     }
 
@@ -129,12 +130,16 @@ public class ActionQueueProcessor : MonoBehaviour
         AudioClip clip = !string.IsNullOrEmpty(hitSoundId) ? assetRegistry?.GetSound(hitSoundId) : null;
         if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
 
-        // Animation / Visuals
-        TriggerVisuals(target, ActionType.Hit);
-
         // Show Damage Number
         var textControl = target is Player ? playerEffectText : monsterEffectText;
         ShowNumberEffect(textControl, action.Damage, Color.red);
+
+        var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
+        var healthbarGhost = target is Player ? playerHealthBarGhost : monsterHealthBarGhost;
+        UpdateHealth(healthbarActual, healthbarGhost, target.Health, target.MaxHealth, ShakeType.Hit);
+        
+        // Animation / Visuals
+        TriggerVisuals(target, ActionType.Hit);
     }
 
     private void PlayDefendEffects(AttackAction action)
@@ -158,144 +163,155 @@ public class ActionQueueProcessor : MonoBehaviour
         if (entity == null) return;
 
         GameObject go = FindGameObjectForEntity(entity);
-        if (go != null)
+        if (go == null) return;
+
+        var imgComponent = go.GetComponent<Image>();
+        if (imgComponent == null) return;
+
+        switch (actionType)
         {
-            // Sprite Swapping Logic
-            var imgComponent = go.GetComponent<UnityEngine.UI.Image>();
-            if (imgComponent == null) return;
-            
-            if (actionType == ActionType.Hit)
-            {
-                // 1. Shake
-                var rectTransform = go.GetComponent<RectTransform>();
-                rectTransform.DOShakeAnchorPos(0.4f, 15f, 20, 90f);
-
-                // 2. Flash and show hit sprite
-                if (imgComponent.material != null)
-                {
-                    var hitSprite = assetRegistry.GetSprite(entity.HitSpriteId);
-                    if (hitSprite == null) {
-                        Debug.LogWarning($"Hit sprite `{entity.HitSpriteId}` not found for {entity.Name}");
-                    }
-                    else
-                    {
-                        Debug.Log($"Hit sprite `{entity.HitSpriteId}` found for {entity.Name}");
-                    }
-                    var idleSprite = imgComponent.sprite;
-
-                    // Kill previous flash if it's still running
-                    DOTween.Kill(imgComponent.material);
-                    DOTween.Sequence()
-                        .Append(imgComponent.material.DOFloat(1f, "_FlashAmount", 0))   // Flash white
-                        .AppendInterval(0.08f)                                // Hold
-                        .Append(imgComponent.material.DOFloat(0f, "_FlashAmount", 0))   // Flash back
-                        .AppendCallback(() => imgComponent.sprite = hitSprite) // Swap sprite
-                        .AppendInterval(0.08f)                                // Hold
-                        .OnComplete(() => {
-                            imgComponent.sprite = idleSprite;
-                        })
-                        .SetTarget(imgComponent.material);
-                }
-            } 
-            else if (actionType == ActionType.Attack) 
-            {
-                var attackSprite = assetRegistry.GetSprite(entity.AttackSpriteId);
-                if (attackSprite == null) {
-                    Debug.LogWarning($"Attack sprite `{entity.AttackSpriteId}` not found for {entity.Name}");
-                }
-                var idleSprite = imgComponent.sprite;
-                DOTween.Sequence()
-                    .AppendCallback(() => imgComponent.sprite = attackSprite) // Swap sprite
-                    .AppendInterval(0.25f)                                // Hold
-                    .OnComplete(() => {
-                        imgComponent.sprite = idleSprite;
-                    })
-                    .SetTarget(imgComponent.material);
-            }  
-            else if (actionType == ActionType.Defend) 
-            {
-                var defendSprite = assetRegistry.GetSprite(entity.DefendSpriteId);
-                if (defendSprite == null) {
-                    Debug.LogWarning($"Defend sprite `{entity.DefendSpriteId}` not found for {entity.Name}");
-                }
-                var idleSprite = imgComponent.sprite; // Assume current is idle/base
-                
-                DOTween.Sequence()
-                   .AppendCallback(() => imgComponent.sprite = defendSprite)
-                   .AppendInterval(2.0f) // Defend action duration context
-                   .OnComplete(() => {
-                       // Only revert if we are done? 
-                       // Actually, let's revert to keep it safe from getting stuck.
-                       imgComponent.sprite = idleSprite;
-                   })
-                   .SetTarget(imgComponent.material);
-            }
-            else if (actionType == ActionType.UseItem) 
-            {
-                // TODO: Show item menu
-            }
-            else if (actionType == ActionType.Yield) 
-            {
-                // TODO: end battle early
-            }
-            else if (actionType == ActionType.Win) 
-            {
-                var monsterGameObject = FindGameObjectForEntity(GameWorld.Battle.Player2);
-                if (monsterGameObject == null){
-                    Debug.LogWarning("Monster GameObject not found for Player2");
-                    return;
-                }
-                var monsterImage = monsterGameObject.GetComponent<Image>();
-                if (monsterImage == null){
-                    Debug.LogWarning("Monster Image not found on monster game object");
-                    return;
-                }
-
-                // Create a sequence to group tweens
-                var deathSeq = DOTween.Sequence();
-                var monsterRect = monsterImage.rectTransform;
-                deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.InQuint));
-                deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
-
-                deathSeq.OnComplete(() => {
-                    // Show win pose
-                    imgComponent.sprite = assetRegistry.GetSprite(GameWorld.Battle.Player1.WinSpriteId);
-
-                    // hide all monster objects
-                    monsterGameObject.transform.parent.localScale = Vector3.zero;
-                });
-                deathSeq.SetLink(monsterGameObject);
-
-                // Level up sequence
-                Debug.Log("Checking if player can level up");
-                if (GameState.Player.CanLevelUp()) {
-                    Debug.Log("Player can level up");
-                    var levelUpBackground = GameObject.Find("LevelUpBackground").GetComponent<RectTransform>();
-                    var levelUpPresenter = levelUpBackground.GetComponent<LevelUpPresenter>();
-                    LevelUpPresenter.Show(levelUpBackground, levelUpPresenter);
-                }
-                else {
-                    Debug.Log("Player cannot level up");
-                }
-                // 3. (Optional) You can add more things here that happen AFTER the slide
-                // winSeq.Append(victoryText.DOFade(1, 0.3f));
-            }
-            else if (actionType == ActionType.Lose) 
-            {
-                imgComponent.sprite = assetRegistry.GetSprite(GameWorld.Battle.Player1.DefeatSpriteId);
-            }
+            case ActionType.Hit:
+                HandleHitVisuals(go, imgComponent, entity);
+                break;
+            case ActionType.Attack:
+                HandleSpriteSwap(imgComponent, entity.AttackSpriteId, 0.25f);
+                break;
+            case ActionType.Defend:
+                HandleSpriteSwap(imgComponent, entity.DefendSpriteId, 2.0f);
+                break;
+            case ActionType.Win:
+                HandleWinVisuals(imgComponent, entity);
+                break;
+            case ActionType.Lose:
+                SetSprite(imgComponent, entity.DefeatSpriteId);
+                break;
+            case ActionType.Item:
+            case ActionType.Yield:
+                // TODO: Implement these via specific handlers
+                break;
         }
     }
 
-    // Use for big hits
-    public void HitStop()
+    private void HandleHitVisuals(GameObject go, Image img, Entity entity)
     {
-        // Temporarily set timeScale to 0.05 (near frozen) then snap back
-        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.05f, 0.01f)
-            .OnComplete(() => {
-                DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 1f, 0.1f)
-                        .SetUpdate(true); // Must be true so it works while time is slow!
-            }).SetUpdate(true);
+        var rectTransform = go.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            rectTransform.DOShakeAnchorPos(0.4f, 15f, 20, 90f);
+        }
+
+        if (img.material == null) return;
+
+        Sprite hitSprite = assetRegistry.GetSprite(entity.HitSpriteId);
+        if (hitSprite == null)
+        {
+            Debug.LogWarning($"Hit sprite `{entity.HitSpriteId}` not found for {entity.Name}");
+            return;
+        }
+
+        Sprite idleSprite = img.sprite;
+        DOTween.Kill(img.material);
+        DOTween.Sequence()
+            .Append(img.material.DOFloat(1f, "_FlashAmount", 0))
+            .AppendInterval(0.08f)
+            .Append(img.material.DOFloat(0f, "_FlashAmount", 0))
+            .AppendCallback(() => img.sprite = hitSprite)
+            .AppendInterval(0.08f)
+            .OnComplete(() => img.sprite = idleSprite)
+            .SetTarget(img.material);
+    }
+
+    private void HandleSpriteSwap(Image img, string spriteId, float duration)
+    {
+        Sprite newSprite = assetRegistry.GetSprite(spriteId);
+        if (newSprite == null)
+        {
+            Debug.LogWarning($"Sprite `{spriteId}` not found.");
+            return;
+        }
+
+        Sprite originalSprite = img.sprite;
+        DOTween.Sequence()
+            .AppendCallback(() => img.sprite = newSprite)
+            .AppendInterval(duration)
+            .OnComplete(() => img.sprite = originalSprite)
+            .SetTarget(img.material);
+    }
+
+    private void UpdateHealth(Image healthBarActual, Image healthBarGhost, int currentHealth, int maxHealth, ShakeType shakeType)
+    {
+        float targetFill = (float)currentHealth / maxHealth;
+
+        // 1. Shake health bar
+        if (shakeType == ShakeType.Hit)
+        {
+            healthBarActual.transform.parent.DOKill(true); // Complete previous shake if hit again
+            healthBarActual.transform.parent.DOShakePosition(0.3f, strength: 10f, vibrato: 20);
+        }
+        
+        // 2. Snap the actual health bar instantly
+        healthBarActual.fillAmount = targetFill;
+
+        // 3. Animate the ghost bar
+        // Only start a new tween if the ghost is actually further ahead than the actual bar
+        if (healthBarGhost.fillAmount > targetFill) 
+        {
+            // Complete: false ensures we don't snap to the end before restarting
+            healthBarGhost.DOKill(false); 
+
+            healthBarGhost.DOFillAmount(targetFill, 0.5f)
+                .SetDelay(0.5f)
+                .SetEase(Ease.OutQuad);
+        }
+        else 
+        {
+            // If healing, just snap the ghost bar to match
+            healthBarGhost.fillAmount = targetFill;
+        }
+    }
+
+    private void SetSprite(Image img, string spriteId)
+    {
+        Sprite newSprite = assetRegistry.GetSprite(spriteId);
+        if (newSprite != null) img.sprite = newSprite;
+    }
+
+    private void HandleWinVisuals(Image playerImg, Entity player)
+    {
+        var monsterGO = FindGameObjectForEntity(GameWorld.Battle.Player2);
+        if (monsterGO == null) return;
+
+        var monsterImage = monsterGO.GetComponent<Image>();
+        if (monsterImage == null) return;
+
+        var deathSeq = DOTween.Sequence();
+        var monsterRect = monsterImage.rectTransform;
+
+        deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.OutQuint));
+        deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
+
+        deathSeq.OnComplete(() =>
+        {
+            SetSprite(playerImg, GameWorld.Battle.Player1.WinSpriteId);
+            if (monsterGO.transform.parent != null)
+                monsterGO.transform.parent.localScale = Vector3.zero;
+        });
+
+        deathSeq.SetLink(monsterGO);
+
+        Debug.Log("Player experience: " + GameState.Player.Experience);
+        Debug.Log("Player can level up: " + GameState.Player.CanLevelUp());
+        if (GameState.Player.CanLevelUp())
+        {
+            Debug.Log("Player can level up");
+            var levelUpObj = GameObject.Find("LevelUpBackground");
+            if (levelUpObj != null)
+            {
+                var rect = levelUpObj.GetComponent<RectTransform>();
+                var presenter = levelUpObj.GetComponent<LevelUpPresenter>();
+                LevelUpPresenter.Show(rect, presenter);
+            }
+        }
     }
 
     public void ShowNumberEffect(TextMeshProUGUI textControl, int amount, Color textColor)
