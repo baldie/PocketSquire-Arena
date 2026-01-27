@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PocketSquire.Arena.Core;
+using DG.Tweening;
 
 namespace PocketSquire.Unity
 {
@@ -83,7 +84,8 @@ namespace PocketSquire.Unity
                 if (player != null)
                 {
                     var attackAction = new AttackAction(player, GameWorld.Battle.CurrentTurn.Target);
-                    actionQueueProcessor.EnqueueAction(attackAction);
+                    // Wait 0.1 seconds before enqueuing the action to allow the menu selection sfx to play
+                    DOTween.Sequence().AppendInterval(0.4f).AppendCallback(() => actionQueueProcessor.EnqueueAction(attackAction));
                 }
             }
         }

@@ -72,6 +72,7 @@ namespace PocketSquire.Arena.Core
         }
 
         public bool CanLevelUp() {
+            if (GameWorld.Progression == null) return false;
             var nextLevel = GameWorld.Progression.GetLevelForExperience(this.Experience);
 
             return this.Level < nextLevel;
@@ -95,7 +96,9 @@ namespace PocketSquire.Arena.Core
         }
 
         public void AcceptNewLevel() {
-            this.Level = GameWorld.Progression.GetLevelForExperience(this.Experience);
+            if (GameWorld.Progression != null) {
+                this.Level = GameWorld.Progression.GetLevelForExperience(this.Experience);
+            }
         }
 
         public string GetSpriteId(GameContext context)

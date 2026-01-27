@@ -21,9 +21,8 @@ namespace PocketSquire.Arena.Core
 
         public void ApplyEffect()
         {
-            if (Actor is Player)
+            if (Actor is Player player)
             {
-                var player = Actor as Player;
                 Console.WriteLine("Player gained " + Target.Experience + " experience points");
                 player.Experience += Target.Experience;
             }

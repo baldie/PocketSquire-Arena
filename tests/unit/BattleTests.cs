@@ -24,7 +24,7 @@ namespace PocketSquire.Arena.Tests
             var battle = new Battle(_player, _monster);
 
             // Assert
-            Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.True);
+            Assert.That(battle.CurrentTurn?.IsPlayerTurn, Is.True);
             Assert.That(battle.IsOver(), Is.False);
         }
 
@@ -38,13 +38,13 @@ namespace PocketSquire.Arena.Tests
             battle.AdvanceTurn();
 
             // Assert - Now monster turn
-            Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.False);
+            Assert.That(battle.CurrentTurn?.IsPlayerTurn, Is.False);
 
             // Act - End turn again
             battle.AdvanceTurn();
 
             // Assert - Now player turn again
-            Assert.That(battle.CurrentTurn.IsPlayerTurn, Is.True);
+            Assert.That(battle.CurrentTurn?.IsPlayerTurn, Is.True);
         }
 
         [Test]

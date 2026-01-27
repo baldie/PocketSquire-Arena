@@ -13,6 +13,10 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
         [SerializeField] private Button acceptButton;
         [SerializeField] private Transform levelUpBackground; // Parent containing rows and accept button
         [SerializeField] private TextMeshProUGUI pointsLabel;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip levelUpSound;
+        [SerializeField] private AudioClip statChangeSound;
+        [SerializeField] private AudioClip acceptSound;
         
         private ILevelUpModel _model;
         private List<AttributeRow> _attributeRows = new List<AttributeRow>();
@@ -80,11 +84,21 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
         private void OnIncrement(string key)
         {
             _model.IncrementAttribute(key);
+
+            if (audioSource != null && statChangeSound != null)
+            {
+                audioSource.PlayOneShot(statChangeSound);
+            }
         }
 
         private void OnDecrement(string key)
         {
             _model.DecrementAttribute(key);
+
+            if (audioSource != null && statChangeSound != null)
+            {
+                audioSource.PlayOneShot(statChangeSound);
+            }
         }
 
         private void OnAcceptClicked()
@@ -97,6 +111,11 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             else
             {
                 Debug.Log("No player to save to.");
+            }
+
+            if (audioSource != null && acceptSound != null)
+            {
+                audioSource.PlayOneShot(acceptSound);
             }
 
             LevelUpPresenter.HideLevelUpScreen(levelUpBackground as RectTransform);
@@ -169,6 +188,11 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             var attributes = PlayerAttributesToDictionary(GameState.Player.Attributes);
             int currentLevel = GameState.Player.Level;
             levelUpPresenter.Initialize(attributes, reward.StatPoints, currentLevel);
+
+            if (levelUpPresenter.audioSource != null && levelUpPresenter.levelUpSound != null)
+            {
+                levelUpPresenter.audioSource.PlayOneShot(levelUpPresenter.levelUpSound);
+            }
 
             // Animate the level up screen's appearance on the scene
             Sequence showSequence = DOTween.Sequence();

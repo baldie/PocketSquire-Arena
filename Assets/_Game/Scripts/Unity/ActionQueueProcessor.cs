@@ -314,6 +314,17 @@ public class ActionQueueProcessor : MonoBehaviour
         }
     }
 
+    // Use for big hits
+    public void HitStop()
+    {
+        // Temporarily set timeScale to 0.05 (near frozen) then snap back
+        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.05f, 0.01f)
+            .OnComplete(() => {
+                DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 1f, 0.1f)
+                        .SetUpdate(true); // Must be true so it works while time is slow!
+            }).SetUpdate(true);
+    }
+
     public void ShowNumberEffect(TextMeshProUGUI textControl, int amount, Color textColor)
     {
         textControl.text = amount.ToString();

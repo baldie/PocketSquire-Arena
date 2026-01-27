@@ -15,10 +15,8 @@ namespace PocketSquire.Arena.Core
         public ChangeTurnsAction(Battle? battle = null)
         {
             _battle = battle ?? GameWorld.Battle ?? throw new InvalidOperationException("No battle found in GameWorld.Battle");
-            if (_battle.CurrentTurn != null) {
-                Actor = _battle.CurrentTurn.Actor;
-                Target = _battle.CurrentTurn.Target;
-            }
+            Actor = _battle.CurrentTurn?.Actor ?? _battle.Player1;
+            Target = _battle.CurrentTurn?.Target ?? _battle.Player2;
         }
 
         public void ApplyEffect()
@@ -28,7 +26,7 @@ namespace PocketSquire.Arena.Core
             var player1 = _battle.Player1;
             var player2 = _battle.Player2;
             
-            if (_battle.CurrentTurn.IsPlayerTurn)
+            if (_battle.CurrentTurn!.IsPlayerTurn)
             {
                 player2.IsDefending = false; // Reset defend for the new actor
                 _battle.CurrentTurn = new Turn(player2, player1);

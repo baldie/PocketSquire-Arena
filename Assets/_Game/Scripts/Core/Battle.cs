@@ -4,7 +4,7 @@ namespace PocketSquire.Arena.Core
 {
     public class Battle
     {
-        public Turn CurrentTurn { get; set; }
+        public Turn? CurrentTurn { get; set; }
         public Entity Player1 { get; private set; }
         public Entity Player2 { get; private set; }
 
@@ -38,7 +38,7 @@ namespace PocketSquire.Arena.Core
         /// </summary>
         /// <param name="action">The action that was just completed</param>
         /// <returns>The next action to be executed, or null if the battle is over</returns>
-        public IGameAction DetermineNextAction(IGameAction action)
+        public IGameAction? DetermineNextAction(IGameAction action)
         {
             // End of battle logic
             var someoneHasLost = Player1.IsDefeated || Player2.IsDefeated;
@@ -51,12 +51,12 @@ namespace PocketSquire.Arena.Core
                     : (IGameAction)new WinAction(Player1, Player2);
             }
 
-            if (battleIsStillGoing)
+            if (battleIsStillGoing && CurrentTurn != null)
             {
                 // If it's the monster's turn, let it take an action
-                IGameAction nextAction = null;
-                if (action.Type == ActionType.ChangeTurns && CurrentTurn.Actor is Monster) {
-                    switch(CurrentTurn.Actor.DetermineAction(CurrentTurn.Target)) {
+                IGameAction? nextAction = null;
+                if (action.Type == ActionType.ChangeTurns && CurrentTurn.Actor is Monster monster) {
+                    switch(monster.DetermineAction(CurrentTurn.Target)) {
                         case ActionType.Attack:
                             nextAction = new AttackAction(CurrentTurn.Actor, CurrentTurn.Target);
                             break;
