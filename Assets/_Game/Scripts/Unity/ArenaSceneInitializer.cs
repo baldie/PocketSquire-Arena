@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using PocketSquire.Arena.Core;
+using System.Collections;
 
 public class ArenaSceneInitializer : MonoBehaviour
 {
@@ -13,6 +15,11 @@ public class ArenaSceneInitializer : MonoBehaviour
     [Header("Battle")]
     [Tooltip("Reference to the BattleManager in the scene")]
     public PocketSquire.Unity.BattleManager battleManager;
+    public Canvas battleMenu;
+    
+    [Header("Buttons")]
+    public Button nextOpponentButton;
+    public Button leaveArenaButton;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,8 +38,17 @@ public class ArenaSceneInitializer : MonoBehaviour
         {
             actionQueueProcessor.OnActionComplete += GameWorld.Battle.DetermineNextAction;
         }
-    }
 
+        if (nextOpponentButton != null)
+        {
+            nextOpponentButton.onClick.AddListener(() => GoToScene("Arena", nextOpponentButton.gameObject));
+        }
+
+        if (leaveArenaButton != null)
+        {
+            leaveArenaButton.onClick.AddListener(() => GoToScene("Town", leaveArenaButton.gameObject));
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -40,21 +56,12 @@ public class ArenaSceneInitializer : MonoBehaviour
         // TODO: don't do this on every update
         if (GameWorld.Battle == null) return;
         if (GameWorld.Battle.CurrentTurn == null) return;
-
-        var battleMenu = GameObject.Find("BattleMenuPanel");
         if (battleMenu == null) return;
-
-        var battleMenuCanvas = battleMenu.GetComponent<Canvas>();
-        if (battleMenuCanvas == null)
-        {
-            Debug.LogError("BattleMenu does not have a Canvas!");
-            return;
-        }
         
         bool shouldShowMenu = GameWorld.Battle.CurrentTurn.IsPlayerTurn && 
                              (actionQueueProcessor == null || (!actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0));
 
-        battleMenuCanvas.enabled = shouldShowMenu;
+        battleMenu.gameObject.SetActive(shouldShowMenu);
     }
 
     private Player LoadPlayer(Player player)
@@ -148,6 +155,34 @@ public class ArenaSceneInitializer : MonoBehaviour
         if (actionQueueProcessor != null)
         {
             actionQueueProcessor.OnActionComplete -= GameWorld.Battle.DetermineNextAction;
+        }
+    }
+
+    public void GoToScene(string sceneName, GameObject buttonObj)
+    {
+        StartCoroutine(PlaySoundThenLoad(sceneName, buttonObj));
+    }
+
+    private IEnumerator PlaySoundThenLoad(string sceneName, GameObject buttonObj)
+    {
+        if (buttonObj != null)
+        {
+            var menuButtonSound = buttonObj.GetComponent<MenuButtonSound>();
+            if (menuButtonSound != null && menuButtonSound.clickSound != null)
+            {
+                menuButtonSound.PlayClick();
+                yield return new WaitForSecondsRealtime(menuButtonSound.clickSound.length);
+            }
+        }
+
+        if (Application.CanStreamedLevelBeLoaded(sceneName))
+        {
+            Debug.Log($"[ArenaSceneInitializer] Loading scene '{sceneName}'");
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogWarning($"[ArenaSceneInitializer] Scene '{sceneName}' could not be loaded. Please ensure it is in Build Settings.");
         }
     }
 }

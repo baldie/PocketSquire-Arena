@@ -37,7 +37,6 @@ public static class SaveSystem
         
         // 1. Read the text from the file
         string json = File.ReadAllText(path);
-        Debug.Log("Save file JSON loaded:\n" + json);
 
         // 2. Convert JSON back to the SaveData object
         return JsonUtility.FromJson<SaveData>(json);

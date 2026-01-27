@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
         
         private ILevelUpModel _model;
         private List<AttributeRow> _attributeRows = new List<AttributeRow>();
+        private Action _onAccept;
 
         private void Start()
         {
@@ -44,6 +46,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             
             if (acceptButton != null)
             {
+                acceptButton.onClick.RemoveListener(OnAcceptClicked);
                 acceptButton.onClick.AddListener(OnAcceptClicked);
             }
 
@@ -73,7 +76,9 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
                     
                     // Wire up events
                     string key = row.AttributeKey;
+                    row.PlusButton.onClick.RemoveAllListeners();
                     row.PlusButton.onClick.AddListener(() => OnIncrement(key));
+                    row.MinusButton.onClick.RemoveAllListeners();
                     row.MinusButton.onClick.AddListener(() => OnDecrement(key));
 
                     _attributeRows.Add(row);
@@ -119,6 +124,12 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             }
 
             LevelUpPresenter.HideLevelUpScreen(levelUpBackground as RectTransform);
+            
+            // Wait half a sec and then show the arena menu
+            DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() => {
+                _onAccept?.Invoke();
+                _onAccept = null;
+            });
         }
 
         private static Dictionary<string, int> PlayerAttributesToDictionary(Attributes attr)
@@ -179,8 +190,9 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             }
         }
 
-        public static void Show(RectTransform levelUpBackground, LevelUpPresenter levelUpPresenter)
+        public static void Show(RectTransform levelUpBackground, LevelUpPresenter levelUpPresenter, Action onAccept)
         {
+            levelUpPresenter._onAccept = onAccept;
             Debug.Log("Showing level up screen");
             // Prepare the level up screen with the appropriate values
             int level = GameWorld.Progression.GetLevelForExperience(GameState.Player.Experience); 

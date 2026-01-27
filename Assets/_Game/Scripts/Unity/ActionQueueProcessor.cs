@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core;
@@ -28,6 +29,7 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image playerHealthBarGhost;
     public Image monsterHealthBarActual;
     public Image monsterHealthBarGhost;
+    public Canvas arenaMenu;
         
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
@@ -299,8 +301,6 @@ public class ActionQueueProcessor : MonoBehaviour
 
         deathSeq.SetLink(monsterGO);
 
-        Debug.Log("Player experience: " + GameState.Player.Experience);
-        Debug.Log("Player can level up: " + GameState.Player.CanLevelUp());
         if (GameState.Player.CanLevelUp())
         {
             Debug.Log("Player can level up");
@@ -309,9 +309,32 @@ public class ActionQueueProcessor : MonoBehaviour
             {
                 var rect = levelUpObj.GetComponent<RectTransform>();
                 var presenter = levelUpObj.GetComponent<LevelUpPresenter>();
-                LevelUpPresenter.Show(rect, presenter);
+
+                // Show the arena menu after the player has leveled up.
+                LevelUpPresenter.Show(rect, presenter, () => showArenaMenu());
             }
+        } else {
+            showArenaMenu();
         }
+    }
+
+    private void showArenaMenu()
+    {
+        if (arenaMenu == null){
+            Debug.LogError("ArenaMenu not found!");
+            return;
+        }
+
+        var arenaMenuCanvas = arenaMenu.GetComponent<Canvas>();
+        if (arenaMenuCanvas == null)
+        {
+            Debug.LogError("BattleMenu does not have a Canvas!");
+            return;
+        }
+        
+        arenaMenu.gameObject.SetActive(true);
+        GameObject btnNextOpponent = arenaMenu.transform.GetChild(0).gameObject;
+        EventSystem.current.SetSelectedGameObject(btnNextOpponent);
     }
 
     // Use for big hits

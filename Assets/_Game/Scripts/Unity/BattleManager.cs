@@ -15,8 +15,6 @@ namespace PocketSquire.Unity
         [Tooltip("Reference to the ActionQueueProcessor in the scene")]
         public ActionQueueProcessor actionQueueProcessor;
 
-
-
         void Start()
         {
             if (actionQueueProcessor == null)

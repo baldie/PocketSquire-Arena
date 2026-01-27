@@ -6,7 +6,6 @@ public class MenuSelectionCursor : MonoBehaviour
 {
     [Header("Setup")]
     public RectTransform cursorGraph; // Drag your Cursor Image here
-    public float xOffset = -200f;     // Distance to the left of the button center
     public float moveSpeed = 15f;     // How snappy the cursor moves (higher is faster)
 
     void Update()

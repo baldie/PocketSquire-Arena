@@ -3155,6 +3155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf62f586078aca4881a641eab274f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameInitializer
+  _progressionAsset: {fileID: 11400000, guid: 4bdce86dddd5e944db0fbbcf20603b36, type: 2}
 --- !u!4 &1983840167
 Transform:
   m_ObjectHideFlags: 0
