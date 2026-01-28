@@ -47,7 +47,7 @@ namespace PocketSquire.Unity
                 var playTimeStr = string.Format("Play time {0}d {1}h {2}m", playTime.Days, playTime.Hours, playTime.Minutes);
                 
                 DateTime parsedDate = DateTime.MinValue;
-                if (DateTime.TryParse(data.LastSaveDate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var d))
+                if (DateTime.TryParse(data.LastSaveDateString, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var d))
                     parsedDate = d;
                 
                 var dateStr = (parsedDate != DateTime.MinValue) ? parsedDate.ToString("MM/dd/yyyy HH:mm:ss") : "N/A";

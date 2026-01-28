@@ -14,7 +14,7 @@ public static class SaveSystem
     public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot, SaveData data)
     {
         // 0. Set the last save date
-        data.LastSaveDate = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        data.LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
         // 1. Convert the data object to a JSON string
         string json = JsonUtility.ToJson(data, true); // 'true' makes it pretty-print

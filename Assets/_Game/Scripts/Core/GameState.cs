@@ -33,7 +33,7 @@ namespace PocketSquire.Arena.Core
             {
                 SelectedSaveSlot = SelectedSaveSlot,
                 CharacterCreationDate = CharacterCreationDate?.ToString(System.Globalization.CultureInfo.InvariantCulture),
-                LastSaveDate = LastSaveDate?.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                LastSaveDateString = LastSaveDate?.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 PlayTimeTicks = PlayTime?.Ticks ?? 0,
                 Player = Player
             };   
@@ -48,7 +48,7 @@ namespace PocketSquire.Arena.Core
             if (DateTime.TryParse(data.CharacterCreationDate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime creationDate))
                 CharacterCreationDate = creationDate;
             
-            if (DateTime.TryParse(data.LastSaveDate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime lastSaveDate))
+            if (DateTime.TryParse(data.LastSaveDateString, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime lastSaveDate))
                 LastSaveDate = lastSaveDate;
 
             PlayTime = TimeSpan.FromTicks(data.PlayTimeTicks);
@@ -65,9 +65,9 @@ namespace PocketSquire.Arena.Core
 
             foreach (var save in saves)
             {
-                if (save == null || string.IsNullOrEmpty(save.LastSaveDate)) continue;
+                if (save == null || string.IsNullOrEmpty(save.LastSaveDateString)) continue;
 
-                if (DateTime.TryParse(save.LastSaveDate, 
+                if (DateTime.TryParse(save.LastSaveDateString, 
                   System.Globalization.CultureInfo.InvariantCulture, 
                   System.Globalization.DateTimeStyles.None, 
                   out DateTime saveDate))

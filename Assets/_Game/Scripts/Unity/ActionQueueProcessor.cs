@@ -29,7 +29,7 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image playerHealthBarGhost;
     public Image monsterHealthBarActual;
     public Image monsterHealthBarGhost;
-    public Canvas arenaMenu;
+    public Canvas arenaMenuPanel;
         
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
@@ -320,20 +320,20 @@ public class ActionQueueProcessor : MonoBehaviour
 
     private void showArenaMenu()
     {
-        if (arenaMenu == null){
+        if (arenaMenuPanel == null){
             Debug.LogError("ArenaMenu not found!");
             return;
         }
 
-        var arenaMenuCanvas = arenaMenu.GetComponent<Canvas>();
+        var arenaMenuCanvas = arenaMenuPanel.GetComponent<Canvas>();
         if (arenaMenuCanvas == null)
         {
             Debug.LogError("BattleMenu does not have a Canvas!");
             return;
         }
         
-        arenaMenu.gameObject.SetActive(true);
-        GameObject btnNextOpponent = arenaMenu.transform.GetChild(0).gameObject;
+        arenaMenuPanel.gameObject.SetActive(true);
+        GameObject btnNextOpponent = arenaMenuPanel.transform.GetChild(0).gameObject;
         EventSystem.current.SetSelectedGameObject(btnNextOpponent);
     }
 

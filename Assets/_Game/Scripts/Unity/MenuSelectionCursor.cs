@@ -16,9 +16,9 @@ public class MenuSelectionCursor : MonoBehaviour
         // 2. Check if something is actually selected
         if (selectedObj != null)
         {
-            // Optional: Check if the selected item is actually a button 
-            // (so the cursor doesn't jump to scrollbars or sliders if you have them)
-            if(selectedObj.GetComponent<Button>() != null) 
+            // Check if it's a button AND if that button is interactable
+            Button btn = selectedObj.GetComponent<Button>();
+            if(btn != null && btn.interactable) 
             {
                 cursorGraph.gameObject.SetActive(true);
 
@@ -30,6 +30,11 @@ public class MenuSelectionCursor : MonoBehaviour
                 // 4. Move smoothly to that position
                 // (Use Vector3.MoveTowards for linear speed, or Vector3.Lerp for "ease-in" feel)
                 cursorGraph.position = Vector3.Lerp(cursorGraph.position, targetPosition, moveSpeed * Time.unscaledDeltaTime);
+            }
+            else
+            {
+                // Hide the cursor if the button is disabled (interactable = false)
+                cursorGraph.gameObject.SetActive(false);
             }
         }
         else

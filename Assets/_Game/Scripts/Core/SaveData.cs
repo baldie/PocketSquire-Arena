@@ -9,7 +9,7 @@ namespace PocketSquire.Arena.Core
     {
         public SaveSlots SelectedSaveSlot;
         public string? CharacterCreationDate;
-        public string? LastSaveDate;
+        public string? LastSaveDateString;
         public long PlayTimeTicks;
         public Player? Player;
     }

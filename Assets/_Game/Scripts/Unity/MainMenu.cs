@@ -32,7 +32,7 @@ namespace PocketSquire.Unity
             var continueButton = GameObject.Find("Canvas/ContinueButton")?.GetComponent<Button>();
             if (continueButton != null)
             {
-                SaveData[] saves = new SaveData[]
+                SaveData?[] saves = new SaveData?[]
                 {
                     SaveSystem.LoadGame(SaveSlots.Slot1),
                     SaveSystem.LoadGame(SaveSlots.Slot2),
