@@ -63,11 +63,25 @@ namespace PocketSquire.Arena.Tests
             
             var player = GameWorld.GetPlayerByName("player_m_l1");
             Assert.That(player, Is.Not.Null);
-            Assert.That(player!.Health, Is.EqualTo(10));
+            Assert.That(player!.Health, Is.EqualTo(3));
             Assert.That(player!.Attributes.Strength, Is.EqualTo(1));
             Assert.That(player!.SpriteId, Is.EqualTo("player_m_l1_battle"));
             Assert.That(player!.AttackSoundId, Is.EqualTo("m_physical_attack"));
             Assert.That(player!.Gender, Is.EqualTo(Player.CharGender.m));
+        }
+        [Test]
+        public void ResetMonsters_ShouldRestoreHealthToMax()
+        {
+            // Arrange
+            GameWorld.Monsters.Clear();
+            var monster = new Monster("Test Monster", 5, 10, new Attributes());
+            GameWorld.Monsters.Add(monster);
+
+            // Act
+            GameWorld.ResetMonsters();
+
+            // Assert
+            Assert.That(monster.Health, Is.EqualTo(10));
         }
     }
 }

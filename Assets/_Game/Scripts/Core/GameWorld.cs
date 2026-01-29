@@ -98,5 +98,13 @@ namespace PocketSquire.Arena.Core
             if (Monsters == null) return null;
             return Monsters.Find(e => e.Name == name);
         }
+
+        public static void ResetMonsters()
+        {
+            foreach (var monster in Monsters)
+            {
+                monster.Health = monster.MaxHealth;
+            }
+        }
     }
 }

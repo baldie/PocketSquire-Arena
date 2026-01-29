@@ -30,10 +30,16 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image monsterHealthBarActual;
     public Image monsterHealthBarGhost;
     public Canvas arenaMenuPanel;
+
+    [Header("Audio")]
+    public AudioClip crowd_pleased;
+    public AudioClip crowd_displeased;
+    public AudioClip player_win;
+    public AudioClip player_lose;
         
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
-    private enum ShakeType { None, Hit, Heal }
+    private enum HealthBarAnimationType { Snap, Shake, None }
 
     /// <summary>
     /// Event fired when an action completes. Can be used to trigger turn changes.
@@ -49,6 +55,19 @@ public class ActionQueueProcessor : MonoBehaviour
     /// Returns the number of actions currently in the queue.
     /// </summary>
     public int QueueCount => actionQueue.Count;
+
+    void Start()
+    {
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+        audioSource.PlayOneShot(crowd_pleased);
+
+        // Make the healthbars snap to their current values
+        UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameWorld.Battle.Player1.Health, GameWorld.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
+        UpdateHealth(monsterHealthBarActual, monsterHealthBarGhost, GameWorld.Battle.Player2.Health, GameWorld.Battle.Player2.MaxHealth, HealthBarAnimationType.Snap);
+    }
 
     void Update()
     {
@@ -138,7 +157,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
         var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
         var healthbarGhost = target is Player ? playerHealthBarGhost : monsterHealthBarGhost;
-        UpdateHealth(healthbarActual, healthbarGhost, target.Health, target.MaxHealth, ShakeType.Hit);
+        UpdateHealth(healthbarActual, healthbarGhost, target.Health, target.MaxHealth, HealthBarAnimationType.Shake);
         
         // Animation / Visuals
         TriggerVisuals(target, ActionType.Hit);
@@ -158,6 +177,11 @@ public class ActionQueueProcessor : MonoBehaviour
         // Show Damage Number
         var textControl = target is Player ? playerEffectText : monsterEffectText;
         ShowNumberEffect(textControl, action.Damage, Color.white);
+
+        // Update health bar
+        var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
+        var healthbarGhost = target is Player ? playerHealthBarGhost : monsterHealthBarGhost;
+        UpdateHealth(healthbarActual, healthbarGhost, target.Health, target.MaxHealth, HealthBarAnimationType.Shake);
     }
 
     private void TriggerVisuals(Entity entity, ActionType actionType)
@@ -185,13 +209,26 @@ public class ActionQueueProcessor : MonoBehaviour
                 HandleWinVisuals(imgComponent, entity);
                 break;
             case ActionType.Lose:
-                SetSprite(imgComponent, entity.DefeatSpriteId);
+                HandleLoseVisuals(imgComponent, entity);
                 break;
             case ActionType.Item:
             case ActionType.Yield:
                 // TODO: Implement these via specific handlers
                 break;
         }
+    }
+
+    private void HandleLoseVisuals(Image img, Entity entity)
+    {
+        SetSprite(img, entity.DefeatSpriteId);
+
+        // Sound
+        if (audioSource != null){
+            audioSource.PlayOneShot(player_lose);
+            audioSource.PlayOneShot(crowd_displeased);
+        }
+
+        showArenaMenu(false);
     }
 
     private void HandleHitVisuals(GameObject go, Image img, Entity entity)
@@ -240,12 +277,12 @@ public class ActionQueueProcessor : MonoBehaviour
             .SetTarget(img.material);
     }
 
-    private void UpdateHealth(Image healthBarActual, Image healthBarGhost, int currentHealth, int maxHealth, ShakeType shakeType)
+    private void UpdateHealth(Image healthBarActual, Image healthBarGhost, int currentHealth, int maxHealth, HealthBarAnimationType animationType)
     {
         float targetFill = (float)currentHealth / maxHealth;
 
         // 1. Shake health bar
-        if (shakeType == ShakeType.Hit)
+        if (animationType == HealthBarAnimationType.Shake)
         {
             healthBarActual.transform.parent.DOKill(true); // Complete previous shake if hit again
             healthBarActual.transform.parent.DOShakePosition(0.3f, strength: 10f, vibrato: 20);
@@ -256,7 +293,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
         // 3. Animate the ghost bar
         // Only start a new tween if the ghost is actually further ahead than the actual bar
-        if (healthBarGhost.fillAmount > targetFill) 
+        if (healthBarGhost.fillAmount > targetFill && animationType != HealthBarAnimationType.Snap) 
         {
             // Complete: false ensures we don't snap to the end before restarting
             healthBarGhost.DOKill(false); 
@@ -286,9 +323,14 @@ public class ActionQueueProcessor : MonoBehaviour
         var monsterImage = monsterGO.GetComponent<Image>();
         if (monsterImage == null) return;
 
-        var deathSeq = DOTween.Sequence();
         var monsterRect = monsterImage.rectTransform;
 
+        var deathSeq = DOTween.Sequence();
+        deathSeq.AppendCallback(() => {
+            string soundId = GameWorld.Battle.Player2.DefeatSoundId;
+            AudioClip clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
+            if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
+        });
         deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.OutQuint));
         deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
 
@@ -301,6 +343,8 @@ public class ActionQueueProcessor : MonoBehaviour
 
         deathSeq.SetLink(monsterGO);
 
+        if (audioSource != null) audioSource.PlayOneShot(player_win);
+
         if (GameState.Player.CanLevelUp())
         {
             Debug.Log("Player can level up");
@@ -311,30 +355,35 @@ public class ActionQueueProcessor : MonoBehaviour
                 var presenter = levelUpObj.GetComponent<LevelUpPresenter>();
 
                 // Show the arena menu after the player has leveled up.
-                LevelUpPresenter.Show(rect, presenter, () => showArenaMenu());
+                LevelUpPresenter.Show(rect, presenter, () => showArenaMenu(true));
             }
         } else {
-            showArenaMenu();
+            showArenaMenu(true);
         }
     }
 
-    private void showArenaMenu()
+    private void showArenaMenu(bool canContinue)
     {
         if (arenaMenuPanel == null){
             Debug.LogError("ArenaMenu not found!");
             return;
         }
 
-        var arenaMenuCanvas = arenaMenuPanel.GetComponent<Canvas>();
-        if (arenaMenuCanvas == null)
-        {
-            Debug.LogError("BattleMenu does not have a Canvas!");
-            return;
-        }
-        
         arenaMenuPanel.gameObject.SetActive(true);
-        GameObject btnNextOpponent = arenaMenuPanel.transform.GetChild(0).gameObject;
-        EventSystem.current.SetSelectedGameObject(btnNextOpponent);
+
+        // Get the Button components of the arena menu
+        var btnNextOpponent = arenaMenuPanel.transform.GetChild(0).GetComponent<Button>();
+        var btnLeaveArena = arenaMenuPanel.transform.GetChild(1).GetComponent<Button>();
+
+        // Enable / disable based on if the player can continue onwards
+        btnNextOpponent.interactable = canContinue;
+
+        if (canContinue) {   
+            EventSystem.current.SetSelectedGameObject(btnNextOpponent.gameObject);
+        } else {
+            // If the next opponent button is disabled, we focus the leave button
+            EventSystem.current.SetSelectedGameObject(btnLeaveArena.gameObject);
+        }
     }
 
     // Use for big hits

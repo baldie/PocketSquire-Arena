@@ -121,5 +121,12 @@ namespace PocketSquire.Arena.Tests
         }
 
 
+        [Test]
+        public void DefeatSoundId_CanBeSetAndRetrieved()
+        {
+            var entity = new Entity();
+            entity.DefeatSoundId = "death_sound";
+            Assert.That(entity.DefeatSoundId, Is.EqualTo("death_sound"));
+        }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Unity
 {
@@ -18,6 +19,9 @@ namespace PocketSquire.Unity
             {
                 adventureBtn.Select();
             }
+
+            // Must have lost in the arena :(
+            GameState.ResetRun();
         }
 
         private void WireButtons()

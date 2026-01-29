@@ -25,6 +25,7 @@ namespace PocketSquire.Arena.Core
         public string AttackSoundId = string.Empty;
         public string DefendSoundId = string.Empty;
         public string HitSoundId = string.Empty;
+        public string DefeatSoundId = string.Empty;
         public bool IsDefending { get; set; }
         public event Action? onDeath;
         public virtual string SpriteId => string.Empty;

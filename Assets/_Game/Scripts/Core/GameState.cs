@@ -81,5 +81,17 @@ namespace PocketSquire.Arena.Core
             }
             return mostRecentSave;
         }
+
+        public static void ResetRun()
+        {
+            if (Player != null)
+            {
+                if (Player.Health <= 0)
+                {
+                    Player.Health = Player.MaxHealth;
+                }
+            }
+            GameWorld.ResetMonsters();
+        }
     }
 }
