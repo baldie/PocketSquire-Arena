@@ -65,8 +65,8 @@ public class ActionQueueProcessor : MonoBehaviour
         audioSource.PlayOneShot(crowd_pleased);
 
         // Make the healthbars snap to their current values
-        UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameWorld.Battle.Player1.Health, GameWorld.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
-        UpdateHealth(monsterHealthBarActual, monsterHealthBarGhost, GameWorld.Battle.Player2.Health, GameWorld.Battle.Player2.MaxHealth, HealthBarAnimationType.Snap);
+        UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameState.Battle.Player1.Health, GameState.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
+        UpdateHealth(monsterHealthBarActual, monsterHealthBarGhost, GameState.Battle.Player2.Health, GameState.Battle.Player2.MaxHealth, HealthBarAnimationType.Snap);
     }
 
     void Update()
@@ -317,7 +317,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
     private void HandleWinVisuals(Image playerImg, Entity player)
     {
-        var monsterGO = FindGameObjectForEntity(GameWorld.Battle.Player2);
+        var monsterGO = FindGameObjectForEntity(GameState.Battle.Player2);
         if (monsterGO == null) return;
 
         var monsterImage = monsterGO.GetComponent<Image>();
@@ -327,7 +327,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
         var deathSeq = DOTween.Sequence();
         deathSeq.AppendCallback(() => {
-            string soundId = GameWorld.Battle.Player2.DefeatSoundId;
+            string soundId = GameState.Battle.Player2.DefeatSoundId;
             AudioClip clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
             if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
         });
@@ -336,7 +336,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
         deathSeq.OnComplete(() =>
         {
-            SetSprite(playerImg, GameWorld.Battle.Player1.WinSpriteId);
+            SetSprite(playerImg, GameState.Battle.Player1.WinSpriteId);
             if (monsterGO.transform.parent != null)
                 monsterGO.transform.parent.localScale = Vector3.zero;
         });

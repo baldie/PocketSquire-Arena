@@ -26,6 +26,13 @@ namespace PocketSquire.Arena.Core
             }
         }
 
+        public override string SpecialAttackSpriteId {
+            get
+            {
+                return Name.ToLower().Replace(" ", "_") + "_special_attack";
+            }
+        }
+
         public override string HitSpriteId {
             get
             {
@@ -44,6 +51,11 @@ namespace PocketSquire.Arena.Core
         {
             // Basic AI: Always attack for now
             return ActionType.Attack;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} (Rank: {Rank}, Health: {Health}/{MaxHealth})";
         }
     }
 }

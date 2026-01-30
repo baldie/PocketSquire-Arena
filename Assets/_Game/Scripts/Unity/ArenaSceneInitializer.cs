@@ -21,22 +21,27 @@ public class ArenaSceneInitializer : MonoBehaviour
     public Button nextOpponentButton;
     public Button leaveArenaButton;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // If the game world is empty, load it - this allows us to start immediately in the arena
-        if (GameWorld.Monsters.Count == 0)
+        if (GameWorld.AllMonsters.Count == 0)
         {
             GameWorld.Load();
             GameState.CreateNewGame(SaveSlots.Unknown);
         }
 
-        GameWorld.Battle = new Battle(LoadPlayer(GameState.Player), LoadMonster("Training Dummy"));
+        // Here we go!
+        if (GameState.CurrentRun == null) {
+            GameState.CurrentRun = Run.StartNewRun();
+        }
+        var monster = GameState.CurrentRun.GetMonsterForCurrentRank();
+        GameState.Battle = new Battle(LoadPlayer(GameState.Player), monster);
+        LoadMonster(monster);
         
         // Subscribe to action completion to handle turn changes
         if (actionQueueProcessor != null)
         {
-            actionQueueProcessor.OnActionComplete += GameWorld.Battle.DetermineNextAction;
+            actionQueueProcessor.OnActionComplete += GameState.Battle.DetermineNextAction;
         }
 
         if (nextOpponentButton != null)
@@ -54,11 +59,11 @@ public class ArenaSceneInitializer : MonoBehaviour
     void Update()
     {
         // TODO: don't do this on every update
-        if (GameWorld.Battle == null) return;
-        if (GameWorld.Battle.CurrentTurn == null) return;
+        if (GameState.Battle == null) return;
+        if (GameState.Battle.CurrentTurn == null) return;
         if (battleMenu == null) return;
         
-        bool shouldShowMenu = GameWorld.Battle.CurrentTurn.IsPlayerTurn && 
+        bool shouldShowMenu = GameState.Battle.CurrentTurn.IsPlayerTurn && 
                              (actionQueueProcessor == null || (!actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0));
 
         battleMenu.gameObject.SetActive(shouldShowMenu);
@@ -100,14 +105,9 @@ public class ArenaSceneInitializer : MonoBehaviour
         return player;
     }
 
-    private Monster LoadMonster(string name)
+    private Monster LoadMonster(Monster monster)
     {
-        var monster = GameWorld.GetMonsterByName(name);
-        if (monster == null)
-        {
-            Debug.LogError($"{name} not found!");
-            return null;
-        }
+        if (monster == null) return null;
 
         var monsterSprite = GameObject.Find("MonsterSprite");
         if (monsterSprite == null)
@@ -154,7 +154,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         // Unsubscribe to prevent memory leaks
         if (actionQueueProcessor != null)
         {
-            actionQueueProcessor.OnActionComplete -= GameWorld.Battle.DetermineNextAction;
+            actionQueueProcessor.OnActionComplete -= GameState.Battle.DetermineNextAction;
         }
     }
 

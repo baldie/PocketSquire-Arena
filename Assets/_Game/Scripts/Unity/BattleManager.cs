@@ -75,13 +75,13 @@ namespace PocketSquire.Unity
         {
             Debug.Log("Attack");
 
-            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            if (actionQueueProcessor != null && GameState.Battle != null)
             {
                 var player = GameState.Player;
                 
                 if (player != null)
                 {
-                    var attackAction = new AttackAction(player, GameWorld.Battle.CurrentTurn.Target);
+                    var attackAction = new AttackAction(player, GameState.Battle.CurrentTurn.Target);
                     // Wait 0.1 seconds before enqueuing the action to allow the menu selection sfx to play
                     DOTween.Sequence().AppendInterval(0.4f).AppendCallback(() => actionQueueProcessor.EnqueueAction(attackAction));
                 }
@@ -92,7 +92,7 @@ namespace PocketSquire.Unity
         {
             Debug.Log("Defend");
 
-            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            if (actionQueueProcessor != null && GameState.Battle != null)
             {
                 var player = GameState.Player;
                 
@@ -108,7 +108,7 @@ namespace PocketSquire.Unity
         {
             Debug.Log("Item");
             
-            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            if (actionQueueProcessor != null && GameState.Battle != null)
             {
                 var player = GameState.Player;
                 
@@ -124,7 +124,7 @@ namespace PocketSquire.Unity
         {
             Debug.Log("Yield");
             
-            if (actionQueueProcessor != null && GameWorld.Battle != null)
+            if (actionQueueProcessor != null && GameState.Battle != null)
             {
                 var player = GameState.Player;
                 

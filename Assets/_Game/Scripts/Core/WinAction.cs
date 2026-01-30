@@ -26,6 +26,8 @@ namespace PocketSquire.Arena.Core
                 Console.WriteLine("Player gained " + Target.Experience + " experience points");
                 player.Experience += Target.Experience;
             }
+
+            GameState.CurrentRun?.NextRank();
         }
     }
 }

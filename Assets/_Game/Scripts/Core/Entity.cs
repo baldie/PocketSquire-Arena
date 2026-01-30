@@ -22,6 +22,7 @@ namespace PocketSquire.Arena.Core
         public float Height;
         public float ScaleX = 1f;
         public float ScaleY = 1f;
+        public int Rank = 0;
         public string AttackSoundId = string.Empty;
         public string DefendSoundId = string.Empty;
         public string HitSoundId = string.Empty;
@@ -31,6 +32,7 @@ namespace PocketSquire.Arena.Core
         public virtual string SpriteId => string.Empty;
         public virtual string HitSpriteId => string.Empty;
         public virtual string AttackSpriteId => string.Empty;
+        public virtual string SpecialAttackSpriteId => string.Empty;
         public virtual string DefendSpriteId => string.Empty;
         public virtual string YieldSpriteId => string.Empty;
         public virtual string WinSpriteId => string.Empty;

@@ -13,7 +13,7 @@ namespace PocketSquire.Arena.Core
 
         public YieldAction()
         {
-            var battle = GameWorld.Battle ?? throw new InvalidOperationException("No active battle");
+            var battle = GameState.Battle ?? throw new InvalidOperationException("No active battle");
             Actor = battle.CurrentTurn?.Actor ?? battle.Player1;
             Target = battle.CurrentTurn?.Target ?? battle.Player2;
         }

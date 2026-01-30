@@ -28,7 +28,7 @@ namespace PocketSquire.Arena.Tests
             GameWorld.Load(root);
 
             // Assert
-            Assert.That(GameWorld.Monsters.Count, Is.GreaterThan(0), "Monsters list should not be empty");
+            Assert.That(GameWorld.AllMonsters.Count, Is.GreaterThan(0), "Monsters list should not be empty");
             
             var dummy = GameWorld.GetMonsterByName("Training Dummy");
             Assert.That(dummy, Is.Not.Null);
@@ -73,9 +73,9 @@ namespace PocketSquire.Arena.Tests
         public void ResetMonsters_ShouldRestoreHealthToMax()
         {
             // Arrange
-            GameWorld.Monsters.Clear();
+            GameWorld.AllMonsters.Clear();
             var monster = new Monster("Test Monster", 5, 10, new Attributes());
-            GameWorld.Monsters.Add(monster);
+            GameWorld.AllMonsters.Add(monster);
 
             // Act
             GameWorld.ResetMonsters();

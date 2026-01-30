@@ -21,7 +21,7 @@ namespace PocketSquire.Unity
             }
 
             // Must have lost in the arena :(
-            GameState.ResetRun();
+            GameState.CurrentRun.Reset();
         }
 
         private void WireButtons()

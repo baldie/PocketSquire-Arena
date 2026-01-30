@@ -7,6 +7,7 @@ namespace PocketSquire.Arena.Core
     public enum ActionType
     {
         Attack,
+        SpecialAttack,
         Defend,
         Item,
         Hit,

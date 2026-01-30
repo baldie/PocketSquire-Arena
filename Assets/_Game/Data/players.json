@@ -1,7 +1,7 @@
 [
     {
         "name": "player_m_l1",
-        "health": 3,
+        "health": 10,
         "maxHealth": 10,
         "attackSoundId": "m_physical_attack",
         "defendSoundId": "m_physical_defend",

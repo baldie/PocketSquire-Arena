@@ -14,7 +14,7 @@ namespace PocketSquire.Arena.Core
         private Battle _battle;
         public ChangeTurnsAction(Battle? battle = null)
         {
-            _battle = battle ?? GameWorld.Battle ?? throw new InvalidOperationException("No battle found in GameWorld.Battle");
+            _battle = battle ?? GameState.Battle ?? throw new InvalidOperationException("No battle found in GameState.Battle");
             Actor = _battle.CurrentTurn?.Actor ?? _battle.Player1;
             Target = _battle.CurrentTurn?.Target ?? _battle.Player2;
         }

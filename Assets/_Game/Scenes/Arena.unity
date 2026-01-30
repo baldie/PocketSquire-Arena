@@ -2466,7 +2466,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0, g: 0.6978035, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0.41650522, b: 0, a: 1}
     m_SelectedColor: {r: 0, g: 1, b: 0.11623883, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.28235295}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -7450,6 +7450,10 @@ MonoBehaviour:
   monsterHealthBarActual: {fileID: 1420314861}
   monsterHealthBarGhost: {fileID: 1919282022}
   arenaMenuPanel: {fileID: 1835213336}
+  crowd_pleased: {fileID: 8300000, guid: 4bbb975dd39724a4c95f9b590d2aa3a1, type: 3}
+  crowd_displeased: {fileID: 8300000, guid: 62075d8084535c048b33eeffc25c071f, type: 3}
+  player_win: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+  player_lose: {fileID: 8300000, guid: 450149720bbcdb24588983f4abb956c1, type: 3}
 --- !u!4 &1505157163
 Transform:
   m_ObjectHideFlags: 0
@@ -7459,7 +7463,7 @@ Transform:
   m_GameObject: {fileID: 1505157161}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 898.85846, y: 779.624, z: -1735.0791}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

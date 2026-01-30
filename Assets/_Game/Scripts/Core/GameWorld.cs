@@ -12,9 +12,8 @@ namespace PocketSquire.Arena.Core
     /// </summary>
     public static class GameWorld
     {
-        public static List<Monster> Monsters { get; set; } = new List<Monster>();
+        public static List<Monster> AllMonsters { get; set; } = new List<Monster>();
         public static List<Player> Players { get; set; } = new List<Player>();
-        public static Battle? Battle { get; set; } = null;
         public static ProgressionLogic? Progression { get; set; }
 
         public static void Load(string? rootPath = null)
@@ -71,11 +70,11 @@ namespace PocketSquire.Arena.Core
             {
                 var monsters = JsonConvert.DeserializeObject<List<Monster>>(jsonContent);
 
-                Monsters.Clear();
+                AllMonsters.Clear();
 
                 if (monsters != null)
                 {
-                    Monsters.AddRange(monsters);
+                    AllMonsters.AddRange(monsters);
                 }
             }
             catch (Exception ex)
@@ -95,13 +94,13 @@ namespace PocketSquire.Arena.Core
 
         public static Monster? GetMonsterByName(string name)
         {
-            if (Monsters == null) return null;
-            return Monsters.Find(e => e.Name == name);
+            if (AllMonsters == null) return null;
+            return AllMonsters.Find(e => e.Name == name);
         }
 
-        public static void ResetMonsters()
+        public static void ResetAllMonsters()
         {
-            foreach (var monster in Monsters)
+            foreach (var monster in AllMonsters)
             {
                 monster.Health = monster.MaxHealth;
             }

@@ -17,6 +17,8 @@ namespace PocketSquire.Arena.Core
         public static DateTime? LastSaveDate = null;
         public static TimeSpan? PlayTime = null;
         public static Player? Player = null;
+        public static Run? CurrentRun = null;
+        public static Battle? Battle { get; set; } = null;
 
         public static void CreateNewGame(SaveSlots slot)
         {
@@ -80,18 +82,6 @@ namespace PocketSquire.Arena.Core
                 }
             }
             return mostRecentSave;
-        }
-
-        public static void ResetRun()
-        {
-            if (Player != null)
-            {
-                if (Player.Health <= 0)
-                {
-                    Player.Health = Player.MaxHealth;
-                }
-            }
-            GameWorld.ResetMonsters();
         }
     }
 }
