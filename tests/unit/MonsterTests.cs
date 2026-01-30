@@ -53,6 +53,30 @@ namespace PocketSquire.Arena.Tests
             Assert.That(monster.AttackSpriteId, Is.EqualTo("orc_warrior_attack"));
             Assert.That(monster.DefendSpriteId, Is.EqualTo("orc_warrior_defend"));
             Assert.That(monster.HitSpriteId, Is.EqualTo("orc_warrior_hit"));
+            Assert.That(monster.SpecialAttackSpriteId, Is.EqualTo("orc_warrior_special_attack"));
+        }
+
+        [Test]
+        public void DetermineAction_ReturnsAttackOrSpecialAttack()
+        {
+            var monster = new Monster("Test", 10, 10, new Attributes());
+            var target = new Player { Name = "Target" };
+
+            // Run multiple times to verify it returns valid action types
+            for (int i = 0; i < 20; i++)
+            {
+                var action = monster.DetermineAction(target);
+                Assert.That(action, Is.EqualTo(ActionType.Attack).Or.EqualTo(ActionType.SpecialAttack));
+            }
+        }
+
+        [Test]
+        public void GetActionSoundId_ReturnsSpecialAttackSound()
+        {
+            var monster = new Monster();
+            monster.SpecialAttackSoundId = "special_roar";
+
+            Assert.That(monster.GetActionSoundId(ActionType.SpecialAttack), Is.EqualTo("special_roar"));
         }
     }
 }

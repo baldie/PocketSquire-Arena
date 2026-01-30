@@ -60,6 +60,9 @@ namespace PocketSquire.Arena.Core
                         case ActionType.Attack:
                             nextAction = new AttackAction(CurrentTurn.Actor, CurrentTurn.Target);
                             break;
+                        case ActionType.SpecialAttack:
+                            nextAction = new SpecialAttackAction(CurrentTurn.Actor, CurrentTurn.Target);
+                            break;
                         case ActionType.Defend:
                             nextAction = new DefendAction(CurrentTurn.Actor);
                             break;

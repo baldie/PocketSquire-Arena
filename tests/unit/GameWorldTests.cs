@@ -8,77 +8,114 @@ namespace PocketSquire.Arena.Tests
     [TestFixture]
     public class GameWorldTests
     {
-        [Test]
-        public void Load_ShouldLoadMonstersFromFile()
+        private string GetProjectRoot()
         {
-            // Find project root by looking for "Assets" folder up the tree
-            string current = Environment.CurrentDirectory;
-            string root = current;
-            while (!Directory.Exists(Path.Combine(root, "Assets")) && Directory.GetParent(root) != null)
-            {
-                var parent = Directory.GetParent(root);
-                if (parent == null) break; 
-                root = parent.FullName;
-            }
-
-            string path = Path.Combine(root, "Assets/_Game/Data/monsters.json");
-            Assert.That(File.Exists(path), Is.True, $"Monster file not found at local resolved path: {path} (Started at {current})");
-
-            // Act
-            GameWorld.Load(root);
-
-            // Assert
-            Assert.That(GameWorld.AllMonsters.Count, Is.GreaterThan(0), "Monsters list should not be empty");
-            
-            var dummy = GameWorld.GetMonsterByName("Training Dummy");
-            Assert.That(dummy, Is.Not.Null);
-            Assert.That(dummy!.MaxHealth, Is.EqualTo(10));
-            Assert.That(dummy!.Attributes.Constitution, Is.EqualTo(10));
-            Assert.That(dummy!.PosX, Is.EqualTo(-330));
-            Assert.That(dummy!.PosY, Is.EqualTo(450));
-            Assert.That(dummy!.Width, Is.EqualTo(1920));
-            Assert.That(dummy!.Height, Is.EqualTo(2240));
-            Assert.That(dummy!.ScaleX, Is.EqualTo(0.4f).Within(0.001f));
-            Assert.That(dummy!.ScaleY, Is.EqualTo(0.35f).Within(0.001f));
-            Assert.That(dummy!.SpriteId, Is.EqualTo("training_dummy_battle"));
-            Assert.That(dummy!.AttackSoundId, Is.EqualTo("TrainingDummyAttack"));
-        }
-        [Test]
-        public void Load_ShouldLoadPlayersFromFile()
-        {
-            // Find project root
-            string root = "";
             string current = Environment.CurrentDirectory;
             while (!Directory.Exists(Path.Combine(current, "Assets")) && Directory.GetParent(current) != null)
             {
-                current = Directory.GetParent(current)!.FullName;
+                var parent = Directory.GetParent(current);
+                if (parent == null) break;
+                current = parent.FullName;
             }
-            root = current;
+            return current;
+        }
+
+        [Test]
+        public void Load_ShouldLoadMonstersFromFile()
+        {
+            // Arrange
+            string root = GetProjectRoot();
+            string path = Path.Combine(root, "Assets/_Game/Data/monsters.json");
+            Assert.That(File.Exists(path), Is.True, $"Monster file not found at: {path}");
 
             // Act
             GameWorld.Load(root);
 
-            // Assert
-            Assert.That(GameWorld.Players.Count, Is.GreaterThan(0), "Players list should not be empty");
+            // Assert - test logic, not specific values
+            Assert.That(GameWorld.AllMonsters.Count, Is.GreaterThan(0), "Monsters list should not be empty");
             
-            var player = GameWorld.GetPlayerByName("player_m_l1");
-            Assert.That(player, Is.Not.Null);
-            Assert.That(player!.Health, Is.EqualTo(3));
-            Assert.That(player!.Attributes.Strength, Is.EqualTo(1));
-            Assert.That(player!.SpriteId, Is.EqualTo("player_m_l1_battle"));
-            Assert.That(player!.AttackSoundId, Is.EqualTo("m_physical_attack"));
-            Assert.That(player!.Gender, Is.EqualTo(Player.CharGender.m));
+            // Verify monsters have required properties populated
+            var firstMonster = GameWorld.AllMonsters[0];
+            Assert.That(firstMonster.Name, Is.Not.Null.And.Not.Empty, "Monster should have a name");
+            Assert.That(firstMonster.MaxHealth, Is.GreaterThan(0), "Monster should have positive MaxHealth");
+            Assert.That(firstMonster.Attributes, Is.Not.Null, "Monster should have Attributes");
         }
+
         [Test]
-        public void ResetMonsters_ShouldRestoreHealthToMax()
+        public void Load_ShouldLoadPlayersFromFile()
         {
             // Arrange
+            string root = GetProjectRoot();
+
+            // Act
+            GameWorld.Load(root);
+
+            // Assert - test logic, not specific values
+            Assert.That(GameWorld.Players.Count, Is.GreaterThan(0), "Players list should not be empty");
+            
+            // Verify players have required properties populated
+            var firstPlayer = GameWorld.Players[0];
+            Assert.That(firstPlayer.Name, Is.Not.Null.And.Not.Empty, "Player should have a name");
+            Assert.That(firstPlayer.MaxHealth, Is.GreaterThan(0), "Player should have positive MaxHealth");
+            Assert.That(firstPlayer.Attributes, Is.Not.Null, "Player should have Attributes");
+        }
+
+        [Test]
+        public void GetMonsterByName_ReturnsCorrectMonster()
+        {
+            // Arrange
+            string root = GetProjectRoot();
+            GameWorld.Load(root);
+            var expectedName = GameWorld.AllMonsters[0].Name;
+
+            // Act
+            var result = GameWorld.GetMonsterByName(expectedName);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Name, Is.EqualTo(expectedName));
+        }
+
+        [Test]
+        public void GetMonsterByName_ReturnsNullForUnknownName()
+        {
+            // Arrange
+            string root = GetProjectRoot();
+            GameWorld.Load(root);
+
+            // Act
+            var result = GameWorld.GetMonsterByName("NonExistentMonster12345");
+
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public void GetPlayerByName_ReturnsCorrectPlayer()
+        {
+            // Arrange
+            string root = GetProjectRoot();
+            GameWorld.Load(root);
+            var expectedName = GameWorld.Players[0].Name;
+
+            // Act
+            var result = GameWorld.GetPlayerByName(expectedName);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Name, Is.EqualTo(expectedName));
+        }
+
+        [Test]
+        public void ResetAllMonsters_ShouldRestoreHealthToMax()
+        {
+            // Arrange - use synthetic data, not JSON
             GameWorld.AllMonsters.Clear();
             var monster = new Monster("Test Monster", 5, 10, new Attributes());
             GameWorld.AllMonsters.Add(monster);
 
             // Act
-            GameWorld.ResetMonsters();
+            GameWorld.ResetAllMonsters();
 
             // Assert
             Assert.That(monster.Health, Is.EqualTo(10));

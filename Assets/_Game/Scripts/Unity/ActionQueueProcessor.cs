@@ -102,16 +102,24 @@ public class ActionQueueProcessor : MonoBehaviour
         // 2. Wait for mid-point (impact)
         yield return new WaitForSeconds(0.5f);       
 
-        // 3. Trigger Target Hit Effects (if it was an attack)
-        if (action.Type == ActionType.Attack && action.Target != null)
+        // 3. Trigger Target Hit Effects (if it was an attack or special attack)
+        if ((action.Type == ActionType.Attack || action.Type == ActionType.SpecialAttack) && action.Target != null)
         {
+            // Extract damage from either AttackAction or SpecialAttackAction
+            int damage = action switch
+            {
+                AttackAction atk => atk.Damage,
+                SpecialAttackAction spAtk => spAtk.Damage,
+                _ => 0
+            };
+
             if (action.Target.IsDefending)
             {
-                PlayDefendEffects(action as AttackAction);
+                PlayDefendEffects(action.Target, damage);
             }
             else
             {
-                PlayHitEffects(action as AttackAction);
+                PlayHitEffects(action.Target, damage);
             }
             // 4. Wait for remainder of animation
             yield return new WaitForSeconds(0.5f);
@@ -140,10 +148,8 @@ public class ActionQueueProcessor : MonoBehaviour
         TriggerVisuals(actor, type);
     }
 
-    private void PlayHitEffects(AttackAction action)
+    private void PlayHitEffects(Entity target, int damage)
     {
-        if (action == null) return;
-        var target = action.Target;
         if (target == null) return;
 
         // Sound
@@ -153,7 +159,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
         // Show Damage Number
         var textControl = target is Player ? playerEffectText : monsterEffectText;
-        ShowNumberEffect(textControl, action.Damage, Color.red);
+        ShowNumberEffect(textControl, damage, Color.red);
 
         var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
         var healthbarGhost = target is Player ? playerHealthBarGhost : monsterHealthBarGhost;
@@ -163,10 +169,8 @@ public class ActionQueueProcessor : MonoBehaviour
         TriggerVisuals(target, ActionType.Hit);
     }
 
-    private void PlayDefendEffects(AttackAction action)
+    private void PlayDefendEffects(Entity target, int damage)
     {
-        if (action == null) return;
-        var target = action.Target;
         if (target == null) return;
 
         // Sound
@@ -176,7 +180,7 @@ public class ActionQueueProcessor : MonoBehaviour
 
         // Show Damage Number
         var textControl = target is Player ? playerEffectText : monsterEffectText;
-        ShowNumberEffect(textControl, action.Damage, Color.white);
+        ShowNumberEffect(textControl, damage, Color.white);
 
         // Update health bar
         var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
@@ -201,6 +205,9 @@ public class ActionQueueProcessor : MonoBehaviour
                 break;
             case ActionType.Attack:
                 HandleSpriteSwap(imgComponent, entity.AttackSpriteId, 0.25f);
+                break;
+            case ActionType.SpecialAttack:
+                HandleSpriteSwap(imgComponent, entity.SpecialAttackSpriteId, 0.25f);
                 break;
             case ActionType.Defend:
                 HandleSpriteSwap(imgComponent, entity.DefendSpriteId, 2.0f);

@@ -47,9 +47,13 @@ namespace PocketSquire.Arena.Core
             }
         }
 
+        private static readonly Random _random = new Random();
+
         public override ActionType DetermineAction(Entity target)
         {
-            // Basic AI: Always attack for now
+            // ~25% chance for special attack
+            if (_random.Next(4) == 0)
+                return ActionType.SpecialAttack;
             return ActionType.Attack;
         }
 

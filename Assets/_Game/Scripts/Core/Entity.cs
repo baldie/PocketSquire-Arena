@@ -27,6 +27,7 @@ namespace PocketSquire.Arena.Core
         public string DefendSoundId = string.Empty;
         public string HitSoundId = string.Empty;
         public string DefeatSoundId = string.Empty;
+        public string SpecialAttackSoundId = string.Empty;
         public bool IsDefending { get; set; }
         public event Action? onDeath;
         public virtual string SpriteId => string.Empty;
@@ -81,6 +82,8 @@ namespace PocketSquire.Arena.Core
             {
                 case ActionType.Attack:
                     return AttackSoundId;
+                case ActionType.SpecialAttack:
+                    return SpecialAttackSoundId;
                 default:
                     return string.Empty;
             };

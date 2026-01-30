@@ -9,7 +9,13 @@ namespace PocketSquire.Arena.Core
     /// </summary>
     public class Run
     {
-        public List<Monster> Monsters { get; private set; }
+        public enum RunState {
+            NoStarted,
+            Ongoing
+        }
+
+        public RunState State { get; private set; }
+        public List<Monster> Monsters { get; private set; } = new List<Monster>();
         public int ArenaRank { get; private set; }
 
         public static Run StartNewRun()
@@ -17,14 +23,18 @@ namespace PocketSquire.Arena.Core
             var run = new Run();
             run.Monsters = GameWorld.AllMonsters.OrderBy(m => m.Rank).ToList();
             run.ArenaRank = 1;
+            run.State = RunState.Ongoing;
             return run;
         }
 
         public Monster GetMonsterForCurrentRank()
         {
             var m = Monsters.FirstOrDefault(m => m.Rank == ArenaRank);
-            Console.WriteLine($"Monster for rank {ArenaRank}: {m.ToString()}");
-            return m;
+            if (m != null)
+            {
+                Console.WriteLine($"Monster for rank {ArenaRank}: {m.ToString()}");
+            }
+            return m!;
         }
 
         public void NextRank()
@@ -42,6 +52,7 @@ namespace PocketSquire.Arena.Core
                 }
             }
             GameWorld.ResetAllMonsters();
+            State = RunState.NoStarted;
         }
     }
 }

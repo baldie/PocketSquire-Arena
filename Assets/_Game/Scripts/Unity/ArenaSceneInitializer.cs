@@ -31,7 +31,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         }
 
         // Here we go!
-        if (GameState.CurrentRun == null) {
+        if (GameState.CurrentRun == null || GameState.CurrentRun.State == Run.RunState.NoStarted) {
             GameState.CurrentRun = Run.StartNewRun();
         }
         var monster = GameState.CurrentRun.GetMonsterForCurrentRank();
