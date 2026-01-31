@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using PocketSquire.Unity.UI;
 
 namespace PocketSquire.Unity
 {
@@ -11,6 +12,7 @@ namespace PocketSquire.Unity
         public GameObject pauseMenuUI;
         public Button firstSelectedButton;
         public GameObject mutuallyExclusiveButtonGroup;
+        public ConfirmationDialog confirmationDialog;
         private bool mutuallyExclusiveButtonGroupWasActive = false;
         private GameObject selectedObj;
 
@@ -67,7 +69,11 @@ namespace PocketSquire.Unity
             if (mainMenuBtn != null)
             {
                 mainMenuBtn.onClick.RemoveAllListeners();
-                mainMenuBtn.onClick.AddListener(LoadMainMenu);
+                mainMenuBtn.onClick.AddListener(() => ConfirmationDialog.Show(
+                    confirmationDialog,
+                    "Return to Main Menu?",
+                    LoadMainMenu
+                ));
 
                 var sound = mainMenuBtn.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
@@ -77,7 +83,11 @@ namespace PocketSquire.Unity
             if (quitBtn != null)
             {
                 quitBtn.onClick.RemoveAllListeners();
-                quitBtn.onClick.AddListener(QuitGame);
+                quitBtn.onClick.AddListener(() => ConfirmationDialog.Show(
+                    confirmationDialog,
+                    "Are you sure you want to quit?",
+                    QuitGame
+                ));
 
                 var sound = quitBtn.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;

@@ -13,6 +13,16 @@ MonoBehaviour:
   m_Name: GameAssetRegistry
   m_EditorClassIdentifier: Assembly-CSharp::GameAssetRegistry
   sprites:
+  - id: mushroom_marauder_attack
+    asset: {fileID: 21300000, guid: 4cea647e01d18ea428b23fb049bf25a5, type: 3}
+  - id: mushroom_marauder_battle
+    asset: {fileID: 21300000, guid: ad315f5d457affe40bc2f7da569c842c, type: 3}
+  - id: mushroom_marauder_defend
+    asset: {fileID: 21300000, guid: 61aee20531e4c314e931442f1d00b346, type: 3}
+  - id: mushroom_marauder_hit
+    asset: {fileID: 21300000, guid: 0a7b57b751d11b64cb5a53b617fddfb8, type: 3}
+  - id: mushroom_marauder_special_attack
+    asset: {fileID: 21300000, guid: ccaecea389da1b14cb6e69a6d76cc869, type: 3}
   - id: training_dummy_attack
     asset: {fileID: 21300000, guid: 02a13b53d4d0f994eb2eb0a044181ef1, type: 3}
   - id: training_dummy_battle
@@ -34,10 +44,18 @@ MonoBehaviour:
   - id: player_m_l1_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
   sounds:
+  - id: GenericAttack1
+    asset: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  - id: GenericAttack2
+    asset: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  - id: GenericDefend
+    asset: {fileID: 8300000, guid: ed92c14aef8d34d4bbad1f12c8f034af, type: 3}
+  - id: GenericHit
+    asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}
+  - id: MushroomMarauderSpecialAttack
+    asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
   - id: TrainingDummyDefeat
     asset: {fileID: 8300000, guid: afdeb4842286297449e992dd991d3c88, type: 3}
-  - id: TrainingDummyHit
-    asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
   - id: m_physical_defend
