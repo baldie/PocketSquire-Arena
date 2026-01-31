@@ -142,4 +142,39 @@ public class GameStateTests
         // Assert
         Assert.That(result, Is.SameAs(save1));
     }
+
+    [Test]
+    public void CreateNewGame_GivesPlayer2HealthPotions()
+    {
+        // Arrange
+        var slot = SaveSlots.Slot1;
+
+        // Act
+        GameState.CreateNewGame(slot);
+
+        // Assert
+        Assert.That(GameState.Player, Is.Not.Null);
+        Assert.That(GameState.Player!.Inventory, Is.Not.Null);
+        Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(2), "Player should start with 2 health potions (id=1)");
+    }
+
+    [Test]
+    public void SaveLoadRoundtrip_PreservesInventory()
+    {
+        // Arrange
+        GameState.CreateNewGame(SaveSlots.Slot1);
+        GameState.Player!.Inventory.AddItem(1, 5); // Add more health potions
+        GameState.Player.Inventory.AddItem(2, 3); // Add another item type
+
+        // Act - Save and load
+        var saveData = GameState.GetSaveData();
+        GameState.Player = null; // Clear state
+        GameState.LoadFromSaveData(saveData);
+
+        // Assert
+        Assert.That(GameState.Player, Is.Not.Null);
+        Assert.That(GameState.Player!.Inventory, Is.Not.Null);
+        Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(7), "Should have 2 starting + 5 added = 7 health potions");
+        Assert.That(GameState.Player.Inventory.GetItemCount(2), Is.EqualTo(3), "Should preserve second item type");
+    }
 }

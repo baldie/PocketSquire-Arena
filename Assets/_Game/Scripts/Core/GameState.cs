@@ -27,6 +27,9 @@ namespace PocketSquire.Arena.Core
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
             Player = GameWorld.GetPlayerByName("player_m_l1");
+            
+            // Give starting items (2 health potions, id=1)
+            Player?.Inventory.AddItem(1, 2);
         }
 
         public static SaveData GetSaveData()

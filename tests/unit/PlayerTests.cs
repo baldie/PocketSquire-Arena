@@ -70,5 +70,32 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player.DefeatSpriteId, Is.EqualTo("player_m_l1_defeat"));
             Assert.That(player.WinSpriteId, Is.EqualTo("player_m_l1_win"));
         }
+
+        [Test]
+        public void Player_HasEmptyInventory_ByDefault()
+        {
+            // Arrange & Act
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+
+            // Assert
+            Assert.That(player.Inventory, Is.Not.Null);
+            Assert.That(player.Inventory.Slots.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Player_Inventory_PersistsItemsCorrectly()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            
+            // Act
+            player.Inventory.AddItem(1, 3);
+            player.Inventory.AddItem(2, 1);
+
+            // Assert
+            Assert.That(player.Inventory.GetItemCount(1), Is.EqualTo(3));
+            Assert.That(player.Inventory.GetItemCount(2), Is.EqualTo(1));
+            Assert.That(player.Inventory.Slots.Count, Is.EqualTo(2));
+        }
     }
 }

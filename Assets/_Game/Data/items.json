@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "Small Health Potion",
+        "description": "Heals 25% of your health",
+        "target": "self",
+        "stackable": true,
+        "sprite": "health_potion",
+        "sound_effect": "gulp",
+        "price": 3
+    }
+]
