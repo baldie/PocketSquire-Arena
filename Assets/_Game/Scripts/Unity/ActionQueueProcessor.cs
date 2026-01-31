@@ -7,6 +7,9 @@ using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Unity.UI.LevelUp;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+using PocketSquire.Unity.UI;
+
 
 /// <summary>
 /// Manages a queue of game actions and processes them sequentially using coroutines.
@@ -30,6 +33,8 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image monsterHealthBarActual;
     public Image monsterHealthBarGhost;
     public Canvas arenaMenuPanel;
+    public ConfirmationDialog confirmationDialog;
+
 
     [Header("Audio")]
     public AudioClip crowd_pleased;
@@ -218,12 +223,25 @@ public class ActionQueueProcessor : MonoBehaviour
             case ActionType.Lose:
                 HandleLoseVisuals(imgComponent, entity);
                 break;
-            case ActionType.Item:
             case ActionType.Yield:
+                HandleYield(imgComponent, entity);
+                break;
+            case ActionType.Item:
                 // TODO: Implement these via specific handlers
                 break;
         }
     }
+
+    private void HandleYield(Image img, Entity entity)
+    {
+        ConfirmationDialog.Show(
+            confirmationDialog,
+            "Give up now?",
+            () => SceneManager.LoadScene("Town"),
+            null
+        );
+    }
+
 
     private void HandleLoseVisuals(Image img, Entity entity)
     {
