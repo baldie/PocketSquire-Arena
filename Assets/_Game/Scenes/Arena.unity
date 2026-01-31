@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 81269183}
   - component: {fileID: 81269182}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: DialogPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 337560911}
   - component: {fileID: 337560910}
   m_Layer: 5
-  m_Name: LeaveArenaButton
+  m_Name: NoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6345,7 +6345,7 @@ GameObject:
   - component: {fileID: 1347311573}
   - component: {fileID: 1347311572}
   m_Layer: 0
-  m_Name: ArenaMenuCursor
+  m_Name: SelectionCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9204,7 +9204,7 @@ GameObject:
   - component: {fileID: 1720618120}
   - component: {fileID: 1720618119}
   m_Layer: 5
-  m_Name: NextOpponentButton
+  m_Name: YesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
