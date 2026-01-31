@@ -35,14 +35,19 @@ namespace PocketSquire.Unity.UI
 
         private void Awake()
         {
-            _canvasGroup = GetComponent<CanvasGroup>();
+            InitializeCanvasGroup();
+        }
+
+        private void InitializeCanvasGroup()
+        {
             if (_canvasGroup == null)
             {
-                _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+                _canvasGroup = GetComponent<CanvasGroup>();
+                if (_canvasGroup == null)
+                {
+                    _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+                }
             }
-
-            // Start hidden
-            Hide(immediate: true);
         }
 
         private void Start()
@@ -102,6 +107,8 @@ namespace PocketSquire.Unity.UI
 
         private void ShowInternal(string message, Action onConfirm, Action onCancel, string yesText, string noText)
         {
+            InitializeCanvasGroup();
+
             _onConfirm = onConfirm;
             _onCancel = onCancel;
 

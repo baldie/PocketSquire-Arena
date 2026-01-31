@@ -44,7 +44,10 @@ public class ActionQueueProcessor : MonoBehaviour
         
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
+    private bool _isWaitingForUser = false;
+    private bool _yieldCancelled = false;
     private enum HealthBarAnimationType { Snap, Shake, None }
+
 
     /// <summary>
     /// Event fired when an action completes. Can be used to trigger turn changes.
@@ -99,12 +102,20 @@ public class ActionQueueProcessor : MonoBehaviour
 
     private IEnumerator ProcessAction(IGameAction action)
     {
+        _yieldCancelled = false;
         // 1. Trigger Actor Effects
         action.ApplyEffect();
 
         PlayActionEffects(action.Actor, action.Type);
 
+        // Wait if visuals/logic requested user input (e.g. Yield Dialog)
+        while (_isWaitingForUser)
+        {
+            yield return null;
+        }
+
         // 2. Wait for mid-point (impact)
+
         yield return new WaitForSeconds(0.5f);       
 
         // 3. Trigger Target Hit Effects (if it was an attack or special attack)
@@ -131,10 +142,13 @@ public class ActionQueueProcessor : MonoBehaviour
         }       
 
         // 6. Determine next action
-        IGameAction result = OnActionComplete?.Invoke(action);
-        if (result != null)
+        if (!_yieldCancelled)
         {
-            EnqueueAction(result);
+            IGameAction result = OnActionComplete?.Invoke(action);
+            if (result != null)
+            {
+                EnqueueAction(result);
+            }
         }
         currentActionCoroutine = null;
     }
@@ -234,13 +248,19 @@ public class ActionQueueProcessor : MonoBehaviour
 
     private void HandleYield(Image img, Entity entity)
     {
+        _isWaitingForUser = true;
+        Debug.Log("Showing yield confirmation dialog...");
         ConfirmationDialog.Show(
             confirmationDialog,
             "Give up now?",
             () => SceneManager.LoadScene("Town"),
-            null
+            () => {
+                _isWaitingForUser = false;
+                _yieldCancelled = true;
+            }
         );
     }
+
 
 
     private void HandleLoseVisuals(Image img, Entity entity)
