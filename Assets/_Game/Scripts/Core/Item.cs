@@ -17,6 +17,7 @@ namespace PocketSquire.Arena.Core
         public ItemTarget Target = ItemTarget.Self;
         public bool Stackable = true;
         public string Sprite = string.Empty;
+        [Newtonsoft.Json.JsonProperty("sound_effect")]
         public string SoundEffect = string.Empty;
         public int Price;
     }
