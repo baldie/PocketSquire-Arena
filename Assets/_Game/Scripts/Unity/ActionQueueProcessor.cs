@@ -32,6 +32,7 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image playerHealthBarGhost;
     public Image monsterHealthBarActual;
     public Image monsterHealthBarGhost;
+    public Image playerUsedItemSprite;
     public Canvas arenaMenuPanel;
     public ConfirmationDialog confirmationDialog;
 
@@ -302,10 +303,32 @@ public class ActionQueueProcessor : MonoBehaviour
             {
                 Debug.LogWarning($"[ActionQueueProcessor] No sound effect found for: {itemAction.ItemData.SoundEffect}");
             }
-        } else {
+        }
+        else
+        {
             Debug.LogWarning($"[ActionQueueProcessor] No sound effect found for item: {itemAction.ItemData.Id}");
         }
 
+        // Show item above character
+        if (playerUsedItemSprite != null)
+        {
+            Sprite itemSprite = assetRegistry.GetSprite(itemAction.ItemData.Sprite);
+            if (itemSprite != null)
+            {
+                playerUsedItemSprite.sprite = itemSprite;
+                playerUsedItemSprite.color = Color.white;
+                Vector3 originalPos = playerUsedItemSprite.transform.localPosition;
+
+                DOTween.Sequence()
+                    .Append(playerUsedItemSprite.transform.DOLocalMoveY(originalPos.y + 50f, 1f).SetEase(Ease.OutQuad))
+                    .Join(playerUsedItemSprite.DOFade(0f, 1f).SetEase(Ease.InQuad))
+                    .OnComplete(() => {
+                        playerUsedItemSprite.transform.localPosition = originalPos;
+                        playerUsedItemSprite.sprite = assetRegistry.GetSprite("transparent_pixel");
+                        playerUsedItemSprite.color = Color.white;
+                    });
+            }
+        }
 
         // Update health bar
         UpdateHealth(playerHealthBarActual, playerHealthBarGhost, entity.Health, entity.MaxHealth, HealthBarAnimationType.Snap);
