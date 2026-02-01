@@ -298,7 +298,14 @@ public class ActionQueueProcessor : MonoBehaviour
             {
                 audioSource.PlayOneShot(clip);
             }
+            else
+            {
+                Debug.LogWarning($"[ActionQueueProcessor] No sound effect found for: {itemAction.ItemData.SoundEffect}");
+            }
+        } else {
+            Debug.LogWarning($"[ActionQueueProcessor] No sound effect found for item: {itemAction.ItemData.Id}");
         }
+
 
         // Update health bar
         UpdateHealth(playerHealthBarActual, playerHealthBarGhost, entity.Health, entity.MaxHealth, HealthBarAnimationType.Snap);

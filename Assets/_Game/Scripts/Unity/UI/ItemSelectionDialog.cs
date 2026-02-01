@@ -65,11 +65,11 @@ namespace PocketSquire.Arena.Unity.UI
                  {
                      cursor.cursorGraph = cursorObj.GetComponent<RectTransform>();
                      cursorObj.gameObject.SetActive(false); // Hide initially, cursor script handles it
-             }
+                }
+            }
         }
-    }
 
-    private GameAssetRegistry Registry
+        private GameAssetRegistry Registry
         {
             get
             {

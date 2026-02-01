@@ -30,13 +30,23 @@ public class GameAssetRegistry : ScriptableObject {
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("Populate Sprites From Art Folder")]
+    [ContextMenu("Populate All Assets")]
+    public void PopulateAll()
+    {
+        PopulateSprites();
+        PopulateAudio();
+        UnityEditor.EditorUtility.SetDirty(this);
+        UnityEditor.AssetDatabase.SaveAssets();
+    }
+
+    [ContextMenu("Populate Sprites")]
     public void PopulateSprites()
     {
         sprites ??= new List<SpriteEntry>();
         sprites.Clear();
 
-        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:Sprite", new[] { "Assets/_Game/Art" });
+        string[] searchFolders = { "Assets/_Game/Art", "Assets/_Game/Audio" };
+        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:Sprite", searchFolders);
         
         foreach (string guid in guids)
         {
@@ -50,7 +60,31 @@ public class GameAssetRegistry : ScriptableObject {
         }
         
         UnityEditor.EditorUtility.SetDirty(this);
-        Debug.Log($"Populated {sprites.Count} sprites from Assets/_Game/Art");
+        Debug.Log($"Populated {sprites.Count} sprites from Art and Audio folders.");
+    }
+
+    [ContextMenu("Populate Audio")]
+    public void PopulateAudio()
+    {
+        sounds ??= new List<AudioEntry>();
+        sounds.Clear();
+
+        string[] searchFolders = { "Assets/_Game/Art", "Assets/_Game/Audio" };
+        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:AudioClip", searchFolders);
+        
+        foreach (string guid in guids)
+        {
+            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            AudioClip clip = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+            
+            if (clip != null)
+            {
+                sounds.Add(new AudioEntry { id = clip.name, asset = clip });
+            }
+        }
+        
+        UnityEditor.EditorUtility.SetDirty(this);
+        Debug.Log($"Populated {sounds.Count} audio clips from Art and Audio folders.");
     }
 
     [UnityEditor.MenuItem("Tools/Populate Asset Registry")]
@@ -68,7 +102,7 @@ public class GameAssetRegistry : ScriptableObject {
         
         if (registry != null)
         {
-             registry.PopulateSprites();
+             registry.PopulateAll();
         }
     }
 #endif
