@@ -40,7 +40,18 @@ namespace PocketSquire.Arena.Unity.UI
             if (icon != null)
             {
                 icon.gameObject.SetActive(true);
-                if (itemSprite != null) icon.sprite = itemSprite;
+                if (itemSprite != null)
+                {
+                    Debug.Log("Setting sprite: " + itemSprite.name);
+                    icon.sprite = itemSprite;
+                    icon.color = Color.white;
+                }
+                else
+                {
+                    Debug.Log("Setting sprite: null");
+                    icon.sprite = null;
+                    icon.color = Color.clear;
+                }
             }
             
             if (button != null)
@@ -63,5 +74,44 @@ namespace PocketSquire.Arena.Unity.UI
                 button.onClick.AddListener(() => onClick?.Invoke());
             }
         }
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (Application.isPlaying) return;
+            
+            if (button == null) button = GetComponent<Button>();
+            if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
+            
+            if (button != null && eventTrigger != null)
+            {
+                bool hasPointerEnter = false;
+                foreach(var entry in eventTrigger.triggers)
+                {
+                    if(entry.eventID == EventTriggerType.PointerEnter)
+                    {
+                        hasPointerEnter = true;
+                        break;
+                    }
+                }
+                
+                if (!hasPointerEnter)
+                {
+                    var entry = new EventTrigger.Entry();
+                    entry.eventID = EventTriggerType.PointerEnter;
+                    
+                    // We need to use UnityEventTools to make it persistent in Editor
+                    UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(
+                        entry.callback,
+                        button.Select
+                    );
+                    
+                    eventTrigger.triggers.Add(entry);
+                    UnityEditor.EditorUtility.SetDirty(this);
+                    UnityEditor.EditorUtility.SetDirty(eventTrigger);
+                }
+            }
+        }
+#endif
+
     }
 }

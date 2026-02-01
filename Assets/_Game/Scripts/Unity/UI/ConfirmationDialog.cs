@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
+using PocketSquire.Unity;
 
 namespace PocketSquire.Unity.UI
 {
@@ -73,8 +74,9 @@ namespace PocketSquire.Unity.UI
         private void Update()
         {
             // Allow Cancel input to dismiss the dialog
-            if (gameObject.activeSelf && Input.GetButtonDown("Cancel"))
+            if (gameObject.activeSelf && InputManager.GetButtonDown("Cancel"))
             {
+                InputManager.ConsumeButton("Cancel");
                 OnNoClicked();
             }
         }
@@ -194,7 +196,7 @@ namespace PocketSquire.Unity.UI
                 return;
             }
 
-            Sequence hideSequence = DOTween.Sequence();
+            Sequence hideSequence = DOTween.Sequence().SetUpdate(true);
             
             if (_canvasGroup != null)
             {

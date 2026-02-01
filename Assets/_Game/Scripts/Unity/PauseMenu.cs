@@ -21,7 +21,7 @@ namespace PocketSquire.Unity
         void Update()
         {
             // 1. Toggle Pause (Escape Key OR Gamepad Start)
-            if (Input.GetButtonDown("Pause")) 
+            if (InputManager.GetButtonDown("Pause")) 
             {
                 if (isPaused)
                 {
@@ -34,7 +34,7 @@ namespace PocketSquire.Unity
             }
             // 2. Allow "B" button (Cancel) to close the menu only, 
             // but only if we didn't just handle the Pause input
-            else if (isPaused && Input.GetButtonDown("Cancel"))
+            else if (isPaused && InputManager.GetButtonDown("Cancel"))
             {
                 Resume();
             }

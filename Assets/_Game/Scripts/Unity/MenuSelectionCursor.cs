@@ -13,6 +13,8 @@ public class MenuSelectionCursor : MonoBehaviour
         // 1. Get the currently selected object from the Event System
         GameObject selectedObj = EventSystem.current.currentSelectedGameObject;
 
+        if (cursorGraph == null) return;
+
         // 2. Check if something is actually selected
         if (selectedObj != null)
         {

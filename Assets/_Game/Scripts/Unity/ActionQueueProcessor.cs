@@ -299,6 +299,9 @@ public class ActionQueueProcessor : MonoBehaviour
                 audioSource.PlayOneShot(clip);
             }
         }
+
+        // Update health bar
+        UpdateHealth(playerHealthBarActual, playerHealthBarGhost, entity.Health, entity.MaxHealth, HealthBarAnimationType.Snap);
     }
 
     private void HandleLoseVisuals(Image img, Entity entity)

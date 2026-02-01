@@ -6,6 +6,8 @@ using TMPro;
 using DG.Tweening;
 using PocketSquire.Arena.Core;
 using UnityEngine.EventSystems;
+using PocketSquire.Unity.UI;
+using PocketSquire.Unity;
 
 namespace PocketSquire.Arena.Unity.UI
 {
@@ -63,12 +65,24 @@ namespace PocketSquire.Arena.Unity.UI
                  {
                      cursor.cursorGraph = cursorObj.GetComponent<RectTransform>();
                      cursorObj.gameObject.SetActive(false); // Hide initially, cursor script handles it
-                 }
              }
+        }
+    }
 
-             // Find Registry
-             var initializer = FindFirstObjectByType<ArenaSceneInitializer>();
-             if (initializer != null) _registry = initializer.registry;
+    private GameAssetRegistry Registry
+        {
+            get
+            {
+                if (_registry == null)
+                {
+                    var initializer = FindFirstObjectByType<ArenaSceneInitializer>();
+                    if (initializer != null)
+                    {
+                        _registry = initializer.registry;
+                    }
+                }
+                return _registry;
+            }
         }
 
         private void InitializeCanvasGroup()
@@ -89,8 +103,9 @@ namespace PocketSquire.Arena.Unity.UI
         
         private void Update()
         {
-            if (gameObject.activeSelf && Input.GetButtonDown("Cancel"))
+            if (gameObject.activeSelf && InputManager.GetButtonDown("Cancel"))
             {
+                InputManager.ConsumeButton("Cancel");
                 OnCancelClicked();
             }
         }
@@ -189,9 +204,13 @@ namespace PocketSquire.Arena.Unity.UI
             if (rowScript != null)
             {
                 Sprite iconSprite = null;
-                if (_registry != null && !string.IsNullOrEmpty(item.Sprite))
+                if (Registry != null && !string.IsNullOrEmpty(item.Sprite))
                 {
-                    iconSprite = _registry.GetSprite(item.Sprite);
+                    iconSprite = Registry.GetSprite(item.Sprite);
+                } else {
+                    Debug.Log("Registry = " + (Registry == null ? "null" : "not null"));
+                    Debug.Log("Sprite = " + item.Sprite);
+                    Debug.Log("No sprite found for item: " + item.Name);
                 }
 
                 rowScript.Initialize(item, quantity, iconSprite, () => OnItemClicked(item.Id));

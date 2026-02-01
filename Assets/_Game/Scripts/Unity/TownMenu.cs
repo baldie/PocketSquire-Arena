@@ -20,8 +20,10 @@ namespace PocketSquire.Unity
                 adventureBtn.Select();
             }
 
-            // Must have lost in the arena :(
-            GameState.CurrentRun.Reset();
+            if (GameState.CurrentRun != null){
+                // Must have lost in the arena :(
+                GameState.CurrentRun.Reset();
+            }
         }
 
         private void WireButtons()
