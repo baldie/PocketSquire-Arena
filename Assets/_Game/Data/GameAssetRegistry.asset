@@ -53,6 +53,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 39f53fd9c4b16454bb3a5abbbb61bec2, type: 3}
   - id: training_dummy_hit
     asset: {fileID: 21300000, guid: 9364e9e08d5c6834bb89c89c87c596ea, type: 3}
+  - id: training_dummy_special_attack
+    asset: {fileID: 21300000, guid: 90d41cdb70795f64bb95e763ffa3ae23, type: 3}
   - id: player_m_l1_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
   - id: player_m_l1_battle
@@ -63,8 +65,6 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 795d74c3f17505a408ea718377684e13, type: 3}
   - id: player_m_l1_hit
     asset: {fileID: 21300000, guid: 5eeb6db8622749940a6cbe698e2d9e1f, type: 3}
-  - id: player_m_l1_ready_0
-    asset: {fileID: -1825961191, guid: 34a778e3716944b46bb4bc82bdaab309, type: 3}
   - id: player_m_l1_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
   - id: chibi-cursor
@@ -98,3 +98,21 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: m_physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
+  - id: battle_menu_tick
+    asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}
+  - id: crowd_displeased
+    asset: {fileID: 8300000, guid: 62075d8084535c048b33eeffc25c071f, type: 3}
+  - id: crowd_pleased
+    asset: {fileID: 8300000, guid: 4bbb975dd39724a4c95f9b590d2aa3a1, type: 3}
+  - id: gulp
+    asset: {fileID: 8300000, guid: 533da56448f7a1443a6fc6590ba92a0b, type: 3}
+  - id: level_up
+    asset: {fileID: 8300000, guid: 6996c6a6c942c7d4d9f2fb5ab5163fda, type: 3}
+  - id: menu_tick
+    asset: {fileID: 8300000, guid: 3b6ea49b05504154c9137c02a84d112e, type: 3}
+  - id: player_lose
+    asset: {fileID: 8300000, guid: 450149720bbcdb24588983f4abb956c1, type: 3}
+  - id: player_win
+    asset: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+  - id: selection_made
+    asset: {fileID: 8300000, guid: 1be2fcc16ab0da84f99ba7c633037620, type: 3}

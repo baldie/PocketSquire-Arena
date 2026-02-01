@@ -45,7 +45,7 @@ public class GameAssetRegistry : ScriptableObject {
         sprites ??= new List<SpriteEntry>();
         sprites.Clear();
 
-        string[] searchFolders = { "Assets/_Game/Art", "Assets/_Game/Audio" };
+        string[] searchFolders = { "Assets/_Game/Art" };
         string[] guids = UnityEditor.AssetDatabase.FindAssets("t:Sprite", searchFolders);
         
         foreach (string guid in guids)
@@ -60,7 +60,7 @@ public class GameAssetRegistry : ScriptableObject {
         }
         
         UnityEditor.EditorUtility.SetDirty(this);
-        Debug.Log($"Populated {sprites.Count} sprites from Art and Audio folders.");
+        Debug.Log($"Populated {sprites.Count} sprites from Assets/_Game/Art");
     }
 
     [ContextMenu("Populate Audio")]
@@ -69,7 +69,7 @@ public class GameAssetRegistry : ScriptableObject {
         sounds ??= new List<AudioEntry>();
         sounds.Clear();
 
-        string[] searchFolders = { "Assets/_Game/Art", "Assets/_Game/Audio" };
+        string[] searchFolders = { "Assets/_Game/Audio" };
         string[] guids = UnityEditor.AssetDatabase.FindAssets("t:AudioClip", searchFolders);
         
         foreach (string guid in guids)
@@ -84,7 +84,7 @@ public class GameAssetRegistry : ScriptableObject {
         }
         
         UnityEditor.EditorUtility.SetDirty(this);
-        Debug.Log($"Populated {sounds.Count} audio clips from Art and Audio folders.");
+        Debug.Log($"Populated {sounds.Count} audio clips from Assets/_Game/Audio");
     }
 
     [UnityEditor.MenuItem("Tools/Populate Asset Registry")]
