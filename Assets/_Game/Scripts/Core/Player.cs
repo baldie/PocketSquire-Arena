@@ -13,7 +13,7 @@ namespace PocketSquire.Arena.Core
         public CharGender Gender;
         public int Gold;
         public int Level { get; private set; } = 1;
-        public Inventory Inventory = new();
+// public Inventory Inventory = new(); // Moved to Entity
 
         public override string SpriteId {
             get

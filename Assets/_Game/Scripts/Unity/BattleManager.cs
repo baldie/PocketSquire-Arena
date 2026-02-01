@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PocketSquire.Arena.Core;
-using DG.Tweening;
+using PocketSquire.Arena.Unity.UI;
+using TMPro;
+using DG.Tweening; // For animations
+using UnityEngine.EventSystems;
 
 namespace PocketSquire.Unity
 {
     public class BattleManager : MonoBehaviour
     {
         [Header("UI References")]
-        public GameObject battleMenuUI;
-        public Button firstSelectedButton;
+        [SerializeField] private GameObject battleMenuUI;
+        [SerializeField] private Button attackButton;
+        [SerializeField] private Button firstSelectedButton;
+        [SerializeField] private ItemSelectionDialog itemSelectionDialog; // Added dialog reference
         
         [Header("Action Queue")]
         [Tooltip("Reference to the ActionQueueProcessor in the scene")]
@@ -21,7 +26,25 @@ namespace PocketSquire.Unity
             {
                 Debug.LogError("BattleManager: ActionQueueProcessor not found");
             }
+            else
+            {
+                // Subscribe to know when to show the menu again
+                actionQueueProcessor.OnProcessingFinished += ShowMenu;
+            }
+
+            if (itemSelectionDialog == null)
+            {
+                itemSelectionDialog = FindFirstObjectByType<ItemSelectionDialog>();
+                if (itemSelectionDialog != null)
+                {
+                    itemSelectionDialog.gameObject.SetActive(false); // Ensure hidden at start
+                }
+            }
+
             WireButtons();
+            
+            // Explicitly show menu at start if it's player turn
+            ShowMenu();
         }
 
         private void WireButtons()
@@ -29,7 +52,7 @@ namespace PocketSquire.Unity
             var uiAudio = GameObject.Find("UIAudio");
             var audioSource = uiAudio != null ? uiAudio.GetComponent<AudioSource>() : null;
 
-            var attackButton = battleMenuUI.transform.Find("AttackButton")?.GetComponent<Button>();
+            attackButton = battleMenuUI.transform.Find("AttackButton")?.GetComponent<Button>();
             if (attackButton != null)
             {
                 attackButton.onClick.RemoveAllListeners();
@@ -71,9 +94,37 @@ namespace PocketSquire.Unity
             }
         }
 
+        public void ShowMenu()
+        {
+            if (battleMenuUI == null) return;
+
+            // Only show if it's the player's turn and no actions are currently processing
+            bool isPlayerTurn = GameState.Battle?.CurrentTurn?.IsPlayerTurn ?? false;
+            bool isProcessing = actionQueueProcessor?.IsProcessing ?? false;
+
+            if (isPlayerTurn && !isProcessing)
+            {
+                battleMenuUI.SetActive(true);
+                if (firstSelectedButton != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
+                }
+            }
+            else
+            {
+                battleMenuUI.SetActive(false);
+            }
+        }
+
+        public void HideMenu()
+        {
+            if (battleMenuUI != null) battleMenuUI.SetActive(false);
+        }
+
         public void Attack()
         {
             Debug.Log("Attack");
+            HideMenu();
 
             if (actionQueueProcessor != null && GameState.Battle != null)
             {
@@ -91,6 +142,7 @@ namespace PocketSquire.Unity
         public void Defend()
         {
             Debug.Log("Defend");
+            HideMenu();
 
             if (actionQueueProcessor != null && GameState.Battle != null)
             {
@@ -108,21 +160,45 @@ namespace PocketSquire.Unity
         {
             Debug.Log("Item");
             
-            if (actionQueueProcessor != null && GameState.Battle != null)
+            if (GameState.Player == null || GameState.Battle == null)
             {
-                var player = GameState.Player;
-                
-                if (player != null)
-                {
-                    var itemAction = new ItemAction();
-                    actionQueueProcessor.EnqueueAction(itemAction);
-                }
+                Debug.LogWarning("Cannot use item: No player or battle active");
+                return;
             }
+
+            // Hide battle menu while dialog is shown
+            HideMenu();
+
+            ItemSelectionDialog.Show(
+                itemSelectionDialog,
+                onItemSelected: (itemId) => 
+                {
+                    // Create ItemAction with the selected item
+                    var itemAction = new ItemAction(itemId);
+                    
+                    // Delay to allow selection sound to play
+                    DOTween.Sequence()
+                        .AppendInterval(0.4f)
+                        .AppendCallback(() => 
+                        {
+                            if (actionQueueProcessor != null)
+                                actionQueueProcessor.EnqueueAction(itemAction);
+                            
+                            // Menu will be re-shown by OnProcessingFinished event
+                        });
+                },
+                onCancel: () => 
+                {
+                    // User cancelled - return to their turn
+                    ShowMenu();
+                }
+            );
         }
 
         public void Yield()
         {
             Debug.Log("Yield");
+            HideMenu();
             
             if (actionQueueProcessor != null && GameState.Battle != null)
             {

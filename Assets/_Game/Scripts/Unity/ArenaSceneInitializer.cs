@@ -12,11 +12,6 @@ public class ArenaSceneInitializer : MonoBehaviour
     [Tooltip("Reference to the ActionQueueProcessor in the scene")]
     public ActionQueueProcessor actionQueueProcessor;
 
-    [Header("Battle")]
-    [Tooltip("Reference to the BattleManager in the scene")]
-    public PocketSquire.Unity.BattleManager battleManager;
-    public Canvas battleMenu;
-    
     [Header("Buttons")]
     public Button nextOpponentButton;
     public Button leaveArenaButton;
@@ -56,18 +51,7 @@ public class ArenaSceneInitializer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // TODO: don't do this on every update
-        if (GameState.Battle == null) return;
-        if (GameState.Battle.CurrentTurn == null) return;
-        if (battleMenu == null) return;
-        
-        bool shouldShowMenu = GameState.Battle.CurrentTurn.IsPlayerTurn && 
-                             (actionQueueProcessor == null || (!actionQueueProcessor.IsProcessing && actionQueueProcessor.QueueCount == 0));
-
-        battleMenu.gameObject.SetActive(shouldShowMenu);
-    }
+    // Removed polling: visibility is now handled explicitly via BattleManager.ShowMenu() event subscriptions.
 
     private Player LoadPlayer(Player player)
     {

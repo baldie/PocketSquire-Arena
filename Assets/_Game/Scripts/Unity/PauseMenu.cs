@@ -85,7 +85,7 @@ namespace PocketSquire.Unity
                 quitBtn.onClick.RemoveAllListeners();
                 quitBtn.onClick.AddListener(() => ConfirmationDialog.Show(
                     confirmationDialog,
-                    "Are you sure you want to quit?",
+                    "Quit the game?",
                     QuitGame
                 ));
 

@@ -55,6 +55,11 @@ public class ActionQueueProcessor : MonoBehaviour
     public event System.Func<IGameAction, IGameAction> OnActionComplete;
 
     /// <summary>
+    /// Event fired when the processor has finished all actions in the queue.
+    /// </summary>
+    public event System.Action OnProcessingFinished;
+
+    /// <summary>
     /// Returns true if the queue is currently processing an action.
     /// </summary>
     public bool IsProcessing => currentActionCoroutine != null;
@@ -64,6 +69,9 @@ public class ActionQueueProcessor : MonoBehaviour
     /// </summary>
     public int QueueCount => actionQueue.Count;
 
+    private GameObject _playerGO;
+    private GameObject _monsterGO;
+
     void Start()
     {
         if (audioSource == null)
@@ -71,6 +79,10 @@ public class ActionQueueProcessor : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
         audioSource.PlayOneShot(crowd_pleased);
+
+        // Cache GameObjects
+        _playerGO = GameObject.Find(playerObjectName);
+        _monsterGO = GameObject.Find(monsterObjectName);
 
         // Make the healthbars snap to their current values
         UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameState.Battle.Player1.Health, GameState.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
@@ -106,7 +118,7 @@ public class ActionQueueProcessor : MonoBehaviour
         // 1. Trigger Actor Effects
         action.ApplyEffect();
 
-        PlayActionEffects(action.Actor, action.Type);
+        PlayActionEffects(action);
 
         // Wait if visuals/logic requested user input (e.g. Yield Dialog)
         while (_isWaitingForUser)
@@ -151,20 +163,26 @@ public class ActionQueueProcessor : MonoBehaviour
             }
         }
         currentActionCoroutine = null;
+
+        // If no more actions are queued, notify listeners (e.g., BattleManager to show menu)
+        if (actionQueue.Count == 0)
+        {
+            OnProcessingFinished?.Invoke();
+        }
     }
 
-    private void PlayActionEffects(Entity actor, ActionType type)
+    private void PlayActionEffects(IGameAction action)
     {
-        if (actor == null) return;
+        if (action?.Actor == null) return;
 
         // Sound
-        string soundId = actor.GetActionSoundId(type);
+        string soundId = action.Actor.GetActionSoundId(action.Type);
         AudioClip clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
         
         if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
 
         // Animation / Visuals
-        TriggerVisuals(actor, type);
+        TriggerVisuals(action.Actor, action.Type, action);
     }
 
     private void PlayHitEffects(Entity target, int damage)
@@ -207,7 +225,7 @@ public class ActionQueueProcessor : MonoBehaviour
         UpdateHealth(healthbarActual, healthbarGhost, target.Health, target.MaxHealth, HealthBarAnimationType.Shake);
     }
 
-    private void TriggerVisuals(Entity entity, ActionType actionType)
+    private void TriggerVisuals(Entity entity, ActionType actionType, IGameAction action = null)
     {
         if (entity == null) return;
 
@@ -241,7 +259,7 @@ public class ActionQueueProcessor : MonoBehaviour
                 HandleYield(imgComponent, entity);
                 break;
             case ActionType.Item:
-                // TODO: Implement these via specific handlers
+                HandleItemEffects(imgComponent, entity, action as ItemAction);
                 break;
         }
     }
@@ -261,7 +279,27 @@ public class ActionQueueProcessor : MonoBehaviour
         );
     }
 
-
+    private void HandleItemEffects(Image img, Entity entity, ItemAction? itemAction)
+    {
+        if (itemAction == null || itemAction.ItemData == null) return;
+        
+        // Visual: Use Player's ItemSpriteId (or generic if monster, but monsters use different logic usually)
+        if (entity is Player player)
+        {
+            HandleSpriteSwap(img, player.ItemSpriteId, 1.0f);
+        }
+        
+        // Audio: Play item's sound effect
+        string soundId = itemAction.ItemData.SoundEffect;
+        if (!string.IsNullOrEmpty(soundId))
+        {
+            AudioClip clip = assetRegistry?.GetSound(soundId);
+            if (clip != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(clip);
+            }
+        }
+    }
 
     private void HandleLoseVisuals(Image img, Entity entity)
     {
@@ -474,8 +512,8 @@ public class ActionQueueProcessor : MonoBehaviour
 
     private GameObject FindGameObjectForEntity(Entity entity)
     {
-        if (entity is Player) return GameObject.Find(playerObjectName);
-        if (entity is Monster) return GameObject.Find(monsterObjectName);
+        if (entity is Player) return _playerGO ?? (_playerGO = GameObject.Find(playerObjectName));
+        if (entity is Monster) return _monsterGO ?? (_monsterGO = GameObject.Find(monsterObjectName));
         return null;
     }
 }

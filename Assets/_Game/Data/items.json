@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "Small Health Potion",
+        "name": "Health Potion I",
         "description": "Heals 25% of your health",
         "target": "self",
         "stackable": true,
