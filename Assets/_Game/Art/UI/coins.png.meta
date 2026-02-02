@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7bac2f3e23cc16744b4372c5e544d48b
+guid: 6bec808db30b96c4bbf88e29c3675f20
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -49,7 +49,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 170, y: 227, z: 195, w: 271}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -121,57 +121,13 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: paper_board_0
-      rect:
-        serializedVersion: 2
-        x: 701
-        y: 1087
-        width: 15
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2d3cee2a454bf1a4a8c38ebfc7549352
-      internalID: 1923106048
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: paper_board_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 720
-        height: 1120
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 167, y: 304, z: 177, w: 306}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cedc3a0e62f3ebe469a39f02766a037a
-      internalID: 1474192339
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c4bcb0a508bb9e348a5b48b8845c3d02
-    internalID: 2018635644
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -179,9 +135,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      paper_board_0: 1923106048
-      paper_board_1: 1474192339
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
