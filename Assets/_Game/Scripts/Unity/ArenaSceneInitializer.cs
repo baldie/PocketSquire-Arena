@@ -32,6 +32,9 @@ public class ArenaSceneInitializer : MonoBehaviour
         var monster = GameState.CurrentRun.GetMonsterForCurrentRank();
         GameState.Battle = new Battle(LoadPlayer(GameState.Player), monster);
         LoadMonster(monster);
+
+        // Save the game
+        SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
         
         // Subscribe to action completion to handle turn changes
         if (actionQueueProcessor != null)

@@ -61,6 +61,14 @@ namespace PocketSquire.Arena.Core
             Console.WriteLine("Loaded Player: " + Player?.Name);
         }
 
+        public static void AccumulatePlaytime(TimeSpan sessionDuration)
+        {
+            if (PlayTime == null)
+                PlayTime = TimeSpan.Zero;
+            
+            PlayTime = PlayTime.Value.Add(sessionDuration);
+        }
+
         public static SaveData? FindMostRecentSave(SaveData?[]? saves)
         {
             if (saves == null || saves.Length == 0) return null;

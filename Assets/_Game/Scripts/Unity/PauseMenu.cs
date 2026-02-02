@@ -71,7 +71,7 @@ namespace PocketSquire.Unity
                 mainMenuBtn.onClick.RemoveAllListeners();
                 mainMenuBtn.onClick.AddListener(() => ConfirmationDialog.Show(
                     confirmationDialog,
-                    "Return to Main Menu?",
+                    "Are you sure?",
                     LoadMainMenu
                 ));
 
@@ -129,6 +129,19 @@ namespace PocketSquire.Unity
 
         public void LoadMainMenu()
         {
+            // Stop playtime tracking and save before returning to main menu
+            var tracker = FindFirstObjectByType<PlaytimeTracker>();
+            if (tracker != null)
+            {
+                tracker.StopTracking();
+            }
+            
+            // Save the game (automatically accumulates playtime via SaveSystem)
+            SaveSystem.SaveGame(PocketSquire.Arena.Core.GameState.SelectedSaveSlot, PocketSquire.Arena.Core.GameState.GetSaveData());
+            
+            // Reset save slot to prevent tracking in main menu
+            PocketSquire.Arena.Core.GameState.SelectedSaveSlot = PocketSquire.Arena.Core.SaveSlots.Unknown;
+            
             Time.timeScale = 1f; // Ensure time is unfrozen
             SceneManager.LoadScene("MainMenu");
         }

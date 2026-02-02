@@ -24,6 +24,9 @@ namespace PocketSquire.Unity
                 // Must have lost in the arena :(
                 GameState.CurrentRun.Reset();
             }
+
+            // Save the game
+            SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
         }
 
         private void WireButtons()

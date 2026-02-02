@@ -88,6 +88,15 @@ namespace PocketSquire.Unity
                 Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
             }
 
+            // Start playtime tracking for this save slot
+            var tracker = FindFirstObjectByType<PlaytimeTracker>();
+            if (tracker == null)
+            {
+                var trackerObj = new GameObject("PlaytimeTracker");
+                tracker = trackerObj.AddComponent<PlaytimeTracker>();
+            }
+            tracker.StartTracking();
+
             StartCoroutine(PlaySoundThenLoad("Town", buttonObj));
         }
 

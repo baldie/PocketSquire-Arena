@@ -13,6 +13,10 @@ public static class SaveSystem
 
     public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot, SaveData data)
     {
+        // Accumulate current session playtime before saving
+        var tracker = UnityEngine.Object.FindFirstObjectByType<PlaytimeTracker>();
+        tracker?.SaveCurrentPlaytime();
+        
         // 0. Set the last save date
         data.LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
