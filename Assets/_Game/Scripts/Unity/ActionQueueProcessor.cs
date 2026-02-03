@@ -35,6 +35,7 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image playerUsedItemSprite;
     public Canvas arenaMenuPanel;
     public ConfirmationDialog confirmationDialog;
+    public GameObject levelUpBackground;
 
 
     [Header("Audio")]
@@ -464,14 +465,14 @@ public class ActionQueueProcessor : MonoBehaviour
         if (GameState.Player.CanLevelUp())
         {
             Debug.Log("Player can level up");
-            var levelUpObj = GameObject.Find("LevelUpBackground");
-            if (levelUpObj != null)
+            if (levelUpBackground != null)
             {
-                var rect = levelUpObj.GetComponent<RectTransform>();
-                var presenter = levelUpObj.GetComponent<LevelUpPresenter>();
+                var presenter = levelUpBackground.GetComponent<LevelUpPresenter>();
 
                 // Show the arena menu after the player has leveled up.
-                LevelUpPresenter.Show(rect, presenter, () => showArenaMenu(true));
+                LevelUpPresenter.Show(levelUpBackground, presenter, () => showArenaMenu(true));
+            } else {
+                Debug.LogError("LevelUpBackground not found!");
             }
         } else {
             showArenaMenu(true);

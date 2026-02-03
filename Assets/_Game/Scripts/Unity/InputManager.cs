@@ -16,6 +16,7 @@ namespace PocketSquire.Unity
 
         private InputAction _pauseAction;
         private InputAction _cancelAction;
+        private InputAction _inventoryAction;
 
         public static InputManager Instance => _instance;
 
@@ -40,18 +41,24 @@ namespace PocketSquire.Unity
             // Define Cancel Action (Escape or Gamepad Button East/B)
             _cancelAction = new InputAction("Cancel", binding: "<Keyboard>/escape");
             _cancelAction.AddBinding("<Gamepad>/buttonEast");
+
+            // Define Inventory Action (I or Gamepad Button North)
+            _inventoryAction = new InputAction("Inventory", binding: "<Keyboard>/i");
+            _inventoryAction.AddBinding("<Gamepad>/buttonNorth");
         }
 
         void OnEnable()
         {
             _pauseAction?.Enable();
             _cancelAction?.Enable();
+            _inventoryAction?.Enable();
         }
 
         void OnDisable()
         {
             _pauseAction?.Disable();
             _cancelAction?.Disable();
+            _inventoryAction?.Disable();
         }
 
         void LateUpdate()
@@ -80,6 +87,10 @@ namespace PocketSquire.Unity
             else if (buttonName == "Cancel")
             {
                 return _instance._cancelAction.WasPressedThisFrame();
+            }
+            else if (buttonName == "Inventory")
+            {
+                return _instance._inventoryAction.WasPressedThisFrame();
             }
 
             Debug.LogWarning($"[InputManager] Unknown button requested: {buttonName}");

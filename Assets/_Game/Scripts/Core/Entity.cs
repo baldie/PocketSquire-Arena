@@ -15,6 +15,7 @@ namespace PocketSquire.Arena.Core
         public int Health;
         public int MaxHealth;
         public int Experience;
+        public int Gold;
         public Inventory Inventory = new();
         public Attributes Attributes = new Attributes();
         public float PosX;

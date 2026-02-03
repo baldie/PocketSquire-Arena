@@ -12,7 +12,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
     public class LevelUpPresenter : MonoBehaviour
     {
         [SerializeField] private Button acceptButton;
-        [SerializeField] private Transform levelUpBackground; // Parent containing rows and accept button
+        [SerializeField] private GameObject levelUpBackground;
         [SerializeField] private TextMeshProUGUI pointsLabel;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip levelUpSound;
@@ -35,7 +35,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
 
             if (pointsLabel == null && levelUpBackground != null)
             {
-                var labelTransform = levelUpBackground.Find("PointsLabel");
+                var labelTransform = levelUpBackground.transform.Find("PointsLabel");
                 if (labelTransform != null)
                 {
                     pointsLabel = labelTransform.GetComponent<TextMeshProUGUI>();
@@ -60,7 +60,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             // Find all AttributeRow-capable objects under LevelUpBackground
             // Based on requirements, they are direct children named STR, CON, etc.
             // But we can just look for components to be safe and dynamic.
-            foreach (Transform child in levelUpBackground)
+            foreach (Transform child in levelUpBackground.transform)
             {
                 // We check if the name matches our expected attribute keys or just grab all.
                 // The user said: "STR, CON, INT, WIS, and LUC. Each of these are TextMeshPro gameobjects."
@@ -123,7 +123,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
                 audioSource.PlayOneShot(acceptSound);
             }
 
-            LevelUpPresenter.HideLevelUpScreen(levelUpBackground as RectTransform);
+            LevelUpPresenter.HideLevelUpScreen(levelUpBackground);
             
             // Wait half a sec and then show the arena menu
             DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() => {
@@ -190,10 +190,12 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             }
         }
 
-        public static void Show(RectTransform levelUpBackground, LevelUpPresenter levelUpPresenter, Action onAccept)
+        public static void Show(GameObject levelUpBackground, LevelUpPresenter levelUpPresenter, Action onAccept)
         {
             levelUpPresenter._onAccept = onAccept;
             Debug.Log("Showing level up screen");
+            levelUpBackground.SetActive(true);
+
             // Prepare the level up screen with the appropriate values
             int level = GameWorld.Progression.GetLevelForExperience(GameState.Player.Experience); 
             var reward = GameWorld.Progression.GetRewardForLevel(level);
@@ -207,20 +209,23 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             }
 
             // Animate the level up screen's appearance on the scene
+            RectTransform rectTransform = levelUpBackground.GetComponent<RectTransform>();
             Sequence showSequence = DOTween.Sequence();
             showSequence.AppendInterval(1.0f);
-            showSequence.Append(levelUpBackground.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuad));   
+            showSequence.Append(rectTransform.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuad));   
         }
 
-        private static void HideLevelUpScreen(RectTransform levelUpBackground)
+        private static void HideLevelUpScreen(GameObject levelUpBackground)
         {
             // Calculate the off-screen position to the right
-            float offScreenX = levelUpBackground.rect.width;
+            RectTransform rectTransform = levelUpBackground.GetComponent<RectTransform>();
+            float offScreenX = rectTransform.rect.width;
             Sequence hideSequence = DOTween.Sequence();
             hideSequence.AppendInterval(1.0f); 
-            hideSequence.Append(levelUpBackground
-                .DOAnchorPos(new Vector2(offScreenX, 0), 0.5f)
+            hideSequence.Append(rectTransform.DOAnchorPos(new Vector2(offScreenX, 0), 0.5f)
                 .SetEase(Ease.InQuad));
+            hideSequence.AppendInterval(1.0f);
+            hideSequence.AppendCallback(() => levelUpBackground.SetActive(false));
         }
     }
 }

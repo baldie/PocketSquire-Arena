@@ -12,8 +12,7 @@ namespace PocketSquire.Unity.UI
     public class PlayerMenuController : MonoBehaviour
     {
         [Header("Character Info")]
-        [SerializeField] private TextMeshProUGUI classText;
-        [SerializeField] private TextMeshProUGUI levelText;
+        [SerializeField] private TextMeshProUGUI levelAndClassText;
         [SerializeField] private TextMeshProUGUI goldText;
 
         [Header("Experience Bar")]
@@ -33,23 +32,46 @@ namespace PocketSquire.Unity.UI
 
         [Header("Containers")]
         [SerializeField] private Transform badgesContainer;
-        [SerializeField] private Transform inventoryGrid;
-        [SerializeField] private Transform statusEffectsRow;
 
         [Header("Footer")]
-        [SerializeField] private Button footerButton;
+        [SerializeField] private Button skillTreeButton;
+
+        private bool isOpen = false;
+
+        public bool IsOpen => isOpen;
+        
+        private Canvas _canvas;
+
+        private void Awake()
+        {
+            _canvas = GetComponent<Canvas>();
+        }
 
         private void Start()
         {
             // Wire up footer button
-            if (footerButton != null)
+            if (skillTreeButton != null)
             {
-                footerButton.onClick.RemoveAllListeners();
-                footerButton.onClick.AddListener(OnFooterButtonClicked);
+                skillTreeButton.onClick.RemoveAllListeners();
+                skillTreeButton.onClick.AddListener(OnSkillTreeButtonClicked);
             }
-
-            // Initial refresh
+                
+            // Initial refresh and ensure closed
             Refresh();
+            Close();
+        }
+
+        private void Update()
+        {
+            if (InputManager.GetButtonDown("Inventory"))
+            {
+                if (isOpen) Close();
+                else Open();
+            }
+            else if (isOpen && InputManager.GetButtonDown("Cancel"))
+            {
+                Close();
+            }
         }
 
         /// <summary>
@@ -60,21 +82,19 @@ namespace PocketSquire.Unity.UI
             var player = GameState.Player;
             if (player == null)
             {
-                Debug.LogWarning("PlayerMenuController: GameState.Player is null");
                 return;
             }
-
+            
+            // Re-bind references if needed (since it's a prefab instance)
+            // But they should already be wired in the prefab.
+            
             // Update character info
-            if (classText != null)
+            if (levelAndClassText != null)
             {
                 // TODO: Add class property to Player when implemented
-                classText.text = "Class: Adventurer";
+                levelAndClassText.text = $"Level {player.Level} {player.Class}";
             }
 
-            if (levelText != null)
-            {
-                levelText.text = $"Level: {player.Level}";
-            }
 
             if (goldText != null)
             {
@@ -132,20 +152,11 @@ namespace PocketSquire.Unity.UI
         {
             if (player.Attributes == null) return;
 
-            if (strText != null)
-                strText.text = $"STR: {player.Attributes.Strength}";
-
-            if (conText != null)
-                conText.text = $"CON: {player.Attributes.Constitution}";
-
-            if (intText != null)
-                intText.text = $"INT: {player.Attributes.Intelligence}";
-
-            if (wisText != null)
-                wisText.text = $"WIS: {player.Attributes.Wisdom}";
-
-            if (lckText != null)
-                lckText.text = $"LCK: {player.Attributes.Luck}";
+            if (strText != null) strText.text = $"STR: {player.Attributes.Strength}";
+            if (conText != null) conText.text = $"CON: {player.Attributes.Constitution}";
+            if (intText != null) intText.text = $"INT: {player.Attributes.Intelligence}";
+            if (wisText != null) wisText.text = $"WIS: {player.Attributes.Wisdom}";
+            if (lckText != null) lckText.text = $"LCK: {player.Attributes.Luck}";
         }
 
         /// <summary>
@@ -162,9 +173,35 @@ namespace PocketSquire.Unity.UI
         /// <summary>
         /// Called when the footer button (Skill Tree) is clicked
         /// </summary>
-        private void OnFooterButtonClicked()
+        private void OnSkillTreeButtonClicked()
         {
             Debug.Log("Skill Tree clicked");
+        }
+
+        public void Open()
+        {
+            if (_canvas != null)
+                _canvas.enabled = true;
+            
+            isOpen = true;
+            Refresh();
+            
+            // Optional: Pause game if in Arena
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Arena")
+            {
+                Time.timeScale = 0f;
+            }
+        }
+
+        public void Close()
+        {
+            if (_canvas != null)
+                _canvas.enabled = false;
+                
+            isOpen = false;
+            
+            // Unpause
+            Time.timeScale = 1f;
         }
     }
 }

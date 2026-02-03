@@ -23,8 +23,8 @@ namespace PocketSquire.Arena.Core
         {
             if (Actor is Player player)
             {
-                Console.WriteLine("Player gained " + Target.Experience + " experience points");
-                player.Experience += Target.Experience;
+                player.GainExperience(Target.Experience);
+                player.GainGold(Target.Gold);
             }
 
             GameState.CurrentRun?.NextRank();
