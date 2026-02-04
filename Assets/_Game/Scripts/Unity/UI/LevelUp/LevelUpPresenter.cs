@@ -140,7 +140,8 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
                 { "CON", attr.Constitution },
                 { "INT", attr.Intelligence },
                 { "WIS", attr.Wisdom },
-                { "LUC", attr.Luck }
+                { "LUC", attr.Luck },
+                { "DEF", attr.Defense }
             };
         }
 
@@ -154,6 +155,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             player.Attributes.Intelligence = _model.GetAttributeValue("INT");
             player.Attributes.Wisdom = _model.GetAttributeValue("WIS");
             player.Attributes.Luck = _model.GetAttributeValue("LUC");
+            player.Attributes.Defense = _model.GetAttributeValue("DEF");
         }
 
         private void UpdateUI()

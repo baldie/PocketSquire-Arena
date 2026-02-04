@@ -16,6 +16,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Intelligence = 1;
             attributes.Wisdom = 1;
             attributes.Luck = 1;
+            attributes.Defense = 1;
 
             // Act
             var player = new Player("Squire", 10, 10, attributes, Player.CharGender.m);
@@ -29,6 +30,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player.Attributes.Intelligence, Is.EqualTo(1));
             Assert.That(player.Attributes.Wisdom, Is.EqualTo(1));
             Assert.That(player.Attributes.Luck, Is.EqualTo(1));
+            Assert.That(player.Attributes.Defense, Is.EqualTo(1));
             Assert.That(player.IsDefeated, Is.False);
         }
 

@@ -18,7 +18,8 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
             _initialAttributes = new Dictionary<string, int>
             {
                 { "STR", 5 },
-                { "CON", 10 }
+                { "CON", 10 },
+                { "DEF", 3 }
             };
             _initialPoints = 3;
             _currentLevel = 5;
@@ -31,6 +32,7 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
             Assert.That(_model.AvailablePoints, Is.EqualTo(3));
             Assert.That(_model.GetAttributeValue("STR"), Is.EqualTo(5));
             Assert.That(_model.GetAttributeValue("CON"), Is.EqualTo(10));
+            Assert.That(_model.GetAttributeValue("DEF"), Is.EqualTo(3));
             Assert.That(_model.CurrentLevel, Is.EqualTo(5));
         }
 
@@ -104,6 +106,25 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
 
             Assert.That(_model.IsPerkUnlocked(perkId), Is.False);
             Assert.That(_model.PendingPerkChoices, Is.Not.Empty);
+        }
+
+        [Test]
+        public void IncrementDefenseAttribute_ShouldDecreaseAvailablePoints_AndIncreaseDefense()
+        {
+            _model.IncrementAttribute("DEF");
+
+            Assert.That(_model.AvailablePoints, Is.EqualTo(2));
+            Assert.That(_model.GetAttributeValue("DEF"), Is.EqualTo(4));
+        }
+
+        [Test]
+        public void DecrementDefenseAttribute_ShouldIncreaseAvailablePoints_AndDecreaseDefense()
+        {
+            _model.IncrementAttribute("DEF");
+            _model.DecrementAttribute("DEF");
+
+            Assert.That(_model.AvailablePoints, Is.EqualTo(3));
+            Assert.That(_model.GetAttributeValue("DEF"), Is.EqualTo(3));
         }
     }
 }
