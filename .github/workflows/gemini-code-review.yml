@@ -33,48 +33,86 @@ jobs:
           INSTRUCTIONS=$(cat review_agent_instructions.md)
 
           PROMPT=$(cat <<EOF
-          review $PR_DIFF
+          Review the following diff:
+          $PR_DIFF
           
+          Context:
           REPO: ${{ github.repository }}
           PR NUMBER: ${{ github.event.pull_request.number }}
           
+          Instructions:
           $INSTRUCTIONS
           EOF
           )
 
-          gemini "$PROMPT" > review_output.json
+          # Capture output and strip potential Markdown code blocks (```json ... ```)
+          gemini "$PROMPT" | sed 's/```json//g; s/```//g' > review_output.json
 
-      - name: Auto-merge if approved
-        if: steps.gemini-review.conclusion == 'success'
-        env:
-          GITHUB_TOKEN: ${{secrets.REVIEWER_TOKEN}}
-          PR_NUMBER: ${{github.event.pull_request.number}}
-        run: |
-          gh pr review $PR_NUMBER --approve -b "LGTM"
-          gh pr merge $PR_NUMBER --auto --squash --delete-branch
-          
-          # Find the linked issue
-          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+' || true)
-          echo "Closing associated issue: #$ISSUE_NUMBER"
-          if [ ! -z "$ISSUE_NUMBER" ]; then
-            gh issue close $ISSUE_NUMBER -c "Closed via Gemini Code Review auto-merge"
-          else
-             echo "No linked issue found."
-          fi
-
-      - name: Create Issues from Review
+      - name: Create Issues and Validate Review
+        id: process-review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Use jq to check if the file is valid JSON and has issues
+          # Check if review_output.json contains a non-empty array
           if jq -e '. | type == "array" and length > 0' review_output.json >/dev/null 2>&1; then
+            echo "Issues found by Gemini. Creating GitHub Issues..."
+            
             jq -c '.[]' review_output.json | while read -r issue; do
               TITLE=$(echo "$issue" | jq -r '.title')
               BODY=$(echo "$issue" | jq -r '.body')
               
-              echo "Creating issue: $TITLE"
-              gh issue create --title "$TITLE" --body "$BODY" --label "gemini-review"
+              # Create the issue and label it with the PR number for traceability
+              gh issue create \
+                --title "$TITLE" \
+                --body "$BODY" \
+                --label "gemini-review" \
+                --label "pr-${{ github.event.pull_request.number }}"
             done
+            
+            echo "Blocking merge due to identified issues."
+            exit 1 # This stops the workflow here; 'Auto-merge' will be skipped
           else
-            echo "No issues found or invalid JSON format returned."
+            echo "No issues found. Review passed."
+          fi
+
+      - name: Auto-merge if approved
+        # This step only runs if 'Create Issues' finished with exit code 0 (no issues found)
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.REVIEWER_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr review $PR_NUMBER --approve -b "LGTM - Gemini found no issues."
+          gh pr merge $PR_NUMBER --auto --squash --delete-branch
+          
+          # Find and close the original linked issue (e.g., "Closes #123")
+          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+' || true)
+          if [ ! -z "$ISSUE_NUMBER" ]; then
+            echo "Closing associated issue: #$ISSUE_NUMBER"
+            gh issue close $ISSUE_NUMBER -c "Closed via Gemini Code Review auto-merge"
+          else
+            echo "No linked issue found to close."
+          fi
+
+      - name: Trigger Author Agent
+        # This runs ONLY if 'Create Issues' exited with 1 (meaning bugs were found)
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          PR_LABELS=$(gh pr view $PR_NUMBER --json labels --jq '.labels | .[].name')
+          DOMAIN_LABEL=$(echo "$PR_LABELS" | grep "domain-" || true)
+          
+          if [ ! -z "$DOMAIN_LABEL" ]; then
+            DOMAIN=$(echo "$DOMAIN_LABEL" | cut -d'-' -f2)
+            AUTHOR_LABEL="author-$DOMAIN"
+            
+            # Extract original issue linked in the PR body
+            ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+' || true)
+            
+            if [ ! -z "$ISSUE_NUMBER" ]; then
+              echo "Tagging original issue #$ISSUE_NUMBER with $AUTHOR_LABEL"
+              gh issue edit $ISSUE_NUMBER --add-label "$AUTHOR_LABEL"
+            fi
           fi

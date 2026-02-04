@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for git operations
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,128 +31,98 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install Playwright
-        run: npx playwright install --with-deps chromium
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: "0"
-
-      - name: Install Beads CLI
-        run: |
-          # Install beads CLI for issue tracking (steveyegge/beads)
-          curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
-          bd --version
-          # Initialize beads if not already initialized
-          bd init || true
-
       - name: Configure git for author bot
         run: |
           git config --global user.name "PocketSquire Author Bot"
           git config --global user.email "author-agent@pocketsquirearena.com"
-          # Clear the extraheader that actions/checkout adds, as it overrides our URL-based auth
           git config --local --unset-all http.https://github.com/.extraheader || true
           git remote set-url origin \
             https://x-access-token:${{ secrets.AUTHOR_TOKEN }}@github.com/${{ github.repository }}.git
 
-      - name: Determine Agent Scope
+      - name: Determine Agent Scope & Branch
         id: scope
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTHOR_TOKEN }}
         run: |
+          # 1. Determine Domain
           LABEL="${{ github.event.label.name }}"
           case "$LABEL" in
             author-menu)
               echo "domain=menu" >> $GITHUB_OUTPUT
-              echo "write_paths=Assets/Scripts/Menu/**,Assets/Scenes/Menu/**" >> $GITHUB_OUTPUT
               echo "description=Menu and UI systems" >> $GITHUB_OUTPUT
               ;;
             author-town)
               echo "domain=town" >> $GITHUB_OUTPUT
-              echo "write_paths=Assets/Scripts/Town/**,Assets/Scenes/Town/**" >> $GITHUB_OUTPUT
               echo "description=Town gameplay and systems" >> $GITHUB_OUTPUT
               ;;
             author-arena)
               echo "domain=arena" >> $GITHUB_OUTPUT
-              echo "write_paths=Assets/Scripts/Arena/**,Assets/Scripts/Core/**,Assets/Scenes/Arena/**" >> $GITHUB_OUTPUT
               echo "description=Arena combat and core gameplay" >> $GITHUB_OUTPUT
               ;;
           esac
 
+          # 2. Identify the PR branch from labels (e.g., pr-123)
+          ISSUE_LABELS=$(gh issue view ${{ github.event.issue.number }} --json labels --jq '.labels.[].name')
+          PR_NUMBER=$(echo "$ISSUE_LABELS" | grep -oP '(?<=pr-)\d+' || true)
+          
+          if [ ! -z "$PR_NUMBER" ]; then
+            echo "Found linked PR #$PR_NUMBER. Fetching branch..."
+            BRANCH_NAME=$(gh pr view $PR_NUMBER --json headRefName --jq '.headRefName')
+            echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+            git checkout $BRANCH_NAME
+          else
+            echo "No linked PR found. Working on a new branch from main."
+            NEW_BRANCH="fix/issue-${{ github.event.issue.number }}"
+            git checkout -b $NEW_BRANCH
+            echo "branch=$NEW_BRANCH" >> $GITHUB_OUTPUT
+          fi
+
       - name: Load Agent Instructions
         id: instructions
         run: |
-          # Load base instructions
           BASE=$(cat author_agent_instructions.md)
           echo "base<<EOF" >> $GITHUB_OUTPUT
           echo "$BASE" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-          # Load domain-specific instructions
           DOMAIN="${{ steps.scope.outputs.domain }}"
           DOMAIN_FILE="author_agent_instructions_${DOMAIN}.md"
-
           if [ -f "$DOMAIN_FILE" ]; then
             DOMAIN_INSTRUCTIONS=$(cat "$DOMAIN_FILE")
           else
             DOMAIN_INSTRUCTIONS="No domain-specific instructions found."
           fi
-
           echo "domain<<EOF" >> $GITHUB_OUTPUT
           echo "$DOMAIN_INSTRUCTIONS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Run Author Agent
+      - name: Run Author Agent (Claude Code)
         uses: anthropics/claude-code-action@v1
-        env:
-          # Tools running inside the agent (gh, playwright) need these in the environment
-          GITHUB_TOKEN: ${{ secrets.AUTHOR_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          PLAYWRIGHT_BROWSERS_PATH: "0"
-          CI: "true"
         with:
-          # The action wrapper specifically requests these as inputs
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.AUTHOR_TOKEN }}
-          
           prompt: |
-            You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain (${{ steps.scope.outputs.description }}).
+            You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain.
+            
+            WORK CONTEXT:
+            You are currently working on branch: `${{ steps.scope.outputs.branch }}`.
+            Any code changes you make MUST be committed and pushed to this branch.
 
-            ---
             ## AUTHOR AGENT CONSTITUTION
-            The following instructions are MANDATORY. Follow them exactly.
-
             ${{ steps.instructions.outputs.base }}
 
-            ---
-            ## DOMAIN-SPECIFIC INSTRUCTIONS (${{ steps.scope.outputs.domain }})
-
+            ## DOMAIN-SPECIFIC INSTRUCTIONS
             ${{ steps.instructions.outputs.domain }}
 
-            ---
             ## YOUR ASSIGNED TASK
-
             **GitHub Issue #${{ github.event.issue.number }}**
             **Title:** ${{ github.event.issue.title }}
-
             **Description:**
             ${{ github.event.issue.body }}
-
-            ---
-            Begin implementation now by following the **Author Agent Protocol** provided above.
-
           claude_args: |
             --allowedTools "npm,git,gh,Edit,Write,Read,Glob,Grep"
             --max-turns 50
             --dangerously-skip-permissions
-
-      - name: Debug Log on Failure
-        if: failure()
-        run: |
-          LOG_FILE="/home/runner/work/_temp/claude-execution-output.json"
-          if [ -f "$LOG_FILE" ]; then
-            echo "--- CLAUDE EXECUTION LOG ---"
-            cat "$LOG_FILE"
-            echo "----------------------------"
-          else
-            echo "Execution log not found at $LOG_FILE"
-          fi
 
       - name: Comment on Issue
         if: always()
@@ -161,9 +131,10 @@ jobs:
           script: |
             const status = '${{ job.status }}';
             const domain = '${{ steps.scope.outputs.domain }}';
+            const branch = '${{ steps.scope.outputs.branch }}';
             const body = status === 'success'
-              ? `🤖 **Author Agent (${domain})** has completed work on this issue. Check the linked PR for changes.`
-              : `⚠️ **Author Agent (${domain})** encountered an issue while working on this task. Please review the workflow logs.`;
+              ? `🤖 **Author Agent (${domain})** has applied fixes to branch \`${branch}\`. This should trigger a re-review.`
+              : `⚠️ **Author Agent (${domain})** failed to apply fixes. Check logs for details.`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
