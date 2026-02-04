@@ -10,5 +10,6 @@ namespace PocketSquire.Arena.Core
         public int Intelligence;
         public int Wisdom;
         public int Luck;
+        public int Defense;
     }
 }

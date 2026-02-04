@@ -25,6 +25,7 @@ namespace PocketSquire.Unity.UI
         [SerializeField] private TextMeshProUGUI intText;
         [SerializeField] private TextMeshProUGUI wisText;
         [SerializeField] private TextMeshProUGUI lckText;
+        [SerializeField] private TextMeshProUGUI defText;
 
         [Header("Inventory")]
         [SerializeField] private CanvasGroup inventoryCanvasGroup;
@@ -157,6 +158,7 @@ namespace PocketSquire.Unity.UI
             if (intText != null) intText.text = $"INT: {player.Attributes.Intelligence}";
             if (wisText != null) wisText.text = $"WIS: {player.Attributes.Wisdom}";
             if (lckText != null) lckText.text = $"LCK: {player.Attributes.Luck}";
+            if (defText != null) defText.text = $"DEF: {player.Attributes.Defense}";
         }
 
         /// <summary>

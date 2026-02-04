@@ -12,7 +12,8 @@
             "Constitution": 1,
             "Intelligence": 1,
             "Wisdom": 1,
-            "Luck": 1
+            "Luck": 1,
+            "Defense": 1
         },
         "posX": 35,
         "posY": -150,

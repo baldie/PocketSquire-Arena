@@ -16,7 +16,8 @@
             "Constitution": 10,
             "Intelligence": 1,
             "Wisdom": 1,
-            "Luck": 1
+            "Luck": 1,
+            "Defense": 1
         },
         "posX": -330,
         "posY": 450,
@@ -42,7 +43,8 @@
             "Constitution": 10,
             "Intelligence": 3,
             "Wisdom": 3,
-            "Luck": 2
+            "Luck": 2,
+            "Defense": 2
         },
         "posX": -330,
         "posY": 350,
@@ -67,7 +69,8 @@
             "Constitution": 10,
             "Intelligence": 3,
             "Wisdom": 3,
-            "Luck": 2
+            "Luck": 2,
+            "Defense": 2
         },
         "posX": -330,
         "posY": 350,
