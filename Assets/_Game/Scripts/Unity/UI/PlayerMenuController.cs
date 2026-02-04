@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Unity.UI;
 
 namespace PocketSquire.Unity.UI
 {
@@ -16,7 +17,6 @@ namespace PocketSquire.Unity.UI
         [SerializeField] private TextMeshProUGUI goldText;
 
         [Header("Experience Bar")]
-        [SerializeField] private Image xpBarBackground;
         [SerializeField] private Image xpBarForeground;
 
         [Header("Attributes")]
@@ -36,6 +36,10 @@ namespace PocketSquire.Unity.UI
 
         [Header("Footer")]
         [SerializeField] private Button skillTreeButton;
+
+        [Header("Assets")]
+        [SerializeField] private GameObject itemRowPrefab;
+        [SerializeField] private GameAssetRegistry gameAssetRegistry;
 
         private bool isOpen = false;
 
@@ -108,7 +112,8 @@ namespace PocketSquire.Unity.UI
             // Update attributes
             UpdateAttributes(player);
 
-            // TODO: Update inventory, badges, and status effects when those systems are ready
+            // Update inventory
+            UpdateInventory(player);
         }
 
         /// <summary>
@@ -159,6 +164,54 @@ namespace PocketSquire.Unity.UI
             if (wisText != null) wisText.text = $"WIS: {player.Attributes.Wisdom}";
             if (lckText != null) lckText.text = $"LCK: {player.Attributes.Luck}";
             if (defText != null) defText.text = $"DEF: {player.Attributes.Defense}";
+        }
+
+        private void UpdateInventory(Player player)
+        {
+            if (inventoryScrollContent == null) return;
+            if (itemRowPrefab == null)
+            {
+                Debug.LogWarning("PlayerMenuController: ItemRowPrefab is not assigned.");
+                return;
+            }
+            if (gameAssetRegistry == null)
+            {
+                // Warn once per session or just log warning? 
+                // Given we are in development, distinct error is better.
+                Debug.LogWarning("PlayerMenuController: GameAssetRegistry is not assigned.");
+                // We proceed but sprites will be null
+            }
+
+            // Clear existing
+            foreach (Transform child in inventoryScrollContent)
+            {
+                Destroy(child.gameObject);
+            }
+
+            if (player.Inventory == null) return;
+
+            // Populate new
+            foreach (var slot in player.Inventory.Slots)
+            {
+                var item = GameWorld.GetItemById(slot.ItemId);
+                if (item == null) continue;
+
+                var go = Instantiate(itemRowPrefab, inventoryScrollContent);
+                var row = go.GetComponent<ItemRow>();
+                
+                if (row != null)
+                {
+                    Sprite icon = null;
+                    if (gameAssetRegistry != null && !string.IsNullOrEmpty(item.Sprite))
+                    {
+                        icon = gameAssetRegistry.GetSprite(item.Sprite);
+                    }
+
+                    row.Initialize(item, slot.Quantity, icon, () => {
+                        Debug.Log($"Clicked on {item.Name}");
+                    });
+                }
+            }
         }
 
         /// <summary>

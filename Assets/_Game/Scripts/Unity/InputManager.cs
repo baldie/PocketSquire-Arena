@@ -7,18 +7,18 @@ namespace PocketSquire.Unity
     /// <summary>
     /// Singleton input manager that tracks consumed input per frame.
     /// Prevents multiple systems from responding to the same input event.
-    /// Uses Unity Input System (com.unity.inputsystem).
+    /// Uses Unity Input System (com.unity.inputsystem) via PlayerInput component.
     /// </summary>
+    [DefaultExecutionOrder(-100)]
+    [RequireComponent(typeof(PlayerInput))]
     public class InputManager : MonoBehaviour
     {
         private static InputManager _instance;
         private HashSet<string> _consumedInputsThisFrame = new HashSet<string>();
-
-        private InputAction _pauseAction;
-        private InputAction _cancelAction;
-        private InputAction _inventoryAction;
+        private PlayerInput _playerInput;
 
         public static InputManager Instance => _instance;
+        public static PlayerInput PlayerInput => _instance != null ? _instance._playerInput : null;
 
         void Awake()
         {
@@ -28,37 +28,22 @@ namespace PocketSquire.Unity
                 return;
             }
             _instance = this;
-
-            InitializeActions();
+            _playerInput = GetComponent<PlayerInput>();
+            
+            if (_playerInput == null)
+            {
+                Debug.LogError("[InputManager] PlayerInput component missing! usage will fail.");
+            }
+            
+            Debug.Log("InputManager initialized with PlayerInput");
         }
 
-        private void InitializeActions()
+        private void OnDestroy()
         {
-            // Define Pause Action (Escape or Gamepad Start)
-            _pauseAction = new InputAction("Pause", binding: "<Keyboard>/escape");
-            _pauseAction.AddBinding("<Gamepad>/start");
-
-            // Define Cancel Action (Escape or Gamepad Button East/B)
-            _cancelAction = new InputAction("Cancel", binding: "<Keyboard>/escape");
-            _cancelAction.AddBinding("<Gamepad>/buttonEast");
-
-            // Define Inventory Action (I or Gamepad Button North)
-            _inventoryAction = new InputAction("Inventory", binding: "<Keyboard>/i");
-            _inventoryAction.AddBinding("<Gamepad>/buttonNorth");
-        }
-
-        void OnEnable()
-        {
-            _pauseAction?.Enable();
-            _cancelAction?.Enable();
-            _inventoryAction?.Enable();
-        }
-
-        void OnDisable()
-        {
-            _pauseAction?.Disable();
-            _cancelAction?.Disable();
-            _inventoryAction?.Disable();
+            if (_instance == this)
+            {
+                _instance = null;
+            }
         }
 
         void LateUpdate()
@@ -74,26 +59,28 @@ namespace PocketSquire.Unity
         /// <returns>True if button was pressed and not yet consumed</returns>
         public static bool GetButtonDown(string buttonName)
         {
-            if (_instance == null) return false;
+            if (_instance == null || _instance._playerInput == null) return false;
+
+            // Debug.Log($"GetButtonDown: {buttonName}"); // Commented out to reduce spam
             
             if (_instance._consumedInputsThisFrame.Contains(buttonName))
                 return false;
             
-            // Map legacy string names to Input Actions
-            if (buttonName == "Pause")
+            // Access action dynamically by name from PlayerInput
+            // Note: This requires the Actions asset to have actions with these exact names.
+            InputAction action = _instance._playerInput.actions[buttonName];
+            
+            if (action == null)
             {
-                return _instance._pauseAction.WasPressedThisFrame();
-            }
-            else if (buttonName == "Cancel")
-            {
-                return _instance._cancelAction.WasPressedThisFrame();
-            }
-            else if (buttonName == "Inventory")
-            {
-                return _instance._inventoryAction.WasPressedThisFrame();
+                Debug.LogWarning($"[InputManager] Unknown action requested: {buttonName}");
+                return false;
             }
 
-            Debug.LogWarning($"[InputManager] Unknown button requested: {buttonName}");
+            if (action.WasPressedThisFrame())
+            {
+                 Debug.Log($"{buttonName} button pressed");
+                 return true;
+            }
             return false;
         }
 

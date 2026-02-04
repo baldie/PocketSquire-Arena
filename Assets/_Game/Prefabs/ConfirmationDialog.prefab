@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 4482198020073218084}
   - component: {fileID: 4213883779444085459}
   - component: {fileID: 4790116153895674181}
+  - component: {fileID: -8531982137655398693}
   m_Layer: 5
   m_Name: ConfirmationDialog
   m_TagString: Untagged
@@ -434,6 +435,18 @@ MonoBehaviour:
   confirmSound: {fileID: 0}
   cancelSound: {fileID: 0}
   animationDuration: 0.5
+--- !u!225 &-8531982137655398693
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599741090934638775}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5143426184363688646
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Are you sure?
+  m_text: Quit the game?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 657641a92ef9a124bbb8524adcf823dc, type: 2}
   m_sharedMaterial: {fileID: 3278063576851637822, guid: 657641a92ef9a124bbb8524adcf823dc, type: 2}
