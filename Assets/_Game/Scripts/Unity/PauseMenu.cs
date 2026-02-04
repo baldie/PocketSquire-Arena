@@ -111,6 +111,13 @@ namespace PocketSquire.Unity
 
         public void Pause()
         {
+            // Close PlayerMenu if it's open
+            var playerMenu = FindFirstObjectByType<PlayerMenuController>();
+            if (playerMenu != null && playerMenu.IsOpen)
+            {
+                playerMenu.Close();
+            }
+
             if (mutuallyExclusiveButtonGroup != null)
             {
                 mutuallyExclusiveButtonGroupWasActive = mutuallyExclusiveButtonGroup.activeSelf;
@@ -120,7 +127,7 @@ namespace PocketSquire.Unity
             pauseMenuUI.SetActive(true);  // Show UI
             Time.timeScale = 0f;          // Freeze time
             isPaused = true;
-            
+
             if (firstSelectedButton != null)
             {
                 firstSelectedButton.Select();
