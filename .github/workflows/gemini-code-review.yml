@@ -34,9 +34,6 @@ jobs:
 
           PROMPT=$(cat <<EOF
           review $PR_DIFF
-          You are an expert code reviewer. Please review the pull request.
-          If the code is good and you have no suggestions, exit with a success code.
-          Otherwise, leave comments on the pull request with your suggestions and exit with a failure code.
           
           REPO: ${{ github.repository }}
           PR NUMBER: ${{ github.event.pull_request.number }}
@@ -45,7 +42,7 @@ jobs:
           EOF
           )
 
-          gemini "$PROMPT"
+          gemini "$PROMPT" > review_output.json
 
       - name: Auto-merge if approved
         if: steps.gemini-review.conclusion == 'success'
@@ -65,39 +62,19 @@ jobs:
              echo "No linked issue found."
           fi
 
-      - name: Trigger Author Agent
-        if: failure()
+      - name: Create Issues from Review
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PR_NUMBER: ${{github.event.pull_request.number}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Get the PR labels
-          PR_LABELS=$(gh pr view $PR_NUMBER --json labels --jq '.labels | .[].name')
-          echo "PR Labels: $PR_LABELS"
-          
-          if [ -z "$PR_LABELS" ]; then
-            echo "No labels found on PR."
-            exit 0
+          # Use jq to check if the file is valid JSON and has issues
+          if jq -e '. | type == "array" and length > 0' review_output.json >/dev/null 2>&1; then
+            jq -c '.[]' review_output.json | while read -r issue; do
+              TITLE=$(echo "$issue" | jq -r '.title')
+              BODY=$(echo "$issue" | jq -r '.body')
+              
+              echo "Creating issue: $TITLE"
+              gh issue create --title "$TITLE" --body "$BODY" --label "gemini-review"
+            done
+          else
+            echo "No issues found or invalid JSON format returned."
           fi
-          
-          # Find the domain label
-          DOMAIN_LABEL=$(echo "$PR_LABELS" | grep "domain-" || true)
-          
-          if [ -z "$DOMAIN_LABEL" ]; then
-            echo "No domain label found."
-            exit 0
-          fi
-          
-          echo "Domain Label: $DOMAIN_LABEL"
-          # Extract the domain
-          DOMAIN=$(echo "$DOMAIN_LABEL" | cut -d'-' -f2)
-          echo "Domain: $DOMAIN"
-          # Construct the author label
-          AUTHOR_LABEL="author-$DOMAIN"
-          echo "Author Label: $AUTHOR_LABEL"
-          # Find the linked issue
-          ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+')
-          echo "Issue Number: $ISSUE_NUMBER"
-          # Add the author label to the issue
-          gh issue edit $ISSUE_NUMBER --add-label "$AUTHOR_LABEL"
-
