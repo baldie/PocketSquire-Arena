@@ -15,6 +15,7 @@ namespace PocketSquire.Unity.UI
         [Header("Character Info")]
         [SerializeField] private TextMeshProUGUI levelAndClassText;
         [SerializeField] private TextMeshProUGUI goldText;
+        [SerializeField] private Image playerImage;
 
         [Header("Experience Bar")]
         [SerializeField] private Image xpBarForeground;
@@ -50,6 +51,34 @@ namespace PocketSquire.Unity.UI
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
+            
+            if (inventoryScrollContent == null)
+            {
+                var contentTransform = transform.Find("BodyContainer/RightColumn/InventoryScrollView/Viewport/Content");
+                if (contentTransform != null)
+                {
+                    inventoryScrollContent = contentTransform;
+                }
+            }
+
+            if (playerImage == null)
+            {
+                var imageTransform = transform.Find("BodyContainer/LeftColumn/MidPanel/PlayerImage");
+                if (imageTransform != null)
+                {
+                    playerImage = imageTransform.GetComponent<Image>();
+                }
+            }
+
+            // Ensure the Mask component on the Viewport is disabled
+            if (inventoryScrollContent != null && inventoryScrollContent.parent != null)
+            {
+                var mask = inventoryScrollContent.parent.GetComponent<Mask>();
+                if (mask != null)
+                {
+                    mask.enabled = false;
+                }
+            }
         }
 
         private void Start()
@@ -112,8 +141,29 @@ namespace PocketSquire.Unity.UI
             // Update attributes
             UpdateAttributes(player);
 
+            // Update player image
+            UpdatePlayerImage(player);
+
             // Update inventory
             UpdateInventory(player);
+        }
+
+        /// <summary>
+        /// Updates the player sprite image from the registry
+        /// </summary>
+        private void UpdatePlayerImage(Player player)
+        {
+            if (playerImage == null || gameAssetRegistry == null) return;
+
+            // Use the battle sprite as the default menu representation or 
+            // consider context-specific sprites if available
+            string spriteId = player.SpriteId;
+            
+            Sprite playerSprite = gameAssetRegistry.GetSprite(spriteId);
+            if (playerSprite != null)
+            {
+                playerImage.sprite = playerSprite;
+            }
         }
 
         /// <summary>
@@ -171,17 +221,8 @@ namespace PocketSquire.Unity.UI
             if (inventoryScrollContent == null) return;
             if (itemRowPrefab == null)
             {
-                Debug.LogWarning("PlayerMenuController: ItemRowPrefab is not assigned.");
                 return;
             }
-            if (gameAssetRegistry == null)
-            {
-                // Warn once per session or just log warning? 
-                // Given we are in development, distinct error is better.
-                Debug.LogWarning("PlayerMenuController: GameAssetRegistry is not assigned.");
-                // We proceed but sprites will be null
-            }
-
             // Clear existing
             foreach (Transform child in inventoryScrollContent)
             {
@@ -196,7 +237,25 @@ namespace PocketSquire.Unity.UI
                 var item = GameWorld.GetItemById(slot.ItemId);
                 if (item == null) continue;
 
+                if (slot.Quantity <= 0) continue;
+
                 var go = Instantiate(itemRowPrefab, inventoryScrollContent);
+                go.SetActive(true);
+                
+                // Ensure scale is correct (sometimes instantiation in layout groups gets wonky)
+                go.transform.localScale = Vector3.one;
+                go.transform.localPosition = Vector3.zero;
+
+                // Ensure LayoutElement exists for correct sizing in ScrollRect
+                var layoutElement = go.GetComponent<LayoutElement>();
+                if (layoutElement == null)
+                {
+                    layoutElement = go.AddComponent<LayoutElement>();
+                    layoutElement.minHeight = 100f; // Matching prefab height
+                    layoutElement.preferredHeight = 100f;
+                    layoutElement.flexibleWidth = 1f;
+                }
+
                 var row = go.GetComponent<ItemRow>();
                 
                 if (row != null)
@@ -208,10 +267,13 @@ namespace PocketSquire.Unity.UI
                     }
 
                     row.Initialize(item, slot.Quantity, icon, () => {
-                        Debug.Log($"Clicked on {item.Name}");
+                        // Action on click
                     });
                 }
             }
+            
+            // Force layout rebuild (sometimes needed for ScrollRects appearing for first time)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(inventoryScrollContent as RectTransform);
         }
 
         /// <summary>
@@ -230,7 +292,6 @@ namespace PocketSquire.Unity.UI
         /// </summary>
         private void OnSkillTreeButtonClicked()
         {
-            Debug.Log("Skill Tree clicked");
         }
 
         public void Open()
