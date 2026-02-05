@@ -175,6 +175,6 @@ public class GameStateTests
         Assert.That(GameState.Player, Is.Not.Null);
         Assert.That(GameState.Player!.Inventory, Is.Not.Null);
         Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(7), "Should have 2 starting + 5 added = 7 health potions");
-        Assert.That(GameState.Player.Inventory.GetItemCount(2), Is.EqualTo(3), "Should preserve second item type");
+        Assert.That(GameState.Player.Inventory.GetItemCount(2), Is.EqualTo(4), "Should have 1 starting + 3 added = 4 items");
     }
 }
