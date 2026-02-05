@@ -42,6 +42,11 @@ namespace PocketSquire.Unity
 
         void Start()
         {
+            if (confirmationDialog == null || !confirmationDialog.gameObject.scene.IsValid())
+            {
+                confirmationDialog = FindAnyObjectByType<ConfirmationDialog>(FindObjectsInactive.Include);
+            }
+
             WireButtons();
             if (pauseMenuUI != null)
                 pauseMenuUI.SetActive(false);
