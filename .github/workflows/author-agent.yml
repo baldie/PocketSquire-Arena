@@ -28,6 +28,15 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Beads
+        run: |
+          curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | sudo bash
+
       - name: Install Dependencies
         run: npm install
 
@@ -89,7 +98,7 @@ jobs:
             **Description:**
             ${{ github.event.issue.body }}
           claude_args: |
-            --allowedTools "npm,git,gh,Edit,Write,Read,Glob,Grep"
+            --allowedTools "npm,git,gh,bd,dotnet,Edit,Write,Read,Glob,Grep"
             --max-turns 50
             --dangerously-skip-permissions
 
