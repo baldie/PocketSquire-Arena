@@ -11,3 +11,8 @@
 4. **Finish**:
    - Run `npm run task:submit`
    - Output the generated PR link.
+
+> [!IMPORTANT]
+> **Your job is NOT complete until a Pull Request has been successfully created.**
+> The `task:submit` script will create the PR. If it fails, you must resolve the issue and retry.
+> Only after outputting a valid PR link can you consider the task done.

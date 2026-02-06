@@ -2,12 +2,12 @@ name: Author Agent
 
 on:
   issues:
-    types: [labeled]
+    types: [assigned]
 
 jobs:
   author-agent:
-    # Only run when one of the author labels is applied
-    if: contains(fromJSON('["author-menu", "author-town", "author-arena"]'), github.event.label.name)
+    # Only run when assigned to the ps-agent-1
+    if: github.event.assignee.login == 'ps-agent-1'
     runs-on: ubuntu-latest
 
     permissions:
@@ -39,29 +39,12 @@ jobs:
           git remote set-url origin \
             https://x-access-token:${{ secrets.AUTHOR_TOKEN }}@github.com/${{ github.repository }}.git
 
-      - name: Determine Agent Scope & Branch
-        id: scope
+      - name: Determine Branch
+        id: branch
         env:
           GITHUB_TOKEN: ${{ secrets.AUTHOR_TOKEN }}
         run: |
-          # 1. Determine Domain
-          LABEL="${{ github.event.label.name }}"
-          case "$LABEL" in
-            author-menu)
-              echo "domain=menu" >> $GITHUB_OUTPUT
-              echo "description=Menu and UI systems" >> $GITHUB_OUTPUT
-              ;;
-            author-town)
-              echo "domain=town" >> $GITHUB_OUTPUT
-              echo "description=Town gameplay and systems" >> $GITHUB_OUTPUT
-              ;;
-            author-arena)
-              echo "domain=arena" >> $GITHUB_OUTPUT
-              echo "description=Arena combat and core gameplay" >> $GITHUB_OUTPUT
-              ;;
-          esac
-
-          # 2. Identify the PR branch from labels (e.g., pr-123)
+          # Identify the PR branch from labels (e.g., pr-123)
           ISSUE_LABELS=$(gh issue view ${{ github.event.issue.number }} --json labels --jq '.labels.[].name')
           PR_NUMBER=$(echo "$ISSUE_LABELS" | grep -oP '(?<=pr-)\d+' || true)
           
@@ -81,19 +64,8 @@ jobs:
         id: instructions
         run: |
           BASE=$(cat author_agent_instructions.md)
-          echo "base<<EOF" >> $GITHUB_OUTPUT
+          echo "instructions<<EOF" >> $GITHUB_OUTPUT
           echo "$BASE" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-          DOMAIN="${{ steps.scope.outputs.domain }}"
-          DOMAIN_FILE="author_agent_instructions_${DOMAIN}.md"
-          if [ -f "$DOMAIN_FILE" ]; then
-            DOMAIN_INSTRUCTIONS=$(cat "$DOMAIN_FILE")
-          else
-            DOMAIN_INSTRUCTIONS="No domain-specific instructions found."
-          fi
-          echo "domain<<EOF" >> $GITHUB_OUTPUT
-          echo "$DOMAIN_INSTRUCTIONS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Run Author Agent (Claude Code)
@@ -102,17 +74,14 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.AUTHOR_TOKEN }}
           prompt: |
-            You are the Author Agent for the **${{ steps.scope.outputs.domain }}** domain.
+            You are the PocketSquire Author Agent.
             
             WORK CONTEXT:
-            You are currently working on branch: `${{ steps.scope.outputs.branch }}`.
+            You are currently working on branch: `${{ steps.branch.outputs.branch }}`.
             Any code changes you make MUST be committed and pushed to this branch.
 
             ## AUTHOR AGENT CONSTITUTION
-            ${{ steps.instructions.outputs.base }}
-
-            ## DOMAIN-SPECIFIC INSTRUCTIONS
-            ${{ steps.instructions.outputs.domain }}
+            ${{ steps.instructions.outputs.instructions }}
 
             ## YOUR ASSIGNED TASK
             **GitHub Issue #${{ github.event.issue.number }}**
@@ -130,11 +99,10 @@ jobs:
         with:
           script: |
             const status = '${{ job.status }}';
-            const domain = '${{ steps.scope.outputs.domain }}';
-            const branch = '${{ steps.scope.outputs.branch }}';
+            const branch = '${{ steps.branch.outputs.branch }}';
             const body = status === 'success'
-              ? `🤖 **Author Agent (${domain})** has applied fixes to branch \`${branch}\`. This should trigger a re-review.`
-              : `⚠️ **Author Agent (${domain})** failed to apply fixes. Check logs for details.`;
+              ? `🤖 **Author Agent** has applied fixes to branch \`${branch}\`. This should trigger a re-review.`
+              : `⚠️ **Author Agent** failed to apply fixes. Check logs for details.`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

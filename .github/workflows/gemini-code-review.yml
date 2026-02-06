@@ -112,7 +112,7 @@ jobs:
             ISSUE_NUMBER=$(gh pr view $PR_NUMBER --json body --jq '.body' | grep -oP '(?<=Closes #)\d+' || true)
             
             if [ ! -z "$ISSUE_NUMBER" ]; then
-              echo "Tagging original issue #$ISSUE_NUMBER with $AUTHOR_LABEL"
-              gh issue edit $ISSUE_NUMBER --add-label "$AUTHOR_LABEL"
+              echo "Assigning ps-agent-1 to issue #$ISSUE_NUMBER"
+              gh issue edit $ISSUE_NUMBER --add-assignee "ps-agent-1" --add-label "$AUTHOR_LABEL"
             fi
           fi
