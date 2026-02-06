@@ -1,12 +1,32 @@
 [
     {
         "id": 1,
-        "name": "Health Potion I",
+        "name": "Health Potion S",
         "description": "Heals 25% of your health",
         "target": "self",
         "stackable": true,
         "sprite": "health_potion",
         "sound_effect": "gulp",
         "price": 3
+    },
+    {
+        "id": 2,
+        "name": "Health Potion M",
+        "description": "Heals 50% of your health",
+        "target": "self",
+        "stackable": true,
+        "sprite": "health_potion",
+        "sound_effect": "gulp",
+        "price": 5
+    },
+    {
+        "id": 3,
+        "name": "Health Potion L",
+        "description": "Heals 75% of your health",
+        "target": "self",
+        "stackable": true,
+        "sprite": "health_potion",
+        "sound_effect": "gulp",
+        "price": 8
     }
 ]
