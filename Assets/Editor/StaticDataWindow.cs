@@ -122,20 +122,20 @@ public class StaticDataWindow : AlchemyEditorWindow
             playerLevel = GameState.Player.Level;
             playerHealth = GameState.Player.Health;
             playerMaxHealth = GameState.Player.MaxHealth;
-            playerStrength = GameState.Player.Strength;
-            playerDefense = GameState.Player.Defense;
-            playerSpeed = GameState.Player.Speed;
-            playerLuck = GameState.Player.Luck;
+            playerStrength = GameState.Player.Attributes.Strength;
+            playerDefense = GameState.Player.Attributes.Defense;
+            playerSpeed = 0; // Speed is not in Attributes, using 0
+            playerLuck = GameState.Player.Attributes.Luck;
             
             // Inventory
             if (GameState.Player.Inventory != null)
             {
-                inventoryItemCount = GameState.Player.Inventory.Items.Count;
+                inventoryItemCount = GameState.Player.Inventory.Slots.Count;
                 inventoryContents = string.Join("\n", 
-                    GameState.Player.Inventory.Items.Select(kvp => 
+                    GameState.Player.Inventory.Slots.Select(slot => 
                     {
-                        var item = GameWorld.GetItemById(kvp.Key);
-                        return $"{item?.Name ?? "Unknown"} (ID: {kvp.Key}) x{kvp.Value}";
+                        var item = GameWorld.GetItemById(slot.ItemId);
+                        return $"{item?.Name ?? "Unknown"} (ID: {slot.ItemId}) x{slot.Quantity}";
                     }));
                 
                 if (string.IsNullOrEmpty(inventoryContents))
@@ -167,7 +167,7 @@ public class StaticDataWindow : AlchemyEditorWindow
         if (GameState.CurrentRun != null)
         {
             currentRunStatus = "Active";
-            runFloorNumber = GameState.CurrentRun.FloorNumber;
+            runFloorNumber = GameState.CurrentRun.ArenaRank;
         }
         else
         {
@@ -179,7 +179,7 @@ public class StaticDataWindow : AlchemyEditorWindow
         if (GameState.Battle != null)
         {
             battleStatus = "In Battle";
-            currentMonster = GameState.Battle.Monster?.Name ?? "Unknown";
+            currentMonster = GameState.Battle.Player2?.Name ?? "Unknown";
         }
         else
         {
@@ -200,7 +200,7 @@ public class StaticDataWindow : AlchemyEditorWindow
         {
             monsterNames = string.Join("\n", 
                 GameWorld.AllMonsters.Select(m => 
-                    $"{m?.Name ?? "Unknown"} (Lvl {m?.Level ?? 0}, HP: {m?.MaxHealth ?? 0})"));
+                    $"{m?.Name ?? "Unknown"} (Rank {m?.Rank ?? 0}, HP: {m?.MaxHealth ?? 0})"));
         }
         else
         {
@@ -224,7 +224,7 @@ public class StaticDataWindow : AlchemyEditorWindow
         {
             playerDefinitions = string.Join("\n", 
                 GameWorld.Players.Select(p => 
-                    $"{p?.Name ?? "Unknown"} (Lvl {p?.Level ?? 0})"));
+                    $"{p?.Name ?? "Unknown"} (Lvl {p?.Level ?? 0}, HP: {p?.MaxHealth ?? 0})"));
         }
         else
         {
