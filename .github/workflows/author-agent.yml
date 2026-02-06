@@ -35,7 +35,7 @@ jobs:
 
       - name: Install Beads
         run: |
-          curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | sudo bash
+          curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
 
       - name: Install Dependencies
         run: npm install

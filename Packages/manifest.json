@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.annulusgames.alchemy": "https://github.com/annulusgames/Alchemy.git?path=/Alchemy/Assets/Alchemy",
     "com.unity.2d.enhancers": "1.0.0",
     "com.unity.ai.assistant": "1.5.0-pre.1",
     "com.unity.ai.generators": "1.5.0-pre.1",

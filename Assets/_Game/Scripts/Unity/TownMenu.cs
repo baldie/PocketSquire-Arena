@@ -11,6 +11,13 @@ namespace PocketSquire.Unity
 
         private void Start()
         {
+            // Ensure GameWorld is loaded - this allows us to start immediately in the town
+            if (GameWorld.AllMonsters.Count == 0 || GameState.Player == null)
+            {
+                if (GameWorld.AllMonsters.Count == 0) GameWorld.Load();
+                if (GameState.Player == null) GameState.CreateNewGame(SaveSlots.Unknown);
+            }
+
             WireButtons();
 
             // Default selection for gamepad/keyboard
@@ -25,9 +32,17 @@ namespace PocketSquire.Unity
                 GameState.CurrentRun.Reset();
             }
 
-            // Save the game
-            SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
+            // Save the game (skip if testing with Unknown slot)
+            if (GameState.SelectedSaveSlot != SaveSlots.Unknown)
+            {
+                SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
+            }
+            else
+            {
+                Debug.Log("[TownMenu] Skipping save for testing mode (Unknown slot)");
+            }
         }
+
 
         private void WireButtons()
         {

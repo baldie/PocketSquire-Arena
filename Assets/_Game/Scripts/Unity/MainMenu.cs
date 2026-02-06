@@ -11,8 +11,13 @@ namespace PocketSquire.Unity
     {
         private void Awake()
         {
+            if (GameWorld.AllMonsters.Count == 0)
+            {
+                GameWorld.Load();
+            }
             WireButtons();
         }
+
 
         private void Start()
         {

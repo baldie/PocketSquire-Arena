@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Alchemy.Editor;
@@ -18,217 +19,70 @@ public class StaticDataWindow : AlchemyEditorWindow
         window.Show();
     }
 
-    // ========== GameState Fields ==========
+    // ========== Game State ==========
     
-    [FoldoutGroup("Game State"), ReadOnly]
-    public SaveSlots selectedSaveSlot = SaveSlots.Unknown;
+    [ReadOnly, ShowInInspector]
+    public SaveSlots SelectedSaveSlot;
     
-    [FoldoutGroup("Game State"), ReadOnly]
-    public string characterCreationDate = "N/A";
+    [ReadOnly, ShowInInspector]
+    public string CharacterCreationDate;
     
-    [FoldoutGroup("Game State"), ReadOnly]
-    public string lastSaveDate = "N/A";
+    [ReadOnly, ShowInInspector]
+    public string LastSaveDate;
     
-    [FoldoutGroup("Game State"), ReadOnly]
-    public string playTime = "N/A";
+    [ReadOnly, ShowInInspector]
+    public string PlayTime;
     
-    // Player data (simplified from complex Player object)
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public string playerName = "N/A";
+    [ReadOnly, ShowInInspector]
+    public Player Player;
     
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerLevel;
+    [ReadOnly, ShowInInspector]
+    public Run CurrentRun;
     
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerHealth;
+    [ReadOnly, ShowInInspector]
+    public Battle Battle;
     
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerMaxHealth;
+    // ========== Game World ==========
     
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerStrength;
+    [ReadOnly, ShowInInspector]
+    public List<Monster> AllMonsters;
     
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerDefense;
+    [ReadOnly, ShowInInspector]
+    public List<Player> PlayerDefinitions;
     
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerSpeed;
-    
-    [FoldoutGroup("Game State/Player"), ReadOnly]
-    public int playerLuck;
-    
-    [FoldoutGroup("Game State/Player/Inventory"), ReadOnly]
-    public int inventoryItemCount;
-    
-    [FoldoutGroup("Game State/Player/Inventory"), ReadOnly, TextArea]
-    public string inventoryContents = "N/A";
-    
-    // Current Run data
-    [FoldoutGroup("Game State/Current Run"), ReadOnly]
-    public string currentRunStatus = "N/A";
-    
-    [FoldoutGroup("Game State/Current Run"), ReadOnly]
-    public int runFloorNumber;
-    
-    // Battle data
-    [FoldoutGroup("Game State/Battle"), ReadOnly]
-    public string battleStatus = "N/A";
-    
-    [FoldoutGroup("Game State/Battle"), ReadOnly]
-    public string currentMonster = "N/A";
-    
-    // ========== GameWorld Fields ==========
-    
-    [FoldoutGroup("Game World"), ReadOnly]
-    public int monsterCount;
-    
-    [FoldoutGroup("Game World"), ReadOnly]
-    public int playerDefinitionsCount;
-    
-    [FoldoutGroup("Game World"), ReadOnly]
-    public int itemsCount;
-    
-    [FoldoutGroup("Game World/Monsters"), ReadOnly, TextArea(3, 10)]
-    public string monsterNames = "";
-    
-    [FoldoutGroup("Game World/Items"), ReadOnly, TextArea(3, 10)]
-    public string itemNames = "";
-    
-    [FoldoutGroup("Game World/Player Definitions"), ReadOnly, TextArea(3, 10)]
-    public string playerDefinitions = "";
+    [ReadOnly, ShowInInspector]
+    public List<Item> Items;
+
+    [ReadOnly, ShowInInspector]
+    public int MonsterCount;
+
+    [ReadOnly, ShowInInspector]
+    public int PlayerDefinitionsCount;
+
+    [ReadOnly, ShowInInspector]
+    public int ItemsCount;
 
     // Update the window continuously while it's open
     private void OnInspectorUpdate()
     {
-        UpdateGameStateData();
-        UpdateGameWorldData();
-        
+        // Game State Updates
+        SelectedSaveSlot = GameState.SelectedSaveSlot;
+        CharacterCreationDate = GameState.CharacterCreationDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A";
+        LastSaveDate = GameState.LastSaveDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A";
+        PlayTime = GameState.PlayTime?.ToString(@"hh\:mm\:ss") ?? "N/A";
+        Player = GameState.Player;
+        CurrentRun = GameState.CurrentRun;
+        Battle = GameState.Battle;
+
+        // Game World Updates
+        AllMonsters = GameWorld.AllMonsters;
+        PlayerDefinitions = GameWorld.Players;
+        Items = GameWorld.Items;
+        MonsterCount = GameWorld.AllMonsters?.Count ?? 0;
+        PlayerDefinitionsCount = GameWorld.Players?.Count ?? 0;
+        ItemsCount = GameWorld.Items?.Count ?? 0;
+
         // Repaint the window to show real-time updates while the game is running
         Repaint();
-    }
-
-    private void UpdateGameStateData()
-    {
-        // Basic GameState properties
-        selectedSaveSlot = GameState.SelectedSaveSlot;
-        characterCreationDate = GameState.CharacterCreationDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A";
-        lastSaveDate = GameState.LastSaveDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A";
-        playTime = GameState.PlayTime?.ToString(@"hh\:mm\:ss") ?? "N/A";
-        
-        // Player data
-        if (GameState.Player != null)
-        {
-            playerName = GameState.Player.Name ?? "N/A";
-            playerLevel = GameState.Player.Level;
-            playerHealth = GameState.Player.Health;
-            playerMaxHealth = GameState.Player.MaxHealth;
-            playerStrength = GameState.Player.Attributes.Strength;
-            playerDefense = GameState.Player.Attributes.Defense;
-            playerSpeed = 0; // Speed is not in Attributes, using 0
-            playerLuck = GameState.Player.Attributes.Luck;
-            
-            // Inventory
-            if (GameState.Player.Inventory != null)
-            {
-                inventoryItemCount = GameState.Player.Inventory.Slots.Count;
-                inventoryContents = string.Join("\n", 
-                    GameState.Player.Inventory.Slots.Select(slot => 
-                    {
-                        var item = GameWorld.GetItemById(slot.ItemId);
-                        return $"{item?.Name ?? "Unknown"} (ID: {slot.ItemId}) x{slot.Quantity}";
-                    }));
-                
-                if (string.IsNullOrEmpty(inventoryContents))
-                {
-                    inventoryContents = "Empty";
-                }
-            }
-            else
-            {
-                inventoryItemCount = 0;
-                inventoryContents = "N/A";
-            }
-        }
-        else
-        {
-            playerName = "N/A";
-            playerLevel = 0;
-            playerHealth = 0;
-            playerMaxHealth = 0;
-            playerStrength = 0;
-            playerDefense = 0;
-            playerSpeed = 0;
-            playerLuck = 0;
-            inventoryItemCount = 0;
-            inventoryContents = "N/A";
-        }
-        
-        // Current Run data
-        if (GameState.CurrentRun != null)
-        {
-            currentRunStatus = "Active";
-            runFloorNumber = GameState.CurrentRun.ArenaRank;
-        }
-        else
-        {
-            currentRunStatus = "No active run";
-            runFloorNumber = 0;
-        }
-        
-        // Battle data
-        if (GameState.Battle != null)
-        {
-            battleStatus = "In Battle";
-            currentMonster = GameState.Battle.Player2?.Name ?? "Unknown";
-        }
-        else
-        {
-            battleStatus = "Not in battle";
-            currentMonster = "N/A";
-        }
-    }
-
-    private void UpdateGameWorldData()
-    {
-        // GameWorld counts
-        monsterCount = GameWorld.AllMonsters?.Count ?? 0;
-        playerDefinitionsCount = GameWorld.Players?.Count ?? 0;
-        itemsCount = GameWorld.Items?.Count ?? 0;
-        
-        // Monster names
-        if (GameWorld.AllMonsters != null && GameWorld.AllMonsters.Count > 0)
-        {
-            monsterNames = string.Join("\n", 
-                GameWorld.AllMonsters.Select(m => 
-                    $"{m?.Name ?? "Unknown"} (Rank {m?.Rank ?? 0}, HP: {m?.MaxHealth ?? 0})"));
-        }
-        else
-        {
-            monsterNames = "No monsters loaded";
-        }
-        
-        // Item names
-        if (GameWorld.Items != null && GameWorld.Items.Count > 0)
-        {
-            itemNames = string.Join("\n", 
-                GameWorld.Items.Select(i => 
-                    $"{i?.Name ?? "Unknown"} (ID: {i?.Id ?? 0})"));
-        }
-        else
-        {
-            itemNames = "No items loaded";
-        }
-        
-        // Player definitions
-        if (GameWorld.Players != null && GameWorld.Players.Count > 0)
-        {
-            playerDefinitions = string.Join("\n", 
-                GameWorld.Players.Select(p => 
-                    $"{p?.Name ?? "Unknown"} (Lvl {p?.Level ?? 0}, HP: {p?.MaxHealth ?? 0})"));
-        }
-        else
-        {
-            playerDefinitions = "No player definitions loaded";
-        }
     }
 }

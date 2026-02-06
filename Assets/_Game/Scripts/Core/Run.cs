@@ -7,6 +7,7 @@ namespace PocketSquire.Arena.Core
     /// <summary>
     /// Represents a run through the arena
     /// </summary>
+    [Serializable]
     public class Run
     {
         public enum RunState {

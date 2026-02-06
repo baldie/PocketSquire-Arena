@@ -2,6 +2,7 @@ using System;
 
 namespace PocketSquire.Arena.Core
 {
+    [Serializable]
     public class Battle
     {
         public Turn? CurrentTurn { get; set; }

@@ -18,12 +18,13 @@ public class ArenaSceneInitializer : MonoBehaviour
     
     void Start()
     {
-        // If the game world is empty, load it - this allows us to start immediately in the arena
-        if (GameWorld.AllMonsters.Count == 0)
+        // Ensure GameWorld is loaded and we have a player - this allows us to start immediately in the arena
+        if (GameWorld.AllMonsters.Count == 0 || GameState.Player == null)
         {
-            GameWorld.Load();
-            GameState.CreateNewGame(SaveSlots.Unknown);
+            if (GameWorld.AllMonsters.Count == 0) GameWorld.Load();
+            if (GameState.Player == null) GameState.CreateNewGame(SaveSlots.Unknown);
         }
+
 
         // Here we go!
         if (GameState.CurrentRun == null || GameState.CurrentRun.State == Run.RunState.NoStarted) {
@@ -33,8 +34,16 @@ public class ArenaSceneInitializer : MonoBehaviour
         GameState.Battle = new Battle(LoadPlayer(GameState.Player), monster);
         LoadMonster(monster);
 
-        // Save the game
-        SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
+        // Save the game (skip if testing with Unknown slot)
+        if (GameState.SelectedSaveSlot != SaveSlots.Unknown)
+        {
+            SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
+        }
+        else
+        {
+            Debug.Log("[ArenaSceneInitializer] Skipping save for testing mode (Unknown slot)");
+        }
+
         
         // Subscribe to action completion to handle turn changes
         if (actionQueueProcessor != null)

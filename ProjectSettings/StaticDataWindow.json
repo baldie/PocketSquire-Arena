@@ -1,0 +1,248 @@
+{
+    "m_MinSize": {
+        "x": 50.0,
+        "y": 50.0
+    },
+    "m_MaxSize": {
+        "x": 4000.0,
+        "y": 4000.0
+    },
+    "m_TitleContent": {
+        "m_Text": "Game Debugger",
+        "m_Image": {
+            "instanceID": 0
+        },
+        "m_Tooltip": "",
+        "m_TextWithWhitespace": "Game Debugger​"
+    },
+    "m_Pos": {
+        "serializedVersion": "2",
+        "x": 882.0,
+        "y": 373.3333435058594,
+        "width": 308.66668701171877,
+        "height": 552.0
+    },
+    "m_SerializedDataModeController": {
+        "m_DataMode": 0,
+        "m_PreferredDataMode": 0,
+        "m_SupportedDataModes": [],
+        "isAutomatic": true
+    },
+    "m_ViewDataDictionary": {
+        "instanceID": 61172
+    },
+    "m_OverlayCanvas": {
+        "m_LastAppliedPresetName": "Default",
+        "m_SaveData": [],
+        "m_ContainerData": [],
+        "m_DynamicPanelContainerData": [],
+        "m_OverlaysVisible": true,
+        "m_DynamicPanelBehavior": 0
+    },
+    "SelectedSaveSlot": 2,
+    "CharacterCreationDate": "2026-02-05 22:50:26",
+    "LastSaveDate": "2026-02-05 22:50:26",
+    "PlayTime": "00:01:03",
+    "Player": {
+        "Name": "player_m_l1",
+        "Health": 10,
+        "MaxHealth": 10,
+        "Experience": 0,
+        "Gold": 0,
+        "Inventory": {
+            "Slots": [
+                {
+                    "ItemId": 1,
+                    "Quantity": 2
+                },
+                {
+                    "ItemId": 2,
+                    "Quantity": 1
+                }
+            ]
+        },
+        "Attributes": {
+            "Strength": 1,
+            "Constitution": 1,
+            "Intelligence": 1,
+            "Wisdom": 1,
+            "Luck": 1,
+            "Defense": 1
+        },
+        "PosX": 35.0,
+        "PosY": -150.0,
+        "Width": 512.0,
+        "Height": 700.0,
+        "ScaleX": 0.6499999761581421,
+        "ScaleY": 0.6499999761581421,
+        "Rank": 0,
+        "AttackSoundId": "m_physical_attack",
+        "DefendSoundId": "m_physical_defend",
+        "HitSoundId": "m_physical_hit",
+        "DefeatSoundId": "",
+        "SpecialAttackSoundId": "",
+        "Gender": 0
+    },
+    "CurrentRun": {},
+    "Battle": {},
+    "AllMonsters": [
+        {
+            "Name": "Training Dummy",
+            "Health": 3,
+            "MaxHealth": 3,
+            "Experience": 1,
+            "Gold": 1,
+            "Inventory": {
+                "Slots": []
+            },
+            "Attributes": {
+                "Strength": 1,
+                "Constitution": 10,
+                "Intelligence": 1,
+                "Wisdom": 1,
+                "Luck": 1,
+                "Defense": 1
+            },
+            "PosX": -330.0,
+            "PosY": 450.0,
+            "Width": 1920.0,
+            "Height": 2240.0,
+            "ScaleX": 0.4000000059604645,
+            "ScaleY": 0.3499999940395355,
+            "Rank": 1,
+            "AttackSoundId": "TrainingDummyAttack",
+            "DefendSoundId": "GenericDefend",
+            "HitSoundId": "GenericHit",
+            "DefeatSoundId": "TrainingDummyDefeat",
+            "SpecialAttackSoundId": "TrainingDummySpecialAttack"
+        },
+        {
+            "Name": "Mushroom Marauder",
+            "Health": 10,
+            "MaxHealth": 10,
+            "Experience": 5,
+            "Gold": 3,
+            "Inventory": {
+                "Slots": []
+            },
+            "Attributes": {
+                "Strength": 3,
+                "Constitution": 10,
+                "Intelligence": 3,
+                "Wisdom": 3,
+                "Luck": 2,
+                "Defense": 2
+            },
+            "PosX": -330.0,
+            "PosY": 350.0,
+            "Width": 1920.0,
+            "Height": 2240.0,
+            "ScaleX": 0.4000000059604645,
+            "ScaleY": 0.3499999940395355,
+            "Rank": 2,
+            "AttackSoundId": "GenericAttack2",
+            "DefendSoundId": "GenericDefend",
+            "HitSoundId": "GenericHit",
+            "DefeatSoundId": "MushroomMarauderDefeat",
+            "SpecialAttackSoundId": "MushroomMarauderSpecialAttack"
+        },
+        {
+            "Name": "Mushroom Marauder",
+            "Health": 10,
+            "MaxHealth": 10,
+            "Experience": 5,
+            "Gold": 0,
+            "Inventory": {
+                "Slots": []
+            },
+            "Attributes": {
+                "Strength": 3,
+                "Constitution": 10,
+                "Intelligence": 3,
+                "Wisdom": 3,
+                "Luck": 2,
+                "Defense": 2
+            },
+            "PosX": -330.0,
+            "PosY": 350.0,
+            "Width": 1920.0,
+            "Height": 2240.0,
+            "ScaleX": 0.4000000059604645,
+            "ScaleY": 0.3499999940395355,
+            "Rank": 3,
+            "AttackSoundId": "GenericAttack2",
+            "DefendSoundId": "GenericDefend",
+            "HitSoundId": "GenericHit",
+            "DefeatSoundId": "MushroomMarauderDefeat",
+            "SpecialAttackSoundId": "MushroomMarauderSpecialAttack"
+        }
+    ],
+    "PlayerDefinitions": [
+        {
+            "Name": "player_m_l1",
+            "Health": 10,
+            "MaxHealth": 10,
+            "Experience": 0,
+            "Gold": 0,
+            "Inventory": {
+                "Slots": []
+            },
+            "Attributes": {
+                "Strength": 1,
+                "Constitution": 1,
+                "Intelligence": 1,
+                "Wisdom": 1,
+                "Luck": 1,
+                "Defense": 1
+            },
+            "PosX": 35.0,
+            "PosY": -150.0,
+            "Width": 512.0,
+            "Height": 700.0,
+            "ScaleX": 0.6499999761581421,
+            "ScaleY": 0.6499999761581421,
+            "Rank": 0,
+            "AttackSoundId": "m_physical_attack",
+            "DefendSoundId": "m_physical_defend",
+            "HitSoundId": "m_physical_hit",
+            "DefeatSoundId": "",
+            "SpecialAttackSoundId": "",
+            "Gender": 0
+        }
+    ],
+    "Items": [
+        {
+            "Id": 1,
+            "Name": "Health Potion S",
+            "Description": "Heals 25% of your health",
+            "Target": 0,
+            "Stackable": true,
+            "Sprite": "health_potion_s",
+            "SoundEffect": "gulp",
+            "Price": 3
+        },
+        {
+            "Id": 2,
+            "Name": "Health Potion M",
+            "Description": "Heals 50% of your health",
+            "Target": 0,
+            "Stackable": true,
+            "Sprite": "health_potion_m",
+            "SoundEffect": "gulp",
+            "Price": 5
+        },
+        {
+            "Id": 3,
+            "Name": "Health Potion L",
+            "Description": "Heals 75% of your health",
+            "Target": 0,
+            "Stackable": true,
+            "Sprite": "health_potion_l",
+            "SoundEffect": "gulp",
+            "Price": 8
+        }
+    ],
+    "MonsterCount": 3,
+    "PlayerDefinitionsCount": 1,
+    "ItemsCount": 3
+}

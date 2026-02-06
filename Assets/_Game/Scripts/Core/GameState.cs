@@ -1,5 +1,5 @@
-#nullable enable
 using System;
+using Newtonsoft.Json;
 namespace PocketSquire.Arena.Core
 {
     public enum SaveSlots
@@ -26,11 +26,18 @@ namespace PocketSquire.Arena.Core
             CharacterCreationDate = DateTime.Now;
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
-            Player = GameWorld.GetPlayerByName("player_m_l1");
-            
+            var prototype = GameWorld.GetPlayerByName("player_m_l1");
+            if (prototype != null)
+            {
+                // Deep clone via JSON to avoid reference issues
+                var json = JsonConvert.SerializeObject(prototype);
+                Player = JsonConvert.DeserializeObject<Player>(json);
+            }
+
             // Give starting items (2 Health Potion S, 1 Health Potion M)
             Player?.Inventory.AddItem(1, 2);
             Player?.Inventory.AddItem(2, 1);
+            Console.WriteLine(Player?.ToString());
         }
 
         public static SaveData GetSaveData()

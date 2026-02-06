@@ -33,10 +33,16 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a9bf3f5c49dd5d245894b29e5315dbc4, type: 3}
   - id: transparent_pixel
     asset: {fileID: 21300000, guid: f54175c33884e1b42a3449d29837946c, type: 3}
+  - id: white_box_32x32
+    asset: {fileID: 21300000, guid: 2ad3352e3755585489027784027ca254, type: 3}
   - id: win_bkg
     asset: {fileID: 21300000, guid: e8c9b1a01b4a34949a6248ad17650f1d, type: 3}
-  - id: health_potion
-    asset: {fileID: 21300000, guid: 2e817631ebdd5e946bf79b72debe61da, type: 3}
+  - id: health_potion_l
+    asset: {fileID: 21300000, guid: 3c30a83b92ccc17449f6ec9b666d286d, type: 3}
+  - id: health_potion_m
+    asset: {fileID: 21300000, guid: 9ff29ec38d8731f408568da9e7b2f02b, type: 3}
+  - id: health_potion_s
+    asset: {fileID: 21300000, guid: e2f4f167642d52e4bb529f322d85eb2d, type: 3}
   - id: mushroom_marauder_attack
     asset: {fileID: 21300000, guid: 4cea647e01d18ea428b23fb049bf25a5, type: 3}
   - id: mushroom_marauder_battle
@@ -73,8 +79,12 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 6b95bedfe7bbbcb4aab4380448438ddf, type: 3}
   - id: chose_save_slot
     asset: {fileID: 21300000, guid: a06d3450346eec5468ca93a45ec898fe, type: 3}
+  - id: coins
+    asset: {fileID: 21300000, guid: 6bec808db30b96c4bbf88e29c3675f20, type: 3}
   - id: Game_Menu
     asset: {fileID: 21300000, guid: 2196a10cc882d8447a3b78e67fddd9bf, type: 3}
+  - id: paper_board
+    asset: {fileID: 21300000, guid: 7bac2f3e23cc16744b4372c5e544d48b, type: 3}
   - id: pocket_squire_title
     asset: {fileID: 21300000, guid: 84c46989968fe1648a453e9f6affc0f6, type: 3}
   - id: scroll

@@ -2,6 +2,7 @@ using System;
 
 namespace PocketSquire.Arena.Core
 {
+    [Serializable]
     public class Turn{
         public Entity Actor { get; private set; }
         public Entity Target { get; private set; }

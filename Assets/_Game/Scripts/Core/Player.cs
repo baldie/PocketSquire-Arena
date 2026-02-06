@@ -137,5 +137,10 @@ namespace PocketSquire.Arena.Core
                     return string.Empty;
             };
         }
+
+        public override string ToString()
+        {
+            return $"[Player: {Name} (Lvl {Level} {Class})] HP: {Health}/{MaxHealth}, Gold: {Gold}, Exp: {Experience}, Attr: [Str:{Attributes.Strength} Def:{Attributes.Defense} Lck:{Attributes.Luck}]";
+        }
     }
 }
