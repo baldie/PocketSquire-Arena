@@ -1,0 +1,32 @@
+[
+  {
+    "id": "squire_frenzy",
+    "name": "Squire's Frenzy",
+    "duration": 10.0,
+    "components": [
+      {
+        "type": "StatModifierComponent",
+        "stat": "AttackSpeed",
+        "value": 1.25,
+        "isMultiplier": true
+      },
+      {
+        "type": "VFXComponent",
+        "effectId": "red_glow_aura"
+      }
+    ]
+  },
+  {
+    "id": "iron_skin",
+    "name": "Iron Skin",
+    "duration": 15.0,
+    "components": [
+      {
+        "type": "StatModifierComponent",
+        "stat": "Defense",
+        "value": 10.0,
+        "isMultiplier": false
+      }
+    ]
+  }
+]
