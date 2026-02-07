@@ -61,6 +61,10 @@ jobs:
               TITLE=$(echo "$issue" | jq -r '.title')
               BODY=$(echo "$issue" | jq -r '.body')
               
+              # Ensure labels exist
+              gh label create "gemini-review" --color "dbedff" --description "Issues identified by Gemini Code Review" || true
+              gh label create "pr-${{ github.event.pull_request.number }}" --color "eeeeee" --description "Issues related to PR ${{ github.event.pull_request.number }}" || true
+
               # Create the issue and label it with the PR number for traceability
               gh issue create \
                 --title "$TITLE" \
@@ -113,6 +117,7 @@ jobs:
             
             if [ ! -z "$ISSUE_NUMBER" ]; then
               echo "Assigning ps-agent-1 to issue #$ISSUE_NUMBER"
+              gh label create "$AUTHOR_LABEL" --color "bfdadc" --description "Author agent assignment for $DOMAIN" || true
               gh issue edit $ISSUE_NUMBER --add-assignee "ps-agent-1" --add-label "$AUTHOR_LABEL"
             fi
           fi

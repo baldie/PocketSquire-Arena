@@ -19,7 +19,7 @@
         "serializedVersion": "2",
         "x": 882.0,
         "y": 373.3333435058594,
-        "width": 308.66668701171877,
+        "width": 308.6666564941406,
         "height": 552.0
     },
     "m_SerializedDataModeController": {
@@ -29,7 +29,7 @@
         "isAutomatic": true
     },
     "m_ViewDataDictionary": {
-        "instanceID": 61172
+        "instanceID": 45314
     },
     "m_OverlayCanvas": {
         "m_LastAppliedPresetName": "Default",
@@ -41,8 +41,8 @@
     },
     "SelectedSaveSlot": 2,
     "CharacterCreationDate": "2026-02-05 22:50:26",
-    "LastSaveDate": "2026-02-05 22:50:26",
-    "PlayTime": "00:01:03",
+    "LastSaveDate": "2026-02-05 22:50:27",
+    "PlayTime": "00:00:00",
     "Player": {
         "Name": "player_m_l1",
         "Health": 10,
