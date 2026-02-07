@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PocketSquire.Arena.Core.LevelUp;
+using PocketSquire.Arena.Core.Buffs;
 
 namespace PocketSquire.Arena.Core
 {
@@ -15,6 +17,7 @@ namespace PocketSquire.Arena.Core
         public static List<Monster> AllMonsters { get; set; } = new List<Monster>();
         public static List<Player> Players { get; set; } = new List<Player>();
         public static List<Item> Items { get; set; } = new List<Item>(); // Added Items list
+        public static List<Buff> AllBuffs { get; set; } = new List<Buff>();
         public static ProgressionLogic? Progression { get; set; }
 
         public static void Load(string? rootPath = null)
@@ -22,6 +25,7 @@ namespace PocketSquire.Arena.Core
             LoadMonsters(rootPath);
             LoadPlayers(rootPath);
             LoadItems(rootPath); // Load items
+            LoadBuffs(rootPath); // Load buffs
         }
 
         private static void LoadPlayers(string? rootPath = null)
@@ -140,6 +144,62 @@ namespace PocketSquire.Arena.Core
         public static Item? GetItemById(int id)
         {
             return Items.Find(i => i.Id == id);
+        }
+
+        private static void LoadBuffs(string? rootPath = null)
+        {
+            try
+            {
+                string root = rootPath ?? Environment.CurrentDirectory;
+                string filePath = Path.Combine(root, "Assets/_Game/Data/buffs.json");
+
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException($"Buff data file not found at: {filePath}");
+                }
+
+                string jsonContent = File.ReadAllText(filePath);
+                var buffArray = JArray.Parse(jsonContent);
+
+                AllBuffs.Clear();
+
+                foreach (var buffToken in buffArray)
+                {
+                    if (buffToken is JObject buffObj)
+                    {
+                        string id = buffObj["id"]?.ToString() ?? string.Empty;
+                        string name = buffObj["name"]?.ToString() ?? string.Empty;
+                        float duration = buffObj["duration"]?.Value<float>() ?? 0f;
+
+                        var buff = new Buff(id, name, duration);
+
+                        var componentsArray = buffObj["components"] as JArray;
+                        if (componentsArray != null)
+                        {
+                            foreach (var componentToken in componentsArray)
+                            {
+                                if (componentToken is JObject componentObj)
+                                {
+                                    var component = BuffComponentFactory.CreateComponent(componentObj);
+                                    buff.Components.Add(component);
+                                }
+                            }
+                        }
+
+                        AllBuffs.Add(buff);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading buffs: {ex.Message}");
+                throw;
+            }
+        }
+
+        public static Buff? GetBuffById(string id)
+        {
+            return AllBuffs.Find(b => b.Id == id);
         }
 
         public static void ResetAllMonsters()
