@@ -3,11 +3,20 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Unity.Town;
 
 namespace PocketSquire.Unity
 {
     public class TownMenu : MonoBehaviour
     {
+        [Header("Location Data")]
+        [SerializeField] private LocationData blacksmithLocation;
+        [SerializeField] private LocationData merchantLocation;
+        [SerializeField] private LocationData wizardLocation;
+        [SerializeField] private LocationData trainingLocation;
+        [SerializeField] private LocationData homeLocation;
+
+        private TownUIManager townUIManager;
 
         private void Start()
         {
@@ -18,10 +27,13 @@ namespace PocketSquire.Unity
                 if (GameState.Player == null) GameState.CreateNewGame(SaveSlots.Unknown);
             }
 
+            // Find the TownUIManager
+            townUIManager = FindFirstObjectByType<TownUIManager>(FindObjectsInactive.Include);
+
             WireButtons();
 
             // Default selection for gamepad/keyboard
-            var adventureBtn = GameObject.Find("Canvas/Interactables/btn_adventure")?.GetComponent<Button>();
+            var adventureBtn = GameObject.Find("Canvas/TownMapPanel/Interactables/btn_adventure")?.GetComponent<Button>();
             if (adventureBtn != null)
             {
                 adventureBtn.Select();
@@ -49,20 +61,40 @@ namespace PocketSquire.Unity
             var uiAudio = GameObject.Find("UIAudio");
             var audioSource = uiAudio != null ? uiAudio.GetComponent<AudioSource>() : null;
 
-            var adventureBtn = GameObject.Find("Canvas/Interactables/btn_adventure")?.GetComponent<Button>();
+            // Adventure button - goes to Arena scene
+            var adventureBtn = GameObject.Find("Canvas/TownMapPanel/Interactables/btn_adventure")?.GetComponent<Button>();
             if (adventureBtn != null)
             {
                 adventureBtn.onClick.RemoveAllListeners();
-                adventureBtn.onClick.AddListener(() => StartCoroutine(PlaySoundThenLoad("Arena", adventureBtn.gameObject)));
+                adventureBtn.onClick.AddListener(() => StartCoroutine(PlaySoundAndLoadCoroutine("Arena", adventureBtn.gameObject)));
                 
                 var sound = adventureBtn.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
             
-            //TODO: Wire up town locations here
+            // Wire up town locations to TownUIManager
+            WireLocationButton("btn_blacksmith", blacksmithLocation, audioSource);
+            WireLocationButton("btn_merchant", merchantLocation, audioSource);
+            WireLocationButton("btn_wizard", wizardLocation, audioSource);
+            WireLocationButton("btn_training", trainingLocation, audioSource);
+            WireLocationButton("btn_home", homeLocation, audioSource);
         }
 
-        private IEnumerator PlaySoundThenLoad(string sceneName, GameObject buttonObj)
+        private void WireLocationButton(string buttonPath, LocationData locationData, AudioSource audioSource)
+        {
+            if (townUIManager == null || locationData == null) return;
+
+            var button = GameObject.Find("Canvas/TownMapPanel/Interactables/" + buttonPath)?.GetComponent<Button>();
+            if (button == null) return;
+            
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => townUIManager.ShowInterior(locationData));
+
+            var sound = button.GetComponent<MenuButtonSound>();
+            if (sound != null && audioSource != null) sound.source = audioSource;
+        }
+
+        private IEnumerator PlaySoundAndLoadCoroutine(string sceneName, GameObject buttonObj)
         {
             if (buttonObj != null)
             {

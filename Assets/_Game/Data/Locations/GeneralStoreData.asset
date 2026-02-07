@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e254b0831c38cff49889a00de5048d51, type: 3}
+  m_Name: GeneralStoreData
+  m_EditorClassIdentifier: 
+  locationName: General Store
+  backgroundSprite: {fileID: 21300000, guid: 265623c560d1eb840bff738c1bac502d, type: 3}
+  npcPortrait: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
+  initialGreeting: "Greetings, adventurer! Browse my wares."
+  dialogueOptions:
+  - buttonText: Shop
+    action: 2
+  - buttonText: Leave
+    action: 1
