@@ -108,7 +108,7 @@ namespace PocketSquire.Arena.Unity.Town
 
             if (greetingText != null)
             {
-                greetingText.text = locationData.InitialGreeting;
+                PlayGreeting(locationData.InitialGreeting);
             }
 
             // Create dialogue option buttons
@@ -376,7 +376,7 @@ namespace PocketSquire.Arena.Unity.Town
 
                 if (greetingText != null)
                 {
-                    greetingText.text = locationData.InitialGreeting;
+                    PlayGreeting(locationData.InitialGreeting);
                 }
 
                 // Create dialogue option buttons
@@ -422,6 +422,17 @@ namespace PocketSquire.Arena.Unity.Town
             }
             
             yield return flashSequence.WaitForCompletion();
+        }
+        /// <summary>
+        /// Animates the greeting text like a typewriter.
+        /// </summary>
+        private void PlayGreeting(string message)
+        {
+            if (greetingText == null) return;
+            
+            // Clear the text, then "type" it over 2 seconds
+            greetingText.text = "";
+            greetingText.DOText(message, 2.0f).SetEase(Ease.Linear);
         }
     }
 }
