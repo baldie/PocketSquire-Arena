@@ -15,6 +15,7 @@ MonoBehaviour:
   locationName: Smithy
   backgroundSprite: {fileID: 21300000, guid: f9883d8ae637061409d92a1a5439c50a, type: 3}
   npcPortrait: {fileID: 21300000, guid: b3caf91bce2dff047a087fcdb7d79127, type: 3}
+  entrySound: {fileID: 8300000, guid: 8a297ce084dff4c4c8db62a99fa4b39d, type: 3}
   initialGreeting: Best be prepared to fight if you're going to the arena. What'll
     it be?
   dialogueOptions:

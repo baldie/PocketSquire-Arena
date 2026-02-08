@@ -32,11 +32,24 @@ namespace PocketSquire.Arena.Unity.Town
         [Header("Prefabs")]
         [SerializeField] private GameObject dialogueOptionButtonPrefab;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource;
+
         private LocationData currentLocation;
         private readonly List<GameObject> spawnedButtons = new List<GameObject>();
 
         private void Start()
         {
+            // Try to find global UI Audio if not assigned
+            if (audioSource == null)
+            {
+                var uiAudioObj = GameObject.Find("UIAudio");
+                if (uiAudioObj != null)
+                {
+                    audioSource = uiAudioObj.GetComponent<AudioSource>();
+                }
+            }
+
             // Ensure we start on the town map
             if (interiorPanel != null)
             {
@@ -51,15 +64,12 @@ namespace PocketSquire.Arena.Unity.Town
         /// <param name="clickedButton">The button that was clicked (for punch animation)</param>
         public void ShowInteriorWithTransition(LocationData locationData, GameObject clickedButton)
         {
-            Debug.Log($"[TownUIManager] ShowInteriorWithTransition called for {locationData?.LocationName ?? "NULL"}, button: {clickedButton?.name ?? "NULL"}");
-            
             if (locationData == null)
             {
                 Debug.LogWarning("[TownUIManager] ShowInteriorWithTransition called with null LocationData");
                 return;
             }
 
-            Debug.Log($"[TownUIManager] Starting transition coroutine. FlashOverlay null? {transitionFlashOverlay == null}");
             StartCoroutine(TransitionToInteriorCoroutine(locationData, clickedButton));
         }
 
@@ -143,7 +153,7 @@ namespace PocketSquire.Arena.Unity.Town
             switch (action)
             {
                 case DialogueAction.Leave:
-                    ReturnToTown();
+                    ReturnToTownWithTransition();
                     break;
 
                 case DialogueAction.Shop:
@@ -217,6 +227,71 @@ namespace PocketSquire.Arena.Unity.Town
         }
 
         /// <summary>
+        /// Transitions back to the town map with animation.
+        /// </summary>
+        public void ReturnToTownWithTransition()
+        {
+            StartCoroutine(TransitionToTownCoroutine());
+        }
+
+        private IEnumerator TransitionToTownCoroutine()
+        {
+            // Ensure flash overlay starts invisible and renders on top (using same overlay as entry)
+            if (transitionFlashOverlay != null)
+            {
+                transitionFlashOverlay.alpha = 0f;
+                transitionFlashOverlay.gameObject.SetActive(true);
+                transitionFlashOverlay.transform.SetAsLastSibling();
+            }
+
+            // 1. Build-up (Anticipation)
+            // Fade white overlay in (0 -> 1)
+            Sequence sequence = DOTween.Sequence();
+            
+            if (transitionFlashOverlay != null)
+            {
+                // Fade in to full opacity
+                sequence.Append(transitionFlashOverlay.DOFade(1f, 0.15f));
+            }
+            
+            // Simultaneously punch the interior panel scale (shrink by 10%)
+            if (interiorPanel != null)
+            {
+                // We use Join to make it happen at the same time as the fade in
+                sequence.Join(interiorPanel.transform.DOPunchScale(Vector3.one * -0.1f, 0.15f, 5, 1));
+            }
+
+            // 2. The Switch (at peak opacity)
+            sequence.AppendCallback(() => 
+            {
+                ReturnToTown();
+
+                // 3. The Snap-Back (Resolution)
+                // Set town map initial scale to 110%
+                if (townMapPanel != null)
+                {
+                    townMapPanel.transform.localScale = Vector3.one * 1.1f;
+                    
+                    // Animate scale 1.1 -> 1.0
+                    townMapPanel.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+                }
+            });
+
+            // Fade out the overlay
+            if (transitionFlashOverlay != null)
+            {
+                sequence.Append(transitionFlashOverlay.DOFade(0f, 0.3f));
+                
+                sequence.OnComplete(() =>
+                {
+                    transitionFlashOverlay.gameObject.SetActive(false);
+                });
+            }
+
+            yield return sequence.WaitForCompletion();
+        }
+
+        /// <summary>
         /// Coroutine that handles the animated transition to an interior location.
         /// 1. Punch scale on the clicked button
         /// 2. Flash white overlay (0 → 0.8 → 0)
@@ -224,93 +299,101 @@ namespace PocketSquire.Arena.Unity.Town
         /// </summary>
         private IEnumerator TransitionToInteriorCoroutine(LocationData locationData, GameObject clickedButton)
         {
-            Debug.Log($"[TownUIManager] TransitionToInteriorCoroutine started for {locationData.LocationName}");
             currentLocation = locationData;
 
             // Ensure flash overlay starts invisible and renders on top
             if (transitionFlashOverlay != null)
             {
-                Debug.Log($"[TownUIManager] Setting flash overlay active. Current alpha: {transitionFlashOverlay.alpha}");
                 transitionFlashOverlay.alpha = 0f;
                 transitionFlashOverlay.gameObject.SetActive(true);
                 
                 // CRITICAL: Move to end of hierarchy so it renders on TOP of all other UI
                 transitionFlashOverlay.transform.SetAsLastSibling();
-                Debug.Log($"[TownUIManager] Flash overlay activated and moved to front. GameObject active: {transitionFlashOverlay.gameObject.activeSelf}");
             }
             else
             {
                 Debug.LogWarning("[TownUIManager] transitionFlashOverlay is NULL!");
             }
 
-            // 1. Punch the clicked button icon
-            if (clickedButton != null)
-            {
-                Debug.Log($"[TownUIManager] Starting punch animation on button: {clickedButton.name}");
-                clickedButton.transform.DOPunchScale(Vector3.one * 0.2f, punchDuration, 2, 0.5f);
-            }
-            else
-            {
-                Debug.LogWarning("[TownUIManager] clickedButton is NULL - no punch animation");
-            }
-
-            // 2. Start the flash animation (fade in to 0.8 over half duration)
+            // 1. Build-up (Anticipation)
             Sequence flashSequence = DOTween.Sequence();
-            Debug.Log($"[TownUIManager] Creating DOTween sequence. Flash duration: {flashDuration}s");
-            
+            float halfFlash = flashDuration * 0.5f;
+
             if (transitionFlashOverlay != null)
             {
-                float halfFlash = flashDuration * 0.5f;
-                Debug.Log($"[TownUIManager] Half flash duration: {halfFlash}s");
-                
                 // Fade in to peak
-                Debug.Log("[TownUIManager] Appending fade IN to 0.8 alpha");
                 flashSequence.Append(transitionFlashOverlay.DOFade(0.8f, halfFlash));
+            }
+
+            // Play entry sound immediately
+            if (audioSource != null && locationData.EntrySound != null)
+            {
+                audioSource.PlayOneShot(locationData.EntrySound);
+            }
                 
-                // 3. At peak flash (brightest moment), swap the background
-                flashSequence.AppendCallback(() =>
+            // Simultaneously punch the clicked button icon
+            if (clickedButton != null)
+            {
+                // Note: Join with previous append
+                flashSequence.Join(clickedButton.transform.DOPunchScale(Vector3.one * 0.2f, punchDuration, 2, 0.5f));
+            }
+
+            // Simultaneously punch the town map panel (shrink by 10%) - same as exit transition
+            if (townMapPanel != null)
+            {
+                flashSequence.Join(townMapPanel.transform.DOPunchScale(Vector3.one * -0.1f, halfFlash, 5, 1));
+            }
+            
+            // 2. The Switch (at peak flash)
+            flashSequence.AppendCallback(() =>
+            {
+                // Populate UI elements
+                if (backgroundImage != null)
                 {
-                    Debug.Log($"[TownUIManager] PEAK FLASH - Swapping to {locationData.LocationName} interior");
-                    // Populate UI elements
-                    if (backgroundImage != null)
-                    {
-                        backgroundImage.sprite = locationData.BackgroundSprite;
-                    }
+                    backgroundImage.sprite = locationData.BackgroundSprite;
+                }
 
-                    if (portraitImage != null)
-                    {
-                        portraitImage.sprite = locationData.NpcPortrait;
-                        portraitImage.gameObject.SetActive(locationData.NpcPortrait != null);
-                    }
+                if (portraitImage != null)
+                {
+                    portraitImage.sprite = locationData.NpcPortrait;
+                    portraitImage.gameObject.SetActive(locationData.NpcPortrait != null);
+                }
 
-                    if (greetingText != null)
-                    {
-                        greetingText.text = locationData.InitialGreeting;
-                    }
+                if (greetingText != null)
+                {
+                    greetingText.text = locationData.InitialGreeting;
+                }
 
-                    // Create dialogue option buttons
-                    PopulateOptions(locationData.DialogueOptions);
+                // Create dialogue option buttons
+                PopulateOptions(locationData.DialogueOptions);
 
-                    // Switch panels
-                    if (townMapPanel != null)
-                    {
-                        townMapPanel.SetActive(false);
-                    }
+                // Switch panels
+                if (townMapPanel != null)
+                {
+                    townMapPanel.SetActive(false);
+                }
 
-                    if (interiorPanel != null)
-                    {
-                        interiorPanel.SetActive(true);
-                    }
-                });
+                if (interiorPanel != null)
+                {
+                    interiorPanel.SetActive(true);
+                    
+                    // 3. Snap-Back (Resolution)
+                    // Set interior panel initial scale to 110%
+                    interiorPanel.transform.localScale = Vector3.one * 1.1f;
+                    
+                    // Animate scale 1.1 -> 1.0
+                    interiorPanel.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+                }
+            });
                 
-                // Fade out from peak
-                Debug.Log("[TownUIManager] Appending fade OUT to 0 alpha");
+            // Fade out from peak
+            if (transitionFlashOverlay != null)
+            {
                 flashSequence.Append(transitionFlashOverlay.DOFade(0f, halfFlash));
                 
                 // Clean up after flash completes
                 flashSequence.OnComplete(() =>
                 {
-                    Debug.Log("[TownUIManager] Flash sequence COMPLETE - deactivating overlay");
                     if (transitionFlashOverlay != null)
                     {
                         transitionFlashOverlay.gameObject.SetActive(false);
@@ -319,14 +402,11 @@ namespace PocketSquire.Arena.Unity.Town
             }
             else
             {
-                Debug.LogWarning("[TownUIManager] Flash overlay is NULL - falling back to immediate transition");
                 // Fallback if no flash overlay - just do immediate transition
                 ShowInterior(locationData);
             }
-
-            Debug.Log($"[TownUIManager] Coroutine ending for {locationData.LocationName}");
             
-            yield return null;
+            yield return flashSequence.WaitForCompletion();
         }
     }
 }

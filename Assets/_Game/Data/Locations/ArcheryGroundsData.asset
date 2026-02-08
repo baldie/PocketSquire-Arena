@@ -15,7 +15,8 @@ MonoBehaviour:
   locationName: Archery Grounds
   backgroundSprite: {fileID: 21300000, guid: e2ccb98821d98e34c8fb4a2d4c73e734, type: 3}
   npcPortrait: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
-  initialGreeting: "Looking to sharpen your aim?"
+  entrySound: {fileID: 8300000, guid: 64d9a4c22f4bbde449df41433227eccb, type: 3}
+  initialGreeting: Looking to sharpen your aim?
   dialogueOptions:
   - buttonText: Train
     action: 3

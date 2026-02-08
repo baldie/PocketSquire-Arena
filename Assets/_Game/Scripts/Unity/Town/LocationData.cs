@@ -18,6 +18,9 @@ namespace PocketSquire.Arena.Unity.Town
         [SerializeField] private Sprite backgroundSprite;
         [SerializeField] private Sprite npcPortrait;
 
+        [Header("Audio")]
+        [SerializeField] private AudioClip entrySound;
+
         [Header("Dialogue")]
         [TextArea(2, 5)]
         [SerializeField] private string initialGreeting;
@@ -27,6 +30,7 @@ namespace PocketSquire.Arena.Unity.Town
         public string LocationName => locationName;
         public Sprite BackgroundSprite => backgroundSprite;
         public Sprite NpcPortrait => npcPortrait;
+        public AudioClip EntrySound => entrySound;
         public string InitialGreeting => initialGreeting;
         public IReadOnlyList<DialogueOption> DialogueOptions => dialogueOptions;
 

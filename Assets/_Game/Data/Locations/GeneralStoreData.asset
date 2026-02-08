@@ -15,6 +15,7 @@ MonoBehaviour:
   locationName: General Store
   backgroundSprite: {fileID: 21300000, guid: 265623c560d1eb840bff738c1bac502d, type: 3}
   npcPortrait: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
+  entrySound: {fileID: 8300000, guid: 4ff160b68fb3f4c41a81821179b0ae95, type: 3}
   initialGreeting: Welcome in! Make sure you're stocked up.
   dialogueOptions:
   - buttonText: Shop

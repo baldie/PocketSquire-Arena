@@ -15,7 +15,8 @@ MonoBehaviour:
   locationName: Home
   backgroundSprite: {fileID: 21300000, guid: 8774bd719a4407b44bfd8460387ae490, type: 3}
   npcPortrait: {fileID: 21300000, guid: 5f16071d9296e8e4cb47f47f50985d56, type: 3}
-  initialGreeting: "Oh! Welcome back dearie!"
+  entrySound: {fileID: 8300000, guid: 6286ebc1ac1aa24469aba3106617c304, type: 3}
+  initialGreeting: Oh! Welcome back dearie!
   dialogueOptions:
   - buttonText: Prepare
     action: 5
