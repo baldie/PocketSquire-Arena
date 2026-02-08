@@ -15,7 +15,7 @@ MonoBehaviour:
   locationName: Wizard Tower
   backgroundSprite: {fileID: 21300000, guid: f6d00bfc0c813144e802149cf968dbb5, type: 3}
   npcPortrait: {fileID: 21300000, guid: c13dcefd805ace24dbdf2898998f7c1e, type: 3}
-  initialGreeting: "Ah, a seeker of magical knowledge..."
+  initialGreeting: Oh ho ho! Come in young one. Interested in the arcane arts?
   dialogueOptions:
   - buttonText: Shop
     action: 2
