@@ -431,8 +431,9 @@ namespace PocketSquire.Arena.Unity.Town
             if (greetingText == null) return;
             
             // Clear the text, then "type" it over 2 seconds
+            // Note: Using DOTween.To because DOText extension for TMPro is not available in current setup
             greetingText.text = "";
-            greetingText.DOText(message, 2.0f).SetEase(Ease.Linear);
+            DOTween.To(() => greetingText.text, x => greetingText.text = x, message, 2.0f).SetEase(Ease.Linear);
         }
     }
 }
