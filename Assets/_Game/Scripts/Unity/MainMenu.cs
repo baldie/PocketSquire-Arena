@@ -71,7 +71,24 @@ namespace PocketSquire.Unity
             if (newGameButton != null)
             {
                 newGameButton.onClick.RemoveAllListeners();
-                newGameButton.onClick.AddListener(() => GoToScene("SaveSlotSelection", newGameButton.gameObject));
+                newGameButton.onClick.AddListener(() => {
+                    SaveSlotSelector.Mode = SaveSlotSelector.SlotSelectionMode.NewGame;
+                    GoToScene("SaveSlotSelection", newGameButton.gameObject);
+                });
+            }
+
+            var loadGameButton = GameObject.Find("Canvas/LoadGameButton")?.GetComponent<Button>();
+            if (loadGameButton != null)
+            {
+                loadGameButton.interactable = true; 
+                // We could check if there are ANY saves, but SaveSystem helper to check "Any" isn't strictly here.
+                // For now, let them go to the scene, and empty slots will just be unselectable.
+
+                loadGameButton.onClick.RemoveAllListeners();
+                loadGameButton.onClick.AddListener(() => {
+                    SaveSlotSelector.Mode = SaveSlotSelector.SlotSelectionMode.LoadGame;
+                    GoToScene("SaveSlotSelection", loadGameButton.gameObject);
+                });
             }
 
             var optionsButton = GameObject.Find("Canvas/OptionsButton")?.GetComponent<Button>();

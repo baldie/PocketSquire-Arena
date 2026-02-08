@@ -10,11 +10,22 @@ namespace PocketSquire.Unity
 {
     public class SaveSlotSelector : MonoBehaviour
     {
+        public enum SlotSelectionMode { NewGame, LoadGame }
+        public static SlotSelectionMode Mode = SlotSelectionMode.NewGame;
+
+        [Header("UI")]
+        [SerializeField] private PocketSquire.Unity.UI.ConfirmationDialog confirmationDialog;
+
         private void Awake()
         {
             if (GameWorld.AllMonsters.Count == 0)
             {
                 GameWorld.Load();
+            }
+            // Ensure we find the dialog if not assigned (fallback)
+            if (confirmationDialog == null)
+            {
+                confirmationDialog = FindAnyObjectByType<PocketSquire.Unity.UI.ConfirmationDialog>(FindObjectsInactive.Include);
             }
             WireButtons();
         }
@@ -80,19 +91,67 @@ namespace PocketSquire.Unity
         public void SelectSaveSlot(SaveSlots slot, GameObject buttonObj)
         {
             var existingData = SaveSystem.LoadGame(slot);
-            if (existingData != null)
+
+            if (Mode == SlotSelectionMode.LoadGame)
             {
-                GameState.LoadFromSaveData(existingData);
-                Debug.Log($"[SaveSlotSelector] Loaded Save Slot: {slot}");
+                // LOAD GAME MODE
+                if (existingData != null)
+                {
+                    LoadGame(slot, existingData, buttonObj);
+                }
+                else
+                {
+                    // TODO: meaningful feedback for empty slot
+                    Debug.Log("[SaveSlotSelector] Cannot load empty slot.");
+                    // Maybe play a "buzzer" sound here if we had one
+                }
             }
             else
             {
-                GameState.CreateNewGame(slot);
-                // Immediately save to reserve the slot
-                SaveSystem.SaveGame(slot, GameState.GetSaveData());
-                Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
+                // NEW GAME MODE
+                if (existingData != null)
+                {
+                    // Slot occupied -> Confirm Overwrite
+                    if (confirmationDialog != null)
+                    {
+                        PocketSquire.Unity.UI.ConfirmationDialog.Show(
+                            confirmationDialog,
+                            "Overwrite existing save?",
+                            () => StartNewGame(slot, buttonObj) // On Confirm
+                        );
+                    }
+                    else
+                    {
+                        Debug.LogError("[SaveSlotSelector] ConfirmationDialog reference missing! Overwriting anyway...");
+                        StartNewGame(slot, buttonObj);
+                    }
+                }
+                else
+                {
+                    // Slot empty -> Just start
+                    StartNewGame(slot, buttonObj);
+                }
             }
+        }
 
+        private void LoadGame(SaveSlots slot, SaveData data, GameObject buttonObj)
+        {
+            GameState.LoadFromSaveData(data);
+            Debug.Log($"[SaveSlotSelector] Loaded Save Slot: {slot}");
+            TransitionToTown(buttonObj);
+        }
+
+        private void StartNewGame(SaveSlots slot, GameObject buttonObj)
+        {
+            GameState.CreateNewGame(slot);
+            // Immediately save to reserve the slot
+            SaveSystem.SaveGame(slot, GameState.GetSaveData());
+            Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
+            TransitionToTown(buttonObj);
+        }
+
+        private void TransitionToTown(GameObject buttonObj)
+        {
             // Start playtime tracking for this save slot
             var tracker = FindFirstObjectByType<PlaytimeTracker>();
             if (tracker == null)
