@@ -47,6 +47,35 @@ namespace PocketSquire.Arena.Unity.Town
                 originalPortraitPos = portraitImage.rectTransform.anchoredPosition;
             }
 
+            // Find and reparent the menu cursor so it follows OptionsContainer visibility
+            if (optionsContainer != null)
+            {
+                // Find inactive objects using transform search if necessary
+                GameObject cursor = null;
+                if (interiorPanel != null)
+                {
+                    // Search in interiorPanel path
+                    Transform t = interiorPanel.transform.Find("DialogueBox/OptionsCursor");
+                    if (t != null) cursor = t.gameObject;
+                }
+                
+                if (cursor == null) cursor = GameObject.Find("OptionsCursor");
+
+                if (cursor != null)
+                {
+                    cursor.transform.SetParent(optionsContainer, false);
+                    cursor.transform.SetAsLastSibling();
+                    
+                    // Ensure it ignores layout
+                    var layout = cursor.GetComponent<LayoutElement>();
+                    if (layout == null) layout = cursor.AddComponent<LayoutElement>();
+                    layout.ignoreLayout = true;
+                    
+                    // Start hidden
+                    cursor.SetActive(false);
+                }
+            }
+
             // Try to find global UI Audio if not assigned
             if (audioSource == null)
             {
@@ -189,37 +218,7 @@ namespace PocketSquire.Arena.Unity.Town
             }
         }
 
-        private void PopulateOptions(IReadOnlyList<DialogueOption> options)
-        {
-            ClearOptions();
 
-            if (optionsContainer == null || dialogueOptionButtonPrefab == null)
-            {
-                Debug.LogWarning("[TownUIManager] Missing optionsContainer or dialogueOptionButtonPrefab");
-                return;
-            }
-
-            foreach (var option in options)
-            {
-                var buttonObj = Instantiate(dialogueOptionButtonPrefab, optionsContainer);
-                spawnedButtons.Add(buttonObj);
-
-                // Set button text
-                var buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
-                if (buttonText != null)
-                {
-                    buttonText.text = option.buttonText;
-                }
-
-                // Wire up click handler
-                var button = buttonObj.GetComponent<Button>();
-                if (button != null)
-                {
-                    var capturedAction = option.action;
-                    button.onClick.AddListener(() => HandleDialogueAction(capturedAction));
-                }
-            }
-        }
 
         private void ClearOptions()
         {
@@ -264,7 +263,6 @@ namespace PocketSquire.Arena.Unity.Town
             // Simultaneously punch the interior panel scale (shrink by 10%)
             if (interiorPanel != null)
             {
-                // We use Join to make it happen at the same time as the fade in
                 sequence.Join(interiorPanel.transform.DOPunchScale(Vector3.one * -0.1f, 0.15f, 5, 1));
             }
 
@@ -341,7 +339,6 @@ namespace PocketSquire.Arena.Unity.Town
             // Simultaneously punch the clicked button icon
             if (clickedButton != null)
             {
-                // Note: Join with previous append
                 flashSequence.Join(clickedButton.transform.DOPunchScale(Vector3.one * 0.2f, punchDuration, 2, 0.5f));
             }
 
@@ -374,13 +371,11 @@ namespace PocketSquire.Arena.Unity.Town
                     }
                 }
 
-                if (greetingText != null)
+                // Hide options container initially
+                if (optionsContainer != null)
                 {
-                    PlayGreeting(locationData.InitialGreeting);
+                    optionsContainer.gameObject.SetActive(false);
                 }
-
-                // Create dialogue option buttons
-                PopulateOptions(locationData.DialogueOptions);
 
                 // Switch panels
                 if (townMapPanel != null)
@@ -415,25 +410,89 @@ namespace PocketSquire.Arena.Unity.Town
                     }
                 });
             }
-            else
-            {
-                // Fallback if no flash overlay - just do immediate transition
-                ShowInterior(locationData);
-            }
             
             yield return flashSequence.WaitForCompletion();
+
+            // After transition, play greeting and wait for it
+            if (greetingText != null)
+            {
+                // Play greeting and wait for the tween
+                Tweener greetingTween = PlayGreeting(locationData.InitialGreeting);
+                if (greetingTween != null)
+                {
+                    yield return greetingTween.WaitForCompletion();
+                }
+            }
+
+            // Show options after greeting finishes
+            // Create dialogue option buttons
+            PopulateOptions(locationData.DialogueOptions);
+
+            if (optionsContainer != null)
+            {
+                optionsContainer.gameObject.SetActive(true);
+            }
+            
+            // Auto-select first option
+            if (spawnedButtons.Count > 0)
+            {
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(spawnedButtons[0]);
+            }
         }
+
         /// <summary>
         /// Animates the greeting text like a typewriter.
         /// </summary>
-        private void PlayGreeting(string message)
+        private Tweener PlayGreeting(string message)
         {
-            if (greetingText == null) return;
+            if (greetingText == null) return null;
             
-            // Clear the text, then "type" it over 2 seconds
-            // Note: Using DOTween.To because DOText extension for TMPro is not available in current setup
+            // Clear the text, then "type" it over 0.75 seconds
             greetingText.text = "";
-            DOTween.To(() => greetingText.text, x => greetingText.text = x, message, 2.0f).SetEase(Ease.Linear);
+            return DOTween.To(() => greetingText.text, x => greetingText.text = x, message, 0.75f).SetEase(Ease.Linear);
+        }
+
+        private void PopulateOptions(IReadOnlyList<DialogueOption> options)
+        {
+            ClearOptions();
+
+            if (optionsContainer == null || dialogueOptionButtonPrefab == null)
+            {
+                Debug.LogWarning("[TownUIManager] Missing optionsContainer or dialogueOptionButtonPrefab");
+                return;
+            }
+
+            foreach (var option in options)
+            {
+                var buttonObj = Instantiate(dialogueOptionButtonPrefab, optionsContainer);
+                spawnedButtons.Add(buttonObj);
+
+                // Set button text
+                var buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
+                if (buttonText != null)
+                {
+                    buttonText.text = option.buttonText;
+                }
+
+                // Wire up click handler
+                var button = buttonObj.GetComponent<Button>();
+                if (button != null)
+                {
+                    var capturedAction = option.action;
+                    button.onClick.AddListener(() => HandleDialogueAction(capturedAction));
+                }
+
+                // Add hover selection support
+                var eventTrigger = buttonObj.GetComponent<UnityEngine.EventSystems.EventTrigger>();
+                if (eventTrigger == null) eventTrigger = buttonObj.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+
+                var entry = new UnityEngine.EventSystems.EventTrigger.Entry();
+                entry.eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter;
+                entry.callback.AddListener((data) => {
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(buttonObj);
+                });
+                eventTrigger.triggers.Add(entry);
+            }
         }
     }
 }
