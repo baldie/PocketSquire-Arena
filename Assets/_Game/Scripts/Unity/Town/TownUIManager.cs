@@ -370,7 +370,7 @@ namespace PocketSquire.Arena.Unity.Town
                     {
                         // Reset to off-screen right and tween in
                         portraitImage.rectTransform.anchoredPosition = originalPortraitPos + new Vector2(500f, 0f);
-                        portraitImage.rectTransform.DOAnchorPos(originalPortraitPos, 0.4f).SetEase(Ease.OutBack);
+                        portraitImage.rectTransform.DOAnchorPos(originalPortraitPos, 0.4f).SetEase(Ease.OutCubic);
                     }
                 }
 
