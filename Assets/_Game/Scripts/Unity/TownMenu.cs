@@ -88,7 +88,8 @@ namespace PocketSquire.Unity
             if (button == null) return;
             
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => townUIManager.ShowInterior(locationData));
+            // Pass the button's GameObject for the punch animation
+            button.onClick.AddListener(() => townUIManager.ShowInteriorWithTransition(locationData, button.gameObject));
 
             var sound = button.GetComponent<MenuButtonSound>();
             if (sound != null && audioSource != null) sound.source = audioSource;
