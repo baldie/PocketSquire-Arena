@@ -140,6 +140,7 @@ namespace PocketSquire.Unity.UI
 
             if (dialogPanel != null)
             {
+                dialogPanel.gameObject.SetActive(true);
                 dialogPanel.localScale = Vector3.one * 0.8f;
                 dialogPanel.DOScale(Vector3.one, animationDuration)
                     .SetEase(Ease.OutBack)

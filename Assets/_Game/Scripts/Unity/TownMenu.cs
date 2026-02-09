@@ -12,8 +12,8 @@ namespace PocketSquire.Unity
         [Header("Location Data")]
         [SerializeField] private LocationData blacksmithLocation;
         [SerializeField] private LocationData merchantLocation;
-        [SerializeField] private LocationData wizardLocation;
-        [SerializeField] private LocationData trainingLocation;
+        [SerializeField] private LocationData towerLocation;
+        [SerializeField] private LocationData archeryLocation;
         [SerializeField] private LocationData homeLocation;
 
         private TownUIManager townUIManager;
@@ -75,8 +75,8 @@ namespace PocketSquire.Unity
             // Wire up town locations to TownUIManager
             WireLocationButton("btn_blacksmith", blacksmithLocation, audioSource);
             WireLocationButton("btn_merchant", merchantLocation, audioSource);
-            WireLocationButton("btn_wizard", wizardLocation, audioSource);
-            WireLocationButton("btn_training", trainingLocation, audioSource);
+            WireLocationButton("btn_tower", towerLocation, audioSource);
+            WireLocationButton("btn_archery", archeryLocation, audioSource);
             WireLocationButton("btn_home", homeLocation, audioSource);
         }
 

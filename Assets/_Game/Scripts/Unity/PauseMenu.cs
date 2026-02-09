@@ -48,8 +48,9 @@ namespace PocketSquire.Unity
             }
 
             WireButtons();
-            if (pauseMenuUI != null)
+            if (pauseMenuUI != null) {
                 pauseMenuUI.SetActive(false);
+            }
         }
 
         private void WireButtons()
@@ -116,6 +117,7 @@ namespace PocketSquire.Unity
 
         public void Pause()
         {
+            Debug.Log("Pause() called");
             // Close PlayerMenu if it's open
             var playerMenu = FindFirstObjectByType<PlayerMenuController>();
             if (playerMenu != null && playerMenu.IsOpen)
