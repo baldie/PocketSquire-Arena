@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using PocketSquire.Unity.UI;
 
 public class MenuSelectionCursor : MonoBehaviour
 {
     [Header("Setup")]
     public RectTransform cursorGraph; // Drag your Cursor Image here
     public float moveSpeed = 15f;     // How snappy the cursor moves (higher is faster)
+
+    private GameObject _lastSelectedObj;
+    private MenuCursorTarget _cachedTarget;
 
     void Update()
     {
@@ -18,30 +22,55 @@ public class MenuSelectionCursor : MonoBehaviour
         // 2. Check if something is actually selected
         if (selectedObj != null)
         {
+            // Update cache if selection changed
+            if (selectedObj != _lastSelectedObj)
+            {
+                _lastSelectedObj = selectedObj;
+                _cachedTarget = selectedObj.GetComponent<MenuCursorTarget>();
+            }
+
             // Check if it's a button AND if that button is interactable
+            // Optimization: We could also cache the Button component if this proves heavy, 
+            // but GetComponent<Button> is very cheap.
             Button btn = selectedObj.GetComponent<Button>();
             if(btn != null && btn.interactable) 
             {
                 cursorGraph.gameObject.SetActive(true);
 
                 // 3. Define the target position
-                // We use the button's Y position, but keep our own fixed X offset relative to the button
                 Vector3 targetPosition = selectedObj.transform.position;
-                targetPosition.x = cursorGraph.position.x;
+                
+                if (_cachedTarget != null)
+                {
+                    // Use the configured offset
+                    if (_cachedTarget.useLocalOffset)
+                    {
+                        targetPosition += selectedObj.transform.TransformVector(_cachedTarget.cursorOffset);
+                    }
+                    else
+                    {
+                        // World space offset
+                        targetPosition += _cachedTarget.cursorOffset;
+                    }
+                }
+                else
+                {
+                    // Legacy behavior: lock X
+                    targetPosition.x = cursorGraph.position.x;
+                }
 
                 // 4. Move smoothly to that position
-                // (Use Vector3.MoveTowards for linear speed, or Vector3.Lerp for "ease-in" feel)
                 cursorGraph.position = Vector3.Lerp(cursorGraph.position, targetPosition, moveSpeed * Time.unscaledDeltaTime);
             }
             else
             {
-                // Hide the cursor if the button is disabled (interactable = false)
                 cursorGraph.gameObject.SetActive(false);
             }
         }
         else
         {
-            // Optional: Hide cursor if nothing is selected (e.g. user clicked empty space)
+            _lastSelectedObj = null;
+            _cachedTarget = null;
             cursorGraph.gameObject.SetActive(false);
         }
     }

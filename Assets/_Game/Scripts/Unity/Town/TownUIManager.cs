@@ -41,41 +41,6 @@ namespace PocketSquire.Arena.Unity.Town
 
         private void Start()
         {
-            // Capture original position
-            if (portraitImage != null)
-            {
-                originalPortraitPos = portraitImage.rectTransform.anchoredPosition;
-            }
-
-            // Find and reparent the menu cursor so it follows OptionsContainer visibility
-            if (optionsContainer != null)
-            {
-                // Find inactive objects using transform search if necessary
-                GameObject cursor = null;
-                if (interiorPanel != null)
-                {
-                    // Search in interiorPanel path
-                    Transform t = interiorPanel.transform.Find("DialogueBox/OptionsCursor");
-                    if (t != null) cursor = t.gameObject;
-                }
-                
-                if (cursor == null) cursor = GameObject.Find("OptionsCursor");
-
-                if (cursor != null)
-                {
-                    cursor.transform.SetParent(optionsContainer, false);
-                    cursor.transform.SetAsLastSibling();
-                    
-                    // Ensure it ignores layout
-                    var layout = cursor.GetComponent<LayoutElement>();
-                    if (layout == null) layout = cursor.AddComponent<LayoutElement>();
-                    layout.ignoreLayout = true;
-                    
-                    // Start hidden
-                    cursor.SetActive(false);
-                }
-            }
-
             // Try to find global UI Audio if not assigned
             if (audioSource == null)
             {
@@ -84,12 +49,6 @@ namespace PocketSquire.Arena.Unity.Town
                 {
                     audioSource = uiAudioObj.GetComponent<AudioSource>();
                 }
-            }
-
-            // Ensure we start on the town map
-            if (interiorPanel != null)
-            {
-                interiorPanel.SetActive(false);
             }
         }
 

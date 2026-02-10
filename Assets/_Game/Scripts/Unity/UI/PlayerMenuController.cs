@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Unity.UI;
 
@@ -12,13 +13,17 @@ namespace PocketSquire.Unity.UI
     /// </summary>
     public class PlayerMenuController : MonoBehaviour
     {
+        [Header("Parent to Hide/Show")]
+        [SerializeField] private GameObject menuParent;
+
         [Header("Character Info")]
         [SerializeField] private TextMeshProUGUI levelAndClassText;
         [SerializeField] private TextMeshProUGUI goldText;
+
+        [Header("Images")]
+        [SerializeField] private Image xpBarForeground;
         [SerializeField] private Image playerImage;
 
-        [Header("Experience Bar")]
-        [SerializeField] private Image xpBarForeground;
 
         [Header("Attributes")]
         [SerializeField] private TextMeshProUGUI strText;
@@ -38,6 +43,9 @@ namespace PocketSquire.Unity.UI
         [Header("Footer")]
         [SerializeField] private Button skillTreeButton;
 
+        [Header("Cursor Settings")]
+        [SerializeField] private Vector3 inventoryCursorOffset = new Vector3(-60f, 0, 0);
+
         [Header("Assets")]
         [SerializeField] private GameObject itemRowPrefab;
         [SerializeField] private GameAssetRegistry gameAssetRegistry;
@@ -46,27 +54,23 @@ namespace PocketSquire.Unity.UI
 
         public bool IsOpen => isOpen;
         
-        private Canvas _canvas;
+        // State tracking for background UI disabling
+        private class CanvasState
+        {
+            public CanvasGroup group;
+            public bool wasInteractable;
+            public bool wasBlocking;
+        }
+        private System.Collections.Generic.List<CanvasState> _disabledCanvases = new System.Collections.Generic.List<CanvasState>();
 
         private void Awake()
         {
-            _canvas = GetComponent<Canvas>();
-            
             if (inventoryScrollContent == null)
             {
                 var contentTransform = transform.Find("BodyContainer/RightColumn/InventoryScrollView/Viewport/Content");
                 if (contentTransform != null)
                 {
                     inventoryScrollContent = contentTransform;
-                }
-            }
-
-            if (playerImage == null)
-            {
-                var imageTransform = transform.Find("BodyContainer/LeftColumn/MidPanel/PlayerImage");
-                if (imageTransform != null)
-                {
-                    playerImage = imageTransform.GetComponent<Image>();
                 }
             }
 
@@ -79,6 +83,8 @@ namespace PocketSquire.Unity.UI
                     mask.enabled = false;
                 }
             }
+
+            this.Close();
         }
 
         private void Start()
@@ -88,6 +94,13 @@ namespace PocketSquire.Unity.UI
             {
                 skillTreeButton.onClick.RemoveAllListeners();
                 skillTreeButton.onClick.AddListener(OnSkillTreeButtonClicked);
+
+                // Add MenuCursorTarget to SkillTreeButton if missing (or we can do this in Editor)
+                // But for safety/completeness based on plan:
+                var target = skillTreeButton.GetComponent<MenuCursorTarget>();
+                if (target == null) target = skillTreeButton.gameObject.AddComponent<MenuCursorTarget>();
+                // Value from Plan: (-60, 40.5, 0). 
+                if (target.cursorOffset == Vector3.zero) target.cursorOffset = new Vector3(-60f, 40.5f, 0f);
             }
                 
             // Initial refresh and ensure closed
@@ -246,6 +259,12 @@ namespace PocketSquire.Unity.UI
                 go.transform.localScale = Vector3.one;
                 go.transform.localPosition = Vector3.zero;
 
+                // Configure Menu Cursor Target for this item
+                var cursorTarget = go.GetComponent<MenuCursorTarget>();
+                if (cursorTarget == null) cursorTarget = go.AddComponent<MenuCursorTarget>();
+                cursorTarget.cursorOffset = inventoryCursorOffset;
+                cursorTarget.useLocalOffset = true;
+
                 // Ensure LayoutElement exists for correct sizing in ScrollRect
                 var layoutElement = go.GetComponent<LayoutElement>();
                 if (layoutElement == null)
@@ -296,25 +315,56 @@ namespace PocketSquire.Unity.UI
 
         public void Open()
         {
-            if (_canvas != null)
-                _canvas.enabled = true;
+            if (isOpen) return;
+
+            if (menuParent != null)
+            {
+                menuParent.SetActive(true);
+            }
             
             isOpen = true;
             Refresh();
             
-            // Optional: Pause game if in Arena
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Arena")
+            // Select the first available item so navigation works immediately
+            SelectFirstInteractable();
+
+            Time.timeScale = 0f;
+        }
+
+        private void SelectFirstInteractable()
+        {
+            // 1. Try to select the first item in the inventory
+            if (inventoryScrollContent.childCount > 0)
             {
-                Time.timeScale = 0f;
+                var firstItem = inventoryScrollContent.GetChild(0).gameObject;
+                if (firstItem.activeInHierarchy)
+                {
+                    EventSystem.current.SetSelectedGameObject(firstItem);
+                    return;
+                }
+            }
+
+            // 2. Fallback to Skill Tree Button if inventory is empty
+            if (skillTreeButton != null && skillTreeButton.interactable)
+            {
+                EventSystem.current.SetSelectedGameObject(skillTreeButton.gameObject);
+                return;
             }
         }
 
         public void Close()
         {
-            if (_canvas != null)
-                _canvas.enabled = false;
+            if (!isOpen) return;
+
+            if (menuParent != null)
+            {
+                menuParent.SetActive(false);
+            }
                 
             isOpen = false;
+            
+            // Clear selection when closing to prevent ghost inputs
+            EventSystem.current.SetSelectedGameObject(null);
             
             // Unpause
             Time.timeScale = 1f;
