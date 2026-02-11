@@ -137,6 +137,7 @@ namespace PocketSquire.Unity
             if (playerMenu != null && playerMenu.IsOpen)
             {
                 playerMenu.Close();
+                return;
             }
 
             selectedObj = EventSystem.current.currentSelectedGameObject;
