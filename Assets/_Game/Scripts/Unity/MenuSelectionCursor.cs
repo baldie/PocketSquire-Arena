@@ -8,70 +8,91 @@ public class MenuSelectionCursor : MonoBehaviour
     [Header("Setup")]
     public RectTransform cursorGraph; // Drag your Cursor Image here
     public float moveSpeed = 15f;     // How snappy the cursor moves (higher is faster)
+    public Vector3 defaultCursorOffset;
 
-    private GameObject _lastSelectedObj;
+    private GameObject _lastSelected;
     private MenuCursorTarget _cachedTarget;
+    private Image _cursorImage;
 
-    void Update()
+    private void Awake()
     {
-        // 1. Get the currently selected object from the Event System
-        GameObject selectedObj = EventSystem.current.currentSelectedGameObject;
+        if (cursorGraph) _cursorImage = cursorGraph.GetComponent<Image>();
+    }
 
+    private void Update()
+    {
         if (cursorGraph == null) return;
 
-        // 2. Check if something is actually selected
-        if (selectedObj != null)
+        GameObject selected = EventSystem.current.currentSelectedGameObject;
+
+        if (ValidateSelection(selected))
         {
-            // Update cache if selection changed
-            if (selectedObj != _lastSelectedObj)
-            {
-                _lastSelectedObj = selectedObj;
-                _cachedTarget = selectedObj.GetComponent<MenuCursorTarget>();
-            }
-
-            // Check if it's a button AND if that button is interactable
-            // Optimization: We could also cache the Button component if this proves heavy, 
-            // but GetComponent<Button> is very cheap.
-            Button btn = selectedObj.GetComponent<Button>();
-            if(btn != null && btn.interactable) 
-            {
-                cursorGraph.gameObject.SetActive(true);
-
-                // 3. Define the target position
-                Vector3 targetPosition = selectedObj.transform.position;
-                
-                if (_cachedTarget != null)
-                {
-                    // Use the configured offset
-                    if (_cachedTarget.useLocalOffset)
-                    {
-                        targetPosition += selectedObj.transform.TransformVector(_cachedTarget.cursorOffset);
-                    }
-                    else
-                    {
-                        // World space offset
-                        targetPosition += _cachedTarget.cursorOffset;
-                    }
-                }
-                else
-                {
-                    // Legacy behavior: lock X
-                    targetPosition.x = cursorGraph.position.x;
-                }
-
-                // 4. Move smoothly to that position
-                cursorGraph.position = Vector3.Lerp(cursorGraph.position, targetPosition, moveSpeed * Time.unscaledDeltaTime);
-            }
-            else
-            {
-                cursorGraph.gameObject.SetActive(false);
-            }
+            MoveCursorTo(selected);
         }
         else
         {
-            _lastSelectedObj = null;
-            _cachedTarget = null;
-            cursorGraph.gameObject.SetActive(false);
+            SetVisible(false);
+            _lastSelected = null; // Reset cache so we re-validate if selected again
+        }
+    }
+
+    private bool ValidateSelection(GameObject selection)
+    {
+        if (selection == null) return false;
+
+        // 1. Ownership Check: Ensure this cursor instance is responsible for the selected object
+        // Find the nearest MenuSelectionCursor in the selection's hierarchy
+        var owner = selection.GetComponentInParent<MenuSelectionCursor>();
+        
+        // Only valid if WE are that cursor
+        if (owner != this) return false;
+
+        // 2. Interactability Check
+        var btn = selection.GetComponent<Button>();
+        return btn != null && btn.interactable;
+    }
+
+    private void MoveCursorTo(GameObject target)
+    {
+        SetVisible(true);
+
+        // Cache target component only when selection changes
+        if (target != _lastSelected)
+        {
+            _lastSelected = target;
+            _cachedTarget = target.GetComponent<MenuCursorTarget>();
+        }
+
+        // Calculate Target Position
+        Vector3 targetPos = target.transform.position;
+
+        if (_cachedTarget != null)
+        {
+            // Apply Custom Offset
+            targetPos += _cachedTarget.useLocalOffset 
+                ? target.transform.TransformVector(_cachedTarget.cursorOffset)
+                : _cachedTarget.cursorOffset;
+        }
+        else
+        {
+            // Apply Default Offset
+            targetPos += defaultCursorOffset;
+        }
+
+        // Move Smoothly
+        cursorGraph.position = Vector3.Lerp(cursorGraph.position, targetPos, moveSpeed * Time.unscaledDeltaTime);
+    }
+
+    private void SetVisible(bool visible)
+    {
+        // Safe toggle that won't disable this script if valid
+        if (_cursorImage) 
+        {
+            _cursorImage.enabled = visible;
+        }
+        else if (cursorGraph.gameObject != gameObject) 
+        {
+            cursorGraph.gameObject.SetActive(visible);
         }
     }
 }

@@ -353,8 +353,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 79.72998, y: -10.13501}
-  m_SizeDelta: {x: 279.7299, y: 60.135}
+  m_AnchoredPosition: {x: 80, y: -10.13501}
+  m_SizeDelta: {x: 280, y: 60.135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5280421041588043928
 CanvasRenderer:
@@ -592,7 +592,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Unity.PauseMenu
   pauseMenuUI: {fileID: 8672469274594261681}
   firstSelectedButton: {fileID: 6179388011154900729}
-  mutuallyExclusiveButtonGroup: {fileID: 0}
   confirmationDialog: {fileID: 4790116153895674181, guid: 9b506c77e30b89a4aa765220614f6bf1, type: 3}
 --- !u!1 &7247864773780888797
 GameObject:
@@ -631,8 +630,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 80, y: 150}
+  m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1108207905027723224
 CanvasRenderer:
@@ -841,7 +840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8494755724000104654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -944,6 +943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MenuSelectionCursor
   cursorGraph: {fileID: 3564869615152467307}
   moveSpeed: 15
+  defaultCursorOffset: {x: -350, y: 0, z: 0}
 --- !u!1 &8867127839547117520
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,8 +981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 65.97534, y: -165.20255}
-  m_SizeDelta: {x: 265.9753, y: 65.2025}
+  m_AnchoredPosition: {x: 80, y: -165.20255}
+  m_SizeDelta: {x: 280, y: 65.2025}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1355855418176076531
 CanvasRenderer:

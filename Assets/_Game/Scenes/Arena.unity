@@ -662,6 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MenuSelectionCursor
   cursorGraph: {fileID: 974883515}
   moveSpeed: 15
+  defaultCursorOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &207338665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,7 +1764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &501033744
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1880,6 +1881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleMenuSelectionCursor
   cursorGraph: {fileID: 1276658740}
   moveSpeed: 15
+  defaultCursorOffset: {x: -230, y: 0, z: 0}
 --- !u!1 &540175769
 GameObject:
   m_ObjectHideFlags: 0
@@ -4555,8 +4557,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: -27}
-  m_SizeDelta: {x: 91.442, y: 41.389}
+  m_AnchoredPosition: {x: 60, y: -27}
+  m_SizeDelta: {x: 130, y: 41.389}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1148758782
 MonoBehaviour:
@@ -6556,8 +6558,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.8832, y: -130.6019}
-  m_SizeDelta: {x: 97.5065, y: 40.8815}
+  m_AnchoredPosition: {x: 60, y: -130.6019}
+  m_SizeDelta: {x: 130, y: 40.8815}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1467242948
 MonoBehaviour:
@@ -6784,8 +6786,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 51.289673, y: 166.47531}
-  m_SizeDelta: {x: 130.6318, y: 43.2198}
+  m_AnchoredPosition: {x: 60, y: 166.47531}
+  m_SizeDelta: {x: 130, y: 43.2198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472477472
 MonoBehaviour:
@@ -7307,8 +7309,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 46.905518, y: 66.75}
-  m_SizeDelta: {x: 127.1244, y: 43}
+  m_AnchoredPosition: {x: 60, y: 66.75}
+  m_SizeDelta: {x: 130, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1500760033
 MonoBehaviour:
@@ -9191,6 +9193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleMenuSelectionCursor
   cursorGraph: {fileID: 1497230211}
   moveSpeed: 15
+  defaultCursorOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1835213333
 MonoBehaviour:
   m_ObjectHideFlags: 0

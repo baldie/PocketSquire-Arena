@@ -11,9 +11,7 @@ namespace PocketSquire.Unity
         [Header("UI References")]
         public GameObject pauseMenuUI;
         public Button firstSelectedButton;
-        public GameObject mutuallyExclusiveButtonGroup;
         public ConfirmationDialog confirmationDialog;
-        private bool mutuallyExclusiveButtonGroupWasActive = false;
         private GameObject selectedObj;
 
         private bool isPaused = false;
@@ -75,11 +73,21 @@ namespace PocketSquire.Unity
             if (mainMenuBtn != null)
             {
                 mainMenuBtn.onClick.RemoveAllListeners();
-                mainMenuBtn.onClick.AddListener(() => ConfirmationDialog.Show(
-                    confirmationDialog,
-                    "Are you sure?",
-                    LoadMainMenu
-                ));
+                mainMenuBtn.onClick.AddListener(() => 
+                {
+                    pauseMenuUI.SetActive(false); // Hide pause menu when showing confirmation
+                    ConfirmationDialog.Show(
+                        confirmationDialog,
+                        "Are you sure?",
+                        LoadMainMenu,
+                        onCancel: () => {
+                            // select a button right away or the cursor will be in the wrong place
+                            var button = firstSelectedButton ?? optionsBtn;
+                            EventSystem.current.SetSelectedGameObject(button.gameObject);
+                            pauseMenuUI.SetActive(true); // Restore pause menu on cancel
+                        }
+                    );
+                });
 
                 var sound = mainMenuBtn.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
@@ -89,11 +97,21 @@ namespace PocketSquire.Unity
             if (quitBtn != null)
             {
                 quitBtn.onClick.RemoveAllListeners();
-                quitBtn.onClick.AddListener(() => ConfirmationDialog.Show(
-                    confirmationDialog,
-                    "Quit the game?",
-                    QuitGame
-                ));
+                quitBtn.onClick.AddListener(() => 
+                {
+                    pauseMenuUI.SetActive(false); // Hide pause menu when showing confirmation
+                    ConfirmationDialog.Show(
+                        confirmationDialog,
+                        "Quit the game?",
+                        QuitGame,
+                        onCancel: () => {
+                            // select a button right away or the cursor will be in the wrong place
+                            var button = firstSelectedButton ?? optionsBtn;
+                            EventSystem.current.SetSelectedGameObject(button.gameObject);
+                            pauseMenuUI.SetActive(true); // Restore pause menu on cancel
+                        }
+                    );
+                });
 
                 var sound = quitBtn.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
@@ -103,10 +121,6 @@ namespace PocketSquire.Unity
         public void Resume()
         {
             pauseMenuUI.SetActive(false); // Hide UI
-            if (mutuallyExclusiveButtonGroup != null)
-            {
-                mutuallyExclusiveButtonGroup.SetActive(mutuallyExclusiveButtonGroupWasActive);
-            }
             if (selectedObj != null)
             {
                 EventSystem.current.SetSelectedGameObject(selectedObj);
@@ -125,12 +139,7 @@ namespace PocketSquire.Unity
                 playerMenu.Close();
             }
 
-            if (mutuallyExclusiveButtonGroup != null)
-            {
-                mutuallyExclusiveButtonGroupWasActive = mutuallyExclusiveButtonGroup.activeSelf;
-                mutuallyExclusiveButtonGroup.SetActive(false);
-                selectedObj = EventSystem.current.currentSelectedGameObject;
-            }
+            selectedObj = EventSystem.current.currentSelectedGameObject;
             pauseMenuUI.SetActive(true);  // Show UI
             Time.timeScale = 0f;          // Freeze time
             isPaused = true;
