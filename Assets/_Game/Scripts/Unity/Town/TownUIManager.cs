@@ -39,6 +39,14 @@ namespace PocketSquire.Arena.Unity.Town
         private readonly List<GameObject> spawnedButtons = new List<GameObject>();
         private Vector2 originalPortraitPos;
 
+        private void Awake()
+        {
+            if (portraitImage != null)
+            {
+                originalPortraitPos = portraitImage.rectTransform.anchoredPosition;
+            }
+        }
+
         private void Start()
         {
             // Try to find global UI Audio if not assigned
@@ -326,6 +334,7 @@ namespace PocketSquire.Arena.Unity.Town
                     {
                         // Reset to off-screen right and tween in
                         portraitImage.rectTransform.anchoredPosition = originalPortraitPos + new Vector2(500f, 0f);
+                        Debug.Log("Portrait position: " + portraitImage.rectTransform.anchoredPosition);
                         portraitImage.rectTransform.DOAnchorPos(originalPortraitPos, 0.4f).SetEase(Ease.OutCubic);
                     }
                 }
