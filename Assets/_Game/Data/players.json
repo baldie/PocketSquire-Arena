@@ -7,6 +7,7 @@
         "defendSoundId": "m_physical_defend",
         "hitSoundId": "m_physical_hit",
         "gender": "m",
+        "gold": 100,
         "attributes": {
             "Strength": 1,
             "Constitution": 1,

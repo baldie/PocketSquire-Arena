@@ -26,6 +26,9 @@ namespace PocketSquire.Arena.Unity.Town
         [SerializeField] private string initialGreeting;
         [SerializeField] private List<DialogueOption> dialogueOptions = new List<DialogueOption>();
 
+        [Header("Shop")]
+        [HideInInspector] [SerializeField] private List<int> shopItemIds = new List<int>();
+
         // Public accessors
         public string LocationName => locationName;
         public Sprite BackgroundSprite => backgroundSprite;
@@ -33,6 +36,7 @@ namespace PocketSquire.Arena.Unity.Town
         public AudioClip EntrySound => entrySound;
         public string InitialGreeting => initialGreeting;
         public IReadOnlyList<DialogueOption> DialogueOptions => dialogueOptions;
+        public IReadOnlyList<int> ShopItemIds => shopItemIds;
 
         private void OnValidate()
         {

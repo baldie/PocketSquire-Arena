@@ -3,8 +3,10 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core.Town;
+using PocketSquire.Arena.Unity.UI;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 namespace PocketSquire.Arena.Unity.Town
 {
@@ -34,6 +36,9 @@ namespace PocketSquire.Arena.Unity.Town
 
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
+
+        [Header("Shop")]
+        [SerializeField] private ShopController shopController;
 
         private LocationData currentLocation;
         private readonly List<GameObject> spawnedButtons = new List<GameObject>();
@@ -160,8 +165,21 @@ namespace PocketSquire.Arena.Unity.Town
                     break;
 
                 case DialogueAction.Shop:
-                    Debug.Log($"[TownUIManager] Shop action triggered at {currentLocation?.LocationName}");
-                    // TODO: Open shop interface
+                    if (shopController != null && currentLocation != null)
+                    {
+                        if (optionsContainer != null) optionsContainer.gameObject.SetActive(false);
+                        shopController.Open(currentLocation);
+                        shopController.OnShopClosed = () =>
+                        {
+                            if (optionsContainer != null) optionsContainer.gameObject.SetActive(true);
+                            if (spawnedButtons.Count > 0)
+                                EventSystem.current.SetSelectedGameObject(spawnedButtons[0]);
+                        };
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[TownUIManager] ShopController or currentLocation is null");
+                    }
                     break;
 
                 case DialogueAction.Train:

@@ -22,3 +22,4 @@ MonoBehaviour:
     action: 2
   - buttonText: Leave
     action: 1
+  shopItemIds: 010000000200000003000000
