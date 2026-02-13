@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using PocketSquire.Unity.UI;
+using PocketSquire.Arena.Unity.UI;
 
 namespace PocketSquire.Unity
 {
@@ -137,6 +138,14 @@ namespace PocketSquire.Unity
             if (playerMenu != null && playerMenu.IsOpen)
             {
                 playerMenu.Close();
+                return;
+            }
+
+            // Close ShopMenu if it's open
+            var shopMenu = FindFirstObjectByType<ShopController>();
+            if (shopMenu != null && shopMenu.IsOpen)
+            {
+                shopMenu.Close();
                 return;
             }
 

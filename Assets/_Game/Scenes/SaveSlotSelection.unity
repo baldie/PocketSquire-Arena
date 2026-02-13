@@ -662,6 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MenuSelectionCursor
   cursorGraph: {fileID: 1183039137}
   moveSpeed: 15
+  defaultCursorOffset: {x: -380, y: 0, z: 0}
 --- !u!1001 &1008967917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -708,11 +709,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4019222560275765260, guid: 9b506c77e30b89a4aa765220614f6bf1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4019222560275765260, guid: 9b506c77e30b89a4aa765220614f6bf1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4019222560275765260, guid: 9b506c77e30b89a4aa765220614f6bf1, type: 3}
       propertyPath: m_LocalScale.z

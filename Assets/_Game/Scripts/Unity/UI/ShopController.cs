@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Unity.Town;
 using PocketSquire.Unity.UI;
+using PocketSquire.Unity;
 
 namespace PocketSquire.Arena.Unity.UI
 {
@@ -29,6 +30,9 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private TextMeshProUGUI inventoryCountText;
         [SerializeField] private TextMeshProUGUI goldText;
 
+        private bool isOpen = false;
+        public bool IsOpen => isOpen;
+
         private readonly List<GameObject> spawnedRows = new List<GameObject>();
         private LocationData currentLocation;
 
@@ -40,10 +44,20 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Awake()
         {
+            isOpen = false;
             if (doneButton != null)
             {
                 doneButton.onClick.RemoveAllListeners();
                 doneButton.onClick.AddListener(Close);
+            }
+        }
+
+        private void Update()
+        {
+            if (isOpen && InputManager.GetButtonDown("Cancel"))
+            {
+                InputManager.ConsumeButton("Pause");
+                Close();
             }
         }
 
@@ -58,6 +72,7 @@ namespace PocketSquire.Arena.Unity.UI
                 return;
             }
 
+            isOpen = true;
             currentLocation = location;
             ClearShop();
 
@@ -101,6 +116,7 @@ namespace PocketSquire.Arena.Unity.UI
         /// </summary>
         public void Close()
         {
+            isOpen = false;
             ClearShop();
 
             if (shopWindow != null)
