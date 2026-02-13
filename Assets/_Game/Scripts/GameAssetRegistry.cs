@@ -4,6 +4,15 @@ using System.Linq;
 
 [CreateAssetMenu(fileName = "GameAssetRegistry", menuName = "Game/Asset Registry")]
 public class GameAssetRegistry : ScriptableObject {
+    private static GameAssetRegistry _instance;
+    public static GameAssetRegistry Instance {
+        get {
+            if (_instance == null) {
+                _instance = Resources.Load<GameAssetRegistry>("GameAssetRegistry");
+            }
+            return _instance;
+        }
+    }
     
     [Header("Visuals")]
     public List<SpriteEntry> sprites;
@@ -11,13 +20,19 @@ public class GameAssetRegistry : ScriptableObject {
     [Header("Audio")]
     public List<AudioEntry> sounds;
 
+    [Header("Prefabs")]
+    public List<PrefabEntry> prefabs;
+    public GameObject itemRowPrefab;
+
     // Helper classes
     [System.Serializable] public struct SpriteEntry { public string id; public Sprite asset; }
     [System.Serializable] public struct AudioEntry { public string id; public AudioClip asset; }
+    [System.Serializable] public struct PrefabEntry { public string id; public GameObject asset; }
 
     // Fast lookup caches
     private Dictionary<string, Sprite> _spriteCache;
     private Dictionary<string, AudioClip> _audioCache;
+    private Dictionary<string, GameObject> _prefabCache;
 
     public Sprite GetSprite(string id) {
         _spriteCache ??= sprites.ToDictionary(x => x.id, x => x.asset);
@@ -29,12 +44,18 @@ public class GameAssetRegistry : ScriptableObject {
         return _audioCache.GetValueOrDefault(id);
     }
 
+    public GameObject GetPrefab(string id) {
+        _prefabCache ??= prefabs.ToDictionary(x => x.id, x => x.asset);
+        return _prefabCache.GetValueOrDefault(id);
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("Populate All Assets")]
     public void PopulateAll()
     {
         PopulateSprites();
         PopulateAudio();
+        PopulatePrefabs();
         UnityEditor.EditorUtility.SetDirty(this);
         UnityEditor.AssetDatabase.SaveAssets();
     }
@@ -85,6 +106,31 @@ public class GameAssetRegistry : ScriptableObject {
         
         UnityEditor.EditorUtility.SetDirty(this);
         Debug.Log($"Populated {sounds.Count} audio clips from Assets/_Game/Audio");
+    }
+
+    [ContextMenu("Populate Prefabs")]
+    public void PopulatePrefabs()
+    {
+        prefabs ??= new List<PrefabEntry>();
+        prefabs.Clear();
+
+        string[] searchFolders = { "Assets/_Game/Prefabs" };
+        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:Prefab", searchFolders);
+        
+        foreach (string guid in guids)
+        {
+            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+            GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            
+            if (prefab != null)
+            {
+                prefabs.Add(new PrefabEntry { id = prefab.name, asset = prefab });
+                if (prefab.name == "ItemRow") itemRowPrefab = prefab;
+            }
+        }
+        
+        UnityEditor.EditorUtility.SetDirty(this);
+        Debug.Log($"Populated {prefabs.Count} prefabs from Assets/_Game/Prefabs");
     }
 
     [UnityEditor.MenuItem("Tools/Populate Asset Registry")]

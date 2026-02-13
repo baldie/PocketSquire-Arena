@@ -6,7 +6,7 @@ using System.Collections;
 
 public class ArenaSceneInitializer : MonoBehaviour
 {
-    public GameAssetRegistry registry;
+    // registry field removed - now using GameAssetRegistry.Instance
     
     [Header("Action Queue")]
     [Tooltip("Reference to the ActionQueueProcessor in the scene")]
@@ -75,7 +75,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         var playerImage = playerSprite.GetComponent<Image>();
         if (playerImage == null) return null;
 
-        var loadedSprite = registry.GetSprite(player.GetSpriteId(Entity.GameContext.Battle));
+        var loadedSprite = GameAssetRegistry.Instance.GetSprite(player.GetSpriteId(Entity.GameContext.Battle));
         if (loadedSprite != null)
         {
             playerImage.sprite = loadedSprite;
@@ -119,7 +119,7 @@ public class ArenaSceneInitializer : MonoBehaviour
             return null;
         }
 
-        var loadedSprite = registry.GetSprite(monster.SpriteId);
+        var loadedSprite = GameAssetRegistry.Instance.GetSprite(monster.SpriteId);
         if (loadedSprite != null)
         {
             monsterImage.sprite = loadedSprite; 

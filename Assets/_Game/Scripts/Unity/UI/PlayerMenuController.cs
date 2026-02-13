@@ -46,9 +46,6 @@ namespace PocketSquire.Unity.UI
         [Header("Cursor Settings")]
         [SerializeField] private Vector3 inventoryCursorOffset = new Vector3(-60f, 0, 0);
 
-        [Header("Assets")]
-        [SerializeField] private GameObject itemRowPrefab;
-        [SerializeField] private GameAssetRegistry gameAssetRegistry;
 
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
@@ -175,13 +172,8 @@ namespace PocketSquire.Unity.UI
         /// </summary>
         private void UpdatePlayerImage(Player player)
         {
-            if (playerImage == null || gameAssetRegistry == null) return;
-
-            // Use the battle sprite as the default menu representation or 
-            // consider context-specific sprites if available
-            string spriteId = player.SpriteId;
-            
-            Sprite playerSprite = gameAssetRegistry.GetSprite(spriteId);
+            if (playerImage == null) return;
+            Sprite playerSprite = GameAssetRegistry.Instance.GetSprite(player.SpriteId);
             if (playerSprite != null)
             {
                 playerImage.sprite = playerSprite;
@@ -240,11 +232,8 @@ namespace PocketSquire.Unity.UI
 
         private void UpdateInventory(Player player)
         {
-            if (inventoryScrollContent == null) return;
-            if (itemRowPrefab == null)
-            {
-                return;
-            }
+            var prefab = GameAssetRegistry.Instance.itemRowPrefab;
+            if (inventoryScrollContent == null || prefab == null) return;
             // Clear existing
             foreach (Transform child in inventoryScrollContent)
             {
@@ -261,7 +250,7 @@ namespace PocketSquire.Unity.UI
 
                 if (slot.Quantity <= 0) continue;
 
-                var go = Instantiate(itemRowPrefab, inventoryScrollContent);
+                var go = Instantiate(prefab, inventoryScrollContent);
                 go.SetActive(true);
 
                 var itemRow = go.GetComponent<ItemRow>();
@@ -296,9 +285,9 @@ namespace PocketSquire.Unity.UI
                 if (itemRow != null)
                 {
                     Sprite icon = null;
-                    if (gameAssetRegistry != null && !string.IsNullOrEmpty(item.Sprite))
+                    if (!string.IsNullOrEmpty(item.Sprite))
                     {
-                        icon = gameAssetRegistry.GetSprite(item.Sprite);
+                        icon = GameAssetRegistry.Instance.GetSprite(item.Sprite);
                     }
 
                     itemRow.Initialize(item, slot.Quantity, icon, () => {

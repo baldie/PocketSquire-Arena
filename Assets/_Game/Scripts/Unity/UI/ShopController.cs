@@ -22,9 +22,6 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private Transform shopScrollContent;
         [SerializeField] private Button doneButton;
 
-        [Header("Assets")]
-        [SerializeField] private GameObject itemRowPrefab;
-        [SerializeField] private GameAssetRegistry gameAssetRegistry;
 
         [Header("Inventory Display")]
         [SerializeField] private TextMeshProUGUI inInventoryLabel;
@@ -130,13 +127,14 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void CreateItemRow(Item item)
         {
-            if (shopScrollContent == null || itemRowPrefab == null)
+            var prefab = GameAssetRegistry.Instance.itemRowPrefab;
+            if (shopScrollContent == null || prefab == null)
             {
-                Debug.LogWarning("[ShopController] Missing shopScrollContent or itemRowPrefab");
+                Debug.LogWarning("[ShopController] Missing shopScrollContent or itemRowPrefab in GameAssetRegistry");
                 return;
             }
 
-            var rowObj = Instantiate(itemRowPrefab, shopScrollContent);
+            var rowObj = Instantiate(prefab, shopScrollContent);
             rowObj.SetActive(true);
             spawnedRows.Add(rowObj);
 
@@ -173,9 +171,9 @@ namespace PocketSquire.Arena.Unity.UI
 
             // Get sprite
             Sprite icon = null;
-            if (gameAssetRegistry != null && !string.IsNullOrEmpty(item.Sprite))
+            if (!string.IsNullOrEmpty(item.Sprite))
             {
-                icon = gameAssetRegistry.GetSprite(item.Sprite);
+                icon = GameAssetRegistry.Instance.GetSprite(item.Sprite);
             }
 
             // Initialize row

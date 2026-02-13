@@ -17,13 +17,12 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private RectTransform dialogPanel;
         [SerializeField] private ScrollRect scrollView;
         [SerializeField] private Transform contentContainer;
-        [SerializeField] private GameObject itemRowPrefab; // Should have ItemRow component
         [SerializeField] private TextMeshProUGUI emptyMessage;
 
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip selectSound;
-        [SerializeField] private AudioClip cancelSound; // Optional, might use ConfirmationDialog's sounds if shared
+        [SerializeField] private AudioClip cancelSound;
 
         [Header("Animation")]
         [SerializeField] private float animationDuration = 0.3f;
@@ -32,7 +31,6 @@ namespace PocketSquire.Arena.Unity.UI
         private Action _onCancel;
         private CanvasGroup _canvasGroup;
         private List<GameObject> _instantiatedRows = new List<GameObject>();
-        private GameAssetRegistry _registry;
 
         private void Awake()
         {
@@ -43,75 +41,23 @@ namespace PocketSquire.Arena.Unity.UI
         {
              InitializeCanvasGroup();
 
-             // Auto-wire references if missing
              if (dialogPanel == null) dialogPanel = GetComponent<RectTransform>();
              
              if (contentContainer == null)
              {
-                 contentContainer = transform.Find("ContentRoot");
-                 // Fallback to finding anything with "Content" in name if ContentRoot is missing
-                 if (contentContainer == null)
-                 {
-                     foreach (Transform child in transform)
-                     {
-                         if (child.name.Contains("Content"))
-                         {
-                             contentContainer = child;
-                             break;
-                         }
-                     }
-                 }
-                 
-                 if (contentContainer == null)
-                 {
-                     Debug.LogError("[ItemSelectionDialog] contentContainer is missing! Items will not be instantiated.", this);
-                 }
-             }
-             
-             if (itemRowPrefab == null)
-             {
-                 var template = transform.root.Find("ItemRow_Template");
-                 if (template == null && transform.parent != null) template = transform.parent.Find("ItemRow_Template");
-                 
-                 if (template != null)
-                 {
-                     itemRowPrefab = template.gameObject;
-                     itemRowPrefab.SetActive(false);
-                 }
-                 else
-                 {
-                     Debug.LogError("[ItemSelectionDialog] itemRowPrefab is missing and no template found!", this);
-                 }
+                 contentContainer = transform.Find("ContentRoot") ?? transform.Find("Viewport/Content") ?? transform.Find("Content");
              }
 
              // Auto-wire MenuSelectionCursor
-             var cursor = GetComponent<MenuSelectionCursor>();
-             if (cursor == null) cursor = gameObject.AddComponent<MenuSelectionCursor>();
-             
+             var cursor = GetComponent<MenuSelectionCursor>() ?? gameObject.AddComponent<MenuSelectionCursor>();
              if (cursor.cursorGraph == null)
              {
                  var cursorObj = transform.Find("SelectionCursor");
                  if (cursorObj != null)
                  {
                      cursor.cursorGraph = cursorObj.GetComponent<RectTransform>();
-                     cursorObj.gameObject.SetActive(false); // Hide initially, cursor script handles it
+                     cursorObj.gameObject.SetActive(false);
                 }
-            }
-        }
-
-        private GameAssetRegistry Registry
-        {
-            get
-            {
-                if (_registry == null)
-                {
-                    var initializer = FindFirstObjectByType<ArenaSceneInitializer>();
-                    if (initializer != null)
-                    {
-                        _registry = initializer.registry;
-                    }
-                }
-                return _registry;
             }
         }
 
@@ -226,47 +172,37 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void CreateItemRow(Item item, int quantity)
         {
-            if (itemRowPrefab == null || contentContainer == null) return;
-
-            var rowObj = Instantiate(itemRowPrefab, contentContainer);
-            _instantiatedRows.Add(rowObj);
-            Debug.Log($"[ItemSelectionDialog] Instantiated row for item: {item.Name} at {contentContainer.name}");
+            var rowObj = CreateRow();
+            if (rowObj == null) return;
 
             var rowScript = rowObj.GetComponent<ItemRow>();
             if (rowScript != null)
             {
-                Sprite iconSprite = null;
-                if (Registry != null && !string.IsNullOrEmpty(item.Sprite))
-                {
-                    iconSprite = Registry.GetSprite(item.Sprite);
-                } else {
-                    Debug.Log("Registry = " + (Registry == null ? "null" : "not null"));
-                    Debug.Log("Sprite = " + item.Sprite);
-                    Debug.Log("No sprite found for item: " + item.Name);
-                }
-
+                Sprite iconSprite = (!string.IsNullOrEmpty(item.Sprite)) ? GameAssetRegistry.Instance.GetSprite(item.Sprite) : null;
                 rowScript.Initialize(item, quantity, iconSprite, () => OnItemClicked(item.Id), showPrice: false);
             }
-            
-            // Ensure button handles selection for cursor
-            // The Button component does this automatically if configured
-            rowObj.SetActive(true);
         }
 
         private void CreateNoneRow()
         {
-            if (itemRowPrefab == null || contentContainer == null) return;
-
-            var rowObj = Instantiate(itemRowPrefab, contentContainer);
-            _instantiatedRows.Add(rowObj);
-            Debug.Log("[ItemSelectionDialog] Instantiated 'None' row");
+            var rowObj = CreateRow();
+            if (rowObj == null) return;
 
             var rowScript = rowObj.GetComponent<ItemRow>();
             if (rowScript != null)
             {
                 rowScript.InitializeCustom("None", OnCancelClicked);
             }
+        }
+
+        private GameObject CreateRow()
+        {
+            var prefab = GameAssetRegistry.Instance.itemRowPrefab;
+            if (prefab == null || contentContainer == null) return null;
+            var rowObj = Instantiate(prefab, contentContainer);
+            _instantiatedRows.Add(rowObj);
             rowObj.SetActive(true);
+            return rowObj;
         }
 
         private void ClearItemList()
