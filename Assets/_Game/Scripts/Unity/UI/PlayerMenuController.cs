@@ -42,6 +42,7 @@ namespace PocketSquire.Unity.UI
 
         [Header("Footer")]
         [SerializeField] private Button skillTreeButton;
+        [SerializeField] private Button doneButton;
 
         [Header("Cursor Settings")]
         [SerializeField] private Vector3 inventoryCursorOffset = new Vector3(-60f, 0, 0);
@@ -84,7 +85,22 @@ namespace PocketSquire.Unity.UI
                 }
             }
 
-            this.Close();
+            // Fallback for audioSource if not assigned
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>() ?? GetComponentInParent<AudioSource>();
+                if (audioSource == null)
+                {
+                    var uiAudio = GameObject.Find("UIAudio");
+                    if (uiAudio != null) audioSource = uiAudio.GetComponent<AudioSource>();
+                }
+            }
+
+            if (menuParent != null)
+            {
+                menuParent.SetActive(false);
+            }
+            isOpen = false;
         }
 
         private void Start()
@@ -101,6 +117,15 @@ namespace PocketSquire.Unity.UI
                 if (target == null) target = skillTreeButton.gameObject.AddComponent<MenuCursorTarget>();
                 // Value from Plan: (-60, 40.5, 0). 
                 if (target.cursorOffset == Vector3.zero) target.cursorOffset = new Vector3(-60f, 40.5f, 0f);
+            }
+
+            if (doneButton != null)
+            {
+                doneButton.onClick.RemoveAllListeners();
+                doneButton.onClick.AddListener(() => {
+                    Debug.Log("[PlayerMenu] DoneButton onClick fired.");
+                    Close();
+                });
             }
                 
             // Initial refresh and ensure closed
@@ -124,6 +149,14 @@ namespace PocketSquire.Unity.UI
                 InputManager.ConsumeButton("Pause");
                 InputManager.ConsumeButton("Cancel");
                 Close();
+            }
+
+            // Safety sync: ensures visuals match internal state
+            if (menuParent != null && menuParent.activeSelf != isOpen)
+            {
+                // Only sync if we aren't in the middle of a transition or something
+                // But for now, direct sync to fix the 'stuck open' issue
+                // menuParent.SetActive(isOpen); 
             }
         }
 
@@ -259,7 +292,13 @@ namespace PocketSquire.Unity.UI
                 var menuButtonSound = go.GetComponent<MenuButtonSound>();
                 if (menuButtonSound != null && audioSource != null)
                 {
+                    Debug.Log($"[PlayerMenu] Hooking up audio source for item row: {item.Name}");
                     menuButtonSound.source = audioSource;
+                }
+                else
+                {
+                    if (menuButtonSound == null) Debug.LogWarning($"[PlayerMenu] ItemRow prefab for {item.Name} is missing MenuButtonSound!");
+                    if (audioSource == null) Debug.LogWarning("[PlayerMenu] PlayerMenuController auto-setup failed to find an AudioSource!");
                 }
                 
                 // Ensure scale is correct (sometimes instantiation in layout groups gets wonky)
@@ -320,6 +359,14 @@ namespace PocketSquire.Unity.UI
 
         public void Open()
         {
+            Debug.Log($"[PlayerMenu] Open called. Current isOpen: {isOpen}");
+            
+            // Ensure visuals are on if we are calling Open
+            if (menuParent != null && !menuParent.activeSelf)
+            {
+                menuParent.SetActive(true);
+            }
+
             if (isOpen) return;
 
             if (menuParent != null)
@@ -355,10 +402,25 @@ namespace PocketSquire.Unity.UI
                 EventSystem.current.SetSelectedGameObject(skillTreeButton.gameObject);
                 return;
             }
+
+            // 3. Fallback to Done Button
+            if (doneButton != null && doneButton.interactable)
+            {
+                EventSystem.current.SetSelectedGameObject(doneButton.gameObject);
+            }
         }
 
         public void Close()
         {
+            Debug.Log($"[PlayerMenu] Close called. Current isOpen: {isOpen}");
+            
+            // Even if we think it's closed, ensure the visuals are off
+            if (menuParent != null && menuParent.activeSelf)
+            {
+                menuParent.SetActive(false);
+                Debug.Log("[PlayerMenu] Forced menuParent.SetActive(false)");
+            }
+
             if (!isOpen) return;
 
             if (menuParent != null)

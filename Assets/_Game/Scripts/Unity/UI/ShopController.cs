@@ -44,6 +44,16 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Awake()
         {
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>() ?? GetComponentInParent<AudioSource>();
+                if (audioSource == null)
+                {
+                    var uiAudio = GameObject.Find("UIAudio");
+                    if (uiAudio != null) audioSource = uiAudio.GetComponent<AudioSource>();
+                }
+            }
+
             if (doneButton != null)
             {
                 doneButton.onClick.RemoveAllListeners();

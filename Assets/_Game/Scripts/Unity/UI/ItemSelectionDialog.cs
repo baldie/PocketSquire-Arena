@@ -48,6 +48,16 @@ namespace PocketSquire.Arena.Unity.UI
                  contentContainer = transform.Find("ContentRoot") ?? transform.Find("Viewport/Content") ?? transform.Find("Content");
              }
 
+             if (audioSource == null)
+             {
+                 audioSource = GetComponent<AudioSource>() ?? GetComponentInParent<AudioSource>();
+                 if (audioSource == null)
+                 {
+                     var uiAudio = GameObject.Find("UIAudio");
+                     if (uiAudio != null) audioSource = uiAudio.GetComponent<AudioSource>();
+                 }
+             }
+
              // Auto-wire MenuSelectionCursor
              var cursor = GetComponent<MenuSelectionCursor>() ?? gameObject.AddComponent<MenuSelectionCursor>();
              if (cursor.cursorGraph == null)
@@ -201,6 +211,14 @@ namespace PocketSquire.Arena.Unity.UI
             if (prefab == null || contentContainer == null) return null;
             var rowObj = Instantiate(prefab, contentContainer);
             _instantiatedRows.Add(rowObj);
+            
+            // Hook up audio source for button sounds
+            var menuButtonSound = rowObj.GetComponent<MenuButtonSound>();
+            if (menuButtonSound != null && audioSource != null)
+            {
+                menuButtonSound.source = audioSource;
+            }
+
             rowObj.SetActive(true);
             return rowObj;
         }
