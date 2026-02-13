@@ -30,8 +30,7 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private TextMeshProUGUI inventoryCountText;
         [SerializeField] private TextMeshProUGUI goldText;
 
-        private bool isOpen = false;
-        public bool IsOpen => isOpen;
+        public bool IsOpen => shopWindow != null && shopWindow.activeInHierarchy;
 
         private readonly List<GameObject> spawnedRows = new List<GameObject>();
         private LocationData currentLocation;
@@ -44,7 +43,6 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Awake()
         {
-            isOpen = false;
             if (doneButton != null)
             {
                 doneButton.onClick.RemoveAllListeners();
@@ -54,7 +52,7 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Update()
         {
-            if (isOpen && InputManager.GetButtonDown("Cancel"))
+            if (IsOpen && InputManager.GetButtonDown("Cancel"))
             {
                 InputManager.ConsumeButton("Pause");
                 Close();
@@ -72,7 +70,6 @@ namespace PocketSquire.Arena.Unity.UI
                 return;
             }
 
-            isOpen = true;
             currentLocation = location;
             ClearShop();
 
@@ -116,7 +113,6 @@ namespace PocketSquire.Arena.Unity.UI
         /// </summary>
         public void Close()
         {
-            isOpen = false;
             ClearShop();
 
             if (shopWindow != null)
