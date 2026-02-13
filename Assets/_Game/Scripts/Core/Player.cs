@@ -95,6 +95,37 @@ namespace PocketSquire.Arena.Core
             Gold += amount;
         }
 
+        public void SpendGold(int amount)
+        {
+            if (amount < 0)
+            {
+                throw new ArgumentException("Amount cannot be negative", nameof(amount));
+            }
+            if (Gold < amount)
+            {
+                throw new InvalidOperationException($"Insufficient gold. Have {Gold}, need {amount}");
+            }
+            Gold -= amount;
+        }
+
+        public bool TryPurchaseItem(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            if (Gold < item.Price)
+            {
+                return false;
+            }
+
+            SpendGold(item.Price);
+            Inventory.AddItem(item.Id, 1);
+            return true;
+        }
+
+
         public void AcceptNewLevel() {
             if (GameWorld.Progression != null) {
                 this.Level = GameWorld.Progression.GetLevelForExperience(this.Experience);

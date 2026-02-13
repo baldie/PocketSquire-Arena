@@ -3,10 +3,12 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Unity.Town;
 using PocketSquire.Unity.UI;
 using PocketSquire.Unity;
+
 
 
 namespace PocketSquire.Arena.Unity.UI
@@ -22,6 +24,8 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private Transform shopScrollContent;
         [SerializeField] private Button doneButton;
 
+        [Tooltip("Reference to the game asset registry for loading sounds")]
+        public GameAssetRegistry assetRegistry;
 
         [Header("Inventory Display")]
         [SerializeField] private TextMeshProUGUI inInventoryLabel;
@@ -195,11 +199,8 @@ namespace PocketSquire.Arena.Unity.UI
 
                 // Use the item's intrinsic stack size or just 1 for shop display, 
                 // but the price field on ItemRow now handles the cost.
-                row.Initialize(item, 1, icon, () =>
-                {
-                    // TODO: Future - handle purchase logic
-                    Debug.Log($"[ShopController] Clicked item: {item.Name} (Price: {item.Price})");
-                });
+                row.Initialize(item, 1, icon, () => OnItemPurchased(item));
+
             }
         }
 
@@ -232,6 +233,44 @@ namespace PocketSquire.Arena.Unity.UI
 
             goldText.text = gold.ToString();
         }
+
+        private void OnItemPurchased(Item item)
+        {
+            if (GameState.Player == null)
+            {
+                Debug.LogWarning("[ShopController] Cannot purchase - no player");
+                return;
+            }
+
+            if (!GameState.Player.TryPurchaseItem(item))
+            {
+                Debug.Log($"[ShopController] Cannot afford {item.Name} (Price: {item.Price}, Gold: {GameState.Player.Gold})");
+                return;
+            }
+
+            // Play coins sound effect
+            if (audioSource != null)
+            {
+                var coinsClip = assetRegistry?.GetSound("coin_spend");
+                if (coinsClip != null)
+                {
+                    audioSource.PlayOneShot(coinsClip);
+                } else {
+                    Debug.LogWarning("[ShopController] No coins sound effect found");
+                }
+            } else {
+                Debug.LogWarning("[ShopController] No audio source found");
+            }
+
+            // Update UI
+            UpdateGoldDisplay();
+            UpdateInventoryDisplay(item);
+
+            Debug.Log($"[ShopController] Purchased {item.Name} for {item.Price} gold");
+        }
+
+
+
 
         private void ClearShop()
         {

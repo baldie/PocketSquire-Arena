@@ -132,6 +132,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
   - id: battle_menu_tick
     asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}
+  - id: coin_spend
+    asset: {fileID: 8300000, guid: 520fc2bbffdce0a45a7079ad291d6ec6, type: 3}
   - id: crowd_displeased
     asset: {fileID: 8300000, guid: 62075d8084535c048b33eeffc25c071f, type: 3}
   - id: crowd_pleased

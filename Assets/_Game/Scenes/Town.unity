@@ -2342,6 +2342,7 @@ MonoBehaviour:
   shopWindow: {fileID: 898408864}
   shopScrollContent: {fileID: 242645138}
   doneButton: {fileID: 1643412148}
+  assetRegistry: {fileID: 11400000, guid: 1cd371512fee0294fbf0208c37a8b921, type: 2}
   inInventoryLabel: {fileID: 117511403}
   inventoryCountText: {fileID: 915462200}
   goldText: {fileID: 1493996105}
@@ -3544,6 +3545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c4c4416c7350e4796dc1cdec2458b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.Town.TownUIManager
+  assetRegistry: {fileID: 11400000, guid: 1cd371512fee0294fbf0208c37a8b921, type: 2}
   townMapPanel: {fileID: 202058290}
   interiorPanel: {fileID: 2107889985}
   backgroundImage: {fileID: 62394134}

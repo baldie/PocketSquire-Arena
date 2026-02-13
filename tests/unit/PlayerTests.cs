@@ -99,5 +99,82 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player.Inventory.GetItemCount(2), Is.EqualTo(1));
             Assert.That(player.Inventory.Slots.Count, Is.EqualTo(2));
         }
+
+        [Test]
+        public void SpendGold_ReducesGold()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.GainGold(100);
+            
+            // Act
+            player.SpendGold(30);
+
+            // Assert
+            Assert.That(player.Gold, Is.EqualTo(70));
+        }
+
+        [Test]
+        public void SpendGold_Throws_WhenInsufficientGold()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.GainGold(50);
+            
+            // Act & Assert
+            Assert.Throws<InvalidOperationException>(() => player.SpendGold(100));
+            Assert.That(player.Gold, Is.EqualTo(50), "Gold should not change when exception is thrown");
+        }
+
+        [Test]
+        public void TryPurchaseItem_Succeeds_WithEnoughGold()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.GainGold(100);
+            var item = new Item { Id = 5, Name = "Sword", Price = 50 };
+            
+            // Act
+            var result = player.TryPurchaseItem(item);
+
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(player.Gold, Is.EqualTo(50));
+        }
+
+        [Test]
+        public void TryPurchaseItem_Fails_WithInsufficientGold()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.GainGold(30);
+            var item = new Item { Id = 5, Name = "Sword", Price = 50 };
+            
+            // Act
+            var result = player.TryPurchaseItem(item);
+
+            // Assert
+            Assert.That(result, Is.False);
+            Assert.That(player.Gold, Is.EqualTo(30), "Gold should not change on failed purchase");
+            Assert.That(player.Inventory.GetItemCount(5), Is.EqualTo(0), "Item should not be added on failed purchase");
+        }
+
+        [Test]
+        public void TryPurchaseItem_AddsItemToInventory()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.GainGold(100);
+            var item = new Item { Id = 7, Name = "Potion", Price = 25 };
+            
+            // Act
+            var result = player.TryPurchaseItem(item);
+
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(player.Inventory.GetItemCount(7), Is.EqualTo(1));
+            Assert.That(player.Inventory.Slots.Count, Is.EqualTo(1));
+        }
+
     }
 }
