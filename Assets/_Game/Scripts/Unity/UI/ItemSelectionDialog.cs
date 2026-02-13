@@ -36,21 +36,51 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Awake()
         {
+             EnsureInitialized();
+        }
+
+        private void EnsureInitialized()
+        {
              InitializeCanvasGroup();
 
              // Auto-wire references if missing
              if (dialogPanel == null) dialogPanel = GetComponent<RectTransform>();
-             if (contentContainer == null) contentContainer = transform.Find("ContentRoot");
+             
+             if (contentContainer == null)
+             {
+                 contentContainer = transform.Find("ContentRoot");
+                 // Fallback to finding anything with "Content" in name if ContentRoot is missing
+                 if (contentContainer == null)
+                 {
+                     foreach (Transform child in transform)
+                     {
+                         if (child.name.Contains("Content"))
+                         {
+                             contentContainer = child;
+                             break;
+                         }
+                     }
+                 }
+                 
+                 if (contentContainer == null)
+                 {
+                     Debug.LogError("[ItemSelectionDialog] contentContainer is missing! Items will not be instantiated.", this);
+                 }
+             }
              
              if (itemRowPrefab == null)
              {
-                 var template = transform.root.Find("ItemRow_Template"); // Used root.Find just in case, or transform.parent
+                 var template = transform.root.Find("ItemRow_Template");
                  if (template == null && transform.parent != null) template = transform.parent.Find("ItemRow_Template");
                  
                  if (template != null)
                  {
                      itemRowPrefab = template.gameObject;
                      itemRowPrefab.SetActive(false);
+                 }
+                 else
+                 {
+                     Debug.LogError("[ItemSelectionDialog] itemRowPrefab is missing and no template found!", this);
                  }
              }
 
@@ -106,6 +136,7 @@ namespace PocketSquire.Arena.Unity.UI
             if (gameObject.activeSelf && InputManager.GetButtonDown("Cancel"))
             {
                 InputManager.ConsumeButton("Cancel");
+                InputManager.ConsumeButton("Pause");
                 OnCancelClicked();
             }
         }
@@ -126,7 +157,7 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void ShowInternal(Action<int> onItemSelected, Action onCancel)
         {
-            InitializeCanvasGroup();
+            EnsureInitialized();
             _onItemSelected = onItemSelected;
             _onCancel = onCancel;
 
@@ -199,6 +230,7 @@ namespace PocketSquire.Arena.Unity.UI
 
             var rowObj = Instantiate(itemRowPrefab, contentContainer);
             _instantiatedRows.Add(rowObj);
+            Debug.Log($"[ItemSelectionDialog] Instantiated row for item: {item.Name} at {contentContainer.name}");
 
             var rowScript = rowObj.GetComponent<ItemRow>();
             if (rowScript != null)
@@ -213,7 +245,7 @@ namespace PocketSquire.Arena.Unity.UI
                     Debug.Log("No sprite found for item: " + item.Name);
                 }
 
-                rowScript.Initialize(item, quantity, iconSprite, () => OnItemClicked(item.Id));
+                rowScript.Initialize(item, quantity, iconSprite, () => OnItemClicked(item.Id), showPrice: false);
             }
             
             // Ensure button handles selection for cursor
@@ -227,6 +259,7 @@ namespace PocketSquire.Arena.Unity.UI
 
             var rowObj = Instantiate(itemRowPrefab, contentContainer);
             _instantiatedRows.Add(rowObj);
+            Debug.Log("[ItemSelectionDialog] Instantiated 'None' row");
 
             var rowScript = rowObj.GetComponent<ItemRow>();
             if (rowScript != null)

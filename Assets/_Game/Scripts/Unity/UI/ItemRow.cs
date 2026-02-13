@@ -30,7 +30,7 @@ namespace PocketSquire.Arena.Unity.UI
             if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
         }
 
-        public void Initialize(Item item, int quantity, Sprite itemSprite, Action onClick)
+        public void Initialize(Item item, int quantity, Sprite itemSprite, Action onClick, bool showPrice = true)
         {
             if (item == null) return;
             currentItem = item;
@@ -46,7 +46,7 @@ namespace PocketSquire.Arena.Unity.UI
 
             if (priceText != null)
             {
-                priceText.gameObject.SetActive(true);
+                priceText.gameObject.SetActive(showPrice);
                 priceText.text = $"{item.Price}";
             }
 
@@ -77,6 +77,14 @@ namespace PocketSquire.Arena.Unity.UI
             if (currentItem != null)
             {
                 OnSelected?.Invoke(currentItem);
+            }
+        }
+
+        public void HidePriceText()
+        {
+            if (priceText != null)
+            {
+                priceText.gameObject.SetActive(false);
             }
         }
 

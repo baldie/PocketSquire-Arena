@@ -50,6 +50,9 @@ namespace PocketSquire.Unity.UI
         [SerializeField] private GameObject itemRowPrefab;
         [SerializeField] private GameAssetRegistry gameAssetRegistry;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource;
+
         private bool isOpen = false;
 
         public bool IsOpen => isOpen;
@@ -112,11 +115,17 @@ namespace PocketSquire.Unity.UI
         {
             if (InputManager.GetButtonDown("Inventory"))
             {
-                if (isOpen) Close();
+                if (isOpen) 
+                {
+                    InputManager.ConsumeButton("Pause");
+                    Close();
+                }
                 else Open();
             }
             else if (isOpen && InputManager.GetButtonDown("Cancel"))
             {
+                InputManager.ConsumeButton("Pause");
+                InputManager.ConsumeButton("Cancel");
                 Close();
             }
         }
@@ -254,6 +263,15 @@ namespace PocketSquire.Unity.UI
 
                 var go = Instantiate(itemRowPrefab, inventoryScrollContent);
                 go.SetActive(true);
+
+                var itemRow = go.GetComponent<ItemRow>();
+
+                // Hook up the audio source for the item row
+                var menuButtonSound = go.GetComponent<MenuButtonSound>();
+                if (menuButtonSound != null && audioSource != null)
+                {
+                    menuButtonSound.source = audioSource;
+                }
                 
                 // Ensure scale is correct (sometimes instantiation in layout groups gets wonky)
                 go.transform.localScale = Vector3.one;
@@ -274,10 +292,8 @@ namespace PocketSquire.Unity.UI
                     layoutElement.preferredHeight = 100f;
                     layoutElement.flexibleWidth = 1f;
                 }
-
-                var row = go.GetComponent<ItemRow>();
                 
-                if (row != null)
+                if (itemRow != null)
                 {
                     Sprite icon = null;
                     if (gameAssetRegistry != null && !string.IsNullOrEmpty(item.Sprite))
@@ -285,9 +301,9 @@ namespace PocketSquire.Unity.UI
                         icon = gameAssetRegistry.GetSprite(item.Sprite);
                     }
 
-                    row.Initialize(item, slot.Quantity, icon, () => {
+                    itemRow.Initialize(item, slot.Quantity, icon, () => {
                         // Action on click
-                    });
+                    }, showPrice: false);
                 }
             }
             

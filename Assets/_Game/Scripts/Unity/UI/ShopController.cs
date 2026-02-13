@@ -8,6 +8,7 @@ using PocketSquire.Arena.Unity.Town;
 using PocketSquire.Unity.UI;
 using PocketSquire.Unity;
 
+
 namespace PocketSquire.Arena.Unity.UI
 {
     /// <summary>
@@ -29,6 +30,9 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private TextMeshProUGUI inInventoryLabel;
         [SerializeField] private TextMeshProUGUI inventoryCountText;
         [SerializeField] private TextMeshProUGUI goldText;
+
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource;
 
         public bool IsOpen => shopWindow != null && shopWindow.activeInHierarchy;
 
@@ -54,6 +58,7 @@ namespace PocketSquire.Arena.Unity.UI
         {
             if (IsOpen && InputManager.GetButtonDown("Cancel"))
             {
+                InputManager.ConsumeButton("Cancel");
                 InputManager.ConsumeButton("Pause");
                 Close();
             }
@@ -134,6 +139,13 @@ namespace PocketSquire.Arena.Unity.UI
             var rowObj = Instantiate(itemRowPrefab, shopScrollContent);
             rowObj.SetActive(true);
             spawnedRows.Add(rowObj);
+
+            // Hook up the audio source for the item row
+            var menuButtonSound = rowObj.GetComponent<MenuButtonSound>();
+            if (menuButtonSound != null && audioSource != null)
+            {
+                menuButtonSound.source = audioSource;
+            }
 
             // Ensure scale is correct
             rowObj.transform.localScale = Vector3.one;

@@ -25,6 +25,7 @@ namespace PocketSquire.Arena.Unity.Town
         [SerializeField] private Image portraitImage;
         [SerializeField] private TextMeshProUGUI greetingText;
         [SerializeField] private Transform optionsContainer;
+        [SerializeField] private GameObject optionsCursor;
 
         [Header("Transition Effects")]
         [SerializeField] private CanvasGroup transitionFlashOverlay;
@@ -167,7 +168,11 @@ namespace PocketSquire.Arena.Unity.Town
                 case DialogueAction.Shop:
                     if (shopController != null && currentLocation != null)
                     {
-                        if (optionsContainer != null) optionsContainer.gameObject.SetActive(false);
+                        if (optionsContainer != null) 
+                        {
+                            optionsCursor.SetActive(false);
+                            optionsContainer.gameObject.SetActive(false);
+                        }
                         shopController.Open(currentLocation);
                         shopController.OnShopClosed = () =>
                         {
@@ -202,8 +207,6 @@ namespace PocketSquire.Arena.Unity.Town
                     break;
             }
         }
-
-
 
         private void ClearOptions()
         {
@@ -360,6 +363,7 @@ namespace PocketSquire.Arena.Unity.Town
                 // Hide options container initially
                 if (optionsContainer != null)
                 {
+                    optionsCursor.SetActive(false);
                     optionsContainer.gameObject.SetActive(false);
                 }
 
@@ -416,6 +420,7 @@ namespace PocketSquire.Arena.Unity.Town
 
             if (optionsContainer != null)
             {
+                optionsCursor.SetActive(true);
                 optionsContainer.gameObject.SetActive(true);
             }
             

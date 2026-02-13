@@ -77,6 +77,7 @@ namespace PocketSquire.Unity.UI
             if (gameObject.activeSelf && InputManager.GetButtonDown("Cancel"))
             {
                 InputManager.ConsumeButton("Cancel");
+                InputManager.ConsumeButton("Pause");
                 OnNoClicked();
             }
         }

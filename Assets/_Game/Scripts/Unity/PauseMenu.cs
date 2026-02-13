@@ -22,6 +22,8 @@ namespace PocketSquire.Unity
             // 1. Toggle Pause (Escape Key OR Gamepad Start)
             if (InputManager.GetButtonDown("Pause")) 
             {
+                InputManager.ConsumeButton("Pause");
+                InputManager.ConsumeButton("Cancel");
                 if (isPaused)
                 {
                     Resume();
@@ -35,6 +37,8 @@ namespace PocketSquire.Unity
             // but only if we didn't just handle the Pause input
             else if (isPaused && InputManager.GetButtonDown("Cancel"))
             {
+                InputManager.ConsumeButton("Pause");
+                InputManager.ConsumeButton("Cancel");
                 Resume();
             }
         }
@@ -137,6 +141,8 @@ namespace PocketSquire.Unity
             var playerMenu = FindFirstObjectByType<PlayerMenuController>();
             if (playerMenu != null && playerMenu.IsOpen)
             {
+                InputManager.ConsumeButton("Pause");
+                InputManager.ConsumeButton("Cancel");
                 playerMenu.Close();
                 return;
             }
@@ -145,6 +151,8 @@ namespace PocketSquire.Unity
             var shopMenu = FindFirstObjectByType<ShopController>();
             if (shopMenu != null && shopMenu.IsOpen)
             {
+                InputManager.ConsumeButton("Pause");
+                InputManager.ConsumeButton("Cancel");
                 shopMenu.Close();
                 return;
             }

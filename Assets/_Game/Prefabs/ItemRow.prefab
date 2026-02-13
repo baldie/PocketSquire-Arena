@@ -506,6 +506,7 @@ GameObject:
   - component: {fileID: 5474515064342537507}
   - component: {fileID: 229242782231460473}
   - component: {fileID: 743221199982858154}
+  - component: {fileID: 4395963931211233619}
   m_Layer: 0
   m_Name: ItemRow
   m_TagString: Untagged
@@ -666,3 +667,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &4395963931211233619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7679988491501550547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5600ba22235b284ab84b0f5e3208f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuButtonSound
+  source: {fileID: 0}
+  hoverSound: {fileID: 8300000, guid: 3b6ea49b05504154c9137c02a84d112e, type: 3}
+  clickSound: {fileID: 0}
