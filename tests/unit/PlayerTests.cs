@@ -14,7 +14,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Strength = 1;
             attributes.Constitution = 1;
             attributes.Intelligence = 1;
-            attributes.Wisdom = 1;
+            attributes.Agility = 1;
             attributes.Luck = 1;
             attributes.Defense = 1;
 
@@ -28,7 +28,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player.Attributes.Strength, Is.EqualTo(1));
             Assert.That(player.Attributes.Constitution, Is.EqualTo(1));
             Assert.That(player.Attributes.Intelligence, Is.EqualTo(1));
-            Assert.That(player.Attributes.Wisdom, Is.EqualTo(1));
+            Assert.That(player.Attributes.Agility, Is.EqualTo(1));
             Assert.That(player.Attributes.Luck, Is.EqualTo(1));
             Assert.That(player.Attributes.Defense, Is.EqualTo(1));
             Assert.That(player.IsDefeated, Is.False);

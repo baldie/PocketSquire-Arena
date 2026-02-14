@@ -16,7 +16,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(attributes.Strength, Is.EqualTo(0));
             Assert.That(attributes.Constitution, Is.EqualTo(0));
             Assert.That(attributes.Intelligence, Is.EqualTo(0));
-            Assert.That(attributes.Wisdom, Is.EqualTo(0));
+            Assert.That(attributes.Agility, Is.EqualTo(0));
             Assert.That(attributes.Luck, Is.EqualTo(0));
             Assert.That(attributes.Defense, Is.EqualTo(0));
         }
@@ -31,7 +31,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Strength = 10;
             attributes.Constitution = 15;
             attributes.Intelligence = 12;
-            attributes.Wisdom = 8;
+            attributes.Agility = 8;
             attributes.Luck = 5;
             attributes.Defense = 20;
 
@@ -39,7 +39,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(attributes.Strength, Is.EqualTo(10));
             Assert.That(attributes.Constitution, Is.EqualTo(15));
             Assert.That(attributes.Intelligence, Is.EqualTo(12));
-            Assert.That(attributes.Wisdom, Is.EqualTo(8));
+            Assert.That(attributes.Agility, Is.EqualTo(8));
             Assert.That(attributes.Luck, Is.EqualTo(5));
             Assert.That(attributes.Defense, Is.EqualTo(20));
         }
@@ -52,7 +52,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Strength = 5;
             attributes.Constitution = 8;
             attributes.Intelligence = 6;
-            attributes.Wisdom = 4;
+            attributes.Agility = 4;
             attributes.Luck = 3;
             attributes.Defense = 7;
 
@@ -71,7 +71,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Strength = 5;
             attributes.Constitution = 8;
             attributes.Intelligence = 6;
-            attributes.Wisdom = 4;
+            attributes.Agility = 4;
             attributes.Luck = 3;
             attributes.Defense = 12;
 

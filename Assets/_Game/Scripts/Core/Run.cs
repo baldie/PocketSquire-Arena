@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PocketSquire.Arena.Core.PowerUps;
 
 namespace PocketSquire.Arena.Core
 {
@@ -18,6 +19,7 @@ namespace PocketSquire.Arena.Core
         public RunState State { get; private set; }
         public List<Monster> Monsters { get; private set; } = new List<Monster>();
         public int ArenaRank { get; private set; }
+        public PowerUpCollection PowerUps { get; private set; } = new();
 
         public static Run StartNewRun()
         {
