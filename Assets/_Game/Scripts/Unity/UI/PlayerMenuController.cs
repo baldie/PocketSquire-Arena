@@ -124,7 +124,6 @@ namespace PocketSquire.Unity.UI
             {
                 doneButton.onClick.RemoveAllListeners();
                 doneButton.onClick.AddListener(() => {
-                    Debug.Log("[PlayerMenu] DoneButton onClick fired.");
                     Close();
                 });
             }
@@ -276,7 +275,7 @@ namespace PocketSquire.Unity.UI
             if (strText != null) strText.text = $"STR: {player.Attributes.Strength}";
             if (conText != null) conText.text = $"CON: {player.Attributes.Constitution}";
             if (intText != null) intText.text = $"INT: {player.Attributes.Intelligence}";
-            if (wisText != null) wisText.text = $"WIS: {player.Attributes.Wisdom}";
+            if (wisText != null) wisText.text = $"AGI: {player.Attributes.Agility}";
             if (lckText != null) lckText.text = $"LCK: {player.Attributes.Luck}";
             if (defText != null) defText.text = $"DEF: {player.Attributes.Defense}";
         }
@@ -310,7 +309,6 @@ namespace PocketSquire.Unity.UI
                 var menuButtonSound = go.GetComponent<MenuButtonSound>();
                 if (menuButtonSound != null && audioSource != null)
                 {
-                    Debug.Log($"[PlayerMenu] Hooking up audio source for item row: {item.Name}");
                     menuButtonSound.source = audioSource;
                 }
                 else
@@ -377,8 +375,6 @@ namespace PocketSquire.Unity.UI
 
         public void Open()
         {
-            Debug.Log($"[PlayerMenu] Open called. Current isOpen: {isOpen}");
-            
             // Ensure visuals are on if we are calling Open
             if (menuParent != null && !menuParent.activeSelf)
             {
@@ -429,14 +425,11 @@ namespace PocketSquire.Unity.UI
         }
 
         public void Close()
-        {
-            Debug.Log($"[PlayerMenu] Close called. Current isOpen: {isOpen}");
-            
+        {            
             // Even if we think it's closed, ensure the visuals are off
             if (menuParent != null && menuParent.activeSelf)
             {
                 menuParent.SetActive(false);
-                Debug.Log("[PlayerMenu] Forced menuParent.SetActive(false)");
             }
 
             if (!isOpen) return;

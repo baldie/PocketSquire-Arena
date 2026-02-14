@@ -8,7 +8,7 @@ namespace PocketSquire.Arena.Core
         public int Strength;
         public int Constitution;
         public int Intelligence;
-        public int Wisdom;
+        public int Agility;
         public int Luck;
         public int Defense;
     }

@@ -15,7 +15,7 @@
             "Strength": 1,
             "Constitution": 10,
             "Intelligence": 1,
-            "Wisdom": 1,
+            "Agility": 1,
             "Luck": 1,
             "Defense": 1
         },
@@ -42,7 +42,7 @@
             "Strength": 3,
             "Constitution": 10,
             "Intelligence": 3,
-            "Wisdom": 3,
+            "Agility": 3,
             "Luck": 2,
             "Defense": 2
         },
@@ -68,7 +68,7 @@
             "Strength": 3,
             "Constitution": 10,
             "Intelligence": 3,
-            "Wisdom": 3,
+            "Agility": 3,
             "Luck": 2,
             "Defense": 2
         },
