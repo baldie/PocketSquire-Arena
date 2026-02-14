@@ -12,18 +12,24 @@ public static class SaveSystem
         return Path.Combine(Application.persistentDataPath, saveFileName).Replace('\\', '/');
     }
 
+    public static event Action OnSaveStarted;
+    public static event Action OnSaveEnded;
+
     /// <summary>
     /// Saves the game to the specified slot.
     /// Automatically accumulates current playtime and retrieves the latest GameState data.
     /// </summary>
     public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot)
     {
+        OnSaveStarted?.Invoke();
+
         // Validate slot is a valid save slot (Slot1, Slot2, or Slot3)
         if (slot != PocketSquire.Arena.Core.SaveSlots.Slot1 && 
             slot != PocketSquire.Arena.Core.SaveSlots.Slot2 && 
             slot != PocketSquire.Arena.Core.SaveSlots.Slot3)
         {
             Debug.LogError($"[SaveSystem] Cannot save to invalid slot: {slot}. Only Slot1, Slot2, and Slot3 are valid.");
+            OnSaveEnded?.Invoke();
             return;
         }
 
@@ -47,6 +53,7 @@ public static class SaveSystem
         File.WriteAllText(path, json);
         
         Debug.Log("Game Saved to: " + path);
+        OnSaveEnded?.Invoke();
     }
 
     public static SaveData LoadGame(PocketSquire.Arena.Core.SaveSlots slot)
