@@ -189,6 +189,17 @@ namespace PocketSquire.Unity
 
         public void QuitGame()
         {
+            // Save if we are in the Town scene before exiting
+            if (SceneManager.GetActiveScene().name == "Town")
+            {
+                var tracker = FindFirstObjectByType<PlaytimeTracker>();
+                if (tracker != null)
+                {
+                    tracker.StopTracking();
+                }
+                SaveSystem.SaveGame(PocketSquire.Arena.Core.GameState.SelectedSaveSlot);
+            }
+
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -13,7 +13,6 @@ namespace PocketSquire.Unity
 
         private void Awake()
         {
-            Debug.Log("[SaveIndicator] Awake");
             if (_indicatorImage == null)
             {
                 _indicatorImage = GetComponentInChildren<Image>();
@@ -25,14 +24,12 @@ namespace PocketSquire.Unity
 
         private void OnEnable()
         {
-            Debug.Log("[SaveIndicator] OnEnable - Subscribing to SaveSystem events");
             SaveSystem.OnSaveStarted += HandleSaveStarted;
             SaveSystem.OnSaveEnded += HandleSaveEnded;
         }
 
         private void OnDisable()
         {
-            Debug.Log("[SaveIndicator] OnDisable - Unsubscribing from SaveSystem events");
             SaveSystem.OnSaveStarted -= HandleSaveStarted;
             SaveSystem.OnSaveEnded -= HandleSaveEnded;
             StopSpin();
@@ -40,14 +37,12 @@ namespace PocketSquire.Unity
 
         private void HandleSaveStarted()
         {
-            Debug.Log("[SaveIndicator] HandleSaveStarted received");
             SetVisible(true);
             StartSpin();
         }
 
         private void HandleSaveEnded()
         {
-            Debug.Log("[SaveIndicator] HandleSaveEnded received");
             
             // Add a small delay so it doesn't flicker too fast if save is instant
             DOVirtual.DelayedCall(0.5f, () => {
@@ -58,7 +53,6 @@ namespace PocketSquire.Unity
 
         private void SetVisible(bool visible)
         {
-            Debug.Log($"[SaveIndicator] SetVisible: {visible}");
             if (_indicatorImage != null)
             {
                 _indicatorImage.enabled = visible;
