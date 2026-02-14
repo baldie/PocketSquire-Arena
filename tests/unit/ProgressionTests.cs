@@ -10,67 +10,73 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void IsValid_ShouldReturnFalse_WhenNextLevelXPisLowerThanCurrent()
         {
-            var config = new List<LevelReward>
+            // Level 1 = 0, Level 2 = 100, Level 3 = 50 (Invalid)
+            var thresholds = new int[] { 0, 100, 50 };
+            var rewards = new List<LevelReward>
             {
-                new LevelReward { Level = 1, ExperienceRequired = 0 },
-                new LevelReward { Level = 2, ExperienceRequired = 100 },
-                new LevelReward { Level = 3, ExperienceRequired = 50 } // Error: lower than level 2
+                new LevelReward { Level = 1 },
+                new LevelReward { Level = 2 },
+                new LevelReward { Level = 3 }
             };
 
-            var logic = new ProgressionLogic(config);
+            var logic = new ProgressionLogic(thresholds, rewards);
             bool isValid = logic.IsValid(out string error);
 
             Assert.That(isValid, Is.False);
-            Assert.That(error, Contains.Substring("Level 3 XP requirement (50) must be higher than Level 2 (100)"));
+            // Error message format: "Level {i+1} XP ({curr}) is higher than Level {i+2} ({next})."
+            // Level 2 (100) > Level 3 (50)
+            Assert.That(error, Contains.Substring("Level 2 XP (100) is higher than Level 3 (50)"));
         }
 
         [Test]
         public void IsValid_ShouldReturnTrue_WhenRequirementsAreMonotonic()
         {
-            var config = new List<LevelReward>
+            var thresholds = new int[] { 0, 100, 250 };
+            var rewards = new List<LevelReward>
             {
-                new LevelReward { Level = 1, ExperienceRequired = 0 },
-                new LevelReward { Level = 2, ExperienceRequired = 100 },
-                new LevelReward { Level = 3, ExperienceRequired = 250 }
+                new LevelReward { Level = 1 },
+                new LevelReward { Level = 2 },
+                new LevelReward { Level = 3 }
             };
 
-            var logic = new ProgressionLogic(config);
+            var logic = new ProgressionLogic(thresholds, rewards);
             Assert.That(logic.IsValid(out _), Is.True);
         }
 
         [Test]
         public void GetLevelForExperience_ShouldReturnCorrectLevel()
         {
-            var config = new List<LevelReward>
+            var thresholds = new int[] { 0, 100, 300 }; // Lvl 1=0, Lvl 2=100, Lvl 3=300
+            var rewards = new List<LevelReward>
             {
-                new LevelReward { Level = 1, ExperienceRequired = 0 },
-                new LevelReward { Level = 2, ExperienceRequired = 100 },
-                new LevelReward { Level = 3, ExperienceRequired = 300 }
+                new LevelReward { Level = 1 },
+                new LevelReward { Level = 2 },
+                new LevelReward { Level = 3 }
             };
 
-            var logic = new ProgressionLogic(config);
+            var logic = new ProgressionLogic(thresholds, rewards);
 
             Assert.That(logic.GetLevelForExperience(0), Is.EqualTo(1));
             Assert.That(logic.GetLevelForExperience(50), Is.EqualTo(1));
             Assert.That(logic.GetLevelForExperience(100), Is.EqualTo(2));
             Assert.That(logic.GetLevelForExperience(299), Is.EqualTo(2));
             Assert.That(logic.GetLevelForExperience(300), Is.EqualTo(3));
-            Assert.That(logic.GetLevelForExperience(5000), Is.EqualTo(3));
+            Assert.That(logic.GetLevelForExperience(5000), Is.EqualTo(3)); // Cap at max level
         }
 
         [Test]
-        public void GetLevelForExperience_ShouldHandleUnorderedInput()
+        public void GetXpToNextLevel_ShouldReturnCorrectDelta()
         {
-            var config = new List<LevelReward>
-            {
-                new LevelReward { Level = 3, ExperienceRequired = 300 },
-                new LevelReward { Level = 1, ExperienceRequired = 0 },
-                new LevelReward { Level = 2, ExperienceRequired = 100 }
-            };
+            var thresholds = new int[] { 0, 100, 300 };
+            var rewards = new List<LevelReward>(); // rewards strictly don't matter for XP calculation
+            
+            var logic = new ProgressionLogic(thresholds, rewards);
 
-            var logic = new ProgressionLogic(config);
-
-            Assert.That(logic.GetLevelForExperience(150), Is.EqualTo(2));
+            // Current XP = 50 (Level 1). Next Level = 2 (100 XP). Delta = 50.
+            Assert.That(logic.GetXpToNextLevel(50), Is.EqualTo(50));
+            
+            // Current XP = 100 (Level 2). Next Level = 3 (300 XP). Delta = 200.
+            Assert.That(logic.GetXpToNextLevel(100), Is.EqualTo(200));
         }
     }
 }

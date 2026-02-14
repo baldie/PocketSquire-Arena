@@ -2480,16 +2480,16 @@ RectTransform:
   m_GameObject: {fileID: 683617309}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1835213331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 270, y: 114}
-  m_SizeDelta: {x: 260, y: 35}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 450, y: 95}
+  m_SizeDelta: {x: 192, y: 36.9393}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &683617315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2605,7 +2605,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.48486328, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5216,16 +5216,16 @@ RectTransform:
   m_GameObject: {fileID: 1253782437}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1835213331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: -86}
-  m_SizeDelta: {x: 160, y: 35}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 450, y: -86}
+  m_SizeDelta: {x: 192, y: 35}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1253782439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7128,14 +7128,14 @@ RectTransform:
   m_GameObject: {fileID: 1497230210}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1835213331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -475, y: 115}
+  m_AnchoredPosition: {x: -407, y: 95}
   m_SizeDelta: {x: 640, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1497230212
@@ -9060,7 +9060,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 1210, y: 540}
-  m_SizeDelta: {x: 1200, y: 500}
+  m_SizeDelta: {x: 1024, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835213332
 MonoBehaviour:
@@ -9076,7 +9076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleMenuSelectionCursor
   cursorGraph: {fileID: 1497230211}
   moveSpeed: 15
-  defaultCursorOffset: {x: 0, y: 0, z: 0}
+  defaultCursorOffset: {x: -840, y: 0, z: 0}
 --- !u!114 &1835213333
 MonoBehaviour:
   m_ObjectHideFlags: 0

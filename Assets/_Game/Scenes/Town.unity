@@ -3411,6 +3411,17 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &1412069650 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8304309779152231355, guid: 060837d267208b840886f24bc620e493, type: 3}
+  m_PrefabInstance: {fileID: 1874178498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1436075394
 GameObject:
   m_ObjectHideFlags: 0
@@ -3545,7 +3556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c4c4416c7350e4796dc1cdec2458b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.Town.TownUIManager
-  assetRegistry: {fileID: 11400000, guid: 1cd371512fee0294fbf0208c37a8b921, type: 2}
   townMapPanel: {fileID: 202058290}
   interiorPanel: {fileID: 2107889985}
   backgroundImage: {fileID: 62394134}
@@ -4643,6 +4653,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4093708895807461271, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
+      propertyPath: xpText
+      value: 
+      objectReference: {fileID: 1412069650}
+    - target: {fileID: 4999700743974664661, guid: 060837d267208b840886f24bc620e493, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5004844526936925500, guid: 060837d267208b840886f24bc620e493, type: 3}

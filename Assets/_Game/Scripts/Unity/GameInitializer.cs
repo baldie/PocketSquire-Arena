@@ -13,6 +13,7 @@ namespace PocketSquire.Unity
             if (_progressionAsset != null)
             {
                 GameWorld.Progression = _progressionAsset.Logic;
+                GameWorld.PerkPools = _progressionAsset.RuntimePerkPools;
             }
             else
             {

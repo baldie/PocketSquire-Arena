@@ -178,7 +178,7 @@ namespace PocketSquire.Unity
             }
             
             // Save the game (automatically accumulates playtime via SaveSystem)
-            SaveSystem.SaveGame(PocketSquire.Arena.Core.GameState.SelectedSaveSlot, PocketSquire.Arena.Core.GameState.GetSaveData());
+            SaveSystem.SaveGame(PocketSquire.Arena.Core.GameState.SelectedSaveSlot);
             
             // Reset save slot to prevent tracking in main menu
             PocketSquire.Arena.Core.GameState.SelectedSaveSlot = PocketSquire.Arena.Core.SaveSlots.Unknown;

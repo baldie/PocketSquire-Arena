@@ -13,6 +13,7 @@ namespace PocketSquire.Arena.Core
         public CharGender Gender;
         public int Level { get; private set; } = 1;
         public string Class { get; private set; } = "Adventurer";
+        public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
 
         public override string SpriteId {
             get

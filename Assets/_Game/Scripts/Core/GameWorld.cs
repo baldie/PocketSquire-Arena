@@ -16,6 +16,7 @@ namespace PocketSquire.Arena.Core
         public static List<Player> Players { get; set; } = new List<Player>();
         public static List<Item> Items { get; set; } = new List<Item>(); // Added Items list
         public static ProgressionLogic? Progression { get; set; }
+        public static Dictionary<string, PerkPool> PerkPools { get; set; } = new Dictionary<string, PerkPool>();
 
         public static void Load(string? rootPath = null)
         {

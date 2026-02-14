@@ -145,7 +145,7 @@ namespace PocketSquire.Unity
         {
             GameState.CreateNewGame(slot);
             // Immediately save to reserve the slot
-            SaveSystem.SaveGame(slot, GameState.GetSaveData());
+            SaveSystem.SaveGame(slot);
             Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
             TransitionToTown(buttonObj);
         }

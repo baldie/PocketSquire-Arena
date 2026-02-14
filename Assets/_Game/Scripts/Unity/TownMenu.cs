@@ -47,7 +47,7 @@ namespace PocketSquire.Unity
             // Save the game (skip if testing with Unknown slot)
             if (GameState.SelectedSaveSlot != SaveSlots.Unknown)
             {
-                SaveSystem.SaveGame(GameState.SelectedSaveSlot, GameState.GetSaveData());
+                SaveSystem.SaveGame(GameState.SelectedSaveSlot);
             }
             else
             {

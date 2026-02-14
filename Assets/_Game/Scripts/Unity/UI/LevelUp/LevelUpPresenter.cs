@@ -205,6 +205,40 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             int currentLevel = GameState.Player.Level;
             levelUpPresenter.Initialize(attributes, reward.StatPoints, currentLevel);
 
+            // --- PERK SELECTION LOGIC ---
+            var perkChoices = new List<string>();
+            // 1. Fixed Perks (Legacy)
+            if (reward.FixedPerkIds != null)
+            {
+                perkChoices.AddRange(reward.FixedPerkIds);
+            }
+
+            // 2. Dynamic Pool Perks
+            if (!string.IsNullOrEmpty(reward.PerkPoolTag) && GameWorld.PerkPools.TryGetValue(reward.PerkPoolTag, out var pool))
+            {
+                var context = new PerkSelector.SelectionContext
+                {
+                    PlayerLevel = level,
+                    UnlockedPerkIds = GameState.Player.UnlockedPerks
+                };
+                
+                // Use default Random for now (or improve with seeded logic later)
+                var rng = new System.Random(); 
+                
+                var dynamicPerks = PerkSelector.Select(pool, reward.PerkPoolDrawCount, context, rng);
+                foreach(var p in dynamicPerks)
+                {
+                    perkChoices.Add(p.Id);
+                }
+            }
+            
+            // 3. Push to Model
+            if (perkChoices.Count > 0)
+            {
+                levelUpPresenter._model.SetPendingPerkChoices(perkChoices);
+                Debug.Log($"[LevelUp] Generated {perkChoices.Count} perk choices: {string.Join(", ", perkChoices)}");
+            }
+
             if (levelUpPresenter.audioSource != null && levelUpPresenter.levelUpSound != null)
             {
                 levelUpPresenter.audioSource.PlayOneShot(levelUpPresenter.levelUpSound);

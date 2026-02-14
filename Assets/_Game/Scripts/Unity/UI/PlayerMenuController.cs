@@ -23,6 +23,7 @@ namespace PocketSquire.Unity.UI
         [Header("Images")]
         [SerializeField] private Image xpBarForeground;
         [SerializeField] private Image playerImage;
+        [SerializeField] private TextMeshProUGUI xpText; // Added XP Label
 
 
         [Header("Attributes")]
@@ -218,11 +219,12 @@ namespace PocketSquire.Unity.UI
         /// </summary>
         private void UpdateExperienceBar(Player player)
         {
-            if (xpBarForeground == null) return;
+            if (xpBarForeground == null && xpText == null) return;
 
             if (GameWorld.Progression == null)
             {
-                xpBarForeground.fillAmount = 0f;
+                if (xpBarForeground != null) xpBarForeground.fillAmount = 0f;
+                if (xpText != null) xpText.text = "0 / 0 XP";
                 return;
             }
 
@@ -234,8 +236,9 @@ namespace PocketSquire.Unity.UI
             var currentLevelReward = GameWorld.Progression.GetRewardForLevel(currentLevel);
             var nextLevelReward = GameWorld.Progression.GetRewardForLevel(currentLevel + 1);
             
-            int xpForCurrentLevel = currentLevelReward.ExperienceRequired;
-            int xpForNextLevel = nextLevelReward.ExperienceRequired;
+            // NEW: Use ProgressionLogic helpers
+            int xpForCurrentLevel = GameWorld.Progression.GetExperienceRequiredForLevel(currentLevel);
+            int xpForNextLevel = GameWorld.Progression.GetExperienceRequiredForLevel(currentLevel + 1);
             
             // Calculate fill amount (progress within current level)
             int xpIntoCurrentLevel = currentXp - xpForCurrentLevel;
@@ -243,9 +246,24 @@ namespace PocketSquire.Unity.UI
             
             float fillAmount = xpRequiredForLevel > 0 
                 ? (float)xpIntoCurrentLevel / xpRequiredForLevel 
-                : 0f;
+                : 1f; // If max level, full bar
             
-            xpBarForeground.fillAmount = Mathf.Clamp01(fillAmount);
+            if (xpBarForeground != null)
+            {
+                xpBarForeground.fillAmount = Mathf.Clamp01(fillAmount);
+            }
+
+            if (xpText != null)
+            {
+                if (xpRequiredForLevel <= 0) // Max level or error
+                {
+                     xpText.text = "MAX LEVEL";
+                }
+                else
+                {
+                    xpText.text = $"{xpIntoCurrentLevel} / {xpRequiredForLevel} XP";
+                }
+            }
         }
 
         /// <summary>

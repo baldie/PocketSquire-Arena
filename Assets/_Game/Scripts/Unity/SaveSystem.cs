@@ -12,7 +12,11 @@ public static class SaveSystem
         return Path.Combine(Application.persistentDataPath, saveFileName).Replace('\\', '/');
     }
 
-    public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot, SaveData data)
+    /// <summary>
+    /// Saves the game to the specified slot.
+    /// Automatically accumulates current playtime and retrieves the latest GameState data.
+    /// </summary>
+    public static void SaveGame(PocketSquire.Arena.Core.SaveSlots slot)
     {
         // Validate slot is a valid save slot (Slot1, Slot2, or Slot3)
         if (slot != PocketSquire.Arena.Core.SaveSlots.Slot1 && 
@@ -23,24 +27,29 @@ public static class SaveSystem
             return;
         }
 
-        // Accumulate current session playtime before saving
+        // 1. Accumulate current session playtime BEFORE creating SaveData
         var tracker = UnityEngine.Object.FindFirstObjectByType<PlaytimeTracker>();
         tracker?.SaveCurrentPlaytime();
+
+        // 2. Now get the SaveData with updated PlayTime
+        var data = GameState.GetSaveData();
         
-        // 0. Set the last save date
+        // 3. Set the last save date
         data.LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-        // 1. Convert the data object to a JSON string using Newtonsoft for better serialization of properties
+        // 4. Convert the data object to a JSON string using Newtonsoft for better serialization of properties
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-        // 2. Define the path
+        // 5. Define the path
         var path = GetSaveFilePath(slot);
 
-        // 3. Write to file
+        // 6. Write to file
         File.WriteAllText(path, json);
         
         Debug.Log("Game Saved to: " + path);
     }
+
+
 
 
     public static SaveData LoadGame(PocketSquire.Arena.Core.SaveSlots slot)
