@@ -281,7 +281,7 @@ public class ActionQueueProcessor : MonoBehaviour
         );
     }
 
-    private void HandleItemEffects(Image img, Entity entity, ItemAction? itemAction)
+    private void HandleItemEffects(Image img, Entity entity, ItemAction itemAction)
     {
         if (itemAction == null || itemAction.ItemData == null) return;
         
