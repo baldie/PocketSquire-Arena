@@ -188,7 +188,7 @@ namespace PocketSquire.Unity
 
         private void Update()
         {
-            if (Input.GetButtonDown("Cancel"))
+            if (InputManager.GetButtonDown("Cancel"))
             {
                 SceneManager.LoadScene("MainMenu");
             }

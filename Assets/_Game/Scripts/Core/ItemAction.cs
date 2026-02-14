@@ -43,12 +43,19 @@ namespace PocketSquire.Arena.Core
 
         private void ApplyHealing_HealthPotion(Entity actor, Item item)
         {
-            int healAmount = 50; // Default flat
+            int healAmount = 10; // Default flat value
 
-            if (item.Description.Contains("%"))
+            switch (ItemId)
             {
-                // Simple parsing for "Heals X%" - defaulting to 25% for now
-                healAmount = (int)(actor.MaxHealth * 0.25f);
+                case 1: //TODO: make these magic numbers into named consts
+                    healAmount = (int)(actor.MaxHealth * 0.25f);
+                    break;
+                case 2:
+                    healAmount = (int)(actor.MaxHealth * 0.50f);
+                    break;
+                case 3:
+                    healAmount = (int)(actor.MaxHealth * 0.75f);
+                    break;
             }
 
             actor.Heal(healAmount);

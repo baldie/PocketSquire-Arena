@@ -1,21 +1,11 @@
-# Task: Progression System Refactor
+# Task: Migrate Legacy Input to Input System
 
 ## Objectives
-- [x] Implement Hybrid XP Curve Engine (Options 1 & 2)
-  - [x] Create `XpCurveConfig` and `XpCurveGenerator` POCOs
-  - [x] Update `ProgressionLogic` to use new curve generation
-  - [x] Add overrides support
-- [x] Implement Dynamic Perk Pools (Option 3)
-  - [x] Create `PerkPool` and `PerkSelector` POCOs
-  - [x] Add `PerkPool` configuration to `ProgressionSchedule`
-  - [x] Update `LevelUpPresenter` to use `PerkSelector`
-- [x] Implement Simulation Harness
-  - [x] Create `ProgressionSimulator`
-  - [x] Verify with unit tests
-- [x] Integration & Cleanup
-  - [x] Remove `LevelReward.ExperienceRequired` usage
-  - [x] Verify all unit tests pass
+- [x] Analyze codebase for `Input.` usage (Grep Search).
+- [x] Verify `InputManager` wrapper availability and usage.
+- [x] Replace `Input.GetButtonDown` in `SaveSlotSelector.cs` with `InputManager.GetButtonDown`.
+- [x] Verify no other legacy usages in `Assets/_Game` and `Assets/Tests`.
 
 ## Verification
-- [x] All unit tests passed (including new `XpCurveGeneratorTests`, `PerkSelectorTests`, `ProgressionSimulatorTests`)
-- [x] Codebase builds successfully
+- [x] `SaveSlotSelector.cs` updated.
+- [x] Clean grep search for `\bInput\b`.

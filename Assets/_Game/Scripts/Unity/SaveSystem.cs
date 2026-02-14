@@ -38,7 +38,7 @@ public static class SaveSystem
         data.LastSaveDateString = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
         // 4. Convert the data object to a JSON string using Newtonsoft for better serialization of properties
-        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        var json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
         // 5. Define the path
         var path = GetSaveFilePath(slot);
@@ -49,9 +49,6 @@ public static class SaveSystem
         Debug.Log("Game Saved to: " + path);
     }
 
-
-
-
     public static SaveData LoadGame(PocketSquire.Arena.Core.SaveSlots slot)
     {
         var path = GetSaveFilePath(slot);
@@ -60,7 +57,7 @@ public static class SaveSystem
             return null;
         
         // 1. Read the text from the file
-        string json = File.ReadAllText(path);
+        var json = File.ReadAllText(path);
 
         // 2. Convert JSON back to the SaveData object
         return JsonConvert.DeserializeObject<SaveData>(json);
