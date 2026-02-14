@@ -9,3 +9,13 @@
 - **Pattern**: Skipping plan mode for "simple" tasks.
 - **Cause**: Underestimating steps (e.g. usage finding, verification count as steps).
 - **Solution**: Always list steps in `tasks/todo.md` first if >3 steps.
+
+## Input Handling
+- **Pattern**: Using legacy `Input` for buttons/axes (`Input.GetButtonDown`).
+- **Cause**: The legacy Input Manager is deprecated and being replaced by the Unity Input System package.
+- **Solution**: Use `InputManager` wrapper (or direct Input System API `Gamepad.current`, etc.) which leverages `com.unity.inputsystem`.
+
+## C# Features
+- **Pattern**: Using nullable reference types (`string?`) without enabling the feature.
+- **Cause**: The `#nullable enable` context is required for the compiler to correctly interpret `?` as a nullable reference type annotation. Without it, the syntax is valid but misleading or may error depending on language version.
+- **Solution**: Always add `#nullable enable` at the top of the file before using nullable reference type annotations.
