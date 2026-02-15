@@ -280,8 +280,8 @@ namespace PocketSquire.Unity.UI
 
             if (strText != null) strText.text = $"STR: {player.Attributes.Strength}";
             if (conText != null) conText.text = $"CON: {player.Attributes.Constitution}";
-            if (intText != null) intText.text = $"INT: {player.Attributes.Intelligence}";
-            if (wisText != null) wisText.text = $"AGI: {player.Attributes.Agility}";
+            if (intText != null) intText.text = $"MAG: {player.Attributes.Magic}";
+            if (wisText != null) wisText.text = $"DEX: {player.Attributes.Dexterity}";
             if (lckText != null) lckText.text = $"LCK: {player.Attributes.Luck}";
             if (defText != null) defText.text = $"DEF: {player.Attributes.Defense}";
         }

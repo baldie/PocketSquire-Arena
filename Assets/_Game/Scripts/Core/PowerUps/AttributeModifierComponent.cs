@@ -13,8 +13,8 @@ namespace PocketSquire.Arena.Core.PowerUps
         {
             Strength,
             Constitution,
-            Intelligence,
-            Agility,
+            Magic,
+            Dexterity,
             Luck,
             Defense
         }
@@ -53,11 +53,11 @@ namespace PocketSquire.Arena.Core.PowerUps
                 case AttributeType.Constitution:
                     attributes.Constitution += bonus;
                     break;
-                case AttributeType.Intelligence:
-                    attributes.Intelligence += bonus;
+                case AttributeType.Magic:
+                    attributes.Magic += bonus;
                     break;
-                case AttributeType.Agility:
-                    attributes.Agility += bonus;
+                case AttributeType.Dexterity:
+                    attributes.Dexterity += bonus;
                     break;
                 case AttributeType.Luck:
                     attributes.Luck += bonus;

@@ -53,8 +53,8 @@ namespace PocketSquire.Arena.Core.PowerUps
             {
                 Strength = BasePlayer.Attributes.Strength,
                 Constitution = BasePlayer.Attributes.Constitution,
-                Intelligence = BasePlayer.Attributes.Intelligence,
-                Agility = BasePlayer.Attributes.Agility,
+                Magic = BasePlayer.Attributes.Magic,
+                Dexterity = BasePlayer.Attributes.Dexterity,
                 Luck = BasePlayer.Attributes.Luck,
                 Defense = BasePlayer.Attributes.Defense
             };

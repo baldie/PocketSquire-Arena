@@ -1272,7 +1272,7 @@ GameObject:
   - component: {fileID: 29764172919559824}
   - component: {fileID: 3389303127724100138}
   m_Layer: 5
-  m_Name: WisText
+  m_Name: DexText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'WIS: 10'
+  m_text: 'DEX: 10'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -1806,7 +1806,7 @@ GameObject:
   - component: {fileID: 3292512376936811704}
   - component: {fileID: 576135876595690772}
   m_Layer: 5
-  m_Name: IntText
+  m_Name: MagText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1859,7 +1859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'INT: 10'
+  m_text: 'MAG: 10'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}

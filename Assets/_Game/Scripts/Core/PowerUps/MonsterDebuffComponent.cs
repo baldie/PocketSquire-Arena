@@ -13,8 +13,8 @@ namespace PocketSquire.Arena.Core.PowerUps
         {
             Strength,
             Constitution,
-            Intelligence,
-            Agility,
+            Magic,
+            Dexterity,
             Luck,
             Defense
         }
@@ -50,11 +50,11 @@ namespace PocketSquire.Arena.Core.PowerUps
                 case DebuffType.Constitution:
                     monster.Attributes.Constitution = Math.Max(1, monster.Attributes.Constitution - debuff);
                     break;
-                case DebuffType.Intelligence:
-                    monster.Attributes.Intelligence = Math.Max(1, monster.Attributes.Intelligence - debuff);
+                case DebuffType.Magic:
+                    monster.Attributes.Magic = Math.Max(1, monster.Attributes.Magic - debuff);
                     break;
-                case DebuffType.Agility:
-                    monster.Attributes.Agility = Math.Max(1, monster.Attributes.Agility - debuff);
+                case DebuffType.Dexterity:
+                    monster.Attributes.Dexterity = Math.Max(1, monster.Attributes.Dexterity - debuff);
                     break;
                 case DebuffType.Luck:
                     monster.Attributes.Luck = Math.Max(1, monster.Attributes.Luck - debuff);

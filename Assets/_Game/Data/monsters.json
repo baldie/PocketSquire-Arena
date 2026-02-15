@@ -14,8 +14,8 @@
         "attributes": {
             "Strength": 1,
             "Constitution": 10,
-            "Intelligence": 1,
-            "Agility": 1,
+            "Magic": 1,
+            "Dexterity": 1,
             "Luck": 1,
             "Defense": 1
         },
@@ -41,8 +41,8 @@
         "attributes": {
             "Strength": 3,
             "Constitution": 10,
-            "Intelligence": 3,
-            "Agility": 3,
+            "Magic": 3,
+            "Dexterity": 3,
             "Luck": 2,
             "Defense": 2
         },
@@ -67,8 +67,8 @@
         "attributes": {
             "Strength": 3,
             "Constitution": 10,
-            "Intelligence": 3,
-            "Agility": 3,
+            "Magic": 3,
+            "Dexterity": 3,
             "Luck": 2,
             "Defense": 2
         },
