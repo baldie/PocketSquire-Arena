@@ -36,7 +36,7 @@ public class ActionQueueProcessor : MonoBehaviour
     public Canvas arenaMenuPanel;
     public ConfirmationDialog confirmationDialog;
     public GameObject levelUpBackground;
-
+    public Button loot;
 
     [Header("Audio")]
     public AudioClip crowd_pleased;
@@ -470,9 +470,24 @@ public class ActionQueueProcessor : MonoBehaviour
                 var presenter = levelUpBackground.GetComponent<LevelUpPresenter>();
 
                 // Show the arena menu after the player has leveled up.
-                LevelUpPresenter.Show(levelUpBackground, presenter, () => showArenaMenu(true));
+                LevelUpPresenter.Show(levelUpBackground, presenter, () => HandleBattleWin());
             } else {
                 Debug.LogError("LevelUpBackground not found!");
+            }
+        } else {
+            HandleBattleWin();
+        }
+    }
+
+    private void HandleBattleWin()
+    {
+        if (loot != null){
+            var lootScript = loot.GetComponent<LootScript>();
+            if (lootScript != null){
+                lootScript.ShowChest(() => showArenaMenu(true));
+            } else{
+                Debug.Log("LootScript not found!");
+                showArenaMenu(true);
             }
         } else {
             showArenaMenu(true);

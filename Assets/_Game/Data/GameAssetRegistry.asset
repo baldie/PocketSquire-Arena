@@ -25,6 +25,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   - id: home_interior
     asset: {fileID: 21300000, guid: 8774bd719a4407b44bfd8460387ae490, type: 3}
+  - id: save_indicator
+    asset: {fileID: 21300000, guid: 0a2765f5c85983b48b3191b093e8304f, type: 3}
   - id: smithy_interior
     asset: {fileID: 21300000, guid: f9883d8ae637061409d92a1a5439c50a, type: 3}
   - id: town
@@ -132,6 +134,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
   - id: battle_menu_tick
     asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}
+  - id: chest_opening
+    asset: {fileID: 8300000, guid: d08ab70175977484dac2a1a09038750e, type: 3}
   - id: coin_spend
     asset: {fileID: 8300000, guid: 520fc2bbffdce0a45a7079ad291d6ec6, type: 3}
   - id: crowd_displeased

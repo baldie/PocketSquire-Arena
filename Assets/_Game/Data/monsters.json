@@ -2,7 +2,7 @@
     {
         "name": "Training Dummy",
         "rank": 1,
-        "health": 3,
+        "health": 1,
         "maxHealth": 3,
         "experience": 1,
         "gold": 1,
