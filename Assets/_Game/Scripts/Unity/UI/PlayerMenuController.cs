@@ -218,10 +218,15 @@ namespace PocketSquire.Unity.UI
         /// </summary>
         private void UpdateExperienceBar(Player player)
         {
-            if (xpBarForeground == null && xpText == null) return;
+            if (xpBarForeground == null && xpText == null)
+            {
+                Debug.LogWarning("[PlayerMenuController] Experience UI references are missing!");
+                return;
+            }
 
             if (GameWorld.Progression == null)
             {
+                Debug.LogWarning("[PlayerMenuController] GameWorld.Progression is null! Experience bar will not display correctly.");
                 if (xpBarForeground != null) xpBarForeground.fillAmount = 0f;
                 if (xpText != null) xpText.text = "0 / 0 XP";
                 return;
@@ -243,9 +248,9 @@ namespace PocketSquire.Unity.UI
             int xpIntoCurrentLevel = currentXp - xpForCurrentLevel;
             int xpRequiredForLevel = xpForNextLevel - xpForCurrentLevel;
             
-            float fillAmount = xpRequiredForLevel > 0 
-                ? (float)xpIntoCurrentLevel / xpRequiredForLevel 
-                : 1f; // If max level, full bar
+            float fillAmount = (xpForNextLevel >= int.MaxValue || xpRequiredForLevel <= 0) 
+                ? 1f // If max level, full bar
+                : (float)xpIntoCurrentLevel / xpRequiredForLevel;
             
             if (xpBarForeground != null)
             {
@@ -254,7 +259,8 @@ namespace PocketSquire.Unity.UI
 
             if (xpText != null)
             {
-                if (xpRequiredForLevel <= 0) // Max level or error
+                // ProgressionLogic returns int.MaxValue for required XP beyond max level
+                if (xpForNextLevel >= int.MaxValue || xpRequiredForLevel <= 0) 
                 {
                      xpText.text = "MAX LEVEL";
                 }

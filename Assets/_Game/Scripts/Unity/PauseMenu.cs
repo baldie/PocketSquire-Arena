@@ -105,9 +105,14 @@ namespace PocketSquire.Unity
                 quitBtn.onClick.AddListener(() => 
                 {
                     pauseMenuUI.SetActive(false); // Hide pause menu when showing confirmation
+                    bool isTown = SceneManager.GetActiveScene().name == "Town";
+                    string quitMessage = isTown 
+                        ? "Save and quit?" 
+                        : "Are you sure? All your progress since last save will be lost";
+
                     ConfirmationDialog.Show(
                         confirmationDialog,
-                        "Quit the game?",
+                        quitMessage,
                         QuitGame,
                         onCancel: () => {
                             // select a button right away or the cursor will be in the wrong place

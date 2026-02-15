@@ -2371,6 +2371,7 @@ MonoBehaviour:
   goldText: {fileID: 3185305700262412295}
   xpBarForeground: {fileID: 5108771568088299189}
   playerImage: {fileID: 174216345467359589}
+  xpText: {fileID: 8304309779152231355}
   strText: {fileID: 3190311956746938219}
   conText: {fileID: 7623441638508411294}
   intText: {fileID: 576135876595690772}

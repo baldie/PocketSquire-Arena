@@ -24,6 +24,9 @@ public class GameAssetRegistry : ScriptableObject {
     public List<PrefabEntry> prefabs;
     public GameObject itemRowPrefab;
 
+    [Header("Global Data")]
+    public PocketSquire.Arena.Unity.LevelUp.ProgressionSchedule progressionSchedule;
+
     // Helper classes
     [System.Serializable] public struct SpriteEntry { public string id; public Sprite asset; }
     [System.Serializable] public struct AudioEntry { public string id; public AudioClip asset; }

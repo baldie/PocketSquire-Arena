@@ -13,6 +13,7 @@ public class LootScript : MonoBehaviour
     public Image chestImage;
     public Sprite openedChestSprite;
     public Sprite closedChestSprite;
+    public Sprite highlightedChestSprite;
     public GameObject powerupSelectionDialog;
     public Image playerImage;
     public ParticleSystem powerUpParticles;
@@ -69,6 +70,11 @@ public class LootScript : MonoBehaviour
         // Reset UI state
         chestImage.gameObject.SetActive(true);
         chestImage.sprite = closedChestSprite;
+        var state = chestButton.spriteState;
+        state.highlightedSprite = highlightedChestSprite;
+        state.pressedSprite = highlightedChestSprite;
+        chestButton.spriteState = state;
+        chestButton.interactable = true;
 
         // Generate PowerUps
         var context = new PowerUpFactory.PowerUpGenerationContext
@@ -109,7 +115,10 @@ public class LootScript : MonoBehaviour
 
         var mySequence = DOTween.Sequence();
         mySequence.Append(chestImage.transform.DOPunchRotation(new Vector3(0, 0, 10), 0.2f)); 
-        mySequence.AppendCallback(() => chestImage.sprite = openedChestSprite);
+        mySequence.AppendCallback(() => {
+           chestImage.sprite = openedChestSprite;
+           chestButton.interactable = false;
+        });
         mySequence.Append(chestImage.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f));
         mySequence.OnComplete(() => {
             powerupSelectionDialog.SetActive(true);

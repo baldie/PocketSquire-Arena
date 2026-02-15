@@ -69,14 +69,25 @@ public class MenuSelectionCursor : MonoBehaviour
         if (_cachedTarget != null)
         {
             // Apply Custom Offset
-            targetPos += _cachedTarget.useLocalOffset 
-                ? target.transform.TransformVector(_cachedTarget.cursorOffset)
-                : _cachedTarget.cursorOffset;
+            if (_cachedTarget.useLocalOffset)
+            {
+                targetPos += target.transform.TransformVector(_cachedTarget.cursorOffset);
+            }
+            else
+            {
+                // If not local to target, we interpret it as local to the cursor's container (Canvas space)
+                // This ensures it scales correctly when switching to Screen Space - Camera
+                targetPos += cursorGraph.parent != null 
+                    ? cursorGraph.parent.TransformVector(_cachedTarget.cursorOffset)
+                    : _cachedTarget.cursorOffset;
+            }
         }
         else
         {
-            // Apply Default Offset
-            targetPos += defaultCursorOffset;
+            // Apply Default Offset relative to cursor's parent (handles Canvas scaling)
+            targetPos += cursorGraph.parent != null 
+                ? cursorGraph.parent.TransformVector(defaultCursorOffset) 
+                : defaultCursorOffset;
         }
 
         // Move Smoothly

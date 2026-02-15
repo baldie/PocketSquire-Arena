@@ -25,6 +25,13 @@ public class ArenaSceneInitializer : MonoBehaviour
             if (GameState.Player == null) GameState.CreateNewGame(SaveSlots.Unknown);
         }
 
+        // Ensure progression logic is loaded
+        if (GameWorld.Progression == null && GameAssetRegistry.Instance.progressionSchedule != null)
+        {
+            GameWorld.Progression = GameAssetRegistry.Instance.progressionSchedule.Logic;
+            GameWorld.PerkPools = GameAssetRegistry.Instance.progressionSchedule.RuntimePerkPools;
+        }
+
 
         // Here we go!
         if (GameState.CurrentRun == null || GameState.CurrentRun.State == Run.RunState.NoStarted) {

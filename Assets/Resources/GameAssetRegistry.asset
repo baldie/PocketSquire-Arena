@@ -172,3 +172,4 @@ MonoBehaviour:
   - id: MenuCursor
     asset: {fileID: 5743983063834753278, guid: 3dea88bb4a5d7f34db445f404da4d38d, type: 3}
   itemRowPrefab: {fileID: 7679988491501550547, guid: 887fa1c10124f2940a07fd9ba88e79bd, type: 3}
+  progressionSchedule: {fileID: 11400000, guid: 4bdce86dddd5e944db0fbbcf20603b36, type: 2}
