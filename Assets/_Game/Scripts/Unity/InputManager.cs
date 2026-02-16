@@ -76,7 +76,6 @@ namespace PocketSquire.Unity
 
             if (action.WasPressedThisFrame())
             {
-                 Debug.Log($"{buttonName} button pressed");
                  return true;
             }
             return false;

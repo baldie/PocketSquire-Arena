@@ -68,7 +68,7 @@ namespace PocketSquire.Unity.UI
             if (noButton != null)
             {
                 noButton.onClick.RemoveAllListeners();
-                noButton.onClick.AddListener(OnNoClicked);
+                noButton.onClick.AddListener(Cancel);
             }
         }
 
@@ -79,7 +79,7 @@ namespace PocketSquire.Unity.UI
             {
                 InputManager.ConsumeButton("Cancel");
                 InputManager.ConsumeButton("Pause");
-                OnNoClicked();
+                Cancel();
             }
         }
 
@@ -171,7 +171,7 @@ namespace PocketSquire.Unity.UI
             });
         }
 
-        private void OnNoClicked()
+        public void Cancel()
         {
             if (audioSource != null && cancelSound != null)
             {

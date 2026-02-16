@@ -279,7 +279,6 @@ public class ActionQueueProcessor : MonoBehaviour
     private void HandleYield(Image img, Entity entity)
     {
         _isWaitingForUser = true;
-        Debug.Log("Showing yield confirmation dialog...");
         ConfirmationDialog.Show(
             confirmationDialog,
             "Give up now?",

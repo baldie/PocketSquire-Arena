@@ -117,7 +117,8 @@ namespace PocketSquire.Unity
                         PocketSquire.Unity.UI.ConfirmationDialog.Show(
                             confirmationDialog,
                             "Overwrite existing save?",
-                            () => StartNewGame(slot, buttonObj) // On Confirm
+                            () => StartNewGame(slot, buttonObj, skipSound: true), // On Confirm - skip sound since it was played on confirm button
+                            () => ReselectButton(buttonObj) // On Cancel - re-select the button
                         );
                     }
                     else
@@ -141,16 +142,16 @@ namespace PocketSquire.Unity
             TransitionToTown(buttonObj);
         }
 
-        private void StartNewGame(SaveSlots slot, GameObject buttonObj)
+        private void StartNewGame(SaveSlots slot, GameObject buttonObj, bool skipSound = false)
         {
             GameState.CreateNewGame(slot);
             // Immediately save to reserve the slot
             SaveSystem.SaveGame(slot);
             Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
-            TransitionToTown(buttonObj);
+            TransitionToTown(buttonObj, skipSound);
         }
 
-        private void TransitionToTown(GameObject buttonObj)
+        private void TransitionToTown(GameObject buttonObj, bool skipSound = false)
         {
             // Start playtime tracking for this save slot
             var tracker = FindFirstObjectByType<PlaytimeTracker>();
@@ -161,12 +162,12 @@ namespace PocketSquire.Unity
             }
             tracker.StartTracking();
 
-            StartCoroutine(PlaySoundThenLoad("Town", buttonObj));
+            StartCoroutine(PlaySoundThenLoad("Town", buttonObj, skipSound));
         }
 
-        IEnumerator PlaySoundThenLoad(string sceneName, GameObject buttonObj)
+        IEnumerator PlaySoundThenLoad(string sceneName, GameObject buttonObj, bool skipSound = false)
         {
-            if (buttonObj != null)
+            if (!skipSound && buttonObj != null)
             {
                 var menuButtonSound = buttonObj.GetComponent<MenuButtonSound>();
                 if (menuButtonSound != null && menuButtonSound.clickSound != null)
@@ -186,11 +187,31 @@ namespace PocketSquire.Unity
             }
         }
 
+        private void ReselectButton(GameObject buttonObj)
+        {
+            if (buttonObj != null)
+            {
+                var button = buttonObj.GetComponent<Button>();
+                if (button != null)
+                {
+                    UnityEngine.EventSystems.EventSystem.current?.SetSelectedGameObject(buttonObj);
+                }
+            }
+        }
+
         private void Update()
         {
             if (InputManager.GetButtonDown("Cancel"))
             {
-                SceneManager.LoadScene("MainMenu");
+                if (confirmationDialog != null && confirmationDialog.gameObject.activeSelf)
+                {
+                    confirmationDialog.Cancel();
+                    InputManager.ConsumeButton("Cancel");
+                }
+                else
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
             }
         }
     }
