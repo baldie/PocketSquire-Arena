@@ -67,6 +67,10 @@ public class PowerUpHudController : MonoBehaviour
             GameAssetRegistry.Instance.LogAllSprites();
             Debug.LogWarning($"[PowerUpHudController] Icon sprite '{powerUp.Component.IconId}' not found for {powerUp.DisplayName}");
         }
+
+        // Add PowerUpSelector for tooltip/description
+        var selector = iconObj.AddComponent<PowerUpSelector>();
+        selector.Initialize(powerUp);
     }
 
     private void ClearParent(Transform parent)

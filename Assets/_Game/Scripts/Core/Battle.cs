@@ -19,7 +19,6 @@ namespace PocketSquire.Arena.Core
             if (player2 == null) throw new ArgumentNullException(nameof(player2));
             this.Player1 = player1;
             this.Player2 = player2;
-            Console.WriteLine("Creating new battle");
             CurrentTurn = new Turn(player1, player2);
         }
 

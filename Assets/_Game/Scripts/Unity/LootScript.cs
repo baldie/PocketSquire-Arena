@@ -76,6 +76,16 @@ public class LootScript : MonoBehaviour
         chestButton.spriteState = state;
         chestButton.interactable = true;
 
+        GenerateAndPopulatePowerUps(true);
+    }
+
+    public void Reroll()
+    {
+        GenerateAndPopulatePowerUps(false);
+    }
+
+    private void GenerateAndPopulatePowerUps(bool autoSelectFirst)
+    {
         // Generate PowerUps
         var context = new PowerUpFactory.PowerUpGenerationContext
         {
@@ -96,7 +106,7 @@ public class LootScript : MonoBehaviour
         }
 
         // Auto-select first option
-        if (EventSystem.current != null && powerUpOptionA != null)
+        if (autoSelectFirst && EventSystem.current != null && powerUpOptionA != null)
         {
             EventSystem.current.SetSelectedGameObject(powerUpOptionA.gameObject);
         }

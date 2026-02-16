@@ -34,8 +34,6 @@ namespace PocketSquire.Unity
             {
                 Debug.LogError("[InputManager] PlayerInput component missing! usage will fail.");
             }
-            
-            Debug.Log("InputManager initialized with PlayerInput");
         }
 
         private void OnDestroy()

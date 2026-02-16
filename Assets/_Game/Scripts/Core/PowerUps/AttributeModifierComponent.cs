@@ -37,7 +37,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string DisplayName => $"{TargetAttribute} Boost {RomanNumeral(Rank)}";
 
         public override string Description => 
-            $"Increases {TargetAttribute} by {ComputeValue(1):F0} (scales with arena level).";
+            $"Increases {TargetAttribute} by {ComputeValue(1):F0}.";
 
         public AttributeModifierComponent(
             AttributeType targetAttribute, 

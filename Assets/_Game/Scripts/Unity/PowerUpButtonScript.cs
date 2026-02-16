@@ -59,6 +59,14 @@ public class PowerUpButtonScript : MonoBehaviour
                 Debug.LogWarning($"[PowerUpButtonScript] Icon sprite '{powerUp.Component.IconId}' not found in GameAssetRegistry");
             }
         }
+
+        // Initialize PowerUpSelector
+        var selector = GetComponent<PowerUpSelector>();
+        if (selector == null)
+        {
+            selector = gameObject.AddComponent<PowerUpSelector>();
+        }
+        selector.Initialize(powerUp);
     }
 
     private void OnButtonClicked()
