@@ -12,6 +12,7 @@ namespace PocketSquire.Unity.UI
     /// A reusable confirmation dialog that can be triggered from any script.
     /// Usage: ConfirmationDialog.Show(dialogInstance, "Are you sure?", OnConfirm, OnCancel);
     /// </summary>
+    [DefaultExecutionOrder(-50)]
     public class ConfirmationDialog : MonoBehaviour
     {
         [Header("UI References")]
@@ -73,8 +74,8 @@ namespace PocketSquire.Unity.UI
 
         private void Update()
         {
-            // Allow Cancel input to dismiss the dialog
-            if (gameObject.activeSelf && InputManager.GetButtonDown("Cancel"))
+            // Allow Cancel or Pause (Escape) input to dismiss the dialog
+            if (gameObject.activeSelf && (InputManager.GetButtonDown("Cancel") || InputManager.GetButtonDown("Pause")))
             {
                 InputManager.ConsumeButton("Cancel");
                 InputManager.ConsumeButton("Pause");

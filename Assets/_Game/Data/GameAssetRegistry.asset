@@ -19,6 +19,12 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 178cbbc7f5d8a2346a57979bf3448070, type: 3}
   - id: arena_01
     asset: {fileID: 21300000, guid: 398929e07cf32774180894a3d8acf927, type: 3}
+  - id: chest_closed
+    asset: {fileID: 21300000, guid: c3b5d200b3b74d2468abc66973e458b4, type: 3}
+  - id: chest_highlighted
+    asset: {fileID: 21300000, guid: 51506f0317754fb4a9b9e29ddc79faec, type: 3}
+  - id: chest_opened
+    asset: {fileID: 21300000, guid: 832ac8272f8821a46a0aefa86e5db525, type: 3}
   - id: general_store_interior
     asset: {fileID: 21300000, guid: 265623c560d1eb840bff738c1bac502d, type: 3}
   - id: GUI_0
@@ -97,6 +103,26 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8ce105a276362c54993b9f2dabc2bc4e, type: 3}
   - id: player_m_l1_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
+  - id: con
+    asset: {fileID: 21300000, guid: 4b01cc08772854e4c8c9e8c43ceda8f3, type: 3}
+  - id: def
+    asset: {fileID: 21300000, guid: 86a310e6862c5384196c401c27a6bd62, type: 3}
+  - id: dex
+    asset: {fileID: 21300000, guid: 2244737262707e041bc1c3b3947b491c, type: 3}
+  - id: gold
+    asset: {fileID: 21300000, guid: f165acbe5218c7c41bef65498ebbeb36, type: 3}
+  - id: heal
+    asset: {fileID: 21300000, guid: 1e695a004358402478998a850955f863, type: 3}
+  - id: lck
+    asset: {fileID: 21300000, guid: 2288ef78db6fda540b3335f60d3aa0b0, type: 3}
+  - id: mag
+    asset: {fileID: 21300000, guid: e19a4491f5fa8ae4cbd81e4e55dad124, type: 3}
+  - id: poison
+    asset: {fileID: 21300000, guid: 212cddb1ac7a5744c946b16e07212ef2, type: 3}
+  - id: str
+    asset: {fileID: 21300000, guid: 07ea6f28e9952cb4a91eb57a1d7063d7, type: 3}
+  - id: xp
+    asset: {fileID: 21300000, guid: b59eda771d17a5a4eb273679bba6ec94, type: 3}
   - id: chibi-cursor
     asset: {fileID: 21300000, guid: 6b95bedfe7bbbcb4aab4380448438ddf, type: 3}
   - id: chose_save_slot
@@ -152,6 +178,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 450149720bbcdb24588983f4abb956c1, type: 3}
   - id: player_win
     asset: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+  - id: power_up
+    asset: {fileID: 8300000, guid: df8145186ed68a14c95ab14eb795f153, type: 3}
   - id: selection_made
     asset: {fileID: 8300000, guid: 1be2fcc16ab0da84f99ba7c633037620, type: 3}
   - id: archery_field
@@ -175,6 +203,9 @@ MonoBehaviour:
     asset: {fileID: 6880249474966106816, guid: 1da34531698cbd64abbde06381d51a22, type: 3}
   - id: PlayerMenu
     asset: {fileID: 6951523177587671113, guid: 060837d267208b840886f24bc620e493, type: 3}
+  - id: PowerUpOption
+    asset: {fileID: 5228159149513318820, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
   - id: MenuCursor
     asset: {fileID: 5743983063834753278, guid: 3dea88bb4a5d7f34db445f404da4d38d, type: 3}
   itemRowPrefab: {fileID: 7679988491501550547, guid: 887fa1c10124f2940a07fd9ba88e79bd, type: 3}
+  progressionSchedule: {fileID: 0}

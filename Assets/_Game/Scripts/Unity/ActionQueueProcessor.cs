@@ -9,7 +9,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using PocketSquire.Unity.UI;
-
+using System;
 
 /// <summary>
 /// Manages a queue of game actions and processes them sequentially using coroutines.
@@ -37,6 +37,8 @@ public class ActionQueueProcessor : MonoBehaviour
     public ConfirmationDialog confirmationDialog;
     public GameObject levelUpBackground;
     public Button loot;
+    public TextMeshProUGUI experienceGainedText;
+    public TextMeshProUGUI goldGainedText;
 
     [Header("Audio")]
     public AudioClip crowd_pleased;
@@ -89,6 +91,14 @@ public class ActionQueueProcessor : MonoBehaviour
         // Make the healthbars snap to their current values
         UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameState.Battle.Player1.Health, GameState.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
         UpdateHealth(monsterHealthBarActual, monsterHealthBarGhost, GameState.Battle.Player2.Health, GameState.Battle.Player2.MaxHealth, HealthBarAnimationType.Snap);
+
+        // Update points to be gained
+        if (experienceGainedText != null){
+            experienceGainedText.text = String.Format("+{0}xp", GameState.Battle.Player2.Experience);
+        }
+        if (goldGainedText != null){
+            goldGainedText.text = String.Format("+{0}g", GameState.Battle.Player2.Gold);
+        }
     }
 
     void Update()
@@ -440,26 +450,36 @@ public class ActionQueueProcessor : MonoBehaviour
         var monsterImage = monsterGO.GetComponent<Image>();
         if (monsterImage == null) return;
 
+        var monsterShadow = GameObject.Find("MonsterShadow");
+        if (monsterShadow == null) return;
+
+        var monsterShadowImage = monsterShadow.GetComponent<Image>();
+        if (monsterShadowImage == null) return;
+
         var monsterRect = monsterImage.rectTransform;
 
+        // Show monster fade away
         var deathSeq = DOTween.Sequence();
         deathSeq.AppendCallback(() => {
             string soundId = GameState.Battle.Player2.DefeatSoundId;
-            AudioClip clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
+            var clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
             if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
         });
         deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.OutQuint));
+        deathSeq.Join(monsterShadowImage.DOFade(0f, 0.8f).SetEase(Ease.OutQuint));
         deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
-
         deathSeq.OnComplete(() =>
         {
             SetSprite(playerImg, GameState.Battle.Player1.WinSpriteId);
             if (monsterGO.transform.parent != null)
                 monsterGO.transform.parent.localScale = Vector3.zero;
         });
-
         deathSeq.SetLink(monsterGO);
 
+        AnimatePointsGained(experienceGainedText, 0.1f);
+        AnimatePointsGained(goldGainedText, 0.2f);
+
+        // Play win audio
         if (audioSource != null) audioSource.PlayOneShot(player_win);
 
         if (GameState.Player.CanLevelUp())
@@ -477,6 +497,25 @@ public class ActionQueueProcessor : MonoBehaviour
         } else {
             HandleBattleWin();
         }
+    }
+
+    private void AnimatePointsGained(TextMeshProUGUI textObj, float delay)
+    {
+        // 1. Reset Position and Alpha   
+        textObj.gameObject.SetActive(true);
+        textObj.alpha = 1;
+
+        // 2. Move RELATIVE to startPos
+        // .SetRelative() makes it move +50 from where it currently is
+        textObj.transform.DOLocalMoveY(300f, 1.5f)
+            .SetRelative() 
+            .SetDelay(delay)
+            .SetEase(Ease.OutQuad);
+
+        // 3. Fade out
+        textObj.DOFade(0, 1.5f)
+            .SetDelay(delay)
+            .OnComplete(() => textObj.gameObject.SetActive(false));
     }
 
     private void HandleBattleWin()
