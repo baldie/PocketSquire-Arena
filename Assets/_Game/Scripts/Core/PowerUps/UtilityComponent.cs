@@ -18,6 +18,12 @@ namespace PocketSquire.Arena.Core.PowerUps
 
         public override string UniqueKey => $"UTIL_{UtilityEffect.ToString().ToUpper()}";
 
+        public override string IconId => UtilityEffect switch
+        {
+            UtilityType.PartialHeal => "heal",
+            _ => "heal" // fallback
+        };
+
         public override string DisplayName => $"{GetEffectName()} {RomanNumeral(Rank)}";
 
         public override string Description => 

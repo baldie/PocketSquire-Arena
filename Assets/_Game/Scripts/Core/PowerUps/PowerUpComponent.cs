@@ -21,6 +21,11 @@ namespace PocketSquire.Arena.Core.PowerUps
         public abstract string UniqueKey { get; }
         
         /// <summary>
+        /// Icon sprite ID for GameAssetRegistry lookup (e.g., "str", "gold", "heal").
+        /// </summary>
+        public abstract string IconId { get; }
+        
+        /// <summary>
         /// Human-readable name for UI display.
         /// </summary>
         public abstract string DisplayName { get; }

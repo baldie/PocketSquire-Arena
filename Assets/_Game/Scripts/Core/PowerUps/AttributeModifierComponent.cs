@@ -23,6 +23,17 @@ namespace PocketSquire.Arena.Core.PowerUps
 
         public override string UniqueKey => $"ATTR_{TargetAttribute.ToString().ToUpper()}";
 
+        public override string IconId => TargetAttribute switch
+        {
+            AttributeType.Strength => "str",
+            AttributeType.Constitution => "constitution", // for some reason con.png breaks git
+            AttributeType.Magic => "mag",
+            AttributeType.Dexterity => "dex",
+            AttributeType.Luck => "lck",
+            AttributeType.Defense => "def",
+            _ => "str" // fallback
+        };
+
         public override string DisplayName => $"{TargetAttribute} Boost {RomanNumeral(Rank)}";
 
         public override string Description => 

@@ -1,20 +1,20 @@
 [
     {
         "name": "player_m_l1",
-        "health": 10,
-        "maxHealth": 10,
+        "health": 20,
+        "maxHealth": 20,
         "attackSoundId": "m_physical_attack",
         "defendSoundId": "m_physical_defend",
         "hitSoundId": "m_physical_hit",
         "gender": "m",
         "gold": 100,
         "attributes": {
-            "Strength": 1,
-            "Constitution": 1,
-            "Magic": 1,
-            "Dexterity": 1,
-            "Luck": 1,
-            "Defense": 1
+            "Strength": 5,
+            "Constitution": 5,
+            "Magic": 5,
+            "Dexterity": 5,
+            "Luck": 5,
+            "Defense": 5
         },
         "posX": 35,
         "posY": -150,

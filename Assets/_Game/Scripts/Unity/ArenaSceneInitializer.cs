@@ -12,6 +12,10 @@ public class ArenaSceneInitializer : MonoBehaviour
     [Tooltip("Reference to the ActionQueueProcessor in the scene")]
     public ActionQueueProcessor actionQueueProcessor;
 
+    [Header("Power-Up HUD")]
+    [Tooltip("Reference to the PowerUpHudController in the scene")]
+    public PowerUpHudController powerUpHud;
+
     [Header("Buttons")]
     public Button nextOpponentButton;
     public Button leaveArenaButton;
@@ -66,6 +70,12 @@ public class ArenaSceneInitializer : MonoBehaviour
         if (leaveArenaButton != null)
         {
             leaveArenaButton.onClick.AddListener(() => GoToScene("Town", leaveArenaButton.gameObject));
+        }
+
+        // Populate power-up HUD
+        if (powerUpHud != null && GameState.CurrentRun?.PowerUps != null)
+        {
+            powerUpHud.PopulateHud(GameState.CurrentRun.PowerUps);
         }
     }
 

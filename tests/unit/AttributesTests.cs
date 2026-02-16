@@ -15,8 +15,8 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(attributes.Strength, Is.EqualTo(0));
             Assert.That(attributes.Constitution, Is.EqualTo(0));
-            Assert.That(attributes.Intelligence, Is.EqualTo(0));
-            Assert.That(attributes.Agility, Is.EqualTo(0));
+            Assert.That(attributes.Magic, Is.EqualTo(0));
+            Assert.That(attributes.Dexterity, Is.EqualTo(0));
             Assert.That(attributes.Luck, Is.EqualTo(0));
             Assert.That(attributes.Defense, Is.EqualTo(0));
         }
@@ -30,16 +30,16 @@ namespace PocketSquire.Arena.Tests
             // Act
             attributes.Strength = 10;
             attributes.Constitution = 15;
-            attributes.Intelligence = 12;
-            attributes.Agility = 8;
+            attributes.Magic = 12;
+            attributes.Dexterity = 8;
             attributes.Luck = 5;
             attributes.Defense = 20;
 
             // Assert
             Assert.That(attributes.Strength, Is.EqualTo(10));
             Assert.That(attributes.Constitution, Is.EqualTo(15));
-            Assert.That(attributes.Intelligence, Is.EqualTo(12));
-            Assert.That(attributes.Agility, Is.EqualTo(8));
+            Assert.That(attributes.Magic, Is.EqualTo(12));
+            Assert.That(attributes.Dexterity, Is.EqualTo(8));
             Assert.That(attributes.Luck, Is.EqualTo(5));
             Assert.That(attributes.Defense, Is.EqualTo(20));
         }
@@ -51,8 +51,8 @@ namespace PocketSquire.Arena.Tests
             var attributes = new Attributes();
             attributes.Strength = 5;
             attributes.Constitution = 8;
-            attributes.Intelligence = 6;
-            attributes.Agility = 4;
+            attributes.Magic = 6;
+            attributes.Dexterity = 4;
             attributes.Luck = 3;
             attributes.Defense = 7;
 
@@ -70,8 +70,8 @@ namespace PocketSquire.Arena.Tests
             var attributes = new Attributes();
             attributes.Strength = 5;
             attributes.Constitution = 8;
-            attributes.Intelligence = 6;
-            attributes.Agility = 4;
+            attributes.Magic = 6;
+            attributes.Dexterity = 4;
             attributes.Luck = 3;
             attributes.Defense = 12;
 

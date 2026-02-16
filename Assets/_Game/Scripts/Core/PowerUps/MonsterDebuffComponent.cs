@@ -23,6 +23,17 @@ namespace PocketSquire.Arena.Core.PowerUps
 
         public override string UniqueKey => $"DEBUFF_{TargetAttribute.ToString().ToUpper()}";
 
+        public override string IconId => TargetAttribute switch
+        {
+            DebuffType.Strength => "str",
+            DebuffType.Constitution => "constitution",
+            DebuffType.Magic => "mag",
+            DebuffType.Dexterity => "dex",
+            DebuffType.Luck => "lck",
+            DebuffType.Defense => "def",
+            _ => "str" // fallback
+        };
+
         public override string DisplayName => $"Monster {TargetAttribute} Curse {RomanNumeral(Rank)}";
 
         public override string Description => 

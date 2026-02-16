@@ -24,6 +24,13 @@ namespace PocketSquire.Arena.Core.PowerUps
 
         public override string UniqueKey => IsFlatBonus ? "COIN_FALLBACK" : $"LOOT_{TargetLoot.ToString().ToUpper()}";
 
+        public override string IconId => TargetLoot switch
+        {
+            LootType.Gold => "gold",
+            LootType.Experience => "xp",
+            _ => "gold" // fallback
+        };
+
         public override string DisplayName => 
             IsFlatBonus ? "Single Coin" : $"{TargetLoot} Bonus {RomanNumeral(Rank)}";
 

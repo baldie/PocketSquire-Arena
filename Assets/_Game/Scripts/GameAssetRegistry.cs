@@ -42,6 +42,13 @@ public class GameAssetRegistry : ScriptableObject {
         return _spriteCache.GetValueOrDefault(id);
     }
 
+    public void LogAllSprites() {
+        Debug.Log("SpritesCount: " + sprites.Count);
+        foreach (var sprite in sprites) {
+            Debug.Log($"{sprite.id}: {sprite.asset}");
+        }
+    }
+
     public AudioClip GetSound(string id) {
         _audioCache ??= sounds.ToDictionary(x => x.id, x => x.asset);
         return _audioCache.GetValueOrDefault(id);
@@ -139,19 +146,32 @@ public class GameAssetRegistry : ScriptableObject {
     [UnityEditor.MenuItem("Tools/Populate Asset Registry")]
     public static void PopulateRegistryStatic()
     {
-        var guids = UnityEditor.AssetDatabase.FindAssets("t:GameAssetRegistry");
-        if (guids.Length == 0) 
+        // Try to find the one in Resources first, as that's what's used at runtime
+        GameAssetRegistry registry = Resources.Load<GameAssetRegistry>("GameAssetRegistry");
+        
+        if (registry == null)
         {
-            Debug.LogError("Could not find GameAssetRegistry asset");
-            return;
-        }
+            var guids = UnityEditor.AssetDatabase.FindAssets("t:GameAssetRegistry");
+            if (guids.Length == 0) 
+            {
+                Debug.LogError("Could not find any GameAssetRegistry asset. Please create one in a Resources folder.");
+                return;
+            }
 
-        string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-        var registry = UnityEditor.AssetDatabase.LoadAssetAtPath<GameAssetRegistry>(path);
+            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+            registry = UnityEditor.AssetDatabase.LoadAssetAtPath<GameAssetRegistry>(path);
+            
+            if (guids.Length > 1)
+            {
+                Debug.LogWarning($"Multiple GameAssetRegistry assets found. Populating the first one found at: {path}. " +
+                                 "Consider deleting redundant registries.");
+            }
+        }
         
         if (registry != null)
         {
              registry.PopulateAll();
+             Debug.Log($"Successfully populated GameAssetRegistry at {UnityEditor.AssetDatabase.GetAssetPath(registry)}");
         }
     }
 #endif

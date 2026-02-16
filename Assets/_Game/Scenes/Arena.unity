@@ -1806,6 +1806,7 @@ GameObject:
   - component: {fileID: 405550930}
   - component: {fileID: 405550933}
   - component: {fileID: 405550931}
+  - component: {fileID: 405550934}
   m_Layer: 5
   m_Name: PowerUps
   m_TagString: Untagged
@@ -1868,6 +1869,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405550929}
   m_CullTransparentMesh: 1
+--- !u!114 &405550934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405550929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b706c6c0e8509fa428271963a6c87b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpHudController
+  playerPowerUpsParent: {fileID: 1272416026}
+  monsterPowerUpsParent: {fileID: 1243379476}
 --- !u!1 &432045509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,6 +2006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   actionQueueProcessor: {fileID: 1505157162}
+  powerUpHud: {fileID: 405550934}
   nextOpponentButton: {fileID: 683617310}
   leaveArenaButton: {fileID: 1253782440}
 --- !u!1 &484207390

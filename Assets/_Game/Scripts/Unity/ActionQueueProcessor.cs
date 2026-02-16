@@ -17,9 +17,7 @@ using System;
 /// </summary>
 public class ActionQueueProcessor : MonoBehaviour
 {
-    [Tooltip("Reference to the game asset registry for loading sounds")]
-    public GameAssetRegistry assetRegistry;
-    
+   
     [Tooltip("AudioSource to play sound effects")]
     public AudioSource audioSource;
 
@@ -51,7 +49,7 @@ public class ActionQueueProcessor : MonoBehaviour
     private bool _isWaitingForUser = false;
     private bool _yieldCancelled = false;
     private enum HealthBarAnimationType { Snap, Shake, None }
-
+    private GameAssetRegistry assetRegistry;
 
     /// <summary>
     /// Event fired when an action completes. Can be used to trigger turn changes.
@@ -83,6 +81,8 @@ public class ActionQueueProcessor : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
         audioSource.PlayOneShot(crowd_pleased);
+
+        assetRegistry = GameAssetRegistry.Instance;
 
         // Cache GameObjects
         _playerGO = GameObject.Find(playerObjectName);
