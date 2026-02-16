@@ -29,6 +29,7 @@ public class LootScript : MonoBehaviour
 
     private Action _onLootCompleted;
     private Button chestButton;
+    private PowerUp _selectedPowerUp;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -139,6 +140,9 @@ public class LootScript : MonoBehaviour
 
     private void SelectPowerUp(PowerUp powerUp)
     {
+        // Store selected power-up for animation
+        _selectedPowerUp = powerUp;
+
         // Add to collection
         if (GameState.CurrentRun != null)
         {
@@ -183,7 +187,10 @@ public class LootScript : MonoBehaviour
             }
         });
 
-        // 4. Final Cleanup & Invoke
+        // 4. Animate the power-up icon appearing in the power-up hud
+        seq.AppendCallback(() => CreateAndAnimatePowerUpIcon());
+
+        // 5. Final Cleanup & Invoke
         seq.OnComplete(() => {
             playerImage.color = Color.white;
             _onLootCompleted?.Invoke();
@@ -194,5 +201,68 @@ public class LootScript : MonoBehaviour
     {
         if (GameState.Player == null || GameState.Player.MaxHealth == 0) return 1.0f;
         return (float)GameState.Player.Health / GameState.Player.MaxHealth;
+    }
+
+    /// <summary>
+    /// Creates and animates a power-up icon appearing in the PowerUpHud.
+    /// Only applies to player power-ups (not monster debuffs).
+    /// </summary>
+    private void CreateAndAnimatePowerUpIcon()
+    {
+        if (_selectedPowerUp == null || _selectedPowerUp.Component.ComponentType == PowerUpComponentType.MonsterDebuff)
+        {
+            return; // Skip animation for monster debuffs
+        }
+
+        // Find the PowerUpHudController in the scene
+        var hudController = FindFirstObjectByType<PowerUpHudController>();
+        if (hudController == null || hudController.playerPowerUpsParent == null)
+        {
+            Debug.LogWarning("[LootScript] PowerUpHudController or playerPowerUpsParent not found");
+            return;
+        }
+
+        Transform parent = hudController.playerPowerUpsParent;
+
+        // Create the icon GameObject (reusing logic from PowerUpHudController)
+        var iconObj = new GameObject($"PowerUpIcon_{_selectedPowerUp.UniqueKey}");
+        iconObj.transform.SetParent(parent, false);
+
+        // Add and configure RectTransform
+        var rectTransform = iconObj.AddComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(106, 106);
+
+        // Add and configure Image
+        var image = iconObj.AddComponent<Image>();
+        var sprite = GameAssetRegistry.Instance.GetSprite(_selectedPowerUp.Component.IconId);
+        if (sprite != null)
+        {
+            image.sprite = sprite;
+        }
+        else
+        {
+            Debug.LogWarning($"[LootScript] Icon sprite '{_selectedPowerUp.Component.IconId}' not found for {_selectedPowerUp.DisplayName}");
+        }
+
+        // Add PowerUpSelector for tooltip/description
+        var selector = iconObj.AddComponent<PowerUpSelector>();
+        selector.Initialize(_selectedPowerUp);
+
+        // Add CanvasGroup for fade animation
+        var canvasGroup = iconObj.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+
+        // Set initial scale to zero for animation
+        iconObj.transform.localScale = Vector3.zero;
+
+        // Animate the icon appearing
+        Sequence iconSeq = DOTween.Sequence();
+        iconSeq.Append(iconObj.transform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack))
+               .Join(canvasGroup.DOFade(1, 0.2f))
+               .Append(iconObj.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.5f, 10, 1))
+               .OnComplete(() => {
+                   // Add a subtle idle "breath" animation
+                   iconObj.transform.DOScale(1.05f, 1.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+               });
     }
 }

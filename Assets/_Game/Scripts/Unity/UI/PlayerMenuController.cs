@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.PowerUps;
 using PocketSquire.Arena.Unity.UI;
 
 namespace PocketSquire.Unity.UI
@@ -278,12 +279,37 @@ namespace PocketSquire.Unity.UI
         {
             if (player.Attributes == null) return;
 
-            if (strText != null) strText.text = $"STR: {player.Attributes.Strength}";
-            if (conText != null) conText.text = $"CON: {player.Attributes.Constitution}";
-            if (intText != null) intText.text = $"MAG: {player.Attributes.Magic}";
-            if (wisText != null) wisText.text = $"DEX: {player.Attributes.Dexterity}";
-            if (lckText != null) lckText.text = $"LCK: {player.Attributes.Luck}";
-            if (defText != null) defText.text = $"DEF: {player.Attributes.Defense}";
+            Attributes effectiveAttributes = player.Attributes;
+
+            // Calculate effective attributes if a run is ongoing
+            if (GameState.CurrentRun != null && GameState.CurrentRun.State == Run.RunState.Ongoing)
+            {
+                var wrapper = new PlayerWithPowerUps(player, GameState.CurrentRun.PowerUps, GameState.CurrentRun.ArenaRank);
+                effectiveAttributes = wrapper.EffectiveAttributes;
+            }
+
+            SetAttributeText(strText, "STR", player.Attributes.Strength, effectiveAttributes.Strength);
+            SetAttributeText(conText, "CON", player.Attributes.Constitution, effectiveAttributes.Constitution);
+            SetAttributeText(intText, "MAG", player.Attributes.Magic, effectiveAttributes.Magic);
+            SetAttributeText(wisText, "DEX", player.Attributes.Dexterity, effectiveAttributes.Dexterity);
+            SetAttributeText(lckText, "LCK", player.Attributes.Luck, effectiveAttributes.Luck);
+            SetAttributeText(defText, "DEF", player.Attributes.Defense, effectiveAttributes.Defense);
+        }
+
+        private void SetAttributeText(TextMeshProUGUI textComponent, string label, int baseValue, int effectiveValue)
+        {
+            if (textComponent == null) return;
+
+            textComponent.text = $"{label}: {effectiveValue}";
+
+            if (effectiveValue > baseValue)
+            {
+                textComponent.color = new Color32(0, 141, 0, 255); // readable green
+            }
+            else
+            {
+                textComponent.color = Color.white;
+            }
         }
 
         private void UpdateInventory(Player player)

@@ -37,7 +37,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string Description =>
             IsFlatBonus 
                 ? "Grants +1 gold." 
-                : $"Increases {TargetLoot} rewards by {ComputeValue(1):F0}% (scales with arena level).";
+                : $"Increases {TargetLoot} rewards by {ComputeValue(1):F0}%.";
 
         public LootModifierComponent(
             LootType targetLoot, 

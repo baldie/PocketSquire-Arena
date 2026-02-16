@@ -37,7 +37,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string DisplayName => $"Monster {TargetAttribute} Curse {RomanNumeral(Rank)}";
 
         public override string Description => 
-            $"Reduces monster {TargetAttribute} by {ComputeValue(1):F0} at fight start (scales with arena level).";
+            $"Reduces monster {TargetAttribute} by {ComputeValue(1):F0} at fight start.";
 
         public MonsterDebuffComponent(
             DebuffType targetAttribute, 

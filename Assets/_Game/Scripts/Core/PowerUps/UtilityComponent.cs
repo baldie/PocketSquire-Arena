@@ -27,7 +27,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string DisplayName => $"{GetEffectName()} {RomanNumeral(Rank)}";
 
         public override string Description => 
-            $"Restores {ComputeValue(1):F0}% of max health after each battle (scales with arena level).";
+            $"Restores {ComputeValue(1):F0}% of max health after each battle.";
 
         public UtilityComponent(
             UtilityType utilityEffect, 
