@@ -21,6 +21,8 @@ namespace PocketSquire.Arena.Core.PowerUps
 
         public DebuffType TargetAttribute { get; private set; }
 
+        public Rarity Rarity { get; private set; }
+
         public override string UniqueKey => $"DEBUFF_{TargetAttribute.ToString().ToUpper()}";
 
         public override string IconId => TargetAttribute switch
@@ -37,7 +39,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string DisplayName => $"Monster {TargetAttribute} Curse {RomanNumeral(Rank)}";
 
         public override string Description => 
-            $"Reduces monster {TargetAttribute} by {ComputeValue(1):F0} at fight start.";
+            $"({Rarity.ToString()}) Reduces monster {TargetAttribute} by {ComputeValue(1):F0} at fight start.";
 
         public MonsterDebuffComponent(
             DebuffType targetAttribute, 
@@ -47,6 +49,7 @@ namespace PocketSquire.Arena.Core.PowerUps
             : base(PowerUpComponentType.MonsterDebuff, baseValue, rarity, rank)
         {
             TargetAttribute = targetAttribute;
+            Rarity = rarity;
         }
 
         public override void ApplyToMonster(Monster monster, int arenaLevel)

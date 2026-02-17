@@ -9,8 +9,11 @@ public class PowerUpButtonScript : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descriptionText;
-    public Image iconImage; // Placeholder for now
+    public Transform iconPlaceholder;
     public Button selectButton;
+
+    [Header("Prefab References")]
+    public GameObject powerUpIconPrefab;
 
     private PowerUp _powerUp;
     private Action<PowerUp> _onSelected;
@@ -33,31 +36,45 @@ public class PowerUpButtonScript : MonoBehaviour
         {
             nameText.text = powerUp.DisplayName;
             
-            // Apply rarity-based color tint
-            nameText.color = powerUp.Component.Rarity switch
-            {
-                Rarity.Rare => new Color(0.3f, 0.5f, 1f),        // Blue
-                Rarity.Epic => new Color(0.7f, 0.3f, 1f),        // Purple
-                Rarity.Legendary => new Color(1f, 0.6f, 0f),     // Orange
-                _ => Color.white                                  // Common (white)
-            };
+            // Apply rarity-based color tint using shared helper
+            nameText.color = PowerUpIconController.GetRarityColor(powerUp.Component.Rarity);
         }
         
         if (descriptionText != null) descriptionText.text = powerUp.Description;
         
-        // Load icon from GameAssetRegistry
-        if (iconImage != null)
+        // Instantiate PowerUpIcon prefab into placeholder
+        if (iconPlaceholder != null && powerUpIconPrefab != null)
         {
-            var sprite = GameAssetRegistry.Instance.GetSprite(powerUp.Component.IconId);
-            if (sprite != null)
+            // Clear any existing icon
+            foreach (Transform child in iconPlaceholder)
             {
-                iconImage.sprite = sprite;
+                Destroy(child.gameObject);
             }
-            else
+
+            // Create new icon using shared method
+            var iconObj = PowerUpHudController.CreatePowerUpIcon(powerUpIconPrefab, powerUp, iconPlaceholder);
+            
+            // Make the icon clickable - clicking it should trigger the parent button
+            if (iconObj != null && selectButton != null)
             {
-                GameAssetRegistry.Instance.LogAllSprites();
-                Debug.LogWarning($"[PowerUpButtonScript] Icon sprite '{powerUp.Component.IconId}' not found in GameAssetRegistry");
+                var iconButton = iconObj.GetComponent<Button>();
+                if (iconButton == null)
+                {
+                    iconButton = iconObj.AddComponent<Button>();
+                    iconButton.transition = Selectable.Transition.None; // No visual feedback on the icon itself
+                }
+                
+                // Forward clicks on the icon to the parent button
+                iconButton.onClick.AddListener(() => selectButton.onClick.Invoke());
             }
+        }
+        else if (iconPlaceholder == null)
+        {
+            Debug.LogWarning("[PowerUpButtonScript] iconPlaceholder is not assigned");
+        }
+        else if (powerUpIconPrefab == null)
+        {
+            Debug.LogWarning("[PowerUpButtonScript] powerUpIconPrefab is not assigned");
         }
 
         // Initialize PowerUpSelector

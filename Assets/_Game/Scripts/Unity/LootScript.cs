@@ -27,6 +27,10 @@ public class LootScript : MonoBehaviour
     public PowerUpButtonScript powerUpOptionB;
     public PowerUpButtonScript powerUpOptionC;
 
+    [Header("PowerUp Icon Prefab")]
+    [Tooltip("PowerUpIcon prefab to instantiate when animating power-up selection")]
+    public GameObject powerUpIconPrefab;
+
     private Action _onLootCompleted;
     private Button chestButton;
     private PowerUp _selectedPowerUp;
@@ -224,29 +228,13 @@ public class LootScript : MonoBehaviour
 
         Transform parent = hudController.playerPowerUpsParent;
 
-        // Create the icon GameObject (reusing logic from PowerUpHudController)
-        var iconObj = new GameObject($"PowerUpIcon_{_selectedPowerUp.UniqueKey}");
-        iconObj.transform.SetParent(parent, false);
-
-        // Add and configure RectTransform
-        var rectTransform = iconObj.AddComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(106, 106);
-
-        // Add and configure Image
-        var image = iconObj.AddComponent<Image>();
-        var sprite = GameAssetRegistry.Instance.GetSprite(_selectedPowerUp.Component.IconId);
-        if (sprite != null)
+        // Create the icon using the shared prefab-based method
+        var iconObj = PowerUpHudController.CreatePowerUpIcon(powerUpIconPrefab, _selectedPowerUp, parent);
+        if (iconObj == null)
         {
-            image.sprite = sprite;
+            Debug.LogWarning("[LootScript] Failed to create power-up icon");
+            return;
         }
-        else
-        {
-            Debug.LogWarning($"[LootScript] Icon sprite '{_selectedPowerUp.Component.IconId}' not found for {_selectedPowerUp.DisplayName}");
-        }
-
-        // Add PowerUpSelector for tooltip/description
-        var selector = iconObj.AddComponent<PowerUpSelector>();
-        selector.Initialize(_selectedPowerUp);
 
         // Add CanvasGroup for fade animation
         var canvasGroup = iconObj.AddComponent<CanvasGroup>();

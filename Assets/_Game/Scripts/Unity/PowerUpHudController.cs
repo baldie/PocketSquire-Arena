@@ -4,6 +4,10 @@ using PocketSquire.Arena.Core.PowerUps;
 
 public class PowerUpHudController : MonoBehaviour
 {
+    [Header("Prefab Reference")]
+    [Tooltip("PowerUpIcon prefab to instantiate for each power-up")]
+    public GameObject powerUpIconPrefab;
+
     [Header("Layout Group Parents")]
     [Tooltip("Parent for player-focused power-ups (buffs, loot, utility)")]
     public Transform playerPowerUpsParent;
@@ -34,43 +38,53 @@ public class PowerUpHudController : MonoBehaviour
                 ? monsterPowerUpsParent
                 : playerPowerUpsParent;
 
-            CreatePowerUpIcon(powerUp, targetParent);
+            CreatePowerUpIcon(powerUpIconPrefab, powerUp, targetParent);
         }
     }
 
-    private void CreatePowerUpIcon(PowerUp powerUp, Transform parent)
+    /// <summary>
+    /// Creates a PowerUp icon by instantiating the prefab and configuring it.
+    /// </summary>
+    /// <param name="prefab">PowerUpIcon prefab to instantiate</param>
+    /// <param name="powerUp">PowerUp data to configure the icon with</param>
+    /// <param name="parent">Parent transform to attach the icon to</param>
+    /// <returns>The instantiated icon GameObject</returns>
+    public static GameObject CreatePowerUpIcon(GameObject prefab, PowerUp powerUp, Transform parent)
     {
-        if (parent == null)
+        if (prefab == null)
         {
-            Debug.LogWarning($"[PowerUpHudController] Parent is null for power-up {powerUp.DisplayName}");
-            return;
+            Debug.LogError("[PowerUpHudController] PowerUpIcon prefab is null");
+            return null;
         }
 
-        // Create GameObject with Image component
-        var iconObj = new GameObject($"PowerUpIcon_{powerUp.UniqueKey}");
-        iconObj.transform.SetParent(parent, false);
-
-        // Add and configure RectTransform
-        var rectTransform = iconObj.AddComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(106, 106);
-
-        // Add and configure Image
-        var image = iconObj.AddComponent<Image>();
-        var sprite = GameAssetRegistry.Instance.GetSprite(powerUp.Component.IconId);
-        
-        if (sprite != null)
+        if (parent == null)
         {
-            image.sprite = sprite;
+            Debug.LogWarning($"[PowerUpHudController] Parent is null for power-up {powerUp?.DisplayName}");
+            return null;
+        }
+
+        if (powerUp == null)
+        {
+            Debug.LogWarning("[PowerUpHudController] PowerUp is null");
+            return null;
+        }
+
+        // Instantiate the prefab
+        var iconObj = Instantiate(prefab, parent, false);
+        iconObj.name = $"PowerUpIcon_{powerUp.UniqueKey}";
+
+        // Get the PowerUpIconController and configure it
+        var controller = iconObj.GetComponent<PowerUpIconController>();
+        if (controller != null)
+        {
+            controller.Configure(powerUp);
         }
         else
         {
-            GameAssetRegistry.Instance.LogAllSprites();
-            Debug.LogWarning($"[PowerUpHudController] Icon sprite '{powerUp.Component.IconId}' not found for {powerUp.DisplayName}");
+            Debug.LogError("[PowerUpHudController] PowerUpIconController component not found on prefab");
         }
 
-        // Add PowerUpSelector for tooltip/description
-        var selector = iconObj.AddComponent<PowerUpSelector>();
-        selector.Initialize(powerUp);
+        return iconObj;
     }
 
     private void ClearParent(Transform parent)

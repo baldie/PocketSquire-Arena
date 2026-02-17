@@ -19,6 +19,8 @@ namespace PocketSquire.Arena.Core.PowerUps
             Defense
         }
 
+        public Rarity Rarity { get; private set; }
+
         public AttributeType TargetAttribute { get; private set; }
 
         public override string UniqueKey => $"ATTR_{TargetAttribute.ToString().ToUpper()}";
@@ -37,7 +39,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string DisplayName => $"{TargetAttribute} Boost {RomanNumeral(Rank)}";
 
         public override string Description => 
-            $"Increases {TargetAttribute} by {ComputeValue(1):F0}.";
+            $"({Rarity.ToString()}) Increases {TargetAttribute} by {ComputeValue(1):F0}.";
 
         public AttributeModifierComponent(
             AttributeType targetAttribute, 
@@ -47,6 +49,7 @@ namespace PocketSquire.Arena.Core.PowerUps
             : base(PowerUpComponentType.AttributeModifier, baseValue, rarity, rank)
         {
             TargetAttribute = targetAttribute;
+            Rarity = rarity;
         }
 
         /// <summary>

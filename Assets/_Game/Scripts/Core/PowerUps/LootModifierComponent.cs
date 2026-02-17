@@ -22,6 +22,8 @@ namespace PocketSquire.Arena.Core.PowerUps
         /// </summary>
         public bool IsFlatBonus { get; private set; }
 
+        public Rarity Rarity { get; private set; }
+
         public override string UniqueKey => IsFlatBonus ? "COIN_FALLBACK" : $"LOOT_{TargetLoot.ToString().ToUpper()}";
 
         public override string IconId => TargetLoot switch
@@ -37,7 +39,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         public override string Description =>
             IsFlatBonus 
                 ? "Grants +1 gold." 
-                : $"Increases {TargetLoot} rewards by {ComputeValue(1):F0}%.";
+                : $"({Rarity.ToString()}) Increases {TargetLoot} rewards by {ComputeValue(1):F0}%.";
 
         public LootModifierComponent(
             LootType targetLoot, 
@@ -49,6 +51,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         {
             TargetLoot = targetLoot;
             IsFlatBonus = isFlatBonus;
+            Rarity = rarity;
         }
 
         /// <summary>
