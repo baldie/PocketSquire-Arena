@@ -18,7 +18,9 @@ namespace PocketSquire.Arena.Core
             if (player1 == null) throw new ArgumentNullException(nameof(player1));
             if (player2 == null) throw new ArgumentNullException(nameof(player2));
             this.Player1 = player1;
+            this.Player1.IsDefending = false;
             this.Player2 = player2;
+            this.Player2.IsDefending = false;
             CurrentTurn = new Turn(player1, player2);
         }
 

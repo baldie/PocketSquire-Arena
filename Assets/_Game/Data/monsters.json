@@ -10,7 +10,7 @@
         "specialAttackSoundId": "TrainingDummySpecialAttack",
         "defendSoundId": "GenericDefend",
         "hitSoundId": "GenericHit",
-        "defeatSoundId": "TrainingDummyDefeat",
+        "defeatSoundId": "GenericDefeat",
         "attributes": {
             "Strength": 1,
             "Constitution": 10,
@@ -37,7 +37,7 @@
         "specialAttackSoundId": "MushroomMarauderSpecialAttack",
         "defendSoundId": "GenericDefend",
         "hitSoundId": "GenericHit",
-        "defeatSoundId": "MushroomMarauderDefeat",
+        "defeatSoundId": "GenericDefeat",
         "attributes": {
             "Strength": 3,
             "Constitution": 10,
@@ -63,7 +63,7 @@
         "specialAttackSoundId": "MushroomMarauderSpecialAttack",
         "defendSoundId": "GenericDefend",
         "hitSoundId": "GenericHit",
-        "defeatSoundId": "MushroomMarauderDefeat",
+        "defeatSoundId": "GenericDefeat",
         "attributes": {
             "Strength": 3,
             "Constitution": 10,

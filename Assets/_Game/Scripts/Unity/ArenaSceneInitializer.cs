@@ -36,7 +36,6 @@ public class ArenaSceneInitializer : MonoBehaviour
             GameWorld.PerkPools = GameAssetRegistry.Instance.progressionSchedule.RuntimePerkPools;
         }
 
-
         // Here we go!
         if (GameState.CurrentRun == null || GameState.CurrentRun.State == Run.RunState.NoStarted) {
             GameState.CurrentRun = Run.StartNewRun();
@@ -54,7 +53,6 @@ public class ArenaSceneInitializer : MonoBehaviour
         {
             Debug.Log("[ArenaSceneInitializer] Skipping save for testing mode (Unknown slot)");
         }
-
         
         // Subscribe to action completion to handle turn changes
         if (actionQueueProcessor != null)

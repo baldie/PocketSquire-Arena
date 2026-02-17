@@ -146,14 +146,14 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
   - id: GenericAttack2
     asset: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  - id: GenericDefeat
+    asset: {fileID: 8300000, guid: 1dfc82cb4bb08c74c8cb0e78934a0b06, type: 3}
   - id: GenericDefend
     asset: {fileID: 8300000, guid: ed92c14aef8d34d4bbad1f12c8f034af, type: 3}
   - id: GenericHit
     asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}
   - id: MushroomMarauderSpecialAttack
     asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
-  - id: TrainingDummyDefeat
-    asset: {fileID: 8300000, guid: afdeb4842286297449e992dd991d3c88, type: 3}
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
   - id: m_physical_defend

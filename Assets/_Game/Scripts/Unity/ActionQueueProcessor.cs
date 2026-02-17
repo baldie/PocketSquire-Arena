@@ -457,29 +457,46 @@ public class ActionQueueProcessor : MonoBehaviour
 
         var monsterRect = monsterImage.rectTransform;
 
-        // Show monster fade away
-        var deathSeq = DOTween.Sequence();
-        deathSeq.AppendCallback(() => {
+        var playerWinSeq = DOTween.Sequence();
+
+        // 1. Monster Dies (Fade & Move)
+        float fadeTime = 0.8f;
+        playerWinSeq.AppendCallback(() => {
             string soundId = GameState.Battle.Player2.DefeatSoundId;
             var clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
             if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
         });
-        deathSeq.Append(monsterImage.DOFade(0f, 0.8f).SetEase(Ease.OutQuint));
-        deathSeq.Join(monsterShadowImage.DOFade(0f, 0.8f).SetEase(Ease.OutQuint));
-        deathSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, 1.8f, true));
-        deathSeq.OnComplete(() =>
-        {
+        playerWinSeq.Append(monsterImage.DOFade(0f, fadeTime));
+        playerWinSeq.Join(monsterShadowImage.DOFade(0f, fadeTime));
+        playerWinSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, fadeTime));
+
+        // 2. THE FIX: Add a small pause (0.2s - 0.5s) so the monster is gone 
+        // before the player starts celebrating.
+        playerWinSeq.AppendInterval(0.3f);
+
+        // 3. Player Victory Pose
+        playerWinSeq.AppendCallback(() => {
+            if (audioSource != null && player_win != null) audioSource.PlayOneShot(player_win);
             SetSprite(playerImg, GameState.Battle.Player1.WinSpriteId);
+            
+            // Disable the monster container
             if (monsterGO.transform.parent != null)
                 monsterGO.transform.parent.localScale = Vector3.zero;
         });
-        deathSeq.SetLink(monsterGO);
+
+        // 4. THE HOLD: Keep the victory pose on screen for a moment 
+        // before whatever happens next (like loading a menu)
+        playerWinSeq.AppendInterval(2.0f); 
+
+        playerWinSeq.OnComplete(() => {
+            // Trigger the "Return to Map" or "Show Rewards" logic here
+            Debug.Log("Sequence Finished - Moving to next screen.");
+        });
+
+        playerWinSeq.SetLink(monsterGO);
 
         AnimatePointsGained(experienceGainedText, 0.1f);
         AnimatePointsGained(goldGainedText, 0.2f);
-
-        // Play win audio
-        if (audioSource != null) audioSource.PlayOneShot(player_win);
 
         if (GameState.Player.CanLevelUp())
         {
