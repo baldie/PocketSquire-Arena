@@ -136,19 +136,19 @@ namespace PocketSquire.Unity.UI
 
         private void Update()
         {
-            if (InputManager.GetButtonDown("Inventory"))
+            if (GameInput.Instance.GetButtonDown(GameInput.Instance.InventoryAction))
             {
                 if (isOpen) 
                 {
-                    InputManager.ConsumeButton("Pause");
+                    GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
                     Close();
                 }
                 else Open();
             }
-            else if (isOpen && InputManager.GetButtonDown("Cancel"))
+            else if (isOpen && GameInput.Instance.GetButtonDown(GameInput.Instance.CancelAction))
             {
-                InputManager.ConsumeButton("Pause");
-                InputManager.ConsumeButton("Cancel");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
                 Close();
             }
 

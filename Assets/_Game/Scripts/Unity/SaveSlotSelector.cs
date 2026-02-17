@@ -201,12 +201,12 @@ namespace PocketSquire.Unity
 
         private void Update()
         {
-            if (InputManager.GetButtonDown("Cancel"))
+            if (GameInput.Instance.GetButtonDown(GameInput.Instance.CancelAction))
             {
                 if (confirmationDialog != null && confirmationDialog.gameObject.activeSelf)
                 {
                     confirmationDialog.Cancel();
-                    InputManager.ConsumeButton("Cancel");
+                    GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
                 }
                 else
                 {

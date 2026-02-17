@@ -64,10 +64,10 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Update()
         {
-            if (IsOpen && InputManager.GetButtonDown("Cancel"))
+            if (IsOpen && GameInput.Instance.GetButtonDown(GameInput.Instance.CancelAction))
             {
-                InputManager.ConsumeButton("Cancel");
-                InputManager.ConsumeButton("Pause");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
                 Close();
             }
         }

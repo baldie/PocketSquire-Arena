@@ -13,7 +13,7 @@
 ## Input Handling
 - **Pattern**: Using legacy `Input` for buttons/axes (`Input.GetButtonDown`).
 - **Cause**: The legacy Input Manager is deprecated and being replaced by the Unity Input System package.
-- **Solution**: Use `InputManager` wrapper (or direct Input System API `Gamepad.current`, etc.) which leverages `com.unity.inputsystem`.
+- **Solution**: NEVER use `Input.Get...` or custom string-based managers. Use `UnityEngine.InputSystem` actions (`InputAction.WasPressedThisFrame()`) via a typed wrapper like `GameInput`.
 
 ## C# Features
 - **Pattern**: Using nullable reference types (`string?`) without enabling the feature.

@@ -75,10 +75,10 @@ namespace PocketSquire.Unity.UI
         private void Update()
         {
             // Allow Cancel or Pause (Escape) input to dismiss the dialog
-            if (gameObject.activeSelf && (InputManager.GetButtonDown("Cancel") || InputManager.GetButtonDown("Pause")))
+            if (gameObject.activeSelf && (GameInput.Instance.GetButtonDown(GameInput.Instance.CancelAction) || GameInput.Instance.GetButtonDown(GameInput.Instance.PauseAction)))
             {
-                InputManager.ConsumeButton("Cancel");
-                InputManager.ConsumeButton("Pause");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
                 Cancel();
             }
         }

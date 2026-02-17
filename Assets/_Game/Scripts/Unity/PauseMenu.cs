@@ -20,10 +20,11 @@ namespace PocketSquire.Unity
         void Update()
         {
             // 1. Toggle Pause (Escape Key OR Gamepad Start)
-            if (InputManager.GetButtonDown("Pause")) 
+            // 1. Toggle Pause (Escape Key OR Gamepad Start)
+            if (GameInput.Instance.GetButtonDown(GameInput.Instance.PauseAction)) 
             {
-                InputManager.ConsumeButton("Pause");
-                InputManager.ConsumeButton("Cancel");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
                 if (isPaused)
                 {
                     Resume();
@@ -35,10 +36,10 @@ namespace PocketSquire.Unity
             }
             // 2. Allow "B" button (Cancel) to close the menu only, 
             // but only if we didn't just handle the Pause input
-            else if (isPaused && InputManager.GetButtonDown("Cancel"))
+            else if (isPaused && GameInput.Instance.GetButtonDown(GameInput.Instance.CancelAction))
             {
-                InputManager.ConsumeButton("Pause");
-                InputManager.ConsumeButton("Cancel");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
                 Resume();
             }
         }
@@ -146,8 +147,8 @@ namespace PocketSquire.Unity
             var playerMenu = FindFirstObjectByType<PlayerMenuController>();
             if (playerMenu != null && playerMenu.IsOpen)
             {
-                InputManager.ConsumeButton("Pause");
-                InputManager.ConsumeButton("Cancel");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
                 playerMenu.Close();
                 return;
             }
@@ -156,8 +157,8 @@ namespace PocketSquire.Unity
             var shopMenu = FindFirstObjectByType<ShopController>();
             if (shopMenu != null && shopMenu.IsOpen)
             {
-                InputManager.ConsumeButton("Pause");
-                InputManager.ConsumeButton("Cancel");
+                GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
+                GameInput.Instance.ConsumeButton(GameInput.Instance.CancelAction);
                 shopMenu.Close();
                 return;
             }
