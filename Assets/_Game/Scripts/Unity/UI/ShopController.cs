@@ -24,9 +24,6 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private Transform shopScrollContent;
         [SerializeField] private Button doneButton;
 
-        [Tooltip("Reference to the game asset registry for loading sounds")]
-        public GameAssetRegistry assetRegistry;
-
         [Header("Inventory Display")]
         [SerializeField] private TextMeshProUGUI inInventoryLabel;
         [SerializeField] private TextMeshProUGUI inventoryCountText;
@@ -251,7 +248,7 @@ namespace PocketSquire.Arena.Unity.UI
             // Play coins sound effect
             if (audioSource != null)
             {
-                var coinsClip = assetRegistry?.GetSound("coin_spend");
+                var coinsClip = GameAssetRegistry.Instance.GetSound("coin_spend");
                 if (coinsClip != null)
                 {
                     audioSource.PlayOneShot(coinsClip);
