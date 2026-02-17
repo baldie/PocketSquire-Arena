@@ -29,6 +29,10 @@ public class PowerUpIconController : MonoBehaviour
     [Tooltip("Indicator icon shown for Monster Debuffs (Curses)")]
     public GameObject curseIndicator;
 
+    [Header("Materials")]
+    [Tooltip("Material to use for grayscale effect (for monster debuffs)")]
+    public Material grayscaleMaterial;
+
     /// <summary>
     /// Configures this icon with the given PowerUp data.
     /// Sets rarity background color, icon sprite, rank visibility, and PowerUpSelector.
@@ -69,11 +73,11 @@ public class PowerUpIconController : MonoBehaviour
             // Apply grey tint for monster debuffs
             if (isMonsterDebuff)
             {
-                powerUpIconImage.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                powerUpIconImage.material = grayscaleMaterial;
             }
             else
             {
-                powerUpIconImage.color = Color.white;
+                powerUpIconImage.material = null;
             }
         }
         else
