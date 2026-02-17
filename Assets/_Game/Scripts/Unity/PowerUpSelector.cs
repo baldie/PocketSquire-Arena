@@ -10,6 +10,7 @@ public class PowerUpSelector : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public TextMeshProUGUI descriptionText;
 
     private PowerUp _powerUp;
+    public PowerUp PowerUp => _powerUp;
 
     private void OnDisable()
     {

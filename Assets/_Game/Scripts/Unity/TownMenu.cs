@@ -33,10 +33,10 @@ namespace PocketSquire.Unity
             WireButtons();
 
             // Default selection for gamepad/keyboard
-            var adventureBtn = GameObject.Find("Canvas/TownMapPanel/Interactables/btn_adventure")?.GetComponent<Button>();
-            if (adventureBtn != null)
+            var btnArena = GameObject.Find("Canvas/TownMapPanel/Interactables/btn_arena")?.GetComponent<Button>();
+            if (btnArena != null)
             {
-                adventureBtn.Select();
+                btnArena.Select();
             }
 
             if (GameState.CurrentRun != null){
@@ -61,14 +61,13 @@ namespace PocketSquire.Unity
             var uiAudio = GameObject.Find("UIAudio");
             var audioSource = uiAudio != null ? uiAudio.GetComponent<AudioSource>() : null;
 
-            // Adventure button - goes to Arena scene
-            var adventureBtn = GameObject.Find("Canvas/TownMapPanel/Interactables/btn_adventure")?.GetComponent<Button>();
-            if (adventureBtn != null)
+            var btnArena = GameObject.Find("Canvas/TownMapPanel/Interactables/btn_arena")?.GetComponent<Button>();
+            if (btnArena != null)
             {
-                adventureBtn.onClick.RemoveAllListeners();
-                adventureBtn.onClick.AddListener(() => StartCoroutine(PlaySoundAndLoadCoroutine("Arena", adventureBtn.gameObject)));
+                btnArena.onClick.RemoveAllListeners();
+                btnArena.onClick.AddListener(() => StartCoroutine(PlaySoundAndLoadCoroutine("Arena", btnArena.gameObject)));
                 
-                var sound = adventureBtn.GetComponent<MenuButtonSound>();
+                var sound = btnArena.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
             

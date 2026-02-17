@@ -152,6 +152,17 @@ public class LootScript : MonoBehaviour
         {
             GameState.CurrentRun.PowerUps.Add(powerUp);
             Debug.Log($"Selected PowerUp: {powerUp.DisplayName}");
+
+            // Ensure we reference the persistent PowerUp instance from the collection
+            // This guarantees the HUD icon updates automatically if rank increases later
+            foreach (var p in GameState.CurrentRun.PowerUps.GetAll())
+            {
+                if (p.UniqueKey == powerUp.UniqueKey)
+                {
+                    _selectedPowerUp = p;
+                    break;
+                }
+            }
         }
 
         // Hide loot window
@@ -227,6 +238,24 @@ public class LootScript : MonoBehaviour
         }
 
         Transform parent = hudController.playerPowerUpsParent;
+
+        // Check for existing lower-rank versions of this power-up and remove them
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            var child = parent.GetChild(i);
+            var selector = child.GetComponent<PowerUpSelector>();
+            
+            if (selector != null && selector.PowerUp != null)
+            {
+                // If same type (UniqueKey matches), remove it to replace with new version
+                // Note: The underlying data might have already been updated by Add(), so we can't reliably check Rank < SelectedRank.
+                // But since we are adding a new icon for this Key, we should always remove the old one.
+                if (selector.PowerUp.UniqueKey == _selectedPowerUp.UniqueKey)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
 
         // Create the icon using the shared prefab-based method
         var iconObj = PowerUpHudController.CreatePowerUpIcon(powerUpIconPrefab, _selectedPowerUp, parent);
