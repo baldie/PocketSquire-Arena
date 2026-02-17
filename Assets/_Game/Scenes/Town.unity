@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 193861559}
   - component: {fileID: 193861560}
   m_Layer: 5
-  m_Name: btn_adventure
+  m_Name: btn_arena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -620,7 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TownSelector
   backgroundRenderer: {fileID: 461414321}
-  highlightedTexture: {fileID: 2800000, guid: 4ecad4493b79a0d47af39ee616c4924b, type: 3}
+  highlightedTexture: {fileID: 2800000, guid: 4e8cc4c7b9119414ca0672cdf4de311d, type: 3}
   nameText: {fileID: 2090318636}
   locationDisplayName: Arena
 --- !u!114 &193861556
@@ -636,7 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
-    m_Mode: 3
+    m_Mode: -1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}

@@ -108,6 +108,8 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
 
         private void OnAcceptClicked()
         {
+            acceptButton.interactable = false;
+            Debug.Log("Accept button clicked");
             if (GameState.Player != null)
             {
                 ApplyChangesToPlayer(GameState.Player);
@@ -127,6 +129,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             
             // Wait half a sec and then show the arena menu
             DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() => {
+                Debug.Log("Invoking onAccept which is " + (_onAccept == null ? "null" : "not null"));
                 _onAccept?.Invoke();
                 _onAccept = null;
             });
@@ -140,7 +143,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
                 { "CON", attr.Constitution },
                 { "MAG", attr.Magic },
                 { "DEX", attr.Dexterity },
-                { "LUC", attr.Luck },
+                { "LCK", attr.Luck },
                 { "DEF", attr.Defense }
             };
         }
@@ -154,7 +157,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             player.Attributes.Constitution = _model.GetAttributeValue("CON");
             player.Attributes.Magic = _model.GetAttributeValue("MAG");
             player.Attributes.Dexterity = _model.GetAttributeValue("DEX");
-            player.Attributes.Luck = _model.GetAttributeValue("LUC");
+            player.Attributes.Luck = _model.GetAttributeValue("LCK");
             player.Attributes.Defense = _model.GetAttributeValue("DEF");
         }
 
@@ -245,8 +248,8 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             }
 
             // Animate the level up screen's appearance on the scene
-            RectTransform rectTransform = levelUpBackground.GetComponent<RectTransform>();
-            Sequence showSequence = DOTween.Sequence();
+            var rectTransform = levelUpBackground.GetComponent<RectTransform>();
+            var showSequence = DOTween.Sequence();
             showSequence.AppendInterval(1.0f);
             showSequence.Append(rectTransform.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuad));   
         }
@@ -254,9 +257,9 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
         private static void HideLevelUpScreen(GameObject levelUpBackground)
         {
             // Calculate the off-screen position to the right
-            RectTransform rectTransform = levelUpBackground.GetComponent<RectTransform>();
+            var rectTransform = levelUpBackground.GetComponent<RectTransform>();
             float offScreenX = rectTransform.rect.width;
-            Sequence hideSequence = DOTween.Sequence();
+            var hideSequence = DOTween.Sequence();
             hideSequence.AppendInterval(1.0f); 
             hideSequence.Append(rectTransform.DOAnchorPos(new Vector2(offScreenX, 0), 0.5f)
                 .SetEase(Ease.InQuad));

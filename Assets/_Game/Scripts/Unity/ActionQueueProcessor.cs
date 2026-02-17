@@ -470,7 +470,7 @@ public class ActionQueueProcessor : MonoBehaviour
         playerWinSeq.Join(monsterShadowImage.DOFade(0f, fadeTime));
         playerWinSeq.Join(monsterRect.DOAnchorPosY(monsterRect.anchoredPosition.y - 50f, fadeTime));
 
-        // 2. THE FIX: Add a small pause (0.2s - 0.5s) so the monster is gone 
+        // 2. Add a small pause (0.2s - 0.5s) so the monster is gone 
         // before the player starts celebrating.
         playerWinSeq.AppendInterval(0.3f);
 
@@ -484,35 +484,28 @@ public class ActionQueueProcessor : MonoBehaviour
                 monsterGO.transform.parent.localScale = Vector3.zero;
         });
 
-        // 4. THE HOLD: Keep the victory pose on screen for a moment 
-        // before whatever happens next (like loading a menu)
-        playerWinSeq.AppendInterval(2.0f); 
-
         playerWinSeq.OnComplete(() => {
-            // Trigger the "Return to Map" or "Show Rewards" logic here
-            Debug.Log("Sequence Finished - Moving to next screen.");
+            if (GameState.Player.CanLevelUp())
+            {
+                Debug.Log("Player can level up");
+                if (levelUpBackground != null)
+                {
+                    var presenter = levelUpBackground.GetComponent<LevelUpPresenter>();
+
+                    // Show the arena menu after the player has leveled up.
+                    LevelUpPresenter.Show(levelUpBackground, presenter, () => HandleBattleWin());
+                } else {
+                    Debug.LogError("LevelUpBackground not found!");
+                }
+            } else {
+                HandleBattleWin();
+            }
         });
 
         playerWinSeq.SetLink(monsterGO);
 
         AnimatePointsGained(experienceGainedText, 0.1f);
         AnimatePointsGained(goldGainedText, 0.2f);
-
-        if (GameState.Player.CanLevelUp())
-        {
-            Debug.Log("Player can level up");
-            if (levelUpBackground != null)
-            {
-                var presenter = levelUpBackground.GetComponent<LevelUpPresenter>();
-
-                // Show the arena menu after the player has leveled up.
-                LevelUpPresenter.Show(levelUpBackground, presenter, () => HandleBattleWin());
-            } else {
-                Debug.LogError("LevelUpBackground not found!");
-            }
-        } else {
-            HandleBattleWin();
-        }
     }
 
     private void AnimatePointsGained(TextMeshProUGUI textObj, float delay)
