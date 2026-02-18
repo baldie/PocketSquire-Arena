@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core.LevelUp;
+using static PocketSquire.Arena.Core.Player;
 
 namespace PocketSquire.Arena.Unity.LevelUp
 {
@@ -13,13 +14,15 @@ namespace PocketSquire.Arena.Unity.LevelUp
         [SerializeField] private string description;
         [SerializeField] private int minLevel;
         [SerializeField] private List<PerkNode> prerequisites = new List<PerkNode>();
+        public List<PlayerClass> allowedClasses = new List<PlayerClass>();
 
         public string Id => id;
 
         public Perk ToCorePerk()
         {
             var prereqIds = prerequisites.Where(p => p != null).Select(p => p.Id).ToList();
-            return new Perk(id, displayName, description, minLevel, prereqIds);
+            // Pass the allowedClasses through to the core logic
+            return new Perk(id, displayName, description, minLevel, prereqIds, new List<PlayerClass>(allowedClasses));
         }
         
         private void OnValidate()

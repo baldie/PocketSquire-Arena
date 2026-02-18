@@ -32,8 +32,18 @@ namespace PocketSquire.Arena.Core.LevelUp
 
         public LevelReward GetRewardForLevel(int level)
         {
-            var reward = _rewards.FirstOrDefault(x => x.Level == level);
-            return reward ?? new LevelReward { Level = level }; // Empty reward if none defined
+            var rewardEntry = _rewards.FirstOrDefault(x => x.Level == level);
+            if (rewardEntry == null) return new LevelReward(level, 0);
+
+            // We return a reward that contains the stat points 
+            // and the tag for the Common Perk pool.
+            return new LevelReward
+            {
+                Level = rewardEntry.Level,
+                StatPoints = rewardEntry.StatPoints,
+                PerkPoolTag = "Common_Pool", // Force look at the general pool
+                PerkPoolDrawCount = rewardEntry.PerkPoolDrawCount
+            };
         }
 
         public int GetLevelForExperience(int experience)

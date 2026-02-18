@@ -12,6 +12,8 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         private int _initialPoints;
         private int _currentLevel;
 
+        private static List<Player.PlayerClass> NoClasses() => new List<Player.PlayerClass>();
+
         [SetUp]
         public void Setup()
         {
@@ -48,8 +50,8 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void GetEligiblePerks_ShouldFilterByLevel()
         {
-            var lowLevelPerk = new Perk("p1", "Low", "Desc", 1, null);
-            var highLevelPerk = new Perk("p2", "High", "Desc", 10, null);
+            var lowLevelPerk = new Perk("p1", "Low", "Desc", 1, null, NoClasses());
+            var highLevelPerk = new Perk("p2", "High", "Desc", 10, null, NoClasses());
 
             var result = _model.GetEligiblePerks(new List<Perk> { lowLevelPerk, highLevelPerk });
 
@@ -60,7 +62,7 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void GetEligiblePerks_ShouldFilterAlreadyUnlocked()
         {
-            var perk = new Perk("p1", "Unlocked", "Desc", 1, null);
+            var perk = new Perk("p1", "Unlocked", "Desc", 1, null, NoClasses());
             _model.UnlockPerk("p1");
 
             var result = _model.GetEligiblePerks(new List<Perk> { perk });
@@ -71,8 +73,8 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void GetEligiblePerks_ShouldFilterByPrerequisites()
         {
-            var prereq = new Perk("prereq", "Prereq", "Desc", 1, null);
-            var lockedPerk = new Perk("locked", "Locked", "Desc", 1, new List<string> { "prereq" });
+            var prereq = new Perk("prereq", "Prereq", "Desc", 1, null, NoClasses());
+            var lockedPerk = new Perk("locked", "Locked", "Desc", 1, new List<string> { "prereq" }, NoClasses());
 
             // Case 1: Prerequisite NOT unlocked
             var result = _model.GetEligiblePerks(new List<Perk> { lockedPerk });

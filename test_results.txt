@@ -1,0 +1,13 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\LootModifierComponent.cs(25,23): warning CS0108: 'LootModifierComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\AttributeModifierComponent.cs(22,23): warning CS0108: 'AttributeModifierComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\MonsterDebuffComponent.cs(24,23): warning CS0108: 'MonsterDebuffComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+  PocketSquire.Arena.Tests -> C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll
+Test run for C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   157, Skipped:     0, Total:   157, Duration: 68 ms - PocketSquire.Arena.Tests.dll (net10.0)

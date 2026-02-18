@@ -90,12 +90,12 @@ namespace PocketSquire.Arena.Tests
             // Arrange
             var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
             
-            // Act
-            player.Inventory.AddItem(1, 3);
+            // Act — base capacity is 2 slots / stack 2, so 2 different items fit fine
+            player.Inventory.AddItem(1, 2);
             player.Inventory.AddItem(2, 1);
 
             // Assert
-            Assert.That(player.Inventory.GetItemCount(1), Is.EqualTo(3));
+            Assert.That(player.Inventory.GetItemCount(1), Is.EqualTo(2));
             Assert.That(player.Inventory.GetItemCount(2), Is.EqualTo(1));
             Assert.That(player.Inventory.Slots.Count, Is.EqualTo(2));
         }
@@ -174,6 +174,25 @@ namespace PocketSquire.Arena.Tests
             Assert.That(result, Is.True);
             Assert.That(player.Inventory.GetItemCount(7), Is.EqualTo(1));
             Assert.That(player.Inventory.Slots.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void TryPurchaseItem_Fails_WhenInventoryFull()
+        {
+            // Arrange — fill both base slots to their stack limit
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            player.GainGold(500);
+            player.Inventory.AddItem(1, 2); // slot 1 full
+            player.Inventory.AddItem(2, 2); // slot 2 full
+            var item = new Item { Id = 3, Name = "Elixir", Price = 10 };
+
+            // Act
+            var result = player.TryPurchaseItem(item);
+
+            // Assert
+            Assert.That(result, Is.False, "Purchase must be rejected when inventory is full");
+            Assert.That(player.Gold, Is.EqualTo(500), "Gold must not be spent");
+            Assert.That(player.Inventory.GetItemCount(3), Is.EqualTo(0));
         }
 
     }

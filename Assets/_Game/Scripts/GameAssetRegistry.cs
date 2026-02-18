@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-[CreateAssetMenu(fileName = "GameAssetRegistry", menuName = "Game/Asset Registry")]
+[CreateAssetMenu(fileName = "GameAssetRegistry", menuName = "PocketSquire/GameAssetRegistry")]
 public class GameAssetRegistry : ScriptableObject {
     private static GameAssetRegistry _instance;
     public static GameAssetRegistry Instance {

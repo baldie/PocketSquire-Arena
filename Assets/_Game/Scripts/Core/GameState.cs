@@ -34,9 +34,8 @@ namespace PocketSquire.Arena.Core
                 Player = JsonConvert.DeserializeObject<Player>(json);
             }
 
-            // Give starting items (2 Health Potion S, 1 Health Potion M)
-            Player?.Inventory.AddItem(1, 2);
-            Player?.Inventory.AddItem(2, 1);
+            // Give starting item: 1 Small Health Potion
+            Player?.Inventory.AddItem(1, 1);
             Console.WriteLine(Player?.ToString());
         }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using PocketSquire.Arena.Core;
 
 
-[CreateAssetMenu(fileName = "EvolutionTree", menuName = "PocketSquire/Evolution Tree")]
+[CreateAssetMenu(fileName = "EvolutionTree", menuName = "PocketSquire/LevelUp/Evolution Tree")]
 public class EvolutionTreeSO : ScriptableObject
 {
     [System.Serializable]

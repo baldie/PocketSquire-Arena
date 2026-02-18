@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core.LevelUp;
+using static PocketSquire.Arena.Core.Player;
 
 namespace PocketSquire.Arena.Unity.LevelUp
 {
@@ -29,10 +30,10 @@ namespace PocketSquire.Arena.Unity.LevelUp
         public class LevelRewardEntry
         {
             public int level;
+            // If empty, it's "Global". Otherwise, only these classes get this reward.
+            public List<PlayerClass> ValidClasses = new List<PlayerClass>(); 
             public int statPoints;
             public List<PerkNode> perkChoices = new List<PerkNode>();
-            
-            [Tooltip("Tag of the Perk Pool to draw from. Leave empty for none.")]
             public string perkPoolTag = String.Empty;
             public int perkPoolDrawCount = 3;
         }
@@ -100,7 +101,75 @@ namespace PocketSquire.Arena.Unity.LevelUp
 
         public int GetLevelForExperience(int experience) => Logic.GetLevelForExperience(experience);
 
-        public LevelReward GetRewardForLevel(int level) => Logic.GetRewardForLevel(level);
+        public LevelReward GetRewardForLevel(int level, PlayerClass currentClass)
+        {
+            // 1. Find the entry that matches the level AND the class
+            // We look for entries specifically for this class, or entries with no class restrictions
+            var entry = rewards.FirstOrDefault(r => r.level == level && 
+                        (r.ValidClasses.Count == 0 || r.ValidClasses.Contains(currentClass)));
+
+            if (entry == null) return new LevelReward();
+
+            return new LevelReward
+            {
+                Level = entry.level,
+                StatPoints = entry.statPoints,
+                FixedPerkIds = entry.perkChoices.Where(p => p != null).Select(p => p.Id).ToList(),
+                PerkPoolTag = entry.perkPoolTag,
+                PerkPoolDrawCount = entry.perkPoolDrawCount
+            };
+        }
+
+        public List<Perk> GetAvailablePerks(int level, PlayerClass playerClass)
+        {
+            // 1. Find the reward entry for this level
+            var reward = rewards.FirstOrDefault(r => r.level == level);
+            if (reward == null) return new List<Perk>();
+            
+            // 2. Get the pool
+            if (RuntimePerkPools.TryGetValue(reward.perkPoolTag, out var pool))
+            {
+                // 3. Filter perks inside the pool that are allowed for this class
+                return pool.Perks
+                    .Where(p => p.AllowedClasses.Count == 0 || p.AllowedClasses.Contains(playerClass))
+                    .OrderBy(x => UnityEngine.Random.value) // Shuffle
+                    .Take(reward.perkPoolDrawCount)
+                    .ToList();
+            }
+            return new List<Perk>();
+        }
+
+        public List<Perk> DrawPerksForPlayer(string poolTag, int count, PlayerClass playerClass, int playerLevel, List<string> ownedPerkIds)
+        {
+            if (!RuntimePerkPools.TryGetValue(poolTag, out var pool)) return new List<Perk>();
+
+            return pool.Perks
+                .Where(p => 
+                    // 1. Is the player high enough level?
+                    playerLevel >= p.MinLevel && 
+                    // 2. Is this perk allowed for the player's class?
+                    (p.AllowedClasses.Count == 0 || p.AllowedClasses.Contains(playerClass)) &&
+                    // 3. Does the player already have it? (Assuming non-stackable)
+                    !ownedPerkIds.Contains(p.Id) &&
+                    // 4. Have prerequisites been met?
+                    p.PrerequisitePerkIds.All(id => ownedPerkIds.Contains(id))
+                )
+                .OrderBy(_ => UnityEngine.Random.value) // Shuffle
+                .Take(count)
+                .ToList();
+        }
+
+        public List<Perk> GetCommonPerkChoices(string poolTag, int count)
+        {
+            if (!RuntimePerkPools.TryGetValue(poolTag, out var pool)) 
+                return new List<Perk>();
+
+            return pool.Perks
+                .Where(p => p.AllowedClasses.Count == 0) // ONLY Common perks
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(count)
+                .ToList();
+        }
 
         private void OnValidate()
         {

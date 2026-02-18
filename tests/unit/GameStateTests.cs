@@ -144,7 +144,7 @@ public class GameStateTests
     }
 
     [Test]
-    public void CreateNewGame_GivesPlayer2HealthPotions()
+    public void CreateNewGame_GivesPlayerStartingHealthPotion()
     {
         // Arrange
         var slot = SaveSlots.Slot1;
@@ -155,16 +155,16 @@ public class GameStateTests
         // Assert
         Assert.That(GameState.Player, Is.Not.Null);
         Assert.That(GameState.Player!.Inventory, Is.Not.Null);
-        Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(2), "Player should start with 2 health potions (id=1)");
+        Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(1), "Player should start with 1 Small Health Potion (id=1)");
     }
 
     [Test]
     public void SaveLoadRoundtrip_PreservesInventory()
     {
-        // Arrange
+        // Arrange — start with 1 potion, add 1 more to fill slot 1 (stack 2), add item 2 to fill slot 2
         GameState.CreateNewGame(SaveSlots.Slot1);
-        GameState.Player!.Inventory.AddItem(1, 5); // Add more health potions
-        GameState.Player.Inventory.AddItem(2, 3); // Add another item type
+        GameState.Player!.Inventory.AddItem(1, 1); // slot 1: qty 2 (full)
+        GameState.Player.Inventory.AddItem(2, 2);  // slot 2: qty 2 (full)
 
         // Act - Save and load
         var saveData = GameState.GetSaveData();
@@ -174,7 +174,7 @@ public class GameStateTests
         // Assert
         Assert.That(GameState.Player, Is.Not.Null);
         Assert.That(GameState.Player!.Inventory, Is.Not.Null);
-        Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(7), "Should have 2 starting + 5 added = 7 health potions");
-        Assert.That(GameState.Player.Inventory.GetItemCount(2), Is.EqualTo(4), "Should have 1 starting + 3 added = 4 items");
+        Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(2), "Should have 1 starting + 1 added = 2 health potions");
+        Assert.That(GameState.Player.Inventory.GetItemCount(2), Is.EqualTo(2), "Should have 2 of item 2");
     }
 }

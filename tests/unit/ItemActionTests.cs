@@ -50,15 +50,15 @@ namespace PocketSquire.Arena.Tests.Unit
         [Test]
         public void ApplyEffect_ShouldRemoveItemFromInventory()
         {
-            // Arrange
-            _player.Inventory.AddItem(1, 3);
+            // Arrange — add 2 potions (fills the stack limit of 2)
+            _player.Inventory.AddItem(1, 2);
             var action = new ItemAction(1);
 
             // Act
             action.ApplyEffect();
 
             // Assert
-            Assert.That(_player.Inventory.GetItemCount(1), Is.EqualTo(2));
+            Assert.That(_player.Inventory.GetItemCount(1), Is.EqualTo(1));
         }
 
         [Test]

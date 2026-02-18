@@ -143,6 +143,12 @@ namespace PocketSquire.Arena.Core
                 return false;
             }
 
+            // Check inventory space before spending gold
+            if (!Inventory.HasRoom(item.Id))
+            {
+                return false;
+            }
+
             SpendGold(item.Price);
             Inventory.AddItem(item.Id, 1);
             return true;
