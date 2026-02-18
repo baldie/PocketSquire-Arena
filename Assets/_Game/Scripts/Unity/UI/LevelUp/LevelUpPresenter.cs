@@ -18,11 +18,12 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
         [SerializeField] private AudioClip levelUpSound;
         [SerializeField] private AudioClip statChangeSound;
         [SerializeField] private AudioClip acceptSound;
+        [SerializeField] private EvolutionTreeSO evolutionTree;
         
         private ILevelUpModel _model;
         private List<AttributeRow> _attributeRows = new List<AttributeRow>();
         private Action _onAccept;
-
+        
         private void Start()
         {
         }
@@ -153,12 +154,24 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             player.AcceptNewLevel();
 
             // Map back from model to player attributes
+            //TODO: send _model into player.AcceptNewLevel and apply the changes there instead of here
             player.Attributes.Strength = _model.GetAttributeValue("STR");
             player.Attributes.Constitution = _model.GetAttributeValue("CON");
             player.Attributes.Magic = _model.GetAttributeValue("MAG");
             player.Attributes.Dexterity = _model.GetAttributeValue("DEX");
             player.Attributes.Luck = _model.GetAttributeValue("LCK");
             player.Attributes.Defense = _model.GetAttributeValue("DEF");
+
+            // Check the class eveolution tree for options
+            if (evolutionTree == null) return;
+            var options = evolutionTree.GetAvailableEvolutions(player.Class, player.Level);
+            if (options.Count == 0) return;
+            HandleClassEvolution(options);
+        }
+
+        private void HandleClassEvolution(List<Player.PlayerClass> availableClasses)
+        {
+            Debug.Log("Player class evolved");
         }
 
         private void UpdateUI()

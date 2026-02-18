@@ -10,9 +10,31 @@ namespace PocketSquire.Arena.Core
             f
         }
 
+        public enum PlayerClass {
+            Squire,
+            SpellCaster,
+            Bowman,
+            Fighter,
+            Mage,
+            Druid,
+            Archer,
+            Hunter,
+            Warrior,
+            Wizard,
+            Archdruid,
+            Marksman,
+            Ranger,
+            Knight,
+            Sorcerer,
+            Warden,
+            Sniper,
+            Sentinel,
+            Paladin
+        }
+
         public CharGender Gender;
         public int Level { get; private set; } = 1;
-        public string Class { get; private set; } = "Adventurer";
+        public PlayerClass Class { get; private set; } = PlayerClass.Squire;
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
 
         public override string SpriteId {
@@ -140,10 +162,9 @@ namespace PocketSquire.Arena.Core
                 return this.SpriteId;
             }
 
-            // TODO: eventually we will need to add class into this mix
             var sprite = "player_";
             sprite += this.Gender.ToString() + "_";
-            sprite += "l" + this.Level.ToString();
+            sprite += this.Class.ToString().ToLower();
             switch(context)
             {
                 case GameContext.Town: 

@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a89e0927c920343b95e41a00bc70a3, type: 3}
   m_Name: ProgressionSchedule
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.ProgressionSchedule
-  baseXp: 1
+  baseXp: 43
   exponent: 1.6
   maxLevel: 50
-  rewards: []
+  rewards:
+  - level: 2
+    statPoints: 2
+    perkChoices: []
+    perkPoolTag: 
+    perkPoolDrawCount: 0
   perkPools: []

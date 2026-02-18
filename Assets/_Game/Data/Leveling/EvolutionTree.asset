@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b45437dfd27c8e14a97a2fe42aeb8da4, type: 3}
+  m_Name: EvolutionTree
+  m_EditorClassIdentifier: Assembly-CSharp::EvolutionTreeSO
+  nodes:
+  - currentClass: 0
+    unlockLevel: 5
+    potentialEvolutions: 010000000200000003000000
+  - currentClass: 1
+    unlockLevel: 15
+    potentialEvolutions: 0400000005000000
+  - currentClass: 2
+    unlockLevel: 15
+    potentialEvolutions: 050000000600000007000000
+  - currentClass: 3
+    unlockLevel: 15
+    potentialEvolutions: 0700000008000000
+  - currentClass: 4
+    unlockLevel: 28
+    potentialEvolutions: 09000000
+  - currentClass: 5
+    unlockLevel: 28
+    potentialEvolutions: 090000000a000000
+  - currentClass: 6
+    unlockLevel: 28
+    potentialEvolutions: 0b0000000c000000
+  - currentClass: 7
+    unlockLevel: 28
+    potentialEvolutions: 0b0000000c0000000d000000
+  - currentClass: 8
+    unlockLevel: 28
+    potentialEvolutions: 0c0000000d000000
+  - currentClass: 9
+    unlockLevel: 40
+    potentialEvolutions: 0e000000
+  - currentClass: 10
+    unlockLevel: 40
+    potentialEvolutions: 0f000000
+  - currentClass: 11
+    unlockLevel: 40
+    potentialEvolutions: 10000000
+  - currentClass: 12
+    unlockLevel: 40
+    potentialEvolutions: 1000000011000000
+  - currentClass: 13
+    unlockLevel: 40
+    potentialEvolutions: 12000000
