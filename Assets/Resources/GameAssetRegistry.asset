@@ -39,6 +39,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 4ecad4493b79a0d47af39ee616c4924b, type: 3}
   - id: town_archery_highlight
     asset: {fileID: 21300000, guid: a8ea7beb61a50854c825680493610704, type: 3}
+  - id: town_arena
+    asset: {fileID: 21300000, guid: 4e8cc4c7b9119414ca0672cdf4de311d, type: 3}
   - id: town_blacksmith_highlight
     asset: {fileID: 21300000, guid: 043b163edc359eb44bda9171ee4eefd5, type: 3}
   - id: town_home_highlight
@@ -55,6 +57,44 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: e8c9b1a01b4a34949a6248ad17650f1d, type: 3}
   - id: wizard_tower_interior
     asset: {fileID: 21300000, guid: f6d00bfc0c813144e802149cf968dbb5, type: 3}
+  - id: archdruid
+    asset: {fileID: 21300000, guid: 6065ec3908aac3749b5b09e546373dfc, type: 3}
+  - id: archer
+    asset: {fileID: 21300000, guid: cb910d930ccebee4fa4826157fbdce87, type: 3}
+  - id: bowman
+    asset: {fileID: 21300000, guid: 045a7889ce2a9ac4caf31eb64fc62980, type: 3}
+  - id: druid
+    asset: {fileID: 21300000, guid: 5097f54ca622b1a498d1234a9cb9702e, type: 3}
+  - id: fighter
+    asset: {fileID: 21300000, guid: 4af640673324ffa4095e7dccb6008542, type: 3}
+  - id: hunter
+    asset: {fileID: 21300000, guid: 9e29af0629538c14bb2314f3eb67811a, type: 3}
+  - id: knight
+    asset: {fileID: 21300000, guid: 1860cab17e13eb045a918c7fce60c7b1, type: 3}
+  - id: mage
+    asset: {fileID: 21300000, guid: 722472ebeec3a664ea7110c30161e8b7, type: 3}
+  - id: marksman
+    asset: {fileID: 21300000, guid: 6ab1c28f9392e4b4f984cb5efe056cd4, type: 3}
+  - id: paladin
+    asset: {fileID: 21300000, guid: 8ea4afb61332c99449c938ac88a43541, type: 3}
+  - id: ranger
+    asset: {fileID: 21300000, guid: 22944aea00756334185aeaf8e8907746, type: 3}
+  - id: sentinel
+    asset: {fileID: 21300000, guid: 6f6ef6b7d3d77a64fabc1516c72bb637, type: 3}
+  - id: sniper
+    asset: {fileID: 21300000, guid: c0a37c0945dacc34eb3dfe3d5547d5bd, type: 3}
+  - id: sorcerer
+    asset: {fileID: 21300000, guid: ea9960179a340a14fb3bc8e5793b715f, type: 3}
+  - id: SpellCaster
+    asset: {fileID: 21300000, guid: f8bfb43bd130bf44bbcd309b7a0296d2, type: 3}
+  - id: squire
+    asset: {fileID: 21300000, guid: 079722428bc71414b9c1f5820dda22b1, type: 3}
+  - id: warden
+    asset: {fileID: 21300000, guid: 7edbdf04fe43e8549bef6a72a91c7687, type: 3}
+  - id: warrior
+    asset: {fileID: 21300000, guid: 3a22f94aa77b77040939f857a1f59bd7, type: 3}
+  - id: wizard
+    asset: {fileID: 21300000, guid: 745c19470ef5ba64792ca95273cc924c, type: 3}
   - id: health_potion_l
     asset: {fileID: 21300000, guid: 3c30a83b92ccc17449f6ec9b666d286d, type: 3}
   - id: health_potion_m
@@ -79,16 +119,16 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 9364e9e08d5c6834bb89c89c87c596ea, type: 3}
   - id: training_dummy_special_attack
     asset: {fileID: 21300000, guid: 90d41cdb70795f64bb95e763ffa3ae23, type: 3}
-  - id: archer
-    asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
+  - id: magic_trainer
+    asset: {fileID: 21300000, guid: c13dcefd805ace24dbdf2898998f7c1e, type: 3}
+  - id: melee_trainer
+    asset: {fileID: 21300000, guid: b3caf91bce2dff047a087fcdb7d79127, type: 3}
   - id: nana
     asset: {fileID: 21300000, guid: 5f16071d9296e8e4cb47f47f50985d56, type: 3}
+  - id: ranged_combat_trainer
+    asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
-  - id: smith
-    asset: {fileID: 21300000, guid: b3caf91bce2dff047a087fcdb7d79127, type: 3}
-  - id: wizard
-    asset: {fileID: 21300000, guid: c13dcefd805ace24dbdf2898998f7c1e, type: 3}
   - id: player_m_l1_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
   - id: player_m_l1_battle
@@ -107,6 +147,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
   - id: constitution
     asset: {fileID: 21300000, guid: 4b01cc08772854e4c8c9e8c43ceda8f3, type: 3}
+  - id: curse
+    asset: {fileID: 21300000, guid: 4e61870fadb3dfd4999d1c842c1c04ab, type: 3}
   - id: def
     asset: {fileID: 21300000, guid: 86a310e6862c5384196c401c27a6bd62, type: 3}
   - id: dex
@@ -133,6 +175,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 6bec808db30b96c4bbf88e29c3675f20, type: 3}
   - id: Game_Menu
     asset: {fileID: 21300000, guid: 2196a10cc882d8447a3b78e67fddd9bf, type: 3}
+  - id: inventory_slot
+    asset: {fileID: 21300000, guid: 1d1b9ac9679ded742aa1834b35f44ac6, type: 3}
   - id: paper_board
     asset: {fileID: 21300000, guid: 7bac2f3e23cc16744b4372c5e544d48b, type: 3}
   - id: pocket_squire_title
@@ -170,6 +214,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 62075d8084535c048b33eeffc25c071f, type: 3}
   - id: crowd_pleased
     asset: {fileID: 8300000, guid: 4bbb975dd39724a4c95f9b590d2aa3a1, type: 3}
+  - id: denied
+    asset: {fileID: 8300000, guid: 74f7b1b48f5413f4493d08691b4ddb08, type: 3}
   - id: gulp
     asset: {fileID: 8300000, guid: 533da56448f7a1443a6fc6590ba92a0b, type: 3}
   - id: level_up
@@ -205,6 +251,8 @@ MonoBehaviour:
     asset: {fileID: 6880249474966106816, guid: 1da34531698cbd64abbde06381d51a22, type: 3}
   - id: PlayerMenu
     asset: {fileID: 6951523177587671113, guid: 060837d267208b840886f24bc620e493, type: 3}
+  - id: PowerUpIcon
+    asset: {fileID: 5277411691939063948, guid: 8ff8c5d4df81bae4e833d3de4edd46ce, type: 3}
   - id: PowerUpOption
     asset: {fileID: 5228159149513318820, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
   - id: MenuCursor

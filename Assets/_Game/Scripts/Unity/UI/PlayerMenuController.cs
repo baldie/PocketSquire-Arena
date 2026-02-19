@@ -23,7 +23,7 @@ namespace PocketSquire.Unity.UI
 
         [Header("Images")]
         [SerializeField] private Image xpBarForeground;
-        [SerializeField] private Image playerImage;
+        [SerializeField] private Image classImage;
         [SerializeField] private TextMeshProUGUI xpText; // Added XP Label
 
         [Header("Attributes")]
@@ -58,6 +58,10 @@ namespace PocketSquire.Unity.UI
         [Header("Grayscale Material")]
         [Tooltip("Material to use for grayscale effect (for monster debuffs)")]
         public Material grayscaleMaterial;
+
+        [Header("Skill Tree")]
+        [Tooltip("Prefab to show when opening the skill tree")]
+        public GameObject skillTreePrefab;
 
         private bool isOpen = false;
 
@@ -165,10 +169,15 @@ namespace PocketSquire.Unity.UI
             // Update character info
             if (levelAndClassText != null)
             {
-                // TODO: Add class property to Player when implemented
                 levelAndClassText.text = $"Level {player.Level} {player.Class}";
-            }
 
+                if (classImage == null) return;
+                var playerSprite = GameAssetRegistry.Instance.GetSprite(player.Class.ToString());
+                if (playerSprite != null)
+                {
+                    classImage.sprite = playerSprite;
+                }
+            }
 
             if (goldText != null)
             {
@@ -181,24 +190,8 @@ namespace PocketSquire.Unity.UI
             // Update attributes
             UpdateAttributes(player);
 
-            // Update player image
-            UpdatePlayerImage(player);
-
             // Update inventory
             UpdateInventory(player);
-        }
-
-        /// <summary>
-        /// Updates the player sprite image from the registry
-        /// </summary>
-        private void UpdatePlayerImage(Player player)
-        {
-            if (playerImage == null) return;
-            Sprite playerSprite = GameAssetRegistry.Instance.GetSprite(player.SpriteId);
-            if (playerSprite != null)
-            {
-                playerImage.sprite = playerSprite;
-            }
         }
 
         /// <summary>
@@ -391,6 +384,10 @@ namespace PocketSquire.Unity.UI
         /// </summary>
         private void OnSkillTreeButtonClicked()
         {
+            if (skillTreePrefab != null)
+            {
+                skillTreePrefab.SetActive(true);
+            }
         }
 
         public void Open()

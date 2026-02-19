@@ -244,6 +244,11 @@ namespace PocketSquire.Arena.Unity.UI
 
             if (!GameState.Player.TryPurchaseItem(item))
             {
+                var deniedClip = GameAssetRegistry.Instance.GetSound("denied");
+                if (audioSource != null && deniedClip != null)
+                {
+                    audioSource.PlayOneShot(deniedClip);
+                }
                 if (item.Price >= GameState.Player.Gold)
                 {
                     interiorToast.ShowToast("Not enough gold");
