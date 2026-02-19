@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.PerkNode
   id: satchel_tier_1
   displayName: Small satchel
-  description: Increases item stacks from 2 to 4
+  description: 3 slots that can stack to 3
   minLevel: 0
   prerequisites: []
   allowedClasses: 

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a653cf797192fd140896576ebd8edb5a, type: 3}
   m_Name: NewTrainerManifest
   m_EditorClassIdentifier: Assembly-CSharp::TrainerManifest
-  TrainerName: 
-  welcomeMessage: 
-  trainingCatalog: []
+  TrainerName: Archery
+  welcomeMessage: A well placed shot is deadlier than the sharpest sword
+  trainingCatalog:
+  - perk: {fileID: 0}
+    goldCost: 0
+    requiredClass: 0

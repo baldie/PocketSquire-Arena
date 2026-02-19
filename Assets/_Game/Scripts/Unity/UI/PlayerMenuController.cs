@@ -26,7 +26,6 @@ namespace PocketSquire.Unity.UI
         [SerializeField] private Image playerImage;
         [SerializeField] private TextMeshProUGUI xpText; // Added XP Label
 
-
         [Header("Attributes")]
         [SerializeField] private TextMeshProUGUI strText;
         [SerializeField] private TextMeshProUGUI conText;
@@ -37,7 +36,11 @@ namespace PocketSquire.Unity.UI
 
         [Header("Inventory")]
         [SerializeField] private CanvasGroup inventoryCanvasGroup;
-        [SerializeField] private Transform inventoryScrollContent;
+        [SerializeField] private Image slot1;
+        [SerializeField] private Image slot2;
+        [SerializeField] private Image slot3;
+        [SerializeField] private Image slot4;
+        [SerializeField] private Image slot5;
 
         [Header("Containers")]
         [SerializeField] private Transform badgesContainer;
@@ -49,9 +52,12 @@ namespace PocketSquire.Unity.UI
         [Header("Cursor Settings")]
         [SerializeField] private Vector3 inventoryCursorOffset = new Vector3(-60f, 0, 0);
 
-
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
+
+        [Header("Grayscale Material")]
+        [Tooltip("Material to use for grayscale effect (for monster debuffs)")]
+        public Material grayscaleMaterial;
 
         private bool isOpen = false;
 
@@ -68,25 +74,6 @@ namespace PocketSquire.Unity.UI
 
         private void Awake()
         {
-            if (inventoryScrollContent == null)
-            {
-                var contentTransform = transform.Find("BodyContainer/RightColumn/InventoryScrollView/Viewport/Content");
-                if (contentTransform != null)
-                {
-                    inventoryScrollContent = contentTransform;
-                }
-            }
-
-            // Ensure the Mask component on the Viewport is disabled
-            if (inventoryScrollContent != null && inventoryScrollContent.parent != null)
-            {
-                var mask = inventoryScrollContent.parent.GetComponent<Mask>();
-                if (mask != null)
-                {
-                    mask.enabled = false;
-                }
-            }
-
             // Fallback for audioSource if not assigned
             if (audioSource == null)
             {
@@ -314,28 +301,60 @@ namespace PocketSquire.Unity.UI
 
         private void UpdateInventory(Player player)
         {
-            var prefab = GameAssetRegistry.Instance.itemRowPrefab;
-            if (inventoryScrollContent == null || prefab == null) return;
-            // Clear existing
-            foreach (Transform child in inventoryScrollContent)
-            {
-                Destroy(child.gameObject);
-            }
-
             if (player.Inventory == null) return;
 
-            // Populate new
-            foreach (var slot in player.Inventory.Slots)
+            var prefab = GameAssetRegistry.Instance.itemRowPrefab;
+            // The UI has exactly 5 fixed slot Images. Slots beyond MaxSlots are greyed out.
+            var slotImages = new Image[] { slot1, slot2, slot3, slot4, slot5 };
+            int maxSlots = player.Inventory.MaxSlots;
+
+            // Reset all slots: clear spawned children, restore slot image state
+            for (int i = 0; i < slotImages.Length; i++)
             {
-                var item = GameWorld.GetItemById(slot.ItemId);
+                var slotImage = slotImages[i];
+                if (slotImage == null) continue;
+
+                // Destroy any previously instantiated item prefabs without touching the slot Image itself
+                foreach (Transform child in slotImage.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+
+                bool available = i < maxSlots;
+                // Apply grayscale material on locked slots (same technique as PowerUpIconController)
+                slotImage.material = available ? null : grayscaleMaterial;
+                slotImage.color = available ? Color.white : new Color(1f, 1f, 1f, 0.4f);
+            }
+
+            if (prefab == null) return;
+
+            // Populate available slots that have items
+            var slots = player.Inventory.Slots;
+            for (int i = 0; i < slots.Count && i < slotImages.Length; i++)
+            {
+                var inventorySlot = slots[i];
+                if (inventorySlot.Quantity <= 0) continue;
+
+                var item = GameWorld.GetItemById(inventorySlot.ItemId);
                 if (item == null) continue;
 
-                if (slot.Quantity <= 0) continue;
+                var slotImage = slotImages[i];
+                if (slotImage == null) continue;
 
-                var go = Instantiate(prefab, inventoryScrollContent);
+                // Instantiate the prefab as a child of the slot, leaving the slot's own Image untouched
+                var go = Instantiate(prefab, slotImage.transform);
                 go.SetActive(true);
 
-                var itemRow = go.GetComponent<ItemRow>();
+                // Ensure the RectTransform fills the slot and is centered
+                var rect = go.GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    rect.anchorMin = Vector2.zero;
+                    rect.anchorMax = Vector2.one;
+                    rect.offsetMin = Vector2.zero;
+                    rect.offsetMax = Vector2.zero;
+                    rect.localScale = Vector3.one;
+                }
 
                 // Hook up the audio source for the item row
                 var menuButtonSound = go.GetComponent<MenuButtonSound>();
@@ -343,48 +362,17 @@ namespace PocketSquire.Unity.UI
                 {
                     menuButtonSound.source = audioSource;
                 }
-                else
-                {
-                    if (menuButtonSound == null) Debug.LogWarning($"[PlayerMenu] ItemRow prefab for {item.Name} is missing MenuButtonSound!");
-                    if (audioSource == null) Debug.LogWarning("[PlayerMenu] PlayerMenuController auto-setup failed to find an AudioSource!");
-                }
-                
-                // Ensure scale is correct (sometimes instantiation in layout groups gets wonky)
-                go.transform.localScale = Vector3.one;
-                go.transform.localPosition = Vector3.zero;
 
-                // Configure Menu Cursor Target for this item
-                var cursorTarget = go.GetComponent<MenuCursorTarget>();
-                if (cursorTarget == null) cursorTarget = go.AddComponent<MenuCursorTarget>();
-                cursorTarget.cursorOffset = inventoryCursorOffset;
-                cursorTarget.useLocalOffset = true;
-
-                // Ensure LayoutElement exists for correct sizing in ScrollRect
-                var layoutElement = go.GetComponent<LayoutElement>();
-                if (layoutElement == null)
-                {
-                    layoutElement = go.AddComponent<LayoutElement>();
-                    layoutElement.minHeight = 100f; // Matching prefab height
-                    layoutElement.preferredHeight = 100f;
-                    layoutElement.flexibleWidth = 1f;
-                }
-                
+                var itemRow = go.GetComponent<ItemRow>();
                 if (itemRow != null)
                 {
                     Sprite icon = null;
                     if (!string.IsNullOrEmpty(item.Sprite))
-                    {
                         icon = GameAssetRegistry.Instance.GetSprite(item.Sprite);
-                    }
 
-                    itemRow.Initialize(item, slot.Quantity, icon, () => {
-                        // Action on click
-                    }, showPrice: false);
+                    itemRow.Initialize(item, inventorySlot.Quantity, icon, () => { }, showPrice: false);
                 }
             }
-            
-            // Force layout rebuild (sometimes needed for ScrollRects appearing for first time)
-            LayoutRebuilder.ForceRebuildLayoutImmediate(inventoryScrollContent as RectTransform);
         }
 
         /// <summary>
@@ -431,10 +419,13 @@ namespace PocketSquire.Unity.UI
 
         private void SelectFirstInteractable()
         {
-            // 1. Try to select the first item in the inventory
-            if (inventoryScrollContent.childCount > 0)
+            // 1. Try to select the first item found in the slots
+            var slotImages = new Image[] { slot1, slot2, slot3, slot4, slot5 };
+            foreach (var slot in slotImages)
             {
-                var firstItem = inventoryScrollContent.GetChild(0).gameObject;
+                if (slot == null || slot.transform.childCount == 0) continue;
+                
+                var firstItem = slot.transform.GetChild(0).gameObject;
                 if (firstItem.activeInHierarchy)
                 {
                     EventSystem.current.SetSelectedGameObject(firstItem);
@@ -442,7 +433,7 @@ namespace PocketSquire.Unity.UI
                 }
             }
 
-            // 2. Fallback to Skill Tree Button if inventory is empty
+            // 2. Fallback to Skill Tree Button
             if (skillTreeButton != null && skillTreeButton.interactable)
             {
                 EventSystem.current.SetSelectedGameObject(skillTreeButton.gameObject);

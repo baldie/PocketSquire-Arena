@@ -4808,6 +4808,10 @@ PrefabInstance:
       propertyPath: xpText
       value: 
       objectReference: {fileID: 1412069650}
+    - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 717625265}
     - target: {fileID: 4999700743974664661, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f0463317a8c8d4185c0e1a0eed0ffb, type: 3}
   m_Name: satchel_tier_2
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.PerkNode
-  id: 
-  displayName: 
-  description: 
+  id: satchel_tier_2
+  displayName: Large Satchel
+  description: 4 slots that can stack to 4
   minLevel: 0
   prerequisites: []
   allowedClasses: 
