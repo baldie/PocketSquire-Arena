@@ -32,6 +32,9 @@ namespace PocketSquire.Arena.Unity.UI
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
 
+        [Header("Toast")]
+        [SerializeField] private InteriorToast interiorToast;
+
         public bool IsOpen => shopWindow != null && shopWindow.activeInHierarchy;
 
         private readonly List<GameObject> spawnedRows = new List<GameObject>();
@@ -241,8 +244,14 @@ namespace PocketSquire.Arena.Unity.UI
 
             if (!GameState.Player.TryPurchaseItem(item))
             {
-                Debug.Log($"[ShopController] Cannot afford {item.Name} (Price: {item.Price}, Gold: {GameState.Player.Gold})");
-                return;
+                if (item.Price >= GameState.Player.Gold)
+                {
+                    interiorToast.ShowToast("Not enough gold");
+                    return;
+                } else {
+                    interiorToast.ShowToast("Can't carry any more items");
+                    return;
+                }
             }
 
             // Play coins sound effect

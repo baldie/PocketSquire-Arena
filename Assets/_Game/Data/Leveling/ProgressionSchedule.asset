@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a89e0927c920343b95e41a00bc70a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 452bf2f477d33c046b12c5fc6df1ddc8, type: 3}
   m_Name: ProgressionSchedule
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.ProgressionSchedule
   baseXp: 43
