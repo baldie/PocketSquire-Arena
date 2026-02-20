@@ -20,7 +20,6 @@ namespace PocketSquire.Unity
         void Update()
         {
             // 1. Toggle Pause (Escape Key OR Gamepad Start)
-            // 1. Toggle Pause (Escape Key OR Gamepad Start)
             if (GameInput.Instance.GetButtonDown(GameInput.Instance.PauseAction)) 
             {
                 GameInput.Instance.ConsumeButton(GameInput.Instance.PauseAction);
