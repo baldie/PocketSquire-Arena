@@ -128,4 +128,7 @@ Assets/TextMesh Pro/
 Assets/Libraries/
 Assets/UI Toolkit/
 
-
+test_output.txt
+test_results.txt
+build_log.txt
+build_errors.txt
