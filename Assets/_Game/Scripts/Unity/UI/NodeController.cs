@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using PocketSquire.Arena.Core;
+using DG.Tweening;
 
 namespace PocketSquire.Unity.UI
 {
@@ -37,10 +38,21 @@ namespace PocketSquire.Unity.UI
         [Header("Skill Node Data")]
         public PlayerClass.ClassName nodeClass;
 
+        [Header("Hover Glow Settings")]
+        public Color hoverGlowColor = new Color(1f, 0.92f, 0.016f, 1f); // Yellow/gold
+        public Vector2 hoverGlowDistance = new Vector2(3f, -3f);
+
+        [Header("Active Class Indicator Settings")]
+        public float pulseScale = 1.15f;
+        public float pulseDuration = 0.5f;
+
         private Image _image;
         private Button _button;
         private NodeState _currentState = NodeState.Dormant;
         private SkillTreeController _treeController;
+        private Outline _hoverOutline;
+        private Tween _pulseTween;
+        private bool _isActiveClass = false;
 
         public NodeState CurrentState => _currentState;
 
@@ -59,6 +71,11 @@ namespace PocketSquire.Unity.UI
                     audioSource = audioObj.GetComponent<AudioSource>();
                 }
             }
+
+            _hoverOutline = gameObject.AddComponent<Outline>();
+            _hoverOutline.effectColor = hoverGlowColor;
+            _hoverOutline.effectDistance = hoverGlowDistance;
+            _hoverOutline.enabled = false;
         }
 
         private void Start()
@@ -76,6 +93,78 @@ namespace PocketSquire.Unity.UI
             {
                 ApplyVisual();
                 UpdateInteractable();
+            }
+
+            CheckPulseIndicator();
+        }
+
+        private void OnEnable()
+        {
+            if (_pulseTween == null)
+            {
+                CheckPulseIndicator();
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_pulseTween != null)
+            {
+                _pulseTween.Kill();
+                _pulseTween = null;
+                transform.localScale = Vector3.one;
+            }
+        }
+
+        private void CheckPulseIndicator()
+        {
+            // Only pulse if it is the currently selected class of the player
+            if (GameState.Player != null)
+            {
+                if (GameState.Player.Class == nodeClass)
+                {
+                    _isActiveClass = true;
+
+                    if (_pulseTween == null)
+                    {
+                        Debug.Log($"[NodeController] Starting pulse for {nodeClass} on {gameObject.name}");
+                        _pulseTween = transform.DOScale(pulseScale, pulseDuration)
+                            .SetUpdate(true)
+                            .SetLoops(-1, LoopType.Yoyo)
+                            .SetEase(Ease.InOutSine);
+                    }
+
+                    if (_hoverOutline != null)
+                    {
+                        _hoverOutline.effectColor = Color.cyan;
+                        _hoverOutline.effectDistance = new Vector2(6f, -6f);
+                        _hoverOutline.enabled = true;
+                    }
+                }
+                else
+                {
+                    _isActiveClass = false;
+
+                    if (_pulseTween != null)
+                    {
+                        Debug.Log($"[NodeController] Stopping pulse for {nodeClass} on {gameObject.name}");
+                        _pulseTween.Kill();
+                        _pulseTween = null;
+                        transform.localScale = Vector3.one;
+                    }
+
+                    // Reset outline state in case it was cyan
+                    if (_hoverOutline != null)
+                    {
+                        _hoverOutline.effectColor = hoverGlowColor;
+                        _hoverOutline.effectDistance = hoverGlowDistance;
+                        _hoverOutline.enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[NodeController] GameState.Player is null when checking pulse on {gameObject.name}");
             }
         }
 
@@ -122,6 +211,9 @@ namespace PocketSquire.Unity.UI
                     }
                 }
             }
+
+            // We may have just become the active class, check to start pulsing
+            CheckPulseIndicator();
         }
 
         /// <summary>
@@ -179,6 +271,16 @@ namespace PocketSquire.Unity.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!_isActiveClass && (_currentState == NodeState.Available || _currentState == NodeState.Activated))
+            {
+                if (_hoverOutline != null)
+                {
+                    _hoverOutline.effectColor = hoverGlowColor;
+                    _hoverOutline.effectDistance = hoverGlowDistance;
+                    _hoverOutline.enabled = true;
+                }
+            }
+
             if (audioSource != null && hoverSound != null)
             {
                 audioSource.PlayOneShot(hoverSound);
@@ -193,6 +295,11 @@ namespace PocketSquire.Unity.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!_isActiveClass)
+            {
+                if (_hoverOutline != null) _hoverOutline.enabled = false;
+            }
+
             if (_treeController != null)
             {
                 _treeController.HideHoverDescription();
