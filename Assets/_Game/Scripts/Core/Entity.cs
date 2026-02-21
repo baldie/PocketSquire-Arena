@@ -14,12 +14,6 @@ namespace PocketSquire.Arena.Core
         public int Gold;
         public Inventory Inventory = new();
         public Attributes Attributes = new Attributes();
-        public float PosX;
-        public float PosY;
-        public float Width;
-        public float Height;
-        public float ScaleX = 1f;
-        public float ScaleY = 1f;
         public int Rank = 0;
         public string AttackSoundId = string.Empty;
         public string DefendSoundId = string.Empty;

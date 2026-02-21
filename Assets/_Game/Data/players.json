@@ -15,12 +15,6 @@
             "Dexterity": 5,
             "Luck": 5,
             "Defense": 5
-        },
-        "posX": 35,
-        "posY": -150,
-        "width": 512,
-        "height": 700,
-        "scaleX": 0.65,
-        "scaleY": 0.65
+        }
     }
 ]

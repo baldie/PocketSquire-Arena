@@ -18,13 +18,7 @@
             "Dexterity": 1,
             "Luck": 1,
             "Defense": 1
-        },
-        "posX": -330,
-        "posY": 450,
-        "width": 1920,
-        "height": 2240,
-        "scaleX": 0.4,
-        "scaleY": 0.35
+        }
     },
     {
         "name": "Mushroom Marauder",
@@ -45,13 +39,7 @@
             "Dexterity": 3,
             "Luck": 2,
             "Defense": 2
-        },
-        "posX": -330,
-        "posY": 350,
-        "width": 1920,
-        "height": 2240,
-        "scaleX": 0.4,
-        "scaleY": 0.35
+        }
     },
     {
         "name": "Mushroom Marauder",
@@ -71,12 +59,6 @@
             "Dexterity": 3,
             "Luck": 2,
             "Defense": 2
-        },
-        "posX": -330,
-        "posY": 350,
-        "width": 1920,
-        "height": 2240,
-        "scaleX": 0.4,
-        "scaleY": 0.35
+        }
     }
 ]

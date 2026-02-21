@@ -101,17 +101,7 @@ public class ArenaSceneInitializer : MonoBehaviour
             Debug.LogError($"Sprite with ID {player.GetSpriteId()} not found in registry!");
         }
 
-        var rectTransform = playerSprite.GetComponent<RectTransform>();
-        if (rectTransform != null)
-        {
-            rectTransform.anchoredPosition = new Vector2(player.PosX, player.PosY);
-            rectTransform.sizeDelta = new Vector2(player.Width, player.Height);
-            rectTransform.localScale = new Vector3(player.ScaleX, player.ScaleY, 1f);
-        }
-        else
-        {
-            Debug.LogError("PlayerSprite does not have a RectTransform!");
-        }
+
 
         return player;
     }
@@ -145,17 +135,7 @@ public class ArenaSceneInitializer : MonoBehaviour
             Debug.LogError($"Sprite with ID {monster.SpriteId} not found in registry!");
         }
 
-        var rectTransform = monsterSprite.GetComponent<RectTransform>();
-        if (rectTransform != null)
-        {
-            rectTransform.anchoredPosition = new Vector2(monster.PosX, monster.PosY);
-            rectTransform.sizeDelta = new Vector2(monster.Width, monster.Height);
-            rectTransform.localScale = new Vector3(monster.ScaleX, monster.ScaleY, 1f);
-        }
-        else
-        {
-            Debug.LogError("MonsterSprite does not have a RectTransform!");
-        }
+
 
         return monster;
     }
