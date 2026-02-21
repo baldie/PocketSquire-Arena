@@ -1,20 +1,20 @@
 [
     {
-        "name": "player_m_l1",
+        "name": "m_squire",
         "health": 20,
         "maxHealth": 20,
         "attackSoundId": "m_physical_attack",
-        "defendSoundId": "m_physical_defend",
-        "hitSoundId": "m_physical_hit",
-        "gender": "m",
-        "gold": 100,
-        "attributes": {
-            "Strength": 5,
-            "Constitution": 5,
-            "Magic": 5,
-            "Dexterity": 5,
-            "Luck": 5,
-            "Defense": 5
-        }
+        "defendSoundId": "physical_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_squire",
+        "health": 20,
+        "maxHealth": 20,
+        "attackSoundId": "f_physical_attack",
+        "defendSoundId": "physical_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
     }
 ]

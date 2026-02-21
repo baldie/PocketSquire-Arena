@@ -26,14 +26,15 @@ namespace PocketSquire.Arena.Core
             CharacterCreationDate = DateTime.Now;
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
-            var prototype = GameWorld.GetPlayerByName("player_m_l1");
+            var prototype = GameWorld.GetPlayerByName("m_squire");
             if (prototype != null)
             {
                 // Deep clone via JSON to avoid reference issues
                 var json = JsonConvert.SerializeObject(prototype);
                 Player = JsonConvert.DeserializeObject<Player>(json);
             }
-
+            Player?.Gold = 100;
+            Player?.Attributes = Attributes.GetDefaultAttributes();
             // Give starting item: 1 Small Health Potion
             Player?.Inventory.AddItem(1, 1);
             Console.WriteLine(Player?.ToString());
