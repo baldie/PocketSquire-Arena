@@ -131,21 +131,21 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
-  - id: player_m_squire_attack
+  - id: m_squire_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
-  - id: player_m_squire_battle
+  - id: m_squire_battle
     asset: {fileID: 21300000, guid: ec8a0f64caf7b8f4e9b5d9a8a89f27e3, type: 3}
-  - id: player_m_squire_defeat
+  - id: m_squire_defeat
     asset: {fileID: 21300000, guid: e48a0b78bc47bb743bb2ea0ea0b7cdef, type: 3}
-  - id: player_m_squire_defend
+  - id: m_squire_defend
     asset: {fileID: 21300000, guid: 795d74c3f17505a408ea718377684e13, type: 3}
-  - id: player_m_squire_hit
+  - id: m_squire_hit
     asset: {fileID: 21300000, guid: 5eeb6db8622749940a6cbe698e2d9e1f, type: 3}
-  - id: player_m_squire_idle
+  - id: m_squire_idle
     asset: {fileID: 21300000, guid: a755bec72c6fd7a4f9610ad38e507a76, type: 3}
-  - id: player_m_squire_item
+  - id: m_squire_item
     asset: {fileID: 21300000, guid: 8ce105a276362c54993b9f2dabc2bc4e, type: 3}
-  - id: player_m_squire_win
+  - id: m_squire_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
   - id: constitution
     asset: {fileID: 21300000, guid: 4b01cc08772854e4c8c9e8c43ceda8f3, type: 3}
@@ -189,8 +189,6 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 84c46989968fe1648a453e9f6affc0f6, type: 3}
   - id: scroll
     asset: {fileID: 21300000, guid: 79260daeea57ea14287f1ec19d9898b5, type: 3}
-  - id: title
-    asset: {fileID: 21300000, guid: 0d0386ff3e0ebb045ba47befb42ad693, type: 3}
   sounds:
   - id: GenericAttack1
     asset: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
@@ -204,11 +202,13 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}
   - id: MushroomMarauderSpecialAttack
     asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
+  - id: f_physical_attack
+    asset: {fileID: 8300000, guid: 8abe9f07b96f2f64b9dfa144b5cd961a, type: 3}
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
-  - id: m_physical_defend
+  - id: physical_defend
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
-  - id: m_physical_hit
+  - id: physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
   - id: battle_menu_tick
     asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}

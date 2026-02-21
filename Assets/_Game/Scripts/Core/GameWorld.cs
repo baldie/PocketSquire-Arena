@@ -13,46 +13,46 @@ namespace PocketSquire.Arena.Core
     public static class GameWorld
     {
         public static List<Monster> AllMonsters { get; set; } = new List<Monster>();
-        public static List<Player> Players { get; set; } = new List<Player>();
-        public static List<Item> Items { get; set; } = new List<Item>(); // Added Items list
+        public static List<Player> ClassTemplates { get; set; } = new List<Player>();
+        public static List<Item> Items { get; set; } = new List<Item>();
         public static ProgressionLogic? Progression { get; set; }
         public static Dictionary<string, PerkPool> PerkPools { get; set; } = new Dictionary<string, PerkPool>();
 
         public static void Load(string? rootPath = null)
         {
             LoadMonsters(rootPath);
-            LoadPlayers(rootPath);
-            LoadItems(rootPath); // Load items
+            LoadClassTemplates(rootPath);
+            LoadItems(rootPath);
         }
 
-        private static void LoadPlayers(string? rootPath = null)
+        private static void LoadClassTemplates(string? rootPath = null)
         {
             // Load player information from files
             string root = rootPath ?? Environment.CurrentDirectory;
-            string filePath = Path.Combine(root, "Assets/_Game/Data/players.json");
+            string filePath = Path.Combine(root, "Assets/_Game/Data/classes.json");
 
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException($"Player data file not found at: {filePath}");
+                throw new FileNotFoundException($"Class data file not found at: {filePath}");
             }
 
             string jsonContent = File.ReadAllText(filePath);
             try
             {
-                var players = JsonConvert.DeserializeObject<List<Player>>(jsonContent);
+                var classTemplates = JsonConvert.DeserializeObject<List<Player>>(jsonContent);
 
-                Players.Clear();
+                ClassTemplates.Clear();
 
-                if (players != null)
+                if (classTemplates != null)
                 {
-                    Players.AddRange(players);
+                    ClassTemplates.AddRange(classTemplates);
                 }
             }
             catch (Exception ex)
             {
                 // Core logic is framework agnostic, so we use Console or just throw.
                 // The Unity side can catch and log to Debug if needed.
-                Console.WriteLine($"Error loading players: {ex.Message}");
+                Console.WriteLine($"Error loading class templates: {ex.Message}");
                 throw;
             }   
         }
@@ -126,10 +126,12 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-        public static Player? GetPlayerByName(string name)
+        public static Player? GetClassTemplate(Player.Genders gender, PlayerClass.ClassName className)
         {
-            if (Players == null) return null;
-            return Players.Find(e => e.Name == name);
+            if (ClassTemplates == null) return null;
+            var genderStr = gender == Player.Genders.m ? "m" : "f";
+            var targetName = $"{genderStr}_{className.ToString().ToLower()}";
+            return ClassTemplates.Find(p => p.Name.ToLower() == targetName);
         }
 
         public static Monster? GetMonsterByName(string name)

@@ -1,8 +1,6 @@
 [
     {
         "name": "m_squire",
-        "health": 20,
-        "maxHealth": 20,
         "attackSoundId": "m_physical_attack",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
@@ -10,8 +8,6 @@
     },
     {
         "name": "f_squire",
-        "health": 20,
-        "maxHealth": 20,
         "attackSoundId": "f_physical_attack",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",

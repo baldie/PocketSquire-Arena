@@ -10,7 +10,7 @@ import ImageSlotGrid from "../shared/ImageSlotGrid";
 import PromptPanel from "../shared/PromptPanel";
 import AttributeEditor from "../shared/AttributeEditor";
 import ConfirmModal from "../shared/ConfirmModal";
-import AudioButton from "../shared/AudioButton";
+import AudioInputField from "../shared/AudioInputField";
 import type { Attributes, ImageSlot, MonsterData, MonsterSlot } from "../../types";
 
 export default function MonsterDetail() {
@@ -31,7 +31,7 @@ export default function MonsterDetail() {
             const slug = slugify(monster!.name);
             const urls: Partial<Record<ImageSlot, string | null>> = {};
             for (const slot of MONSTER_SLOTS) {
-                urls[slot] = await readImageAsDataUrl(state.dirHandle!, ["Sprites", "Monsters", `${slug}_${slot}.png`]);
+                urls[slot] = await readImageAsDataUrl(state.dirHandle!, ["Art", "Monsters", `${slug}_${slot}.png`]);
             }
             if (!cancelled) setImageUrls(urls);
         }
@@ -54,7 +54,7 @@ export default function MonsterDetail() {
             if (idx === null || !monster) return;
             const updated = { ...monster, [field]: value };
             dispatch({ type: "UPDATE_MONSTER", payload: { index: idx, data: updated } });
-            saveMonsters(state.monsters.map((m, i) => i === idx ? updated : m));
+            saveMonsters(state.monsters.map((m: MonsterData, i: number) => i === idx ? updated : m));
         },
         [idx, monster, dispatch, saveMonsters, state.monsters]
     );
@@ -64,7 +64,7 @@ export default function MonsterDetail() {
             if (idx === null || !monster) return;
             const updated = { ...monster, attributes: attrs };
             dispatch({ type: "UPDATE_MONSTER", payload: { index: idx, data: updated } });
-            saveMonsters(state.monsters.map((m, i) => i === idx ? updated : m));
+            saveMonsters(state.monsters.map((m: MonsterData, i: number) => i === idx ? updated : m));
         },
         [idx, monster, dispatch, saveMonsters, state.monsters]
     );
@@ -80,7 +80,7 @@ export default function MonsterDetail() {
         if (idx === null) return;
         setConfirmDelete(false);
         dispatch({ type: "DELETE_MONSTER", payload: idx });
-        saveMonsters(state.monsters.filter((_, i) => i !== idx));
+        saveMonsters(state.monsters.filter((_: MonsterData, i: number) => i !== idx));
         setConfirmDeleteImages(true);
     };
 
@@ -90,19 +90,19 @@ export default function MonsterDetail() {
         const { deleteFile } = await import("../../utils/fileSystem");
         const slug = slugify(monster.name);
         for (const slot of MONSTER_SLOTS) {
-            await deleteFile(state.dirHandle, ["Sprites", "Monsters", `${slug}_${slot}.png`]);
+            await deleteFile(state.dirHandle, ["Art", "Monsters", `${slug}_${slot}.png`]);
         }
     };
 
     const handleGenerate = useCallback(
-        async (slot: ImageSlot) => {
+        async (slot: ImageSlot, referenceDataUrl?: string) => {
             if (!monster || !state.dirHandle) return;
             setGeneratingSlot(slot);
             const slug = slugify(monster.name);
-            const path = ["Sprites", "Monsters", `${slug}_${slot}.png`];
+            const path = ["Art", "Monsters", `${slug}_${slot}.png`];
             const variables = { name: monster.name, rank: String(monster.rank) };
             try {
-                const dataUrl = await generateImage(slot, path, variables, "monster", slug);
+                const dataUrl = await generateImage(slot, path, variables, "monster", slug, referenceDataUrl);
                 if (dataUrl) setImageUrls((prev) => ({ ...prev, [slot]: dataUrl }));
             } finally {
                 setGeneratingSlot(null);
@@ -206,7 +206,7 @@ export default function MonsterDetail() {
                             className="w-full px-2 py-1.5 text-sm bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                         />
                     </div>
-                    {(["rank", "health", "maxHealth", "experience", "gold"] as const).map((f) => (
+                    {(["rank", "experience", "gold"] as const).map((f) => (
                         <div key={f}>
                             <label className="block text-xs text-gray-500 mb-1 capitalize">{f}</label>
                             <input
@@ -227,19 +227,14 @@ export default function MonsterDetail() {
                             <label className="block text-xs text-gray-500 mb-1">
                                 {f.replace("SoundId", " Sound")}
                             </label>
-                            <div className="flex gap-1">
-                                <input
-                                    id={`monster-${f}`}
-                                    type="text"
-                                    defaultValue={monster[f]}
-                                    key={`${f}-${idx}`}
-                                    onBlur={(e) => handleFieldBlur(f, e.target.value)}
-                                    className="flex-1 min-w-0 px-2 py-1.5 text-sm bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                                />
-                                {state.dirHandle && monster[f] && (
-                                    <AudioButton soundId={monster[f]} dirHandle={state.dirHandle} />
-                                )}
-                            </div>
+                            <AudioInputField
+                                key={`${monster.name}-${f}`}
+                                id={`monster-${f}`}
+                                defaultValue={monster[f] ?? ""}
+                                onBlur={(val) => handleFieldBlur(f, val)}
+                                dirHandle={state.dirHandle}
+                                category="Monsters"
+                            />
                         </div>
                     ))}
                 </div>
@@ -262,7 +257,7 @@ export default function MonsterDetail() {
                     resolvedPrompt={resolvedPrompt}
                     unresolvedVars={unresolvedVars}
                     onOverrideChange={(v) => handleOverrideChange(activeSlot, v)}
-                    onGenerate={() => void handleGenerate(activeSlot)}
+                    onGenerate={(refUrl) => void handleGenerate(activeSlot, refUrl)}
                     onGenerateAll={() => {
                         void (async () => {
                             for (const slot of MONSTER_SLOTS) await handleGenerate(slot);

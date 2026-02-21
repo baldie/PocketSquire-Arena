@@ -10,7 +10,7 @@ export function useFileSystem() {
     const loadAllData = useCallback(
         async (handle: FileSystemDirectoryHandle) => {
             try {
-                const players = await readJsonFile<PlayerData[]>(handle, ["Data", "players.json"]);
+                const players = await readJsonFile<PlayerData[]>(handle, ["Data", "classes.json"]);
                 const monsters = await readJsonFile<MonsterData[]>(handle, ["Data", "monsters.json"]);
                 const items = await readJsonFile<ItemData[]>(handle, ["Data", "items.json"]);
 

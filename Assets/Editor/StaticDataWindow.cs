@@ -48,7 +48,7 @@ public class StaticDataWindow : AlchemyEditorWindow
     public List<Monster> AllMonsters;
     
     [ReadOnly, ShowInInspector]
-    public List<Player> PlayerDefinitions;
+    public List<Player> ClassDefinitions;
     
     [ReadOnly, ShowInInspector]
     public List<Item> Items;
@@ -76,10 +76,10 @@ public class StaticDataWindow : AlchemyEditorWindow
 
         // Game World Updates
         AllMonsters = GameWorld.AllMonsters;
-        PlayerDefinitions = GameWorld.Players;
+        ClassDefinitions = GameWorld.ClassTemplates;
         Items = GameWorld.Items;
         MonsterCount = GameWorld.AllMonsters?.Count ?? 0;
-        PlayerDefinitionsCount = GameWorld.Players?.Count ?? 0;
+        PlayerDefinitionsCount = GameWorld.ClassTemplates?.Count ?? 0;
         ItemsCount = GameWorld.Items?.Count ?? 0;
 
         // Repaint the window to show real-time updates while the game is running

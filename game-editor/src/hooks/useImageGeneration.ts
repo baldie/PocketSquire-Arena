@@ -7,24 +7,46 @@ import type { ImageSlot, MonsterData, ItemData, PlayerData, GenerationHistoryEnt
 import type { PlayerClassName } from "../constants";
 
 const GEMINI_API_URL =
-    "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict";
-
-interface GeminiPrediction {
-    bytesBase64Encoded: string;
-    mimeType: string;
-}
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent";
 
 interface GeminiResponse {
-    predictions?: GeminiPrediction[];
+    candidates?: Array<{
+        content?: {
+            parts?: Array<{
+                inlineData?: {
+                    mimeType: string;
+                    data: string;
+                };
+                text?: string;
+            }>;
+        };
+        finishReason?: string;
+    }>;
 }
 
-async function callGeminiImagen(apiKey: string, prompt: string): Promise<string> {
+async function callGeminiImagen(apiKey: string, prompt: string, referenceImageBase64?: string): Promise<string> {
     let response: Response;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parts: any[] = [{ text: prompt }];
+
+    if (referenceImageBase64) {
+        // Data URL format: "data:image/png;base64,iVBORw0KGgo..."
+        const [mimePrefix, b64Data] = referenceImageBase64.split(",");
+        const mimeType = mimePrefix.split(":")[1].split(";")[0];
+        parts.push({
+            inlineData: {
+                mimeType,
+                data: b64Data
+            }
+        });
+    }
+
     try {
         response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ instances: [{ prompt }], parameters: { sampleCount: 1 } }),
+            body: JSON.stringify({ contents: [{ parts }] }),
         });
     } catch {
         throw new Error("Network error. Check your connection and retry.");
@@ -42,11 +64,24 @@ async function callGeminiImagen(apiKey: string, prompt: string): Promise<string>
     if (!response.ok) throw new Error(`Gemini API error ${response.status}`);
 
     const data = await response.json() as GeminiResponse;
-    if (!data.predictions || data.predictions.length === 0) {
-        throw new Error("Gemini returned no image. Try a different prompt.");
+    const firstPart = data?.candidates?.[0]?.content?.parts?.[0];
+
+    if (!firstPart) {
+        if (data?.candidates?.[0]?.finishReason) {
+            throw new Error(`Generation failed, reason: ${data.candidates[0].finishReason}`);
+        }
+        throw new Error("Gemini returned an empty response. Try a different prompt.");
     }
 
-    return data.predictions[0].bytesBase64Encoded;
+    if (firstPart.inlineData?.data) {
+        return firstPart.inlineData.data;
+    }
+
+    if (firstPart.text) {
+        throw new Error(`Generation failed, model returned: ${firstPart.text}`);
+    }
+
+    throw new Error("Unrecognized response format from Nano Banana Pro.");
 }
 
 export function useImageGeneration() {
@@ -58,7 +93,8 @@ export function useImageGeneration() {
             pathSegments: string[],
             variables: Parameters<typeof resolveTemplate>[1],
             entityType: "player" | "monster" | "item",
-            entityKey: string
+            entityKey: string,
+            referenceImageBase64?: string
         ): Promise<string | null> => {
             const apiKey = localStorage.getItem("gemini_api_key");
             if (!apiKey || !state.dirHandle) return null;
@@ -69,7 +105,7 @@ export function useImageGeneration() {
 
             dispatch({ type: "SET_GENERATING", payload: true });
             try {
-                const base64 = await callGeminiImagen(apiKey, resolved);
+                const base64 = await callGeminiImagen(apiKey, resolved, referenceImageBase64);
                 await writeImageFile(state.dirHandle, pathSegments, base64);
 
                 const dataUrl = `data:image/png;base64,${base64}`;

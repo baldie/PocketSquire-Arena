@@ -19,7 +19,7 @@ function useClassCompletionCheck(dirHandle: FileSystemDirectoryHandle | null) {
                 let allFound = true;
                 for (const gender of ["m", "f"]) {
                     for (const slot of PLAYER_SLOTS) {
-                        const path = ["Sprites", "Players", `player_${gender}_${clsLower}_${slot}.png`];
+                        const path = ["Art", "Player", `player_${gender}_${clsLower}_${slot}.png`];
                         const result = await readImageAsDataUrl(dirHandle!, path);
                         if (result === null) { allFound = false; break; }
                     }

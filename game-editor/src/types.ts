@@ -27,8 +27,6 @@ export interface Attributes {
 
 export interface PlayerData {
     name: string;
-    health: number;
-    maxHealth: number;
     attackSoundId: string;
     defendSoundId: string;
     hitSoundId: string;
@@ -38,8 +36,6 @@ export interface PlayerData {
 export interface MonsterData {
     name: string;
     rank: number;
-    health: number;
-    maxHealth: number;
     experience: number;
     gold: number;
     attackSoundId: string;

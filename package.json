@@ -4,6 +4,7 @@
   "description": "A simple roguelike boss-rush game in Unity",
   "main": "index.js",
   "scripts": {
+    "task:editor": "npm run dev --prefix game-editor",
     "task:start": "node scripts/task-start.js",
     "task:submit": "node scripts/task-submit.js",
     "test:unit": "dotnet test tests/unit",

@@ -5,12 +5,12 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Player : Entity
     {
-        public enum CharGender {
+        public enum Genders {
             m,
             f
         }
 
-        public CharGender Gender;
+        public Genders Gender;
         public int Level { get; private set; } = 1;
         public PlayerClass.ClassName @Class { get; private set; } = PlayerClass.ClassName.Squire;
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
@@ -18,7 +18,7 @@ namespace PocketSquire.Arena.Core
         public override string SpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_battle";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_battle";
             }
         }
 
@@ -26,49 +26,49 @@ namespace PocketSquire.Arena.Core
         {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_hit";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_hit";
             }
         }
 
         public override string DefeatSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_defeat";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_defeat";
             }
         }
 
         public override string YieldSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_yield";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_yield";
             }
         }
 
         public override string AttackSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_attack";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_attack";
             }
         }
 
         public override string DefendSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_defend";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_defend";
             }
         }
 
         public string ItemSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_item";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_item";
             }
         }
 
         public override string WinSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_win";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_win";
             }
         }
 
@@ -81,7 +81,7 @@ namespace PocketSquire.Arena.Core
 
         public Player() : base() { }
 
-        public Player(string name, int health, int maxHealth, Attributes attributes, CharGender gender) : base(name, health, maxHealth, attributes)
+        public Player(string name, int health, int maxHealth, Attributes attributes, Genders gender) : base(name, health, maxHealth, attributes)
         {
             this.Gender = gender;
         }

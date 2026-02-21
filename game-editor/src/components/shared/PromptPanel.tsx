@@ -1,10 +1,12 @@
+import { useState, useRef } from "react";
+
 interface PromptPanelProps {
     globalTemplate: string;
     localOverride: string;
     resolvedPrompt: string;
     unresolvedVars: string[];
     onOverrideChange: (value: string) => void;
-    onGenerate: () => void;
+    onGenerate: (referenceDataUrl?: string) => void;
     onGenerateAll: () => void;
     isGenerating: boolean;
 }
@@ -19,6 +21,19 @@ export default function PromptPanel({
     onGenerateAll,
     isGenerating,
 }: PromptPanelProps) {
+    const [referenceImage, setReferenceImage] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setReferenceImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    };
+
     const hasUnresolved = unresolvedVars.length > 0;
     const disabled = isGenerating || hasUnresolved;
     const apiKey = localStorage.getItem("gemini_api_key");
@@ -75,9 +90,40 @@ export default function PromptPanel({
             )}
 
             <div className="flex gap-2">
+                <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                />
+                <button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={disabled || noApiKey}
+                    className="px-3 py-2 text-sm bg-gray-700 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed text-gray-200 rounded-lg transition-colors flex items-center justify-center relative min-w-[3rem]"
+                    title="Upload Reference Image"
+                >
+                    {referenceImage ? (
+                        <div className="relative w-6 h-6">
+                            <img src={referenceImage} alt="Reference" className="w-full h-full object-cover rounded border border-gray-500" />
+                            <div
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setReferenceImage(null);
+                                    if (fileInputRef.current) fileInputRef.current.value = "";
+                                }}
+                                className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-400 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] cursor-pointer"
+                            >
+                                ×
+                            </div>
+                        </div>
+                    ) : (
+                        "🖼️"
+                    )}
+                </button>
                 <button
                     id="generate-btn"
-                    onClick={onGenerate}
+                    onClick={() => onGenerate(referenceImage || undefined)}
                     disabled={disabled || noApiKey}
                     className="flex-1 px-3 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
                 >

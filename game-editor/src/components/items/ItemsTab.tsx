@@ -41,7 +41,7 @@ export default function ItemsTab() {
         const entities: Parameters<typeof batchGenerate>[0] = state.items.flatMap((item) =>
             ITEM_SLOTS.map((slot) => ({
                 slot,
-                pathSegments: ["Sprites", "Items", `${item.sprite}.png`],
+                pathSegments: ["Art", "Items", `${item.sprite}.png`],
                 variables: { name: item.name },
                 entityType: "item" as const,
                 entityKey: slugify(item.name),

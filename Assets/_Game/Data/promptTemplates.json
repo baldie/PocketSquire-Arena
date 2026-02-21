@@ -1,0 +1,31 @@
+{
+    "player": {
+        "global": {
+            "idle": "A full-body fantasy RPG sprite of a {class} {gender}, idle stance, pixel art, transparent background",
+            "attack": "A full-body fantasy RPG sprite of a {class} {gender}, attacking with weapon, pixel art, transparent background",
+            "defend": "A full-body fantasy RPG sprite of a {class} {gender}, defensive guard stance, pixel art, transparent background",
+            "hit": "A full-body fantasy RPG sprite of a {class} {gender}, recoiling from a hit, pixel art, transparent background",
+            "defeat": "A full-body fantasy RPG sprite of a {class} {gender}, collapsed in defeat, pixel art, transparent background",
+            "yield": "A full-body fantasy RPG sprite of a {class} {gender}, surrendering with hands raised, pixel art, transparent background",
+            "win": "A full-body fantasy RPG sprite of a {class} {gender}, celebrating victory, pixel art, transparent background",
+            "item": "A full-body fantasy RPG sprite of a {class} {gender}, using an item, pixel art, transparent background"
+        },
+        "overrides": {}
+    },
+    "monster": {
+        "global": {
+            "battle": "A fantasy monster named {name} (rank {rank}), idle battle stance, pixel art, transparent background",
+            "attack": "A fantasy monster named {name} (rank {rank}), lunging to attack, pixel art, transparent background",
+            "special_attack": "A fantasy monster named {name} (rank {rank}), unleashing a special attack, pixel art, transparent background",
+            "hit": "A fantasy monster named {name} (rank {rank}), recoiling from damage, pixel art, transparent background",
+            "defend": "A fantasy monster named {name} (rank {rank}), bracing in defense, pixel art, transparent background"
+        },
+        "overrides": {}
+    },
+    "item": {
+        "global": {
+            "icon": "A fantasy RPG item icon of {name}, pixel art style, 64x64, transparent background"
+        },
+        "overrides": {}
+    }
+}

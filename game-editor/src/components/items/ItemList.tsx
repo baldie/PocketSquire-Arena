@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { readImageAsDataUrl } from "../../utils/fileSystem";
+import type { ItemData } from "../../types";
 
 export default function ItemList() {
     const { state, dispatch } = useAppContext();
@@ -14,7 +15,7 @@ export default function ItemList() {
         async function load() {
             const map: Record<number, string | null> = {};
             for (let i = 0; i < state.items.length; i++) {
-                map[i] = await readImageAsDataUrl(dirHandle, ["Sprites", "Items", `${state.items[i].sprite}.png`]);
+                map[i] = await readImageAsDataUrl(dirHandle, ["Art", "Items", `${state.items[i].sprite}.png`]);
             }
             if (!cancelled) setIconImages(map);
         }
@@ -28,7 +29,7 @@ export default function ItemList() {
                 <p className="px-4 py-6 text-sm text-gray-500 text-center">No items yet. Add one!</p>
             ) : (
                 <ul role="listbox" aria-label="Items">
-                    {state.items.map((item, idx) => {
+                    {state.items.map((item: ItemData, idx: number) => {
                         const isActive = state.activeItemIndex === idx;
                         const img = iconImages[idx];
                         return (

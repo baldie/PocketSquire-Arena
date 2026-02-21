@@ -12,8 +12,6 @@ import { autoSave } from "../../utils/autoSave";
 const DEFAULT_MONSTER: MonsterData = {
     name: "New Monster",
     rank: 1,
-    health: 10,
-    maxHealth: 10,
     experience: 5,
     gold: 3,
     attackSoundId: "",
@@ -42,10 +40,10 @@ export default function MonstersTab() {
     const handleBatchGenerate = async () => {
         setBatchOpen(true);
         setFailedSlots([]);
-        const entities: Parameters<typeof batchGenerate>[0] = state.monsters.flatMap((monster) =>
+        const entities: Parameters<typeof batchGenerate>[0] = state.monsters.flatMap((monster: MonsterData) =>
             MONSTER_SLOTS.map((slot) => ({
                 slot,
-                pathSegments: ["Sprites", "Monsters", `${slugify(monster.name)}_${slot}.png`],
+                pathSegments: ["Art", "Monsters", `${slugify(monster.name)}_${slot}.png`],
                 variables: { name: monster.name, rank: String(monster.rank) },
                 entityType: "monster" as const,
                 entityKey: slugify(monster.name),

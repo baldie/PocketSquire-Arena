@@ -8,12 +8,12 @@ import { autoSave } from "../../utils/autoSave";
 import { useImageGeneration } from "../../hooks/useImageGeneration";
 import ImageSlotGrid from "../shared/ImageSlotGrid";
 import PromptPanel from "../shared/PromptPanel";
-import AudioButton from "../shared/AudioButton";
+import AudioInputField from "../shared/AudioInputField";
 import type { Gender, ImageSlot, PlayerData, PlayerSlot } from "../../types";
 import { slugify } from "../../utils/slugify";
 
 function spritePath(gender: Gender, cls: string, slot: PlayerSlot): string[] {
-    return ["Sprites", "Players", `player_${gender}_${cls.toLowerCase()}_${slot}.png`];
+    return ["Art", "Player", `player_${gender}_${cls.toLowerCase()}_${slot}.png`];
 }
 
 export default function ClassDetail() {
@@ -28,7 +28,7 @@ export default function ClassDetail() {
     // Find player data for this class+gender combo
     const playerKey = cls ? `${gender}_${cls.toLowerCase()}` : null;
     const playerIndex = cls
-        ? state.players.findIndex((p) => p.name === playerKey)
+        ? state.players.findIndex((p: PlayerData) => p.name === playerKey)
         : -1;
     const player: PlayerData | null = playerIndex >= 0 ? state.players[playerIndex] : null;
 
@@ -60,8 +60,6 @@ export default function ClassDetail() {
                 // Create default entry
                 updatedPlayer = {
                     name: key,
-                    health: 20,
-                    maxHealth: 20,
                     attackSoundId: "",
                     defendSoundId: "",
                     hitSoundId: "",
@@ -72,12 +70,12 @@ export default function ClassDetail() {
 
             if (playerIndex >= 0) {
                 dispatch({ type: "UPDATE_PLAYER", payload: { index: playerIndex, data: updatedPlayer } });
-                void autoSave(state.dirHandle, "players", state.players.map((p, i) => i === playerIndex ? updatedPlayer : p), (s) =>
+                void autoSave(state.dirHandle, "classes", state.players.map((p: PlayerData, i: number) => i === playerIndex ? updatedPlayer : p), (s) =>
                     dispatch({ type: "SET_SAVE_STATUS", payload: s })
                 );
             } else {
                 dispatch({ type: "UPDATE_PLAYER", payload: { index: state.players.length, data: updatedPlayer } });
-                void autoSave(state.dirHandle, "players", [...state.players, updatedPlayer], (s) =>
+                void autoSave(state.dirHandle, "classes", [...state.players, updatedPlayer], (s) =>
                     dispatch({ type: "SET_SAVE_STATUS", payload: s })
                 );
             }
@@ -117,7 +115,7 @@ export default function ClassDetail() {
     );
 
     const handleGenerate = useCallback(
-        async (slot: ImageSlot) => {
+        async (slot: ImageSlot, referenceDataUrl?: string) => {
             if (!cls || !state.dirHandle) return;
             setGeneratingSlot(slot);
             const variables = {
@@ -126,7 +124,7 @@ export default function ClassDetail() {
             };
             const path = spritePath(gender, cls, slot as PlayerSlot);
             try {
-                const dataUrl = await generateImage(slot, path, variables, "player", slugify(cls));
+                const dataUrl = await generateImage(slot, path, variables, "player", slugify(cls), referenceDataUrl);
                 if (dataUrl) {
                     setImageUrls((prev) => ({ ...prev, [slot]: dataUrl }));
                 }
@@ -187,42 +185,21 @@ export default function ClassDetail() {
 
             {/* Player data form */}
             <div className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-3">
-                <h3 className="text-sm font-semibold text-gray-300">Player Data</h3>
-                <div className="grid grid-cols-2 gap-3">
-                    {(["health", "maxHealth"] as const).map((f) => (
-                        <div key={f}>
-                            <label className="block text-xs text-gray-500 mb-1 capitalize">{f}</label>
-                            <input
-                                id={`player-${f}`}
-                                type="number"
-                                min={1}
-                                defaultValue={player?.[f] ?? 20}
-                                key={`${cls}-${gender}-${f}`}
-                                onBlur={(e) => handleFieldBlur(f, parseInt(e.target.value, 10))}
-                                className="w-full px-2 py-1.5 text-sm bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                            />
-                        </div>
-                    ))}
-                </div>
+                <h3 className="text-sm font-semibold text-gray-300">Class Data</h3>
                 <div className="grid grid-cols-3 gap-3">
                     {(["attackSoundId", "defendSoundId", "hitSoundId"] as const).map((f) => (
                         <div key={f}>
                             <label className="block text-xs text-gray-500 mb-1">
                                 {f.replace("SoundId", " Sound")}
                             </label>
-                            <div className="flex gap-1">
-                                <input
-                                    id={`player-${f}`}
-                                    type="text"
-                                    defaultValue={player?.[f] ?? ""}
-                                    key={`${cls}-${gender}-${f}`}
-                                    onBlur={(e) => handleFieldBlur(f, e.target.value)}
-                                    className="flex-1 min-w-0 px-2 py-1.5 text-sm bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                                />
-                                {state.dirHandle && player?.[f] && (
-                                    <AudioButton soundId={player[f]} dirHandle={state.dirHandle} />
-                                )}
-                            </div>
+                            <AudioInputField
+                                key={`${cls}-${gender}-${f}`}
+                                id={`player-${f}`}
+                                defaultValue={player?.[f] ?? ""}
+                                onBlur={(val) => handleFieldBlur(f, val)}
+                                dirHandle={state.dirHandle}
+                                category="Player"
+                            />
                         </div>
                     ))}
                 </div>
@@ -284,7 +261,7 @@ export default function ClassDetail() {
                     resolvedPrompt={resolvedPrompt}
                     unresolvedVars={unresolvedVars}
                     onOverrideChange={(v) => handleOverrideChange(activeSlot, v)}
-                    onGenerate={() => void handleGenerate(activeSlot)}
+                    onGenerate={(refUrl) => void handleGenerate(activeSlot, refUrl)}
                     onGenerateAll={() => {
                         void (async () => {
                             for (const slot of PLAYER_SLOTS) {

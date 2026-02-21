@@ -38,7 +38,7 @@ describe("autoSave", () => {
     it("calls onStatusChange with 'error' when writeJsonFile throws", async () => {
         vi.mocked(writeJsonFile).mockRejectedValue(new Error("disk full"));
         const cb = vi.fn();
-        await autoSave(mockDir, "players", [], cb);
+        await autoSave(mockDir, "classes", [], cb);
         expect(cb).toHaveBeenCalledWith("error");
     });
 

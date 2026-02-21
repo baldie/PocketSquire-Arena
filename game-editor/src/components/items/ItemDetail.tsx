@@ -9,7 +9,7 @@ import { slugify } from "../../utils/slugify";
 import ImageSlotGrid from "../shared/ImageSlotGrid";
 import PromptPanel from "../shared/PromptPanel";
 import ConfirmModal from "../shared/ConfirmModal";
-import AudioButton from "../shared/AudioButton";
+import AudioInputField from "../shared/AudioInputField";
 import type { ImageSlot, ItemData, ItemTarget } from "../../types";
 
 export default function ItemDetail() {
@@ -29,7 +29,7 @@ export default function ItemDetail() {
         if (!item || !state.dirHandle) return;
         spriteManuallyEdited.current = false; // reset on item change
         let cancelled = false;
-        readImageAsDataUrl(state.dirHandle, ["Sprites", "Items", `${item.sprite}.png`]).then((url) => {
+        readImageAsDataUrl(state.dirHandle, ["Art", "Items", `${item.sprite}.png`]).then((url) => {
             if (!cancelled) setImageUrl(url);
         });
         return () => { cancelled = true; };
@@ -85,12 +85,12 @@ export default function ItemDetail() {
     };
 
     const handleGenerate = useCallback(
-        async (slot: ImageSlot) => {
+        async (slot: ImageSlot, referenceDataUrl?: string) => {
             if (!item || !state.dirHandle) return;
             setGeneratingSlot(slot);
-            const path = ["Sprites", "Items", `${item.sprite}.png`];
+            const path = ["Art", "Items", `${item.sprite}.png`];
             try {
-                const dataUrl = await generateImage(slot, path, { name: item.name }, "item", slugify(item.name));
+                const dataUrl = await generateImage(slot, path, { name: item.name }, "item", slugify(item.name), referenceDataUrl);
                 if (dataUrl) setImageUrl(dataUrl);
             } finally {
                 setGeneratingSlot(null);
@@ -231,19 +231,14 @@ export default function ItemDetail() {
 
                     <div>
                         <label className="block text-xs text-gray-500 mb-1">Sound Effect</label>
-                        <div className="flex gap-1">
-                            <input
-                                id="item-sound-effect"
-                                type="text"
-                                defaultValue={item.sound_effect}
-                                key={`sound-${idx}`}
-                                onBlur={(e) => handleFieldBlur("sound_effect", e.target.value)}
-                                className="flex-1 min-w-0 px-2 py-1.5 text-sm bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                            />
-                            {state.dirHandle && item.sound_effect && (
-                                <AudioButton soundId={item.sound_effect} dirHandle={state.dirHandle} />
-                            )}
-                        </div>
+                        <AudioInputField
+                            id="item-sound-effect"
+                            defaultValue={item.sound_effect}
+                            key={`sound-${idx}`}
+                            onBlur={(val: string) => handleFieldBlur("sound_effect", val)}
+                            dirHandle={state.dirHandle}
+                            category="Items"
+                        />
                     </div>
 
                     <div>
@@ -279,7 +274,7 @@ export default function ItemDetail() {
                     resolvedPrompt={resolvedPrompt}
                     unresolvedVars={unresolvedVars}
                     onOverrideChange={handleOverrideChange}
-                    onGenerate={() => void handleGenerate(activeSlot)}
+                    onGenerate={(refDataUrl) => void handleGenerate(activeSlot, refDataUrl)}
                     onGenerateAll={() => void handleGenerate("icon")}
                     isGenerating={state.isGenerating}
                 />

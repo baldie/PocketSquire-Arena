@@ -22,9 +22,10 @@ function releaseCurrentAudio() {
 interface AudioButtonProps {
     soundId: string;
     dirHandle: FileSystemDirectoryHandle | null;
+    category?: "Player" | "Monsters" | "Items";
 }
 
-export default function AudioButton({ soundId, dirHandle }: AudioButtonProps) {
+export default function AudioButton({ soundId, dirHandle, category }: AudioButtonProps) {
     const { dispatch } = useAppContext();
     const [isPlaying, setIsPlaying] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +50,7 @@ export default function AudioButton({ soundId, dirHandle }: AudioButtonProps) {
 
         setIsLoading(true);
         try {
-            const url = await readAudioAsUrl(dirHandle, soundId);
+            const url = await readAudioAsUrl(dirHandle, soundId, category);
             if (!url) {
                 pushNotification(dispatch, `Audio not found: "${soundId}"`, "error");
                 setIsLoading(false);

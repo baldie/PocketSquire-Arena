@@ -16,7 +16,7 @@ export default function MonsterList() {
             const map: Record<number, string | null> = {};
             for (let i = 0; i < state.monsters.length; i++) {
                 const slug = slugify(state.monsters[i].name);
-                map[i] = await readImageAsDataUrl(dirHandle, ["Sprites", "Monsters", `${slug}_battle.png`]);
+                map[i] = await readImageAsDataUrl(dirHandle, ["Art", "Monsters", `${slug}_battle.png`]);
             }
             if (!cancelled) setBattleImages(map);
         }

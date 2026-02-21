@@ -48,7 +48,7 @@ function AppContent() {
       <Header />
       <TabBar />
       <main className="flex-1 overflow-hidden">
-        {state.activeTab === "players" && <PlayersTab />}
+        {state.activeTab === "classes" && <PlayersTab />}
         {state.activeTab === "monsters" && <MonstersTab />}
         {state.activeTab === "items" && <ItemsTab />}
       </main>

@@ -91,19 +91,23 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void GetPlayerByName_ReturnsCorrectPlayer()
+        public void GetClassTemplate_ReturnsCorrectPlayer()
         {
             // Arrange
             string root = GetProjectRoot();
             GameWorld.Load(root);
-            var expectedName = GameWorld.Players[0].Name;
+            // Assuming the first player name follows the {gender}_{className} pattern
+            var fullName = GameWorld.Players[0].Name;
+            var parts = fullName.Split('_');
+            var gender = parts[0];
+            var className = parts[1];
 
             // Act
-            var result = GameWorld.GetPlayerByName(expectedName);
+            var result = GameWorld.GetClassTemplate(gender, className);
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo(expectedName));
+            Assert.That(result!.Name, Is.EqualTo(fullName));
         }
 
         [Test]

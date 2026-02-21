@@ -2,8 +2,6 @@
     {
         "name": "Training Dummy",
         "rank": 1,
-        "health": 1,
-        "maxHealth": 3,
         "experience": 1,
         "gold": 1,
         "attackSoundId": "TrainingDummyAttack",
@@ -23,8 +21,6 @@
     {
         "name": "Mushroom Marauder",
         "rank": 2,
-        "health": 10,
-        "maxHealth": 10,
         "experience": 5,
         "gold": 3,
         "attackSoundId": "GenericAttack2",
@@ -44,8 +40,6 @@
     {
         "name": "Mushroom Marauder",
         "rank": 3,
-        "health": 10,
-        "maxHealth": 10,
         "experience": 5,
         "attackSoundId": "GenericAttack2",
         "specialAttackSoundId": "MushroomMarauderSpecialAttack",

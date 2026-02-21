@@ -8,7 +8,7 @@ const initialState: AppState = {
     monsters: [],
     items: [],
     promptTemplates: DEFAULT_TEMPLATES,
-    activeTab: "players",
+    activeTab: "classes",
     activePlayerClass: null,
     activePlayerGender: "m",
     activeMonsterIndex: null,

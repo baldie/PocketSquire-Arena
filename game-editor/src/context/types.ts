@@ -16,7 +16,7 @@ export interface AppState {
     monsters: MonsterData[];
     items: ItemData[];
     promptTemplates: PromptTemplates;
-    activeTab: "players" | "monsters" | "items";
+    activeTab: "classes" | "monsters" | "items";
     activePlayerClass: PlayerClassName | null;
     activePlayerGender: Gender;
     activeMonsterIndex: number | null;

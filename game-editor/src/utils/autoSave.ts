@@ -3,7 +3,7 @@ import { writeJsonFile } from "./fileSystem";
 
 export async function autoSave(
     dirHandle: FileSystemDirectoryHandle,
-    entityType: "players" | "monsters" | "items" | "promptTemplates",
+    entityType: "classes" | "monsters" | "items" | "promptTemplates",
     data: unknown,
     onStatusChange: (status: SaveStatus) => void
 ): Promise<void> {

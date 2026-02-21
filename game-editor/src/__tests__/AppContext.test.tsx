@@ -76,7 +76,7 @@ const baseState: AppState = {
     monsters: [],
     items: [],
     promptTemplates: DEFAULT_TEMPLATES,
-    activeTab: "players",
+    activeTab: "classes",
     activePlayerClass: null,
     activePlayerGender: "m",
     activeMonsterIndex: null,
@@ -93,8 +93,6 @@ const baseState: AppState = {
 const testMonster: MonsterData = {
     name: "Test Monster",
     rank: 1,
-    health: 10,
-    maxHealth: 10,
     experience: 5,
     gold: 3,
     attackSoundId: "",
@@ -144,6 +142,6 @@ describe("AppContext reducer", () => {
         const nextState = reducer(state, { type: "SET_SAVE_STATUS", payload: "saving" });
         expect(nextState.saveStatus).toBe("saving");
         expect(nextState.monsters).toHaveLength(1);
-        expect(nextState.activeTab).toBe("players");
+        expect(nextState.activeTab).toBe("classes");
     });
 });
