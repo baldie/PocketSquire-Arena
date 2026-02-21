@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core.LevelUp;
 using System.Collections.Generic;
+using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Arena.Core.Tests.LevelUp
 {
@@ -12,7 +13,7 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         private int _initialPoints;
         private int _currentLevel;
 
-        private static List<Player.PlayerClass> NoClasses() => new List<Player.PlayerClass>();
+        private static List<PlayerClass.ClassName> NoClasses() => new List<PlayerClass.ClassName>();
 
         [SetUp]
         public void Setup()

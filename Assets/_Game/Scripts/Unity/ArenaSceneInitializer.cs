@@ -90,7 +90,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         var playerImage = playerSprite.GetComponent<Image>();
         if (playerImage == null) return null;
 
-        var loadedSprite = GameAssetRegistry.Instance.GetSprite(player.GetSpriteId(Entity.GameContext.Battle));
+        var loadedSprite = GameAssetRegistry.Instance.GetSprite(player.GetSpriteId());
         if (loadedSprite != null)
         {
             playerImage.sprite = loadedSprite;
@@ -98,7 +98,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Sprite with ID {player.GetSpriteId(Entity.GameContext.Battle)} not found in registry!");
+            Debug.LogError($"Sprite with ID {player.GetSpriteId()} not found in registry!");
         }
 
         var rectTransform = playerSprite.GetComponent<RectTransform>();

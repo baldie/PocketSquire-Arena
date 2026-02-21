@@ -131,21 +131,21 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
-  - id: player_m_l1_attack
+  - id: player_m_squire_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
-  - id: player_m_l1_battle
+  - id: player_m_squire_battle
     asset: {fileID: 21300000, guid: ec8a0f64caf7b8f4e9b5d9a8a89f27e3, type: 3}
-  - id: player_m_l1_defeat
+  - id: player_m_squire_defeat
     asset: {fileID: 21300000, guid: e48a0b78bc47bb743bb2ea0ea0b7cdef, type: 3}
-  - id: player_m_l1_defend
+  - id: player_m_squire_defend
     asset: {fileID: 21300000, guid: 795d74c3f17505a408ea718377684e13, type: 3}
-  - id: player_m_l1_hit
+  - id: player_m_squire_hit
     asset: {fileID: 21300000, guid: 5eeb6db8622749940a6cbe698e2d9e1f, type: 3}
-  - id: player_m_l1_idle
+  - id: player_m_squire_idle
     asset: {fileID: 21300000, guid: a755bec72c6fd7a4f9610ad38e507a76, type: 3}
-  - id: player_m_l1_item
+  - id: player_m_squire_item
     asset: {fileID: 21300000, guid: 8ce105a276362c54993b9f2dabc2bc4e, type: 3}
-  - id: player_m_l1_win
+  - id: player_m_squire_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
   - id: constitution
     asset: {fileID: 21300000, guid: 4b01cc08772854e4c8c9e8c43ceda8f3, type: 3}
@@ -214,6 +214,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}
   - id: chest_opening
     asset: {fileID: 8300000, guid: d08ab70175977484dac2a1a09038750e, type: 3}
+  - id: class_unlocked
+    asset: {fileID: 8300000, guid: a60f044c39d06434e94ee2606ef1e6fe, type: 3}
   - id: coin_spend
     asset: {fileID: 8300000, guid: 520fc2bbffdce0a45a7079ad291d6ec6, type: 3}
   - id: crowd_displeased
@@ -225,7 +227,7 @@ MonoBehaviour:
   - id: gulp
     asset: {fileID: 8300000, guid: 533da56448f7a1443a6fc6590ba92a0b, type: 3}
   - id: level_up
-    asset: {fileID: 8300000, guid: 6996c6a6c942c7d4d9f2fb5ab5163fda, type: 3}
+    asset: {fileID: 8300000, guid: 93246f4655305ed4b8fa51c2cb81468a, type: 3}
   - id: menu_tick
     asset: {fileID: 8300000, guid: 3b6ea49b05504154c9137c02a84d112e, type: 3}
   - id: player_lose
@@ -253,6 +255,8 @@ MonoBehaviour:
     asset: {fileID: 1963485399801376877, guid: f7cead71891dc31419540b967e14814d, type: 3}
   - id: ItemRow
     asset: {fileID: 7679988491501550547, guid: 887fa1c10124f2940a07fd9ba88e79bd, type: 3}
+  - id: NodeConnector
+    asset: {fileID: 100000001, guid: af9a29dc531db274cb4e51e65f280f88, type: 3}
   - id: PauseManager
     asset: {fileID: 6880249474966106816, guid: 1da34531698cbd64abbde06381d51a22, type: 3}
   - id: PlayerMenu
@@ -263,6 +267,8 @@ MonoBehaviour:
     asset: {fileID: 5228159149513318820, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
   - id: SkillTree
     asset: {fileID: 8310868900610696175, guid: d29c8fab38ed1ea4fb55a5fb77b17c38, type: 3}
+  - id: SkillTreeNode
+    asset: {fileID: 100000001, guid: 8bd2bfc29ea0a0b459a014bb99140b5c, type: 3}
   - id: MenuCursor
     asset: {fileID: 5743983063834753278, guid: 3dea88bb4a5d7f34db445f404da4d38d, type: 3}
   itemRowPrefab: {fileID: 7679988491501550547, guid: 887fa1c10124f2940a07fd9ba88e79bd, type: 3}

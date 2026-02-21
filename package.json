@@ -7,6 +7,7 @@
     "task:start": "node scripts/task-start.js",
     "task:submit": "node scripts/task-submit.js",
     "test:unit": "dotnet test tests/unit",
+    "test:build": "dotnet build tests/unit/PocketSquire.Arena.Tests.csproj | Out-String | Write-Host",
     "test:integration": "npx playwright test"
   },
   "repository": {

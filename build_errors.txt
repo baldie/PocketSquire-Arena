@@ -1,0 +1,19 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\David\PocketSquire-Arena\tests\unit\LevelUpModelTests.cs(15,36): error CS0426: The type name 'PlayerClass' does not exist in the type 'Player' [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\tests\unit\PerkSelectorTests.cs(11,36): error CS0426: The type name 'PlayerClass' does not exist in the type 'Player' [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\AttributeModifierComponent.cs(22,23): warning CS0108: 'AttributeModifierComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\LootModifierComponent.cs(25,23): warning CS0108: 'LootModifierComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\MonsterDebuffComponent.cs(24,23): warning CS0108: 'MonsterDebuffComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+
+Build FAILED.
+
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\AttributeModifierComponent.cs(22,23): warning CS0108: 'AttributeModifierComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\LootModifierComponent.cs(25,23): warning CS0108: 'LootModifierComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\Assets\_Game\Scripts\Core\PowerUps\MonsterDebuffComponent.cs(24,23): warning CS0108: 'MonsterDebuffComponent.Rarity' hides inherited member 'PowerUpComponent.Rarity'. Use the new keyword if hiding was intended. [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\tests\unit\LevelUpModelTests.cs(15,36): error CS0426: The type name 'PlayerClass' does not exist in the type 'Player' [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+C:\Users\David\PocketSquire-Arena\tests\unit\PerkSelectorTests.cs(11,36): error CS0426: The type name 'PlayerClass' does not exist in the type 'Player' [C:\Users\David\PocketSquire-Arena\tests\unit\PocketSquire.Arena.Tests.csproj]
+    3 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:00.83

@@ -2,13 +2,14 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core.LevelUp;
 using System.Collections.Generic;
+using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Arena.Core.Tests.LevelUp
 {
     [TestFixture]
     public class PerkSelectorTests
     {
-        private static List<Player.PlayerClass> NoClasses() => new List<Player.PlayerClass>();
+        private static List<PlayerClass.ClassName> NoClasses() => new List<PlayerClass.ClassName>();
 
         [Test]
         public void Select_ShouldExcludeAlreadyUnlocked()

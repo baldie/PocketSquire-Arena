@@ -12,13 +12,13 @@ namespace PocketSquire.Arena.Core
 
         public CharGender Gender;
         public int Level { get; private set; } = 1;
-        public PlayerClass.ClassName Class { get; private set; } = PlayerClass.ClassName.Squire;
+        public PlayerClass.ClassName @Class { get; private set; } = PlayerClass.ClassName.Squire;
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
 
         public override string SpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_battle";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_battle";
             }
         }
 
@@ -26,49 +26,49 @@ namespace PocketSquire.Arena.Core
         {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_hit";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_hit";
             }
         }
 
         public override string DefeatSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_defeat";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_defeat";
             }
         }
 
         public override string YieldSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_yield";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_yield";
             }
         }
 
         public override string AttackSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_attack";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_attack";
             }
         }
 
         public override string DefendSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_defend";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_defend";
             }
         }
 
         public string ItemSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_item";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_item";
             }
         }
 
         public override string WinSpriteId {
             get
             {
-                return "player_" + Gender.ToString() + "_l" + Level.ToString() + "_win";
+                return "player_" + Gender.ToString() + "_" + Class.ToString().ToLower() + "_win";
             }
         }
 
@@ -139,25 +139,9 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-        public string GetSpriteId(GameContext context)
+        public string GetSpriteId()
         {
-            if (context == GameContext.Battle)
-            {
-                return this.SpriteId;
-            }
-
-            var sprite = "player_";
-            sprite += this.Gender.ToString() + "_";
-            sprite += this.Class.ToString().ToLower();
-            switch(context)
-            {
-                case GameContext.Town: 
-                    sprite += "_town";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(context), context, null);
-            };
-            return sprite;
+            return this.SpriteId;
         }
 
         public override string GetActionSoundId(ActionType actionType)
