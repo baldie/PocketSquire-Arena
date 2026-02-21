@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 namespace PocketSquire.Unity.UI
 {
@@ -10,6 +11,9 @@ namespace PocketSquire.Unity.UI
     [DefaultExecutionOrder(-50)]
     public class SkillTreeController : MonoBehaviour
     {
+        [Header("UI References")]
+        public TextMeshProUGUI hoverDescriptionText;
+
         private void Update()
         {
             // Only process input when this panel is actually open
@@ -37,6 +41,25 @@ namespace PocketSquire.Unity.UI
         {
             Debug.Log("Closing skill tree");
             gameObject.SetActive(false);
+        }
+
+        public void ShowHoverDescription(string description)
+        {
+            if (hoverDescriptionText != null)
+            {
+                hoverDescriptionText.text = description;
+                // Optional: Ensure it's active if you want it toggled
+                // hoverDescriptionText.gameObject.SetActive(true);
+            }
+        }
+
+        public void HideHoverDescription()
+        {
+            if (hoverDescriptionText != null)
+            {
+                hoverDescriptionText.text = string.Empty;
+                // hoverDescriptionText.gameObject.SetActive(false);
+            }
         }
     }
 }

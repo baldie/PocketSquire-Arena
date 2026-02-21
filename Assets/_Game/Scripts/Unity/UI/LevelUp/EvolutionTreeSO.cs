@@ -9,15 +9,15 @@ public class EvolutionTreeSO : ScriptableObject
     [System.Serializable]
     public struct EvolutionNode
     {
-        public Player.PlayerClass currentClass;
+        public PlayerClass.ClassName currentClass;
         public int unlockLevel;
-        public List<Player.PlayerClass> potentialEvolutions;
+        public List<PlayerClass.ClassName> potentialEvolutions;
     }
 
     public List<EvolutionNode> nodes;
 
     // Helper to quickly find what a class can become at a specific level
-    public List<Player.PlayerClass> GetAvailableEvolutions(Player.PlayerClass currentClass, int level)
+    public List<PlayerClass.ClassName> GetAvailableEvolutions(PlayerClass.ClassName currentClass, int level)
     {
         var node = nodes.Find(n => n.currentClass == currentClass);
         
@@ -27,6 +27,6 @@ public class EvolutionTreeSO : ScriptableObject
             return node.potentialEvolutions;
         }
 
-        return new List<Player.PlayerClass>(); // Empty list if no evolution available
+        return new List<PlayerClass.ClassName>(); // Empty list if no evolution available
     }
 }

@@ -10,31 +10,9 @@ namespace PocketSquire.Arena.Core
             f
         }
 
-        public enum PlayerClass {
-            Squire,
-            SpellCaster,
-            Bowman,
-            Fighter,
-            Mage,
-            Druid,
-            Archer,
-            Hunter,
-            Warrior,
-            Wizard,
-            Archdruid,
-            Marksman,
-            Ranger,
-            Knight,
-            Sorcerer,
-            Warden,
-            Sniper,
-            Sentinel,
-            Paladin
-        }
-
         public CharGender Gender;
         public int Level { get; private set; } = 1;
-        public PlayerClass Class { get; private set; } = PlayerClass.Squire;
+        public PlayerClass.ClassName Class { get; private set; } = PlayerClass.ClassName.Squire;
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
 
         public override string SpriteId {

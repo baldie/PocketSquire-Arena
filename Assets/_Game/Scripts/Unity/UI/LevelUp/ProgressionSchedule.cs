@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core.LevelUp;
-using static PocketSquire.Arena.Core.Player;
-
+using PocketSquire.Arena.Core.LevelUp;
+using PocketSquire.Arena.Core;
 namespace PocketSquire.Arena.Unity.LevelUp
 {
     [CreateAssetMenu(fileName = "ProgressionSchedule", menuName = "PocketSquire/LevelUp/ProgressionSchedule")]
@@ -31,7 +31,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
         {
             public int level;
             // If empty, it's "Global". Otherwise, only these classes get this reward.
-            public List<PlayerClass> ValidClasses = new List<PlayerClass>(); 
+            public List<PlayerClass.ClassName> ValidClasses = new List<PlayerClass.ClassName>(); 
             public int statPoints;
             public List<PerkNode> perkChoices = new List<PerkNode>();
             public string perkPoolTag = String.Empty;
@@ -101,7 +101,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
 
         public int GetLevelForExperience(int experience) => Logic.GetLevelForExperience(experience);
 
-        public LevelReward GetRewardForLevel(int level, PlayerClass currentClass)
+        public LevelReward GetRewardForLevel(int level, PlayerClass.ClassName currentClass)
         {
             // 1. Find the entry that matches the level AND the class
             // We look for entries specifically for this class, or entries with no class restrictions
@@ -120,7 +120,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
             };
         }
 
-        public List<Perk> GetAvailablePerks(int level, PlayerClass playerClass)
+        public List<Perk> GetAvailablePerks(int level, PlayerClass.ClassName playerClass)
         {
             // 1. Find the reward entry for this level
             var reward = rewards.FirstOrDefault(r => r.level == level);
@@ -139,7 +139,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
             return new List<Perk>();
         }
 
-        public List<Perk> DrawPerksForPlayer(string poolTag, int count, PlayerClass playerClass, int playerLevel, List<string> ownedPerkIds)
+        public List<Perk> DrawPerksForPlayer(string poolTag, int count, PlayerClass.ClassName playerClass, int playerLevel, List<string> ownedPerkIds)
         {
             if (!RuntimePerkPools.TryGetValue(poolTag, out var pool)) return new List<Perk>();
 

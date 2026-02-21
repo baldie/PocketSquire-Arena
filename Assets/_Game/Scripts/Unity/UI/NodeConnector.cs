@@ -23,6 +23,9 @@ namespace PocketSquire.Unity.UI
         [Tooltip("Sprite shown when the connection is dormant (default)")]
         public Sprite dormantSprite;
 
+        [Header("States")]
+        public ConnectorState initialState = ConnectorState.Dormant;
+
         private Image _image;
         private ConnectorState _currentState = ConnectorState.Dormant;
 
@@ -35,7 +38,14 @@ namespace PocketSquire.Unity.UI
 
         private void Start()
         {
-            ApplyVisual();
+            if (initialState == ConnectorState.Activated)
+            {
+                Activate();
+            }
+            else
+            {
+                ApplyVisual();
+            }
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core;
-using static PocketSquire.Arena.Core.Player;
+using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.LevelUp;
 using PocketSquire.Arena.Unity.LevelUp;
 
@@ -23,11 +23,11 @@ public class TrainerManifest : ScriptableObject
         public int goldCost;
         
         // This allows you to hide "Sniper" perks until they are actually that class
-        public PlayerClass requiredClass; 
+        public PlayerClass.ClassName requiredClass; 
     }
 
     // Helper to get only the perks relevant to the player's current evolution
-    public List<TrainerProduct> GetAvailableTraining(PlayerClass playerClass)
+    public List<TrainerProduct> GetAvailableTraining(PlayerClass.ClassName playerClass)
     {
         return trainingCatalog
             .Where(item => item.requiredClass == playerClass)

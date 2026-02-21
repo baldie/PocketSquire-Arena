@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 400000001}
   - component: {fileID: 500000001}
   - component: {fileID: 600000001}
-  - component: {fileID: 700000001}
   - component: {fileID: 800000001}
   m_Layer: 5
   m_Name: SkillTreeNode
@@ -105,7 +104,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 0, b: 0.99894524, a: 1}
     m_PressedColor: {r: 0, g: 0.81341505, b: 1, a: 1}
     m_SelectedColor: {r: 0.09605765, g: 1, b: 0, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -137,24 +136,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Unity.UI.NodeController
   audioSource: {fileID: 0}
+  hoverSound: {fileID: 8300000, guid: 3b6ea49b05504154c9137c02a84d112e, type: 3}
+  clickSound: {fileID: 8300000, guid: a60f044c39d06434e94ee2606ef1e6fe, type: 3}
   grayscaleMaterial: {fileID: 2100000, guid: 1a67e88f651d80749b39c3caf59ffd4d, type: 2}
+  initialState: 0
   outgoingConnectors: []
   prerequisites: []
---- !u!114 &700000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5600ba22235b284ab84b0f5e3208f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuButtonSound
-  source: {fileID: 0}
-  hoverSound: {fileID: 8300000, guid: 3b6ea49b05504154c9137c02a84d112e, type: 3}
-  clickSound: {fileID: 8300000, guid: 1be2fcc16ab0da84f99ba7c633037620, type: 3}
+  nodeClass: 0
 --- !u!114 &800000001
 MonoBehaviour:
   m_ObjectHideFlags: 0

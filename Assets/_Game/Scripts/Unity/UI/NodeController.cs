@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Unity.UI
 {
@@ -12,24 +14,33 @@ namespace PocketSquire.Unity.UI
     /// </summary>
     [RequireComponent(typeof(Image))]
     [RequireComponent(typeof(Button))]
-    public class NodeController : MonoBehaviour
+    public class NodeController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public enum NodeState { Dormant, Available, Activated }
 
         [Header("References")]
         public AudioSource audioSource;
+        public AudioClip hoverSound;
+        public AudioClip clickSound;
 
         [Header("Materials")]
         [Tooltip("Material applied when node is Dormant (grayscale shader)")]
         public Material grayscaleMaterial;
 
+        [Header("States")]
+        public NodeState initialState = NodeState.Dormant;
+
         [Header("Connections")]
         public List<NodeConnector> outgoingConnectors = new List<NodeConnector>();
         public List<NodeController> prerequisites = new List<NodeController>();
 
+        [Header("Skill Node Data")]
+        public PlayerClass.ClassName nodeClass;
+
         private Image _image;
         private Button _button;
         private NodeState _currentState = NodeState.Dormant;
+        private SkillTreeController _treeController;
 
         public NodeState CurrentState => _currentState;
 
@@ -37,6 +48,17 @@ namespace PocketSquire.Unity.UI
         {
             if (!TryGetComponent( out _image)) Debug.LogError($"{name}: Missing Image component!");
             if (!TryGetComponent(out _button)) Debug.LogError($"{name}: Missing Button component!");
+
+            _treeController = GetComponentInParent<SkillTreeController>();
+
+            if (audioSource == null)
+            {
+                var audioObj = GameObject.Find("UIAudio");
+                if (audioObj != null)
+                {
+                    audioSource = audioObj.GetComponent<AudioSource>();
+                }
+            }
         }
 
         private void Start()
@@ -45,8 +67,16 @@ namespace PocketSquire.Unity.UI
             {
                 _button.onClick.AddListener(OnNodeClicked);
             }
-            ApplyVisual();
-            UpdateInteractable();
+
+            if (initialState == NodeState.Activated)
+            {
+                Activate();
+            }
+            else
+            {
+                ApplyVisual();
+                UpdateInteractable();
+            }
         }
 
         private void OnDestroy()
@@ -64,6 +94,10 @@ namespace PocketSquire.Unity.UI
         {
             if (_currentState == NodeState.Available)
             {
+                if (audioSource != null && clickSound != null)
+                {
+                    audioSource.PlayOneShot(clickSound);
+                }
                 Activate();
             }
         }
@@ -136,6 +170,33 @@ namespace PocketSquire.Unity.UI
 
             // Dormant → grayscale shader; Available/Activated → default UI shader
             _image.material = _currentState == NodeState.Dormant ? grayscaleMaterial : null;
+
+            // Ensure alpha is never < 1 (255)
+            var color = _image.color;
+            color.a = 1f;
+            _image.color = color;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (audioSource != null && hoverSound != null)
+            {
+                audioSource.PlayOneShot(hoverSound);
+            }
+
+            if (_treeController != null)
+            {
+                string desc = PlayerClass.GetDescription(nodeClass);
+                _treeController.ShowHoverDescription(desc);
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (_treeController != null)
+            {
+                _treeController.HideHoverDescription();
+            }
         }
     }
 }

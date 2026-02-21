@@ -169,7 +169,7 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             HandleClassEvolution(options);
         }
 
-        private void HandleClassEvolution(List<Player.PlayerClass> availableClasses)
+        private void HandleClassEvolution(List<PlayerClass.ClassName> availableClasses)
         {
             Debug.Log("Player class evolved");
         }
