@@ -27,13 +27,15 @@ namespace PocketSquire.Arena.Core
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
             //TODO: character creation to select gender & starting attributes
-            var prototype = GameWorld.GetClassTemplate(Player.Genders.m, PlayerClass.ClassName.Squire);
+            var prototype = GameWorld.GetClassTemplate(Player.Genders.f, PlayerClass.ClassName.Squire);
             if (prototype != null)
             {
                 // Deep clone via JSON to avoid reference issues
                 var json = JsonConvert.SerializeObject(prototype);
                 Player = JsonConvert.DeserializeObject<Player>(json);
                 if (Player != null){
+                    Player.MaxHealth = 20;
+                    Player.Health = 20;
                     Player.Gold = 100;
                     Player.Attributes = Attributes.GetDefaultAttributes();
                     // Give starting item: 1 Small Health Potion

@@ -57,7 +57,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Defense = 7;
 
             // Act
-            var player = new Player("Defender", 10, 10, attributes, Player.CharGender.m);
+            var player = new Player("Defender", 10, 10, attributes, Player.Genders.m);
 
             // Assert
             Assert.That(player.Attributes.Defense, Is.EqualTo(7));

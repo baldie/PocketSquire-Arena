@@ -6,35 +6,41 @@ import { readImageAsDataUrl } from "../../utils/fileSystem";
 
 
 function useClassCompletionCheck(dirHandle: FileSystemDirectoryHandle | null) {
-    const [completionMap, setCompletionMap] = useState<Record<string, boolean>>({});
+    const [missingMap, setMissingMap] = useState<Record<string, number>>({});
 
     useEffect(() => {
         if (!dirHandle) return;
         let cancelled = false;
 
         async function check() {
-            const map: Record<string, boolean> = {};
+            const map: Record<string, number> = {};
             for (const cls of PLAYER_CLASSES) {
                 const clsLower = cls.toLowerCase();
-                let allFound = true;
+                let missingCount = 0;
+                const missingList: string[] = [];
                 for (const gender of ["m", "f"]) {
                     for (const slot of PLAYER_SLOTS) {
-                        const path = ["Art", "Player", `player_${gender}_${clsLower}_${slot}.png`];
+                        const path = ["Art", "Player", `${gender}_${clsLower}_${slot}.png`];
                         const result = await readImageAsDataUrl(dirHandle!, path);
-                        if (result === null) { allFound = false; break; }
+                        if (result === null) {
+                            missingCount++;
+                            missingList.push(`${gender}_${slot}`);
+                        }
                     }
-                    if (!allFound) break;
                 }
-                map[cls] = allFound;
+                map[cls] = missingCount;
+                if (missingCount > 0) {
+                    console.warn(`[ClassList] Missing ${missingCount} images for ${cls}:`, missingList);
+                }
             }
-            if (!cancelled) setCompletionMap(map);
+            if (!cancelled) setMissingMap(map);
         }
 
         void check();
         return () => { cancelled = true; };
     }, [dirHandle]);
 
-    return completionMap;
+    return missingMap;
 }
 
 interface ClassListProps {
@@ -43,7 +49,7 @@ interface ClassListProps {
 
 export default function ClassList({ onRefreshCompletion: _ }: ClassListProps) {
     const { state, dispatch } = useAppContext();
-    const completionMap = useClassCompletionCheck(state.dirHandle);
+    const missingMap = useClassCompletionCheck(state.dirHandle);
 
     return (
         <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
@@ -53,7 +59,9 @@ export default function ClassList({ onRefreshCompletion: _ }: ClassListProps) {
             <ul role="listbox" aria-label="Player classes">
                 {PLAYER_CLASSES.map((cls: PlayerClassName) => {
                     const isActive = state.activePlayerClass === cls;
-                    const isComplete = completionMap[cls];
+                    const missingCount = missingMap[cls];
+                    const isLoaded = missingCount !== undefined;
+
                     return (
                         <li key={cls}>
                             <button
@@ -67,9 +75,15 @@ export default function ClassList({ onRefreshCompletion: _ }: ClassListProps) {
                                 role="option"
                             >
                                 <span>{cls}</span>
-                                <span title={isComplete ? "All images complete" : "Some images missing"}>
-                                    {isComplete === true ? "✓" : isComplete === false ? "✗" : "·"}
-                                </span>
+                                {!isLoaded ? (
+                                    <span className="text-gray-500">·</span>
+                                ) : missingCount === 0 ? (
+                                    <span className="text-green-500" title="All images complete">✓</span>
+                                ) : (
+                                    <span className="text-red-500 font-bold" title={`${missingCount} images missing`}>
+                                        {missingCount}
+                                    </span>
+                                )}
                             </button>
                         </li>
                     );

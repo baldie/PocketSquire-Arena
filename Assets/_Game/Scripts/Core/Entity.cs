@@ -27,7 +27,7 @@ namespace PocketSquire.Arena.Core
         public virtual string AttackSpriteId => string.Empty;
         public virtual string SpecialAttackSpriteId => string.Empty;
         public virtual string DefendSpriteId => string.Empty;
-        public virtual string YieldSpriteId => string.Empty;
+        public virtual string BattleSpriteId => string.Empty;
         public virtual string WinSpriteId => string.Empty;
         public virtual string DefeatSpriteId => string.Empty;
 

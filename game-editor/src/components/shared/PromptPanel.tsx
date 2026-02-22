@@ -1,13 +1,13 @@
 import { useState, useRef } from "react";
 
 interface PromptPanelProps {
-    globalTemplate: string;
+    globalTemplate?: string;
     localOverride: string;
     resolvedPrompt: string;
     unresolvedVars: string[];
     onOverrideChange: (value: string) => void;
     onGenerate: (referenceDataUrl?: string) => void;
-    onGenerateAll: () => void;
+    onGenerateAll?: () => void;
     isGenerating: boolean;
 }
 
@@ -48,12 +48,14 @@ export default function PromptPanel({
         <div className="space-y-3 bg-gray-800 rounded-lg p-4 border border-gray-700">
             <h3 className="text-sm font-semibold text-gray-300">Prompt Panel</h3>
 
-            <div>
-                <label className="block text-xs text-gray-500 mb-1">Global Template (read-only)</label>
-                <p className="text-xs text-gray-400 bg-gray-900 rounded p-2 leading-relaxed break-words">
-                    {globalTemplate}
-                </p>
-            </div>
+            {globalTemplate && (
+                <div>
+                    <label className="block text-xs text-gray-500 mb-1">Global Template (read-only)</label>
+                    <p className="text-xs text-gray-400 bg-gray-900 rounded p-2 leading-relaxed break-words">
+                        {globalTemplate}
+                    </p>
+                </div>
+            )}
 
             <div>
                 <label className="block text-xs text-gray-500 mb-1">
@@ -129,14 +131,16 @@ export default function PromptPanel({
                 >
                     {isGenerating ? "Generating..." : "Generate"}
                 </button>
-                <button
-                    id="generate-all-btn"
-                    onClick={onGenerateAll}
-                    disabled={disabled || noApiKey}
-                    className="px-3 py-2 text-sm font-medium bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-                >
-                    Generate All
-                </button>
+                {onGenerateAll && (
+                    <button
+                        id="generate-all-btn"
+                        onClick={onGenerateAll}
+                        disabled={disabled || noApiKey}
+                        className="px-3 py-2 text-sm font-medium bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                    >
+                        Generate All
+                    </button>
+                )}
             </div>
         </div>
     );

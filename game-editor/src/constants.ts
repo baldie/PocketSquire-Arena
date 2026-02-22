@@ -31,7 +31,7 @@ export const PLAYER_CLASS_DESCRIPTIONS: Record<PlayerClassName, string> = {
 };
 
 export const PLAYER_SLOTS: PlayerSlot[] = [
-    "idle", "attack", "defend", "hit", "defeat", "yield", "win", "item"
+    "idle", "attack", "defend", "hit", "defeat", "battle", "win", "item"
 ];
 
 export const MONSTER_SLOTS: MonsterSlot[] = [
@@ -50,7 +50,7 @@ export const DEFAULT_TEMPLATES: PromptTemplates = {
             defend: "A full-body fantasy RPG sprite of a {class} {gender}, defensive guard stance, pixel art, transparent background",
             hit: "A full-body fantasy RPG sprite of a {class} {gender}, recoiling from a hit, pixel art, transparent background",
             defeat: "A full-body fantasy RPG sprite of a {class} {gender}, collapsed in defeat, pixel art, transparent background",
-            yield: "A full-body fantasy RPG sprite of a {class} {gender}, surrendering with hands raised, pixel art, transparent background",
+            battle: "A full-body fantasy RPG sprite of a {class} {gender}, standard battle stance, pixel art, transparent background",
             win: "A full-body fantasy RPG sprite of a {class} {gender}, celebrating victory, pixel art, transparent background",
             item: "A full-body fantasy RPG sprite of a {class} {gender}, using an item, pixel art, transparent background",
         },

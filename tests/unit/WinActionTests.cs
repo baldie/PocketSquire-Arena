@@ -9,7 +9,7 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void WinAction_Properties_CorrectlySet()
         {
-            var actor = new Player("Winner", 10, 10, new Attributes(), Player.CharGender.m);
+            var actor = new Player("Winner", 10, 10, new Attributes(), Player.Genders.m);
             var target = new Monster("Loser", 0, 10, new Attributes());
             var action = new WinAction(actor, target);
 
@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void WinAction_ApplyEffect_ExecutesWithoutError()
         {
-            var actor = new Player("Winner", 10, 10, new Attributes(), Player.CharGender.m);
+            var actor = new Player("Winner", 10, 10, new Attributes(), Player.Genders.m);
             var target = new Monster("Loser", 0, 10, new Attributes());
             var action = new WinAction(actor, target);
 

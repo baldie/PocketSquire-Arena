@@ -50,7 +50,7 @@ namespace PocketSquire.Arena.Core.Tests.PowerUps
                 PowerUpRank.I
             );
 
-            var player = new Player("Test", 50, 100, new Attributes(), Player.CharGender.m);
+            var player = new Player("Test", 50, 100, new Attributes(), Player.Genders.m);
             int healthBefore = player.Health;
             component.ApplyToPlayer(player, 1);
 

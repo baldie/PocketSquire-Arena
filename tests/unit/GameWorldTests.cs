@@ -42,7 +42,7 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void Load_ShouldLoadPlayersFromFile()
+        public void Load_ShouldLoadClassTemplatesFromFile()
         {
             // Arrange
             string root = GetProjectRoot();
@@ -51,13 +51,11 @@ namespace PocketSquire.Arena.Tests
             GameWorld.Load(root);
 
             // Assert - test logic, not specific values
-            Assert.That(GameWorld.Players.Count, Is.GreaterThan(0), "Players list should not be empty");
+            Assert.That(GameWorld.ClassTemplates.Count, Is.GreaterThan(0), "ClassTemplates list should not be empty");
             
             // Verify players have required properties populated
-            var firstPlayer = GameWorld.Players[0];
-            Assert.That(firstPlayer.Name, Is.Not.Null.And.Not.Empty, "Player should have a name");
-            Assert.That(firstPlayer.MaxHealth, Is.GreaterThan(0), "Player should have positive MaxHealth");
-            Assert.That(firstPlayer.Attributes, Is.Not.Null, "Player should have Attributes");
+            var firstPlayer = GameWorld.ClassTemplates[0];
+            Assert.That(firstPlayer.Name, Is.Not.Null.And.Not.Empty, "Player class should have a name");
         }
 
         [Test]
@@ -97,13 +95,15 @@ namespace PocketSquire.Arena.Tests
             string root = GetProjectRoot();
             GameWorld.Load(root);
             // Assuming the first player name follows the {gender}_{className} pattern
-            var fullName = GameWorld.Players[0].Name;
+            var fullName = GameWorld.ClassTemplates[0].Name;
             var parts = fullName.Split('_');
             var gender = parts[0];
             var className = parts[1];
 
             // Act
-            var result = GameWorld.GetClassTemplate(gender, className);
+            var genderEnum = (Player.Genders)Enum.Parse(typeof(Player.Genders), gender);
+            var classEnum = (PlayerClass.ClassName)Enum.Parse(typeof(PlayerClass.ClassName), className, true);
+            var result = GameWorld.GetClassTemplate(genderEnum, classEnum);
 
             // Assert
             Assert.That(result, Is.Not.Null);

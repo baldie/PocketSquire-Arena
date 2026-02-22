@@ -131,6 +131,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
+  - id: f_squire_attack
+    asset: {fileID: 21300000, guid: 12c497977f3c1be41abd7229c908283d, type: 3}
+  - id: f_squire_battle
+    asset: {fileID: 21300000, guid: df47fbb43dbc6024296c8fbb1c194305, type: 3}
+  - id: f_squire_defeat
+    asset: {fileID: 21300000, guid: 965921abf10ea1c429b9309462355308, type: 3}
+  - id: f_squire_defend
+    asset: {fileID: 21300000, guid: 0ddc5613225b36145be0a8cb7f3bfb9f, type: 3}
+  - id: f_squire_hit
+    asset: {fileID: 21300000, guid: 5f60cd4a9e9a18449ba2098317624d0f, type: 3}
+  - id: f_squire_idle
+    asset: {fileID: 21300000, guid: 9581fa058bca317429d0d98b6b850434, type: 3}
+  - id: f_squire_item
+    asset: {fileID: 21300000, guid: 8196c3106646dcc46a02441f97cb72a3, type: 3}
+  - id: f_squire_win
+    asset: {fileID: 21300000, guid: 74b8f531df44d444a92f21341ae623a3, type: 3}
   - id: m_squire_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
   - id: m_squire_battle

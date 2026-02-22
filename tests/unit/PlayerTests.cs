@@ -19,7 +19,7 @@ namespace PocketSquire.Arena.Tests
             attributes.Defense = 1;
 
             // Act
-            var player = new Player("Squire", 10, 10, attributes, Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, attributes, Player.Genders.m);
 
             // Assert
             Assert.That(player.Name, Is.EqualTo("Squire"));
@@ -38,7 +38,7 @@ namespace PocketSquire.Arena.Tests
         public void GainExperience_IncreasesExperience()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             
             // Act
             player.GainExperience(50);
@@ -51,7 +51,7 @@ namespace PocketSquire.Arena.Tests
         public void GainGold_IncreasesGold()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             
             // Act
             player.GainGold(100);
@@ -63,21 +63,22 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void Player_SpriteIds_ReturnCorrectFormattedStrings()
         {
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.Experience = 0; // Level 1 is calculated as (Experience+1)/100 rounded up. 0 exp -> Level 1.
 
-            Assert.That(player.AttackSpriteId, Is.EqualTo("player_m_squire_attack"));
-            Assert.That(player.DefendSpriteId, Is.EqualTo("player_m_squire_defend"));
-            Assert.That(player.HitSpriteId, Is.EqualTo("player_m_squire_hit"));
-            Assert.That(player.DefeatSpriteId, Is.EqualTo("player_m_squire_defeat"));
-            Assert.That(player.WinSpriteId, Is.EqualTo("player_m_squire_win"));
+            Assert.That(player.AttackSpriteId, Is.EqualTo("m_squire_attack"));
+            Assert.That(player.DefendSpriteId, Is.EqualTo("m_squire_defend"));
+            Assert.That(player.HitSpriteId, Is.EqualTo("m_squire_hit"));
+            Assert.That(player.DefeatSpriteId, Is.EqualTo("m_squire_defeat"));
+            Assert.That(player.WinSpriteId, Is.EqualTo("m_squire_win"));
+            Assert.That(player.BattleSpriteId, Is.EqualTo("m_squire_battle"));
         }
 
         [Test]
         public void Player_HasEmptyInventory_ByDefault()
         {
             // Arrange & Act
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
 
             // Assert
             Assert.That(player.Inventory, Is.Not.Null);
@@ -88,7 +89,7 @@ namespace PocketSquire.Arena.Tests
         public void Player_Inventory_PersistsItemsCorrectly()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             
             // Act — base capacity is 2 slots / stack 2, so 2 different items fit fine
             player.Inventory.AddItem(1, 2);
@@ -104,7 +105,7 @@ namespace PocketSquire.Arena.Tests
         public void SpendGold_ReducesGold()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(100);
             
             // Act
@@ -118,7 +119,7 @@ namespace PocketSquire.Arena.Tests
         public void SpendGold_Throws_WhenInsufficientGold()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(50);
             
             // Act & Assert
@@ -130,7 +131,7 @@ namespace PocketSquire.Arena.Tests
         public void TryPurchaseItem_Succeeds_WithEnoughGold()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(100);
             var item = new Item { Id = 5, Name = "Sword", Price = 50 };
             
@@ -146,7 +147,7 @@ namespace PocketSquire.Arena.Tests
         public void TryPurchaseItem_Fails_WithInsufficientGold()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(30);
             var item = new Item { Id = 5, Name = "Sword", Price = 50 };
             
@@ -163,7 +164,7 @@ namespace PocketSquire.Arena.Tests
         public void TryPurchaseItem_AddsItemToInventory()
         {
             // Arrange
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(100);
             var item = new Item { Id = 7, Name = "Potion", Price = 25 };
             
@@ -180,7 +181,7 @@ namespace PocketSquire.Arena.Tests
         public void TryPurchaseItem_Fails_WhenInventoryFull()
         {
             // Arrange — fill both base slots to their stack limit
-            var player = new Player("Squire", 10, 10, new Attributes(), Player.CharGender.m);
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(500);
             player.Inventory.AddItem(1, 2); // slot 1 full
             player.Inventory.AddItem(2, 2); // slot 2 full

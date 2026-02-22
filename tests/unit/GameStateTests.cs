@@ -18,8 +18,9 @@ public class GameStateTests
         GameState.Player = null;
 
         // Ensure GameWorld has the expected player for CreateNewGame
-        GameWorld.Players.Clear();
-        GameWorld.Players.Add(new Player("player_m_l1", 10, 10, new Attributes(), Player.CharGender.m));
+        GameWorld.ClassTemplates.Clear();
+        var template = new Player("m_squire", 20, 20, new Attributes(), Player.Genders.m);
+        GameWorld.ClassTemplates.Add(template);
     }
 
     [Test]
@@ -42,7 +43,7 @@ public class GameStateTests
         Assert.That((DateTime.Now - GameState.LastSaveDate!.Value).TotalSeconds, Is.LessThan(5));
         
         Assert.That(GameState.Player, Is.Not.Null);
-        Assert.That(GameState.Player!.Name, Is.EqualTo("player_m_l1"));
+        Assert.That(GameState.Player!.Name, Is.EqualTo("m_squire"));
     }
 
     [Test]
@@ -70,7 +71,7 @@ public class GameStateTests
         Assert.That(saveData.LastSaveDateString, Is.EqualTo(lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         Assert.That(saveData.PlayTimeTicks, Is.EqualTo(playTime.Ticks));
         Assert.That(saveData.Player, Is.Not.Null);
-        Assert.That(saveData.Player!.Name, Is.EqualTo("player_m_l1"));
+        Assert.That(saveData.Player!.Name, Is.EqualTo("m_squire"));
     }
 
     [Test]
@@ -87,7 +88,7 @@ public class GameStateTests
             CharacterCreationDate = creationDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             LastSaveDateString = lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture),
             PlayTimeTicks = playTime.Ticks,
-            Player = new Player("Test Player", 20, 20, new Attributes(), Player.CharGender.m)
+            Player = new Player("Test Player", 20, 20, new Attributes(), Player.Genders.m)
         };
 
         // Act

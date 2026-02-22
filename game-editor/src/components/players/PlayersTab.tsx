@@ -27,7 +27,7 @@ export default function PlayersTab() {
                 for (const slot of PLAYER_SLOTS) {
                     entities.push({
                         slot,
-                        pathSegments: ["Art", "Player", `player_${gender}_${cls.toLowerCase()}_${slot}.png`],
+                        pathSegments: ["Art", "Player", `${gender}_${cls.toLowerCase()}_${slot}.png`],
                         variables: { class: cls, gender: gender === "m" ? "male" : "female" },
                         entityType: "player",
                         entityKey: slugify(cls),

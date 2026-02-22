@@ -9,7 +9,7 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void LoseAction_Properties_CorrectlySet()
         {
-            var actor = new Player("Loser", 0, 10, new Attributes(), Player.CharGender.m);
+            var actor = new Player("Loser", 0, 10, new Attributes(), Player.Genders.m);
             var target = new Monster("Winner", 10, 10, new Attributes());
             var action = new LoseAction(actor, target);
 
@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void LoseAction_ApplyEffect_ExecutesWithoutError()
         {
-            var actor = new Player("Loser", 0, 10, new Attributes(), Player.CharGender.m);
+            var actor = new Player("Loser", 0, 10, new Attributes(), Player.Genders.m);
             var target = new Monster("Winner", 10, 10, new Attributes());
             var action = new LoseAction(actor, target);
 

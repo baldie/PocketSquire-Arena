@@ -11,7 +11,7 @@ export interface Notification {
 }
 
 
-export type PlayerSlot = "idle" | "attack" | "defend" | "hit" | "defeat" | "yield" | "win" | "item";
+export type PlayerSlot = "idle" | "attack" | "defend" | "hit" | "defeat" | "battle" | "win" | "item";
 export type MonsterSlot = "battle" | "attack" | "special_attack" | "hit" | "defend";
 export type ItemSlot = "icon";
 export type ImageSlot = PlayerSlot | MonsterSlot | ItemSlot;

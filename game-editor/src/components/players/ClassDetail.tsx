@@ -13,7 +13,7 @@ import type { Gender, ImageSlot, PlayerData, PlayerSlot } from "../../types";
 import { slugify } from "../../utils/slugify";
 
 function spritePath(gender: Gender, cls: string, slot: PlayerSlot): string[] {
-    return ["Art", "Player", `player_${gender}_${cls.toLowerCase()}_${slot}.png`];
+    return ["Art", "Player", `${gender}_${cls.toLowerCase()}_${slot}.png`];
 }
 
 export default function ClassDetail() {
@@ -145,9 +145,6 @@ export default function ClassDetail() {
         );
     }
 
-    const globalTemplate = activeSlot
-        ? state.promptTemplates.player.global[activeSlot]
-        : "";
     const localOverride = activeSlot ? getLocalOverride(activeSlot) : "";
     const effectiveTemplate = activeSlot
         ? getEffectiveTemplate(state.promptTemplates, "player", slugify(cls), activeSlot)
@@ -163,7 +160,7 @@ export default function ClassDetail() {
             <div className="flex items-start justify-between">
                 <div>
                     <h2 className="text-lg font-bold text-white">{cls}</h2>
-                    <p className="text-sm text-gray-400 mt-0.5">{PLAYER_CLASS_DESCRIPTIONS[cls]}</p>
+                    <p className="text-sm text-gray-400 mt-0.5">{cls ? PLAYER_CLASS_DESCRIPTIONS[cls as keyof typeof PLAYER_CLASS_DESCRIPTIONS] : ""}</p>
                 </div>
                 {/* Gender toggle */}
                 <div className="flex gap-1 p-1 bg-gray-700 rounded-lg">
@@ -256,19 +253,11 @@ export default function ClassDetail() {
             {/* Prompt panel */}
             {activeSlot && (
                 <PromptPanel
-                    globalTemplate={globalTemplate}
                     localOverride={localOverride}
                     resolvedPrompt={resolvedPrompt}
                     unresolvedVars={unresolvedVars}
                     onOverrideChange={(v) => handleOverrideChange(activeSlot, v)}
                     onGenerate={(refUrl) => void handleGenerate(activeSlot, refUrl)}
-                    onGenerateAll={() => {
-                        void (async () => {
-                            for (const slot of PLAYER_SLOTS) {
-                                await handleGenerate(slot);
-                            }
-                        })();
-                    }}
                     isGenerating={state.isGenerating}
                 />
             )}

@@ -13,13 +13,7 @@
         "overrides": {
             "squire": {
                 "idle": "Make this character a girl with short straight hair, but keep the same adventurous facial expression",
-                "attack": "Make this character a girl with short straight hair, but keep the same facial expression",
-                "defend": "Make this character a girl with short straight hair, but keep the same facial expression",
-                "hit": "Make this character a girl with short straight hair, but keep the same facial expression",
-                "defeat": "Make this character a girl with short straight hair, but keep the same facial expression",
-                "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
-                "win": "Make this character a girl with short straight hair, but keep the same facial expression",
-                "item": "Make this character a girl with short straight hair, but keep the same facial expression"
+                "attack": "show this character throwing a punch to th"
             }
         }
     },

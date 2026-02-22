@@ -10,7 +10,7 @@ interface ImageSlotProps {
 
 const SLOT_LABELS: Record<string, string> = {
     idle: "Idle", attack: "Attack", defend: "Defend", hit: "Hit",
-    defeat: "Defeat", yield: "Yield", win: "Win", item: "Item",
+    defeat: "Defeat", win: "Win", item: "Item",
     battle: "Battle", special_attack: "Special Atk", icon: "Icon",
 };
 
@@ -22,8 +22,8 @@ export default function ImageSlot({ slot, imageDataUrl, isActive, isGenerating, 
             id={`slot-${slot}`}
             onClick={onClick}
             className={`relative flex flex-col items-center justify-center rounded-lg overflow-hidden transition-all border-2 aspect-square ${isActive
-                    ? "border-indigo-500 ring-2 ring-indigo-400/50"
-                    : "border-gray-600 hover:border-gray-400"
+                ? "border-indigo-500 ring-2 ring-indigo-400/50"
+                : "border-gray-600 hover:border-gray-400"
                 }`}
             title={label}
             aria-label={`${label} slot${isActive ? " (active)" : ""}`}

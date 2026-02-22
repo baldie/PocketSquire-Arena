@@ -37,10 +37,10 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-        public override string YieldSpriteId {
+        public override string BattleSpriteId {
             get
             {
-                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_yield";
+                return Gender.ToString() + "_" + Class.ToString().ToLower() + "_battle";
             }
         }
 
