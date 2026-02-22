@@ -55,11 +55,12 @@ export default function ClassDetail() {
 
             let updatedPlayer: PlayerData;
             if (player) {
-                updatedPlayer = { ...player, [field]: value };
+                updatedPlayer = { ...player, [field]: value, class: cls };
             } else {
                 // Create default entry
                 updatedPlayer = {
                     name: key,
+                    class: cls,
                     attackSoundId: "",
                     defendSoundId: "",
                     hitSoundId: "",

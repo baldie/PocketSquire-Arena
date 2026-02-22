@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace PocketSquire.Arena.Core
 {
@@ -10,9 +11,12 @@ namespace PocketSquire.Arena.Core
             f
         }
 
-        public Genders Gender;
+        public Genders Gender { get; set; }
         public int Level { get; private set; } = 1;
-        public PlayerClass.ClassName @Class { get; private set; } = PlayerClass.ClassName.Squire;
+
+        [JsonProperty("class")]
+        public PlayerClass.ClassName Class { get; set; } = PlayerClass.ClassName.Squire;
+
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
 
         public override string SpriteId {

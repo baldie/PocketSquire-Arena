@@ -147,6 +147,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8196c3106646dcc46a02441f97cb72a3, type: 3}
   - id: f_squire_win
     asset: {fileID: 21300000, guid: 74b8f531df44d444a92f21341ae623a3, type: 3}
+  - id: m_spellcaster_attack
+    asset: {fileID: 21300000, guid: 71e58aee82c59514e82967bdc2866323, type: 3}
+  - id: m_spellcaster_battle
+    asset: {fileID: 21300000, guid: 04fac6398fc8e9d47926c781b0182b94, type: 3}
+  - id: m_spellcaster_defeat
+    asset: {fileID: 21300000, guid: a0bbaf30bcb801841894b7c07fccb500, type: 3}
+  - id: m_spellcaster_defend
+    asset: {fileID: 21300000, guid: 67f972310b68b5341b724cc6e2164eef, type: 3}
+  - id: m_spellcaster_hit
+    asset: {fileID: 21300000, guid: f35de6a4a4d708b49b26d6ae5576d9f6, type: 3}
+  - id: m_spellcaster_idle
+    asset: {fileID: 21300000, guid: 8afe923bfc8836141bb3154123e1ebfc, type: 3}
+  - id: m_spellcaster_item
+    asset: {fileID: 21300000, guid: df40af37edafe234ab60f4aacae3b5f1, type: 3}
+  - id: m_spellcaster_win
+    asset: {fileID: 21300000, guid: a2b08bc7f2c07444c95ce2c893c630d8, type: 3}
   - id: m_squire_attack
     asset: {fileID: 21300000, guid: 27dec46280ef1784b9b2fb9348b16394, type: 3}
   - id: m_squire_battle
@@ -220,6 +236,10 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
   - id: f_physical_attack
     asset: {fileID: 8300000, guid: 8abe9f07b96f2f64b9dfa144b5cd961a, type: 3}
+  - id: fire_attack
+    asset: {fileID: 8300000, guid: d3b951d1aad59104d819ab546c0417f3, type: 3}
+  - id: force_field_defend
+    asset: {fileID: 8300000, guid: 5943efc78dafe3c45aace42422b68dd7, type: 3}
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
   - id: physical_defend

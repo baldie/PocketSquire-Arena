@@ -27,7 +27,7 @@ namespace PocketSquire.Arena.Core
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
             //TODO: character creation to select gender & starting attributes
-            var prototype = GameWorld.GetClassTemplate(Player.Genders.f, PlayerClass.ClassName.Squire);
+            var prototype = GameWorld.GetClassTemplate(Player.Genders.m, PlayerClass.ClassName.SpellCaster);
             if (prototype != null)
             {
                 // Deep clone via JSON to avoid reference issues

@@ -27,6 +27,7 @@ export interface Attributes {
 
 export interface PlayerData {
     name: string;
+    class: string;
     attackSoundId: string;
     defendSoundId: string;
     hitSoundId: string;
