@@ -116,7 +116,7 @@ namespace PocketSquire.Unity.UI
             }
         }
 
-        private void CheckPulseIndicator()
+        public void CheckPulseIndicator()
         {
             // Only pulse if it is the currently selected class of the player
             if (GameState.Player != null)
@@ -198,6 +198,18 @@ namespace PocketSquire.Unity.UI
         public void Activate()
         {
             SetState(NodeState.Activated);
+
+            if (GameState.Player != null)
+            {
+                GameState.Player.Class = nodeClass;
+
+                // Refresh all nodes' pulse indicators
+                var allNodes = FindObjectsOfType<NodeController>();
+                foreach (var node in allNodes)
+                {
+                    node.CheckPulseIndicator();
+                }
+            }
 
             foreach (var connector in outgoingConnectors)
             {

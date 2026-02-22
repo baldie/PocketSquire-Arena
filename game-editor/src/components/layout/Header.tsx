@@ -8,7 +8,9 @@ export default function Header() {
     const { state } = useAppContext();
     const { selectDirectory } = useFileSystem();
     const [showSettings, setShowSettings] = useState(false);
-    const [apiKey, setApiKey] = useState(() => localStorage.getItem("gemini_api_key") ?? "");
+    const [apiKey, setApiKey] = useState(() => {
+        return localStorage.getItem("gemini_api_key") || import.meta.env.VITE_GEMINI_API_KEY || "";
+    });
 
     const handleApiKeyChange = (value: string) => {
         setApiKey(value);

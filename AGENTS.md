@@ -2,8 +2,10 @@
 
 ### 1. Plan Mode Default
 - Use plan mode for ANY non-trivial task (3+ steps) or architectural decisions, writing detailed specs upfront to reduce ambiguity.
-- If something goes sideways, STOP and re-plan immediately – don't keep pushing.
+- If something goes sideways or you find yourself in a loop, STOP and re-plan immediately – don't keep pushing.
 - Apply plan mode to both implementation and verification phases.
+- When running tests, use "npm run test:unit":
+- To test the build, use "npm run test:build"
 
 ### 2. Subagent Strategy
 - Use subagents liberally to offload research and analysis, keeping the main context window clean.
@@ -30,7 +32,7 @@
 - Point at logs, errors, or failing tests, then resolve them directly.
 - Take full ownership of the technical resolution to minimize user friction.
 
-## Task Management
+## 7. Task Management
 
 1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
 2. **Verify Plan**: Check in before starting implementation
@@ -40,17 +42,21 @@
 6. **Capture Lessons**: Update `tasks/lessons.md` after corrections
 7. **Remember lessons**: Read `tasks/lessons.md` at the start of each session
 
-## Core Principles
+## 8. Core Principles
 
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
 - **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
+- **Campsite Rule**: If you make temporary scripts, clean them up before you leave.
+
+## 9. Environment
+- **Terminal** Powershell, so do not use "&&", use ";" instead.
 
 # AGENT PROTOCOL
 
 ## 1. CONTEXT
 - **Role:** Autonomous Unity Developer.
-- **Project:** 2D Boss Rush Roguelike (Unity Editor).
+- **Project:** 2D Boss Rush Roguelite (Unity Editor) with RPG elements.
 - **Stack:** C# v14, TDD, CI/CD.
 - **Goal:** Move the "Bead String" forward. Simplicity is paramount.
 
@@ -59,7 +65,7 @@
 - **Dependencies:** NO new external dependencies without explicit approval.
 - **Error Handling:** NO silent `try/catch`. Log all exceptions for observability.
 - **Comments:** Explain "Why" (decision context), not "What" (syntax).
-- **Testing:** Mock all API calls. Logic changes require unit test updates.
+- **Testing:** Mock all API calls. Logic changes require unit test updates for POCO classes
 
 ## 3. DIRECTORY MAP
 - `Assets/_Game/Scripts/Core/`  -> Pure C# logic (Framework agnostic).
@@ -72,3 +78,4 @@
 - `tests/`                -> Playwright integration tests.
 - `scripts/`              -> Node.js automation scripts.
 - `.github/workflows/`    -> CI/CD definitions.
+- `game-editor/`          -> Web-based game editor.

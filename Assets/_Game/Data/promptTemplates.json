@@ -22,14 +22,14 @@
                 "item": "Make this character a girl with short straight hair, but keep the same facial expression"
             },
             "spellcaster": {
-                "attack": "",
-                "defend": "",
-                "battle": "this character with a blocking magic force field in front",
-                "win": "this character in a triumphant stance, no background",
-                "hit": "remove the impact burst from this image",
-                "idle": "",
-                "defeat": "This character on their knees in defeat looking dejected - book and staff are laying flat on the ground - no background",
-                "item": "remove the tray of potions but keep the hand raised up  - empty handed"
+                "idle": "Make this character a girl with short straight hair, but keep the same adventurous facial expression",
+                "attack": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defend": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "hit": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defeat": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "win": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "item": "Make this character a girl with short straight hair, but keep the same facial expression"
             }
         }
     },

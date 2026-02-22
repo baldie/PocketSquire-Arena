@@ -19,7 +19,8 @@ public class GameStateTests
 
         // Ensure GameWorld has the expected player for CreateNewGame
         GameWorld.ClassTemplates.Clear();
-        var template = new Player("m_squire", 20, 20, new Attributes(), Player.Genders.m);
+        var template = new Player("m_spellcaster", 20, 20, new Attributes(), Player.Genders.m);
+        template.Class = PlayerClass.ClassName.SpellCaster;
         GameWorld.ClassTemplates.Add(template);
     }
 
@@ -43,7 +44,7 @@ public class GameStateTests
         Assert.That((DateTime.Now - GameState.LastSaveDate!.Value).TotalSeconds, Is.LessThan(5));
         
         Assert.That(GameState.Player, Is.Not.Null);
-        Assert.That(GameState.Player!.Name, Is.EqualTo("m_squire"));
+        Assert.That(GameState.Player!.Name, Is.EqualTo("m_spellcaster"));
     }
 
     [Test]
@@ -71,7 +72,7 @@ public class GameStateTests
         Assert.That(saveData.LastSaveDateString, Is.EqualTo(lastSaveDate.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         Assert.That(saveData.PlayTimeTicks, Is.EqualTo(playTime.Ticks));
         Assert.That(saveData.Player, Is.Not.Null);
-        Assert.That(saveData.Player!.Name, Is.EqualTo("m_squire"));
+        Assert.That(saveData.Player!.Name, Is.EqualTo("m_spellcaster"));
     }
 
     [Test]

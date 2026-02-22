@@ -96,7 +96,7 @@ export function useImageGeneration() {
             entityKey: string,
             referenceImageBase64?: string
         ): Promise<string | null> => {
-            const apiKey = localStorage.getItem("gemini_api_key");
+            const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem("gemini_api_key");
             if (!apiKey || !state.dirHandle) return null;
 
             const template = getEffectiveTemplate(state.promptTemplates, entityType, entityKey, slot);
@@ -149,7 +149,7 @@ export function useImageGeneration() {
             onProgress: (current: number, total: number) => void,
             onFailure: (entityName: string, slot: ImageSlot, error: string) => void
         ) => {
-            const apiKey = localStorage.getItem("gemini_api_key");
+            const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem("gemini_api_key");
             if (!apiKey || !state.dirHandle) return;
 
             const dirHandle = state.dirHandle;

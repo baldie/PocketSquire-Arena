@@ -1,7 +1,7 @@
 {
   "name": "pocketsquire-arena",
   "version": "1.0.0",
-  "description": "A simple roguelike boss-rush game in Unity",
+  "description": "A simple roguelite boss-rush game in Unity",
   "main": "index.js",
   "scripts": {
     "task:editor": "npm run dev --prefix game-editor",

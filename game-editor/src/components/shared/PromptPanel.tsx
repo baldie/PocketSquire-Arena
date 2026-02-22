@@ -36,7 +36,7 @@ export default function PromptPanel({
 
     const hasUnresolved = unresolvedVars.length > 0;
     const disabled = isGenerating || hasUnresolved;
-    const apiKey = localStorage.getItem("gemini_api_key");
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem("gemini_api_key");
     const noApiKey = !apiKey;
 
     // Highlight unresolved vars in the resolved prompt

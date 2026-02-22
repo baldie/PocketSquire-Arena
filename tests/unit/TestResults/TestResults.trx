@@ -1,0 +1,1101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="423d4cb1-aa96-4df2-9e95-7f450c425382" name="David@OMEN25L 2026-02-22 11:51:36" runUser="Omen25L\David" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-02-22T11:51:36.8957763-08:00" queuing="2026-02-22T11:51:36.8957765-08:00" start="2026-02-22T11:51:36.5291475-08:00" finish="2026-02-22T11:51:36.9717472-08:00" />
+  <TestSettings name="default" id="8f6bf098-db2b-415d-9e6e-70352d08e021">
+    <Deployment runDeploymentRoot="David_OMEN25L_2026-02-22_11_51_36" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="e4ae888d-f50d-4715-b73b-871d24653eb2" testId="58570cbf-b990-a08e-61a9-69ee0424eade" testName="Generate_ReturnsThreeDistinctPowerUps" computerName="OMEN25L" duration="00:00:00.0003210" startTime="2026-02-22T11:51:36.8756374-08:00" endTime="2026-02-22T11:51:36.8759586-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e4ae888d-f50d-4715-b73b-871d24653eb2" />
+    <UnitTestResult executionId="d5568940-9bb1-4db7-bfb1-e6511fde2067" testId="8c69fcec-4e3e-1ff4-c2ef-336d40310ecb" testName="ApplyEffect_ShouldHealPlayer_WhenUsingHealthPotion" computerName="OMEN25L" duration="00:00:00.0006780" startTime="2026-02-22T11:51:36.9332525-08:00" endTime="2026-02-22T11:51:36.9339303-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d5568940-9bb1-4db7-bfb1-e6511fde2067">
+      <Output>
+        <StdOut>Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 75/100&#xD;
+Removed 1x Small Health Potion from inventory</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="81c2292c-9421-4edd-9f87-533a20fe5237" testId="6a32665a-4f63-32a5-8270-a74ca6eaaefb" testName="GetEligiblePerks_ShouldFilterByPrerequisites" computerName="OMEN25L" duration="00:00:00.0001660" startTime="2026-02-22T11:51:36.8560446-08:00" endTime="2026-02-22T11:51:36.8562107-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="81c2292c-9421-4edd-9f87-533a20fe5237" />
+    <UnitTestResult executionId="5c49795d-9a17-42d9-8566-c4c96c5dad8b" testId="34cf3235-59fc-bd62-0a66-ed102c78a652" testName="DialogueOption_Prepare_Factory_CreatesCorrectOption" computerName="OMEN25L" duration="00:00:00.0000630" startTime="2026-02-22T11:51:36.9330061-08:00" endTime="2026-02-22T11:51:36.9330695-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5c49795d-9a17-42d9-8566-c4c96c5dad8b" />
+    <UnitTestResult executionId="85734d34-f509-429e-90d3-e20c91f1c2e4" testId="0eeab6c2-de1d-f324-e270-11ef4e41c493" testName="GetActionSoundId_ReturnsSpecialAttackSound" computerName="OMEN25L" duration="00:00:00.0000370" startTime="2026-02-22T11:51:36.9235080-08:00" endTime="2026-02-22T11:51:36.9235445-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="85734d34-f509-429e-90d3-e20c91f1c2e4" />
+    <UnitTestResult executionId="de0d21f4-39cd-4a04-b0dc-8a4e4a711715" testId="198152a9-e5ec-1955-62ae-1aef8fcc102d" testName="AttributeModifier_Apply_IncreasesPlayerStat" computerName="OMEN25L" duration="00:00:00.0005100" startTime="2026-02-22T11:51:36.8656871-08:00" endTime="2026-02-22T11:51:36.8661964-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="de0d21f4-39cd-4a04-b0dc-8a4e4a711715" />
+    <UnitTestResult executionId="a0040220-f7ec-41db-8f39-ed171354bdb3" testId="672b30d7-7154-5928-a9d9-4d706123bc94" testName="Select_ShouldExcludeBelowMinLevel" computerName="OMEN25L" duration="00:00:00.0002340" startTime="2026-02-22T11:51:36.8607050-08:00" endTime="2026-02-22T11:51:36.8609387-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a0040220-f7ec-41db-8f39-ed171354bdb3" />
+    <UnitTestResult executionId="d7448318-77ac-47e8-bbea-7c65020410ee" testId="4b7e72fa-a480-f8cc-bc7e-1aecd58a57bc" testName="HasItem_ReturnsTrue_WhenItemPresent" computerName="OMEN25L" duration="00:00:00.0000590" startTime="2026-02-22T11:51:36.9198522-08:00" endTime="2026-02-22T11:51:36.9199113-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d7448318-77ac-47e8-bbea-7c65020410ee" />
+    <UnitTestResult executionId="c0537ca2-ad55-42a1-9320-7b63cd0771cf" testId="1922bca6-e263-9af0-8771-43736fd50f46" testName="DialogueOption_Constructor_SetsProperties" computerName="OMEN25L" duration="00:00:00.0000960" startTime="2026-02-22T11:51:36.9327754-08:00" endTime="2026-02-22T11:51:36.9328711-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c0537ca2-ad55-42a1-9320-7b63cd0771cf" />
+    <UnitTestResult executionId="500c9d24-c0bc-4265-83a0-c7baff575341" testId="46943e0b-65b9-317b-a173-8c3ddb09f305" testName="LootModifier_FlatBonus_ReturnsBaseValue" computerName="OMEN25L" duration="00:00:00.0007320" startTime="2026-02-22T11:51:36.8662019-08:00" endTime="2026-02-22T11:51:36.8669333-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="500c9d24-c0bc-4265-83a0-c7baff575341" />
+    <UnitTestResult executionId="f7bcb596-c232-42b9-9419-db7df1ac7918" testId="94ef0350-bd4c-ab9e-5d04-bfb2ccc7134b" testName="GetClassTemplate_ReturnsCorrectPlayer" computerName="OMEN25L" duration="00:00:00.0093740" startTime="2026-02-22T11:51:36.9063367-08:00" endTime="2026-02-22T11:51:36.9157102-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7bcb596-c232-42b9-9419-db7df1ac7918" />
+    <UnitTestResult executionId="ea7de0f0-d60d-4d79-840d-9c911fa8f407" testId="8d981af1-15fb-435d-6868-e20718a18fd3" testName="InventorySlot_IsFull_ReturnsFalse_WhenBelowLimit" computerName="OMEN25L" duration="00:00:00.0000500" startTime="2026-02-22T11:51:36.9202296-08:00" endTime="2026-02-22T11:51:36.9202797-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ea7de0f0-d60d-4d79-840d-9c911fa8f407" />
+    <UnitTestResult executionId="5912c26b-e23b-4f46-ba34-483636f2872d" testId="e3e7f60b-177a-b31e-283b-ca77c0aa35a1" testName="DialogueOption_Train_Factory_CreatesCorrectOption" computerName="OMEN25L" duration="00:00:00.0000600" startTime="2026-02-22T11:51:36.9331419-08:00" endTime="2026-02-22T11:51:36.9332013-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5912c26b-e23b-4f46-ba34-483636f2872d" />
+    <UnitTestResult executionId="f3cf31f9-45d1-4cec-be2f-c751c2242b5e" testId="448dd452-c229-ed6d-8585-3d393e9e357d" testName="SpecialAttackAction_Damage_MinimumIsOne" computerName="OMEN25L" duration="00:00:00.0001350" startTime="2026-02-22T11:51:36.9320940-08:00" endTime="2026-02-22T11:51:36.9322289-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f3cf31f9-45d1-4cec-be2f-c751c2242b5e" />
+    <UnitTestResult executionId="26a62898-df5c-4460-9fac-aeff15f1d293" testId="00a78271-4fc8-26db-37e5-b4dfb36befd1" testName="AccumulatePlaytime_MultipleSessions_AccumulatesCorrectly" computerName="OMEN25L" duration="00:00:00.0002300" startTime="2026-02-22T11:51:36.9263516-08:00" endTime="2026-02-22T11:51:36.9265817-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="26a62898-df5c-4460-9fac-aeff15f1d293" />
+    <UnitTestResult executionId="03585d9a-ba3b-4b62-a1f9-ae11bdc65660" testId="ca19414c-30c5-e885-e9ae-d76d5825c14e" testName="GetXpToReachLevel_ShouldMatchLogic" computerName="OMEN25L" duration="00:00:00.0003990" startTime="2026-02-22T11:51:36.8614177-08:00" endTime="2026-02-22T11:51:36.8618162-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="03585d9a-ba3b-4b62-a1f9-ae11bdc65660" />
+    <UnitTestResult executionId="7a341bef-9f1b-4d5b-83f0-3a36aa82d404" testId="9fe26c8b-d2f7-16fb-ea71-1f0fe174c9ee" testName="AddItem_ReturnsFalse_WhenStackLimitReached" computerName="OMEN25L" duration="00:00:00.0000520" startTime="2026-02-22T11:51:36.9193108-08:00" endTime="2026-02-22T11:51:36.9193629-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7a341bef-9f1b-4d5b-83f0-3a36aa82d404" />
+    <UnitTestResult executionId="5e5603bb-d99a-451d-b414-5ca6e64f1795" testId="0808429d-736d-eba3-681a-cea18c10201d" testName="Battle_Initialization_PlayerGoesFirst" computerName="OMEN25L" duration="00:00:00.0000860" startTime="2026-02-22T11:51:36.8826805-08:00" endTime="2026-02-22T11:51:36.8827668-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5e5603bb-d99a-451d-b414-5ca6e64f1795" />
+    <UnitTestResult executionId="e3732308-14c4-430b-821b-4615d39c88b9" testId="3b46d970-cb65-f280-4f4f-99f1fcc1867b" testName="Constructor_ShouldThrow_IfItemNotFound" computerName="OMEN25L" duration="00:00:00.0001620" startTime="2026-02-22T11:51:36.9345064-08:00" endTime="2026-02-22T11:51:36.9346681-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e3732308-14c4-430b-821b-4615d39c88b9" />
+    <UnitTestResult executionId="7750a330-c005-4104-bdac-f7c6fac10bd0" testId="91423e92-c74d-04ea-a976-58d974a27829" testName="GetLevelForExperience_ShouldReturnCorrectLevel" computerName="OMEN25L" duration="00:00:00.0011060" startTime="2026-02-22T11:51:36.8626484-08:00" endTime="2026-02-22T11:51:36.8637541-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7750a330-c005-4104-bdac-f7c6fac10bd0" />
+    <UnitTestResult executionId="db2c3b9d-4389-4b4a-856e-51f238ebd9e4" testId="9261c8e4-38e3-bc79-2fd5-2fc06d0d0a89" testName="LoseAction_Properties_CorrectlySet" computerName="OMEN25L" duration="00:00:00.0003490" startTime="2026-02-22T11:51:36.9225949-08:00" endTime="2026-02-22T11:51:36.9229442-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db2c3b9d-4389-4b4a-856e-51f238ebd9e4" />
+    <UnitTestResult executionId="1df3803f-9651-4eaf-9a3a-6f11e6972880" testId="044189e2-b214-ff9f-1d5c-a13f9fdbfe2d" testName="GetMonsterByName_ReturnsNullForUnknownName" computerName="OMEN25L" duration="00:00:00.0004340" startTime="2026-02-22T11:51:36.9164091-08:00" endTime="2026-02-22T11:51:36.9168427-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1df3803f-9651-4eaf-9a3a-6f11e6972880" />
+    <UnitTestResult executionId="fce84cb1-370e-4428-b967-498247feb142" testId="d2635712-b1be-d551-ee4b-b5f2c8c95327" testName="LootModifier_GetBonusValue_ReturnsPercentage" computerName="OMEN25L" duration="00:00:00.0001230" startTime="2026-02-22T11:51:36.8669413-08:00" endTime="2026-02-22T11:51:36.8670647-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fce84cb1-370e-4428-b967-498247feb142" />
+    <UnitTestResult executionId="5b6f0061-6821-43c2-8d3f-ae8c6213f4d5" testId="9b2eaac3-8b3d-e55d-12ce-db16ec8dcf41" testName="CreateNewGame_SetsCorrectSlotAndDates" computerName="OMEN25L" duration="00:00:00.0012720" startTime="2026-02-22T11:51:36.9019496-08:00" endTime="2026-02-22T11:51:36.9032217-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5b6f0061-6821-43c2-8d3f-ae8c6213f4d5">
+      <Output>
+        <ErrorInfo>
+          <Message>  Assert.That(GameState.Player, Is.Not.Null)&#xD;
+  Expected: not null&#xD;
+  But was:  null&#xD;
+</Message>
+          <StackTrace>   at PocketSquire.Arena.Tests.GameStateTests.CreateNewGame_SetsCorrectSlotAndDates() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 45&#xD;
+
+1)    at PocketSquire.Arena.Tests.GameStateTests.CreateNewGame_SetsCorrectSlotAndDates() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 45&#xD;
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a5380f5c-a555-4760-b89d-e8110a666fa0" testId="f4761b4a-2396-1833-382a-0b4d95e85ca0" testName="Constructor_ShouldSetItemData_UsingId" computerName="OMEN25L" duration="00:00:00.0000870" startTime="2026-02-22T11:51:36.9344149-08:00" endTime="2026-02-22T11:51:36.9345021-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a5380f5c-a555-4760-b89d-e8110a666fa0" />
+    <UnitTestResult executionId="4b6e4330-d1d9-4632-935f-b4a27dd04120" testId="7f8b0778-3e3d-c24d-211d-796d181fad3a" testName="AddItem_AddsNewSlot_WhenItemNotPresent" computerName="OMEN25L" duration="00:00:00.0003500" startTime="2026-02-22T11:51:36.9187294-08:00" endTime="2026-02-22T11:51:36.9190798-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b6e4330-d1d9-4632-935f-b4a27dd04120" />
+    <UnitTestResult executionId="afee1235-b80c-4ee3-bb45-f4a264596d86" testId="07c5bd17-f1ab-5bc7-1277-87092fc55518" testName="SpecialAttackAction_Damage_UsesStrength" computerName="OMEN25L" duration="00:00:00.0000590" startTime="2026-02-22T11:51:36.9322334-08:00" endTime="2026-02-22T11:51:36.9322922-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="afee1235-b80c-4ee3-bb45-f4a264596d86" />
+    <UnitTestResult executionId="7b33487c-febc-40ac-bd04-1933e5e06157" testId="a1eef36c-592a-8272-1bbe-effb66fbad10" testName="DialogueOption_Leave_Factory_CreatesCorrectOption" computerName="OMEN25L" duration="00:00:00.0000720" startTime="2026-02-22T11:51:36.9329300-08:00" endTime="2026-02-22T11:51:36.9330022-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7b33487c-febc-40ac-bd04-1933e5e06157" />
+    <UnitTestResult executionId="0c4a0872-1bb5-465c-bdde-d347f419c29a" testId="e45293dd-bcb2-e0d8-6bfc-d941594ee0cb" testName="Battle_HandleActionComplete_ReturnsWinAction_WhenMonsterDies" computerName="OMEN25L" duration="00:00:00.0001970" startTime="2026-02-22T11:51:36.8824752-08:00" endTime="2026-02-22T11:51:36.8826721-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0c4a0872-1bb5-465c-bdde-d347f419c29a" />
+    <UnitTestResult executionId="a7c552d0-db07-41b6-8ab1-84e82cd79aa2" testId="5606f69a-fa68-c635-1acc-3bf2f229187e" testName="GetHitSoundId_ReturnsEmptyStringByDefault" computerName="OMEN25L" duration="00:00:00.0000570" startTime="2026-02-22T11:51:36.8831251-08:00" endTime="2026-02-22T11:51:36.8831819-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a7c552d0-db07-41b6-8ab1-84e82cd79aa2" />
+    <UnitTestResult executionId="1b0ba175-4aaa-443d-9668-2b33ae5dad43" testId="cec32c2c-a219-bb10-7dc5-6ea1f96b13ab" testName="WinAction_ApplyEffect_ExecutesWithoutError" computerName="OMEN25L" duration="00:00:00.0001800" startTime="2026-02-22T11:51:36.9347222-08:00" endTime="2026-02-22T11:51:36.9349019-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1b0ba175-4aaa-443d-9668-2b33ae5dad43" />
+    <UnitTestResult executionId="7ab81d12-8ee8-44c3-8689-5ecfa79fb513" testId="bcf1bfbe-2a98-e398-398d-c5f0393cda18" testName="UpdateCapacity_DoesNotLoseExistingItems" computerName="OMEN25L" duration="00:00:00.0000760" startTime="2026-02-22T11:51:36.9208183-08:00" endTime="2026-02-22T11:51:36.9208942-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7ab81d12-8ee8-44c3-8689-5ecfa79fb513" />
+    <UnitTestResult executionId="95ef5a15-5c01-4221-8113-addbf53956a0" testId="ae9b5bec-2378-d64e-ce46-8186013c3266" testName="Generate_ShouldStartAtZero" computerName="OMEN25L" duration="00:00:00.0005290" startTime="2026-02-22T11:51:36.8650817-08:00" endTime="2026-02-22T11:51:36.8656104-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="95ef5a15-5c01-4221-8113-addbf53956a0" />
+    <UnitTestResult executionId="f375973c-ef2f-4cce-a42f-194aef56c732" testId="750ae2cc-4b42-7978-20ce-f4d71778b1ef" testName="AccumulatePlaytime_WithNullPlayTime_InitializesToZero" computerName="OMEN25L" duration="00:00:00.0001320" startTime="2026-02-22T11:51:36.9267189-08:00" endTime="2026-02-22T11:51:36.9268511-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f375973c-ef2f-4cce-a42f-194aef56c732" />
+    <UnitTestResult executionId="58251742-1092-4f47-8605-942d910226da" testId="ca50111e-ae3d-c47c-7642-62cb0952ecc9" testName="Generate_LowHealth_BoostsHealWeight" computerName="OMEN25L" duration="00:00:00.0013410" startTime="2026-02-22T11:51:36.8742894-08:00" endTime="2026-02-22T11:51:36.8756302-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="58251742-1092-4f47-8605-942d910226da" />
+    <UnitTestResult executionId="a73c1a00-5409-4a7f-9fe9-5757bfb34976" testId="058138c9-31a9-6633-a871-bd26b990a216" testName="Player_SpriteIds_ReturnCorrectFormattedStrings" computerName="OMEN25L" duration="00:00:00.0003710" startTime="2026-02-22T11:51:36.9243999-08:00" endTime="2026-02-22T11:51:36.9247709-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a73c1a00-5409-4a7f-9fe9-5757bfb34976" />
+    <UnitTestResult executionId="2d82f495-865f-46c4-bb4c-c3203d9498cc" testId="bdac1ae3-ab04-24b5-c553-35d228dfa09b" testName="SpecialAttackAction_Constructor_ThrowsOnNullTarget" computerName="OMEN25L" duration="00:00:00.0000920" startTime="2026-02-22T11:51:36.9319986-08:00" endTime="2026-02-22T11:51:36.9320900-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d82f495-865f-46c4-bb4c-c3203d9498cc" />
+    <UnitTestResult executionId="9972ea32-3c88-48d4-86a8-dd85ec4a2f70" testId="e567233e-8c00-619f-28dc-910126bfb2a0" testName="Item_Initialization_SetsPropertiesCorrectly" computerName="OMEN25L" duration="00:00:00.0001230" startTime="2026-02-22T11:51:36.9215684-08:00" endTime="2026-02-22T11:51:36.9216914-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9972ea32-3c88-48d4-86a8-dd85ec4a2f70" />
+    <UnitTestResult executionId="3efcc31a-f429-465f-97b6-445cea1fb6c2" testId="7569b01d-9e6f-7550-a3a6-df53fa9d9c00" testName="ResetAllMonsters_ShouldRestoreHealthToMax" computerName="OMEN25L" duration="00:00:00.0001670" startTime="2026-02-22T11:51:36.9184760-08:00" endTime="2026-02-22T11:51:36.9186431-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3efcc31a-f429-465f-97b6-445cea1fb6c2" />
+    <UnitTestResult executionId="d0274b46-04aa-4e14-bd8b-2a369880bfe3" testId="b8978565-4315-ee08-76ec-520a117a4605" testName="SelectPerk_ShouldNotUnlock_IfNotPending" computerName="OMEN25L" duration="00:00:00.0004150" startTime="2026-02-22T11:51:36.8564611-08:00" endTime="2026-02-22T11:51:36.8568763-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d0274b46-04aa-4e14-bd8b-2a369880bfe3" />
+    <UnitTestResult executionId="4b650e76-1f3c-4a82-a7bd-1f3e65cde18f" testId="5b4df009-9256-a341-40bd-70b5ed5704d8" testName="GetXpToNextLevel_ShouldReturnCorrectDelta" computerName="OMEN25L" duration="00:00:00.0001510" startTime="2026-02-22T11:51:36.8637619-08:00" endTime="2026-02-22T11:51:36.8639128-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b650e76-1f3c-4a82-a7bd-1f3e65cde18f" />
+    <UnitTestResult executionId="06f51cfd-53b4-43f0-a770-9ca157caf3f9" testId="b3deacfd-8d29-a79b-8c63-dae8e7a3beef" testName="IncrementAttribute_ShouldDecreaseAvailablePoints_AndIncreaseAttribute" computerName="OMEN25L" duration="00:00:00.0000699" startTime="2026-02-22T11:51:36.8562197-08:00" endTime="2026-02-22T11:51:36.8562899-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="06f51cfd-53b4-43f0-a770-9ca157caf3f9" />
+    <UnitTestResult executionId="42c476c6-b0e5-4039-bc5d-9182acc90ba6" testId="3d8c44e1-3ecb-6c1e-e2d8-b7675c87df52" testName="FindMostRecentSave_ReturnsLatestSave" computerName="OMEN25L" duration="00:00:00.0004650" startTime="2026-02-22T11:51:36.9032351-08:00" endTime="2026-02-22T11:51:36.9037005-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="42c476c6-b0e5-4039-bc5d-9182acc90ba6" />
+    <UnitTestResult executionId="210e7b56-6f45-458c-a9e0-2815399fb42c" testId="3d3a8076-fcaf-92e2-886f-922f4742e497" testName="GainExperience_IncreasesExperience" computerName="OMEN25L" duration="00:00:00.0000810" startTime="2026-02-22T11:51:36.9239316-08:00" endTime="2026-02-22T11:51:36.9240130-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="210e7b56-6f45-458c-a9e0-2815399fb42c" />
+    <UnitTestResult executionId="0a5fed47-212f-4b33-b631-8eefa7a40777" testId="13b9ad0a-7429-629f-58b4-c7e1fea8ba44" testName="DefeatSoundId_CanBeSetAndRetrieved" computerName="OMEN25L" duration="00:00:00.0000820" startTime="2026-02-22T11:51:36.8829628-08:00" endTime="2026-02-22T11:51:36.8830452-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0a5fed47-212f-4b33-b631-8eefa7a40777" />
+    <UnitTestResult executionId="4a4f8587-c2b8-40a8-b3a1-1bd9360a848d" testId="90a0c7c6-e2a0-8e8f-2ba3-21025e1a64cb" testName="RemoveItem_ReturnsFalse_WhenItemNotPresent" computerName="OMEN25L" duration="00:00:00.0000370" startTime="2026-02-22T11:51:36.9207016-08:00" endTime="2026-02-22T11:51:36.9207384-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4a4f8587-c2b8-40a8-b3a1-1bd9360a848d" />
+    <UnitTestResult executionId="61af3fe2-4cfd-47e7-aa25-830063b00c54" testId="e47eeef2-0eac-7019-5dea-3ed2e7d6a4c9" testName="TryPurchaseItem_AddsItemToInventory" computerName="OMEN25L" duration="00:00:00.0001689" startTime="2026-02-22T11:51:36.9258357-08:00" endTime="2026-02-22T11:51:36.9260048-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="61af3fe2-4cfd-47e7-aa25-830063b00c54" />
+    <UnitTestResult executionId="6a759a30-b304-4844-8a4f-59d710bcebe1" testId="791729b9-f970-eaf2-6a00-c268c03bc693" testName="GetMonsterByName_ReturnsCorrectMonster" computerName="OMEN25L" duration="00:00:00.0006690" startTime="2026-02-22T11:51:36.9157287-08:00" endTime="2026-02-22T11:51:36.9163972-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6a759a30-b304-4844-8a4f-59d710bcebe1" />
+    <UnitTestResult executionId="de0b85be-5bdf-4884-bfae-05e7b025b579" testId="10246a54-5024-c01c-e654-b3364237a9f7" testName="TryPurchaseItem_Fails_WithInsufficientGold" computerName="OMEN25L" duration="00:00:00.0000810" startTime="2026-02-22T11:51:36.9261160-08:00" endTime="2026-02-22T11:51:36.9261970-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="de0b85be-5bdf-4884-bfae-05e7b025b579" />
+    <UnitTestResult executionId="462f71f2-1afe-4c98-8782-d2b2bcb2e763" testId="436dcab7-461b-4e45-5734-9d0affd2113c" testName="TakeDamage_CannotGoBelowZero" computerName="OMEN25L" duration="00:00:00.0000820" startTime="2026-02-22T11:51:36.8835496-08:00" endTime="2026-02-22T11:51:36.8836313-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="462f71f2-1afe-4c98-8782-d2b2bcb2e763" />
+    <UnitTestResult executionId="07918312-1be0-4f03-8495-80960baa82d1" testId="51b01569-7daa-6221-74a2-82a92ef791e6" testName="InventorySlot_CanStack_ReturnsFalse_ForDifferentItem" computerName="OMEN25L" duration="00:00:00.0000390" startTime="2026-02-22T11:51:36.9201450-08:00" endTime="2026-02-22T11:51:36.9201835-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="07918312-1be0-4f03-8495-80960baa82d1" />
+    <UnitTestResult executionId="423c055e-da49-4594-bcd3-45d6b023bca0" testId="963e39ff-eecd-ffa8-87c6-3ba9d748ba0e" testName="SimulateRun_ShouldLevelUpCorrectly" computerName="OMEN25L" duration="00:00:00.0007730" startTime="2026-02-22T11:51:36.8618220-08:00" endTime="2026-02-22T11:51:36.8625945-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="423c055e-da49-4594-bcd3-45d6b023bca0" />
+    <UnitTestResult executionId="5b865a95-3d30-427f-b661-dddbd1abbf4d" testId="cdef03a0-c713-0f4e-9aae-5155fcd55464" testName="Generate_LinearCurve_ShouldAccumulateLinearly" computerName="OMEN25L" duration="00:00:00.0003200" startTime="2026-02-22T11:51:36.8646589-08:00" endTime="2026-02-22T11:51:36.8649788-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5b865a95-3d30-427f-b661-dddbd1abbf4d" />
+    <UnitTestResult executionId="71fefb18-f95e-471b-a4b8-fbf63dae207e" testId="8de85d42-4507-9ad4-78a8-fe2412e3fc55" testName="ApplyEffect_ShouldUseCorrectActor" computerName="OMEN25L" duration="00:00:00.0000810" startTime="2026-02-22T11:51:36.9343295-08:00" endTime="2026-02-22T11:51:36.9344107-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="71fefb18-f95e-471b-a4b8-fbf63dae207e">
+      <Output>
+        <StdOut>Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 100/100&#xD;
+Removed 1x Small Health Potion from inventory</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4ef121a2-b6d9-4fa9-901d-1de02f1162ac" testId="8dbc05a2-8980-dea0-8ce9-06a1e311ef8e" testName="GetItemCount_ReturnsCorrectQuantity" computerName="OMEN25L" duration="00:00:00.0000450" startTime="2026-02-22T11:51:36.9196342-08:00" endTime="2026-02-22T11:51:36.9196790-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4ef121a2-b6d9-4fa9-901d-1de02f1162ac" />
+    <UnitTestResult executionId="36a4f02f-f0d2-4d22-9d23-1c72733b927d" testId="afaa487b-a1e2-f80d-8887-310abdb54bc5" testName="ComputeValue_HigherArenaLevel_GrowsSubLinearly" computerName="OMEN25L" duration="00:00:00.0001540" startTime="2026-02-22T11:51:36.8760466-08:00" endTime="2026-02-22T11:51:36.8762009-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="36a4f02f-f0d2-4d22-9d23-1c72733b927d" />
+    <UnitTestResult executionId="643c578f-b969-4951-bf18-b1de444471a1" testId="c4a54757-ec5b-0226-25c7-d570b82fb9e7" testName="ApplyEffect_ShouldLogWarning_IfItemNotInInventory" computerName="OMEN25L" duration="00:00:00.0003020" startTime="2026-02-22T11:51:36.9339425-08:00" endTime="2026-02-22T11:51:36.9342447-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="643c578f-b969-4951-bf18-b1de444471a1">
+      <Output>
+        <StdOut>Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 100/100&#xD;
+Failed to remove item 1 from inventory</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5da5823a-c288-4a96-a5b1-e0c53076c9c8" testId="058abee9-48dc-f7af-1686-c1900e712dbd" testName="Select_ShouldExcludeAlreadyUnlocked" computerName="OMEN25L" duration="00:00:00.0021240" startTime="2026-02-22T11:51:36.8585721-08:00" endTime="2026-02-22T11:51:36.8606956-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5da5823a-c288-4a96-a5b1-e0c53076c9c8" />
+    <UnitTestResult executionId="92feb50e-a164-48bb-9c69-9bccdd366452" testId="980a7fbb-e48f-7f3d-8367-a61c3b45cd6d" testName="Generate_ExistingPowerUp_RanksUp" computerName="OMEN25L" duration="00:00:00.0008770" startTime="2026-02-22T11:51:36.8719871-08:00" endTime="2026-02-22T11:51:36.8728641-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="92feb50e-a164-48bb-9c69-9bccdd366452" />
+    <UnitTestResult executionId="aa163b66-1f82-4e80-b0c1-286f974abb0f" testId="3d52ba6d-cd0e-97ba-be88-ef1bdb23db9d" testName="GetEligiblePerks_ShouldFilterAlreadyUnlocked" computerName="OMEN25L" duration="00:00:00.0016019" startTime="2026-02-22T11:51:36.8493602-08:00" endTime="2026-02-22T11:51:36.8509624-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aa163b66-1f82-4e80-b0c1-286f974abb0f" />
+    <UnitTestResult executionId="84069b43-680e-456d-91cc-70f481e7e92c" testId="ba9fb217-9d96-691f-2a08-b28d9ffddcc2" testName="GetHitSoundId_ReturnsConfiguredHitSound" computerName="OMEN25L" duration="00:00:00.0000349" startTime="2026-02-22T11:51:36.9235483-08:00" endTime="2026-02-22T11:51:36.9235833-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="84069b43-680e-456d-91cc-70f481e7e92c" />
+    <UnitTestResult executionId="34dff987-12f1-45f9-aeea-b7ecca02ef9b" testId="99e2c6bd-fa1d-883d-5122-4d29f7c0f945" testName="UpdateCapacity_Tier1_Expands" computerName="OMEN25L" duration="00:00:00.0000500" startTime="2026-02-22T11:51:36.9209604-08:00" endTime="2026-02-22T11:51:36.9210105-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="34dff987-12f1-45f9-aeea-b7ecca02ef9b" />
+    <UnitTestResult executionId="4ac7c204-1f6f-427d-ac5a-69edc150dfbb" testId="f15565f9-fa10-980d-54cc-f732bad8277f" testName="HasRoom_ReturnsTrue_WhenSlotCanStack" computerName="OMEN25L" duration="00:00:00.0000400" startTime="2026-02-22T11:51:36.9201012-08:00" endTime="2026-02-22T11:51:36.9201410-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4ac7c204-1f6f-427d-ac5a-69edc150dfbb" />
+    <UnitTestResult executionId="d6e18c0a-699e-4828-92f5-ca4bed4a4b9d" testId="efe9919f-ac8c-b547-6314-a0f1fe67768b" testName="SelectPerk_ShouldUnlockPerk_IfPending" computerName="OMEN25L" duration="00:00:00.0002110" startTime="2026-02-22T11:51:36.8568866-08:00" endTime="2026-02-22T11:51:36.8570974-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d6e18c0a-699e-4828-92f5-ca4bed4a4b9d" />
+    <UnitTestResult executionId="5ecf38e3-534a-4060-ab91-21ffa8ed68d4" testId="1a1cb1b7-823d-542a-8965-96114bae828e" testName="Player_Inventory_PersistsItemsCorrectly" computerName="OMEN25L" duration="00:00:00.0000970" startTime="2026-02-22T11:51:36.9242989-08:00" endTime="2026-02-22T11:51:36.9243956-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5ecf38e3-534a-4060-ab91-21ffa8ed68d4" />
+    <UnitTestResult executionId="783eae6d-6225-489a-b376-ddce479d0a54" testId="8c4e915c-7f86-e4c8-8139-38690f022b42" testName="InventorySlot_IsFull_ReturnsTrue_WhenAtLimit" computerName="OMEN25L" duration="00:00:00.0000360" startTime="2026-02-22T11:51:36.9202840-08:00" endTime="2026-02-22T11:51:36.9203204-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="783eae6d-6225-489a-b376-ddce479d0a54" />
+    <UnitTestResult executionId="7371be4d-618a-415a-b82e-12e074ed9af0" testId="00036e7e-14f8-66d8-f0b0-d2080ae70d82" testName="GainGold_IncreasesGold" computerName="OMEN25L" duration="00:00:00.0000610" startTime="2026-02-22T11:51:36.9240171-08:00" endTime="2026-02-22T11:51:36.9240783-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7371be4d-618a-415a-b82e-12e074ed9af0" />
+    <UnitTestResult executionId="638bb572-dace-4d67-8a29-f5d9504f2e34" testId="807b8cd7-3255-058d-aefd-e21ebc62fd4f" testName="Heal_CannotExceedMaxHealth" computerName="OMEN25L" duration="00:00:00.0000510" startTime="2026-02-22T11:51:36.8831857-08:00" endTime="2026-02-22T11:51:36.8832371-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="638bb572-dace-4d67-8a29-f5d9504f2e34" />
+    <UnitTestResult executionId="40991ccb-515a-466d-bc45-91734a3ebb5b" testId="96108a37-5d9c-2bde-f17c-2586286b0ab4" testName="UpdateCapacity_HigherTierOverridesLower" computerName="OMEN25L" duration="00:00:00.0000580" startTime="2026-02-22T11:51:36.9208984-08:00" endTime="2026-02-22T11:51:36.9209565-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="40991ccb-515a-466d-bc45-91734a3ebb5b" />
+    <UnitTestResult executionId="9fd4577f-8901-44e8-86ed-586cd860b3d9" testId="1ec8340c-5b62-e439-eafb-c05462f7daf0" testName="Battle_ChangeTurns_ResetsDefendingState" computerName="OMEN25L" duration="00:00:00.0007480" startTime="2026-02-22T11:51:36.8796894-08:00" endTime="2026-02-22T11:51:36.8804374-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9fd4577f-8901-44e8-86ed-586cd860b3d9">
+      <Output>
+        <StdOut>Changing turns&#xD;
+Changing turns</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1d5e53a0-e55b-4c82-ae17-fd6c72bd81f6" testId="2d6156c4-386e-3414-4cc3-c823cfad0a0e" testName="AccumulatePlaytime_WithZeroDuration_DoesNotChangePlayTime" computerName="OMEN25L" duration="00:00:00.0000510" startTime="2026-02-22T11:51:36.9268553-08:00" endTime="2026-02-22T11:51:36.9269065-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1d5e53a0-e55b-4c82-ae17-fd6c72bd81f6" />
+    <UnitTestResult executionId="250935a5-72fd-4640-aaa2-c04191f608b2" testId="3f02eea4-c3a4-d8cb-0bb8-f8966a32e5aa" testName="TryPurchaseItem_Succeeds_WithEnoughGold" computerName="OMEN25L" duration="00:00:00.0000860" startTime="2026-02-22T11:51:36.9262037-08:00" endTime="2026-02-22T11:51:36.9262894-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="250935a5-72fd-4640-aaa2-c04191f608b2" />
+    <UnitTestResult executionId="c2506d84-9ba4-49b9-93a9-b8b8898d612c" testId="1c89793e-100d-65e6-f43e-6437d6bf5755" testName="Initialization_ShouldSetCorrectValues" computerName="OMEN25L" duration="00:00:00.0000760" startTime="2026-02-22T11:51:36.8563816-08:00" endTime="2026-02-22T11:51:36.8564571-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c2506d84-9ba4-49b9-93a9-b8b8898d612c" />
+    <UnitTestResult executionId="882b6497-586f-4b66-bbc0-770c26fb0760" testId="037b82c0-3327-bce4-08bb-70c02a69c412" testName="OnDeath_InvokedWhenHealthReachesZero" computerName="OMEN25L" duration="00:00:00.0002520" startTime="2026-02-22T11:51:36.8832895-08:00" endTime="2026-02-22T11:51:36.8835419-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="882b6497-586f-4b66-bbc0-770c26fb0760" />
+    <UnitTestResult executionId="875fa11f-09b3-4e0d-99db-ba02c3410964" testId="dd3ff07d-954b-df53-6f01-0336bc88278b" testName="Load_ShouldLoadMonstersFromFile" computerName="OMEN25L" duration="00:00:00.0007159" startTime="2026-02-22T11:51:36.9177502-08:00" endTime="2026-02-22T11:51:36.9184660-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="875fa11f-09b3-4e0d-99db-ba02c3410964" />
+    <UnitTestResult executionId="79fcfcab-51aa-44b3-8bac-26ef923baaa4" testId="4c2b2e7f-0c24-7405-4e48-3af56275379e" testName="RemoveItem_RemovesSlot_WhenQuantityReachesZero" computerName="OMEN25L" duration="00:00:00.0000880" startTime="2026-02-22T11:51:36.9205446-08:00" endTime="2026-02-22T11:51:36.9206323-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79fcfcab-51aa-44b3-8bac-26ef923baaa4" />
+    <UnitTestResult executionId="bdcdedf2-d62b-4267-a433-58d3459355c3" testId="47c33613-2e9b-d515-dab8-b7bc62f121e5" testName="Heal_IncreasesHealth" computerName="OMEN25L" duration="00:00:00.0000440" startTime="2026-02-22T11:51:36.8832410-08:00" endTime="2026-02-22T11:51:36.8832847-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bdcdedf2-d62b-4267-a433-58d3459355c3" />
+    <UnitTestResult executionId="20215edb-709a-415b-8245-0966055f8b16" testId="3d4957b1-c7d3-2f30-829a-daea31880fed" testName="AddItem_SupportsMultipleItemTypes_WithExpandedCapacity" computerName="OMEN25L" duration="00:00:00.0001720" startTime="2026-02-22T11:51:36.9194543-08:00" endTime="2026-02-22T11:51:36.9196265-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="20215edb-709a-415b-8245-0966055f8b16" />
+    <UnitTestResult executionId="8aa3a391-88fa-4f20-88de-1c7d3e7d724b" testId="6721ca22-b0b9-4cf8-1ab9-28df1cf2c83a" testName="UpdateCapacity_BaseValues_WithNoPerks" computerName="OMEN25L" duration="00:00:00.0000720" startTime="2026-02-22T11:51:36.9207422-08:00" endTime="2026-02-22T11:51:36.9208141-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8aa3a391-88fa-4f20-88de-1c7d3e7d724b" />
+    <UnitTestResult executionId="84639873-ae5a-4cc0-82fd-4001418c7dc9" testId="e8624b22-1fe4-bc25-5b06-6900934f8b1b" testName="TryPurchaseItem_Fails_WhenInventoryFull" computerName="OMEN25L" duration="00:00:00.0000960" startTime="2026-02-22T11:51:36.9260131-08:00" endTime="2026-02-22T11:51:36.9261088-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="84639873-ae5a-4cc0-82fd-4001418c7dc9" />
+    <UnitTestResult executionId="21954747-ef08-464e-9037-c1e7935e34cb" testId="cee31143-0f63-3919-6463-472248416dd6" testName="SpecialAttackAction_Actor_IsCorrectlySet" computerName="OMEN25L" duration="00:00:00.0002080" startTime="2026-02-22T11:51:36.9314858-08:00" endTime="2026-02-22T11:51:36.9316937-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="21954747-ef08-464e-9037-c1e7935e34cb" />
+    <UnitTestResult executionId="9c121ba9-78b6-4ed0-b221-e82e9eefc216" testId="e13a4b73-0a50-307b-4285-aa743162b977" testName="GetSaveData_IncludesPlayTimeTicks" computerName="OMEN25L" duration="00:00:00.0001780" startTime="2026-02-22T11:51:36.9309643-08:00" endTime="2026-02-22T11:51:36.9311423-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c121ba9-78b6-4ed0-b221-e82e9eefc216" />
+    <UnitTestResult executionId="ad92d7f2-13ec-4d4f-a76c-3c38e8e0ee54" testId="abec147f-407e-7237-d63e-320c662f4147" testName="Player_HasEmptyInventory_ByDefault" computerName="OMEN25L" duration="00:00:00.0000810" startTime="2026-02-22T11:51:36.9240822-08:00" endTime="2026-02-22T11:51:36.9241634-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ad92d7f2-13ec-4d4f-a76c-3c38e8e0ee54" />
+    <UnitTestResult executionId="efd03b02-1481-41d2-bc72-94bdfb1f92b8" testId="87c0395f-e73b-310e-5399-de5036c07234" testName="Select_ShouldRespectPrerequisites" computerName="OMEN25L" duration="00:00:00.0001910" startTime="2026-02-22T11:51:36.8611272-08:00" endTime="2026-02-22T11:51:36.8613178-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="efd03b02-1481-41d2-bc72-94bdfb1f92b8" />
+    <UnitTestResult executionId="c57406b3-b11c-45d9-9955-f33a8f69ac41" testId="804fbda1-3112-1f9b-0ada-acab74480814" testName="SpecialAttackAction_Constructor_ThrowsOnNullActor" computerName="OMEN25L" duration="00:00:00.0001240" startTime="2026-02-22T11:51:36.9318692-08:00" endTime="2026-02-22T11:51:36.9319934-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c57406b3-b11c-45d9-9955-f33a8f69ac41" />
+    <UnitTestResult executionId="a633a0ae-06fa-42be-a3e9-6402db3793f3" testId="04e1da1b-bffc-d771-99c9-822afdaec267" testName="ComputeValue_RarityAndRank_Multiply" computerName="OMEN25L" duration="00:00:00.0000530" startTime="2026-02-22T11:51:36.8763386-08:00" endTime="2026-02-22T11:51:36.8763912-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a633a0ae-06fa-42be-a3e9-6402db3793f3" />
+    <UnitTestResult executionId="09c0786a-296b-4a34-bfe1-d6ec148176ba" testId="02f892b7-2bcc-3130-0945-e4b2ffb55acd" testName="UpdateCapacity_Tier2_Expands" computerName="OMEN25L" duration="00:00:00.0000470" startTime="2026-02-22T11:51:36.9210144-08:00" endTime="2026-02-22T11:51:36.9210617-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="09c0786a-296b-4a34-bfe1-d6ec148176ba" />
+    <UnitTestResult executionId="bd69ee00-4084-4bd5-9775-3d0ba247ffa5" testId="5fe7480c-9c6b-d90e-ceeb-daaa10a86040" testName="HasItem_ReturnsFalse_WhenItemNotPresent" computerName="OMEN25L" duration="00:00:00.0001240" startTime="2026-02-22T11:51:36.9197241-08:00" endTime="2026-02-22T11:51:36.9198480-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bd69ee00-4084-4bd5-9775-3d0ba247ffa5" />
+    <UnitTestResult executionId="32dcfa72-4df8-433f-9308-afcc17591afa" testId="2355f38c-7f2b-032e-9436-238a97a6c0b7" testName="ApplyEffect_ShouldRemoveItemFromInventory" computerName="OMEN25L" duration="00:00:00.0000690" startTime="2026-02-22T11:51:36.9342561-08:00" endTime="2026-02-22T11:51:36.9343251-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="32dcfa72-4df8-433f-9308-afcc17591afa">
+      <Output>
+        <StdOut>Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 100/100&#xD;
+Removed 1x Small Health Potion from inventory</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f7be28a3-cf3e-411d-9568-ba5fd50bec29" testId="d2bad1b2-9fdd-0cab-df1c-081aa28cc05a" testName="Entity_InitializesWithDefenseAttribute" computerName="OMEN25L" duration="00:00:00.0000490" startTime="2026-02-22T11:51:36.8790038-08:00" endTime="2026-02-22T11:51:36.8790532-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7be28a3-cf3e-411d-9568-ba5fd50bec29" />
+    <UnitTestResult executionId="d48febe8-1900-40bb-a8bb-dc0377252423" testId="5facf8e2-7e55-537b-2e63-f182aad0d69f" testName="SpendGold_ReducesGold" computerName="OMEN25L" duration="00:00:00.0004010" startTime="2026-02-22T11:51:36.9247766-08:00" endTime="2026-02-22T11:51:36.9251775-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d48febe8-1900-40bb-a8bb-dc0377252423" />
+    <UnitTestResult executionId="1cc5f67c-6d55-49c5-b765-ad88ec9ffd53" testId="9b9bc092-3274-fb6c-2aae-9689c6c5620d" testName="GetActionSoundId_ReturnsConfiguredSoundIds" computerName="OMEN25L" duration="00:00:00.0000900" startTime="2026-02-22T11:51:36.9233286-08:00" endTime="2026-02-22T11:51:36.9234184-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1cc5f67c-6d55-49c5-b765-ad88ec9ffd53" />
+    <UnitTestResult executionId="4788418e-853c-4dbc-ad7c-1fe36570a30a" testId="0452651a-b748-d9b1-e0bf-5b12ff9995ca" testName="Attributes_CanSetAllAttributes" computerName="OMEN25L" duration="00:00:00.0001430" startTime="2026-02-22T11:51:36.8787712-08:00" endTime="2026-02-22T11:51:36.8789139-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4788418e-853c-4dbc-ad7c-1fe36570a30a" />
+    <UnitTestResult executionId="969b8cdc-cddc-4417-8fc2-a65e56549f16" testId="8c90f9a4-934a-bf5e-6885-854d1c135c54" testName="RollRarity_ZeroLuck_MostlyCommon" computerName="OMEN25L" duration="00:00:00.0001499" startTime="2026-02-22T11:51:36.8785432-08:00" endTime="2026-02-22T11:51:36.8786933-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="969b8cdc-cddc-4417-8fc2-a65e56549f16" />
+    <UnitTestResult executionId="30deb7f8-464e-40ff-b835-62bedbea7c3a" testId="dc0636ac-75f1-dd33-3ace-1ed3866453b4" testName="Item_TargetEnum_SupportsEnemyTarget" computerName="OMEN25L" duration="00:00:00.0000460" startTime="2026-02-22T11:51:36.9216958-08:00" endTime="2026-02-22T11:51:36.9217413-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="30deb7f8-464e-40ff-b835-62bedbea7c3a" />
+    <UnitTestResult executionId="8c4f81ba-a464-41b8-95b7-18b32810f92c" testId="bf46b43f-09cf-142d-64d9-cdeba2b3adea" testName="PowerUp_IncrementRank_UpgradesRank" computerName="OMEN25L" duration="00:00:00.0004720" startTime="2026-02-22T11:51:36.8674302-08:00" endTime="2026-02-22T11:51:36.8679019-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8c4f81ba-a464-41b8-95b7-18b32810f92c" />
+    <UnitTestResult executionId="ee01f7f4-c93a-494c-aa15-445ba8049f89" testId="664589b3-c194-8c34-82ec-c8436f1b3f79" testName="FindMostRecentSave_WithNullElements_IgnoresThem" computerName="OMEN25L" duration="00:00:00.0000710" startTime="2026-02-22T11:51:36.9037952-08:00" endTime="2026-02-22T11:51:36.9038660-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee01f7f4-c93a-494c-aa15-445ba8049f89" />
+    <UnitTestResult executionId="64a580c7-4d6c-44ff-8e3a-164a7465bdaf" testId="2b4f38b7-0f90-a903-1501-208bfa2f1400" testName="Generate_AllMaxRank_ReturnsCoinFallback" computerName="OMEN25L" duration="00:00:00.0027710" startTime="2026-02-22T11:51:36.8692076-08:00" endTime="2026-02-22T11:51:36.8719779-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="64a580c7-4d6c-44ff-8e3a-164a7465bdaf" />
+    <UnitTestResult executionId="1f2a7283-09ce-49ec-8c1d-9728c783473a" testId="bc002b8f-c140-f11b-2a29-b80ce7cc52c2" testName="Select_ShouldRespectCountLimit" computerName="OMEN25L" duration="00:00:00.0001780" startTime="2026-02-22T11:51:36.8609446-08:00" endTime="2026-02-22T11:51:36.8611222-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1f2a7283-09ce-49ec-8c1d-9728c783473a" />
+    <UnitTestResult executionId="d82583d9-2654-48d9-b780-392dadc6eb15" testId="3d2795b3-024c-f640-d867-b527e4bb9a16" testName="AccumulatePlaytime_WithExistingPlayTime_AddsSessionDuration" computerName="OMEN25L" duration="00:00:00.0001280" startTime="2026-02-22T11:51:36.9265868-08:00" endTime="2026-02-22T11:51:36.9267144-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d82583d9-2654-48d9-b780-392dadc6eb15" />
+    <UnitTestResult executionId="75b4a92f-7f38-41d0-9457-d440c2c92555" testId="363452ec-d654-7a8b-04ff-8e9dddf9e662" testName="FindMostRecentSave_WithEmptyArray_ReturnsNull" computerName="OMEN25L" duration="00:00:00.0000830" startTime="2026-02-22T11:51:36.9037077-08:00" endTime="2026-02-22T11:51:36.9037907-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="75b4a92f-7f38-41d0-9457-d440c2c92555" />
+    <UnitTestResult executionId="ee222d7f-c33c-40fa-8078-366ef98b48aa" testId="1b6f1483-fbb8-ec4e-4f4b-bb945d965018" testName="TakeDamage_ReducesDamageWhenDefending" computerName="OMEN25L" duration="00:00:00.0001030" startTime="2026-02-22T11:51:36.8836359-08:00" endTime="2026-02-22T11:51:36.8837383-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee222d7f-c33c-40fa-8078-366ef98b48aa" />
+    <UnitTestResult executionId="d4cae7f6-2890-459e-b11e-0a115c957cea" testId="1c4e6a12-ed3e-8f9b-08b6-48966518600c" testName="DialogueAction_HasExpectedValues" computerName="OMEN25L" duration="00:00:00.0002980" startTime="2026-02-22T11:51:36.9324667-08:00" endTime="2026-02-22T11:51:36.9327647-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d4cae7f6-2890-459e-b11e-0a115c957cea" />
+    <UnitTestResult executionId="05b05cfa-1c6a-47b4-967b-31dec35da3ff" testId="0d05136c-3f66-484f-9c53-ece08fd7f15d" testName="IncrementDefenseAttribute_ShouldDecreaseAvailablePoints_AndIncreaseDefense" computerName="OMEN25L" duration="00:00:00.0000800" startTime="2026-02-22T11:51:36.8562946-08:00" endTime="2026-02-22T11:51:36.8563747-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05b05cfa-1c6a-47b4-967b-31dec35da3ff" />
+    <UnitTestResult executionId="95b6f76d-1753-44bd-871c-0aca7286e818" testId="85248fcc-5b4e-42cd-da61-51cddd6ef14b" testName="PowerUpCollection_Add_RanksUpExisting" computerName="OMEN25L" duration="00:00:00.0007069" startTime="2026-02-22T11:51:36.8679207-08:00" endTime="2026-02-22T11:51:36.8686273-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="95b6f76d-1753-44bd-871c-0aca7286e818" />
+    <UnitTestResult executionId="fd2a7b8c-5f3b-4da3-be7a-2987c37f019c" testId="01644d33-48e7-0186-4d82-d144eb5e152a" testName="CreateNewGame_InitializesPlayTimeToZero" computerName="OMEN25L" duration="00:00:00.0040410" startTime="2026-02-22T11:51:36.9269105-08:00" endTime="2026-02-22T11:51:36.9309510-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd2a7b8c-5f3b-4da3-be7a-2987c37f019c" />
+    <UnitTestResult executionId="8e32c29f-1870-4d32-9c0d-980d9b550685" testId="85f4ec50-c25a-bc2c-6f5b-de6bbff1de77" testName="AddItem_StacksOntoExistingSlot_BeforeOpeningNewSlot" computerName="OMEN25L" duration="00:00:00.0000830" startTime="2026-02-22T11:51:36.9193668-08:00" endTime="2026-02-22T11:51:36.9194502-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8e32c29f-1870-4d32-9c0d-980d9b550685" />
+    <UnitTestResult executionId="f298e529-bfb6-4436-9473-047a8cfe20e3" testId="7fc57561-0ddd-952e-1bf7-032a720c934d" testName="GetActionSoundId_ReturnsEmptyStringByDefault" computerName="OMEN25L" duration="00:00:00.0000720" startTime="2026-02-22T11:51:36.8830496-08:00" endTime="2026-02-22T11:51:36.8831210-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f298e529-bfb6-4436-9473-047a8cfe20e3" />
+    <UnitTestResult executionId="fdd2e965-b224-47c3-bf23-ef07ef12b821" testId="d042cc0e-cccf-6837-7a64-c0cbce3c0118" testName="RollRarity_HighLuck_ShiftsDistribution" computerName="OMEN25L" duration="00:00:00.0021410" startTime="2026-02-22T11:51:36.8763951-08:00" endTime="2026-02-22T11:51:36.8785355-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fdd2e965-b224-47c3-bf23-ef07ef12b821" />
+    <UnitTestResult executionId="5bb4d8e5-8b65-4fcc-81ab-95fb879aa50b" testId="52037813-3836-4cb2-ee29-a16cfc6b3021" testName="Player_Initialization_SetsStatsCorrectly" computerName="OMEN25L" duration="00:00:00.0001270" startTime="2026-02-22T11:51:36.9241675-08:00" endTime="2026-02-22T11:51:36.9242949-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5bb4d8e5-8b65-4fcc-81ab-95fb879aa50b" />
+    <UnitTestResult executionId="cc49a252-a828-4a95-b050-750e3254d125" testId="e6c6d025-5b7b-79ba-d9fb-a0ddd6083919" testName="SpecialAttackAction_Type_IsSpecialAttack" computerName="OMEN25L" duration="00:00:00.0000690" startTime="2026-02-22T11:51:36.9323508-08:00" endTime="2026-02-22T11:51:36.9324194-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc49a252-a828-4a95-b050-750e3254d125" />
+    <UnitTestResult executionId="f247931a-0232-416e-837c-69dbdbefaa69" testId="8853993b-ef62-d357-ff8e-470beb084ef5" testName="Monster_SpriteIds_ReturnCorrectFormattedStrings" computerName="OMEN25L" duration="00:00:00.0002180" startTime="2026-02-22T11:51:36.9235871-08:00" endTime="2026-02-22T11:51:36.9238053-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f247931a-0232-416e-837c-69dbdbefaa69" />
+    <UnitTestResult executionId="e190e06b-b1ba-47c8-9d33-59d0acd61749" testId="ff2bbe5a-76ba-1a50-9806-26b7c1cc0659" testName="HasRoom_ReturnsFalse_WhenAllSlotsFullAndAtMaxStack" computerName="OMEN25L" duration="00:00:00.0001340" startTime="2026-02-22T11:51:36.9199152-08:00" endTime="2026-02-22T11:51:36.9200495-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e190e06b-b1ba-47c8-9d33-59d0acd61749" />
+    <UnitTestResult executionId="799ac844-5238-4b0e-bb62-7398a54714ac" testId="19b675d6-8c38-c6fb-9ef6-c3c568c2a52d" testName="Battle_HandleActionComplete_ReturnsChangeTurnsAction" computerName="OMEN25L" duration="00:00:00.0017630" startTime="2026-02-22T11:51:36.8807055-08:00" endTime="2026-02-22T11:51:36.8824680-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="799ac844-5238-4b0e-bb62-7398a54714ac" />
+    <UnitTestResult executionId="d86ff510-7912-4df6-a428-1b8f1b19bc5b" testId="2c4ab924-45ee-7d5e-6159-23f24eb1ce4d" testName="UpdateCapacity_Tier3_Expands" computerName="OMEN25L" duration="00:00:00.0000470" startTime="2026-02-22T11:51:36.9210663-08:00" endTime="2026-02-22T11:51:36.9211137-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d86ff510-7912-4df6-a428-1b8f1b19bc5b" />
+    <UnitTestResult executionId="9820fb8d-28a0-4d55-9fff-322ed07299f6" testId="4c959f4c-c3fc-032b-57d1-77831b27c688" testName="AddItem_PartialAdd_WhenSomeUnitsFit" computerName="OMEN25L" duration="00:00:00.0001470" startTime="2026-02-22T11:51:36.9190902-08:00" endTime="2026-02-22T11:51:36.9192372-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9820fb8d-28a0-4d55-9fff-322ed07299f6" />
+    <UnitTestResult executionId="606edd75-5f8b-4e33-9213-c961f68af6e3" testId="dd3474e0-e8cc-ed02-5e3a-338c53868a26" testName="GetActionSoundId_ReturnsEmptyForUnknownAction" computerName="OMEN25L" duration="00:00:00.0000430" startTime="2026-02-22T11:51:36.9234231-08:00" endTime="2026-02-22T11:51:36.9234656-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="606edd75-5f8b-4e33-9213-c961f68af6e3" />
+    <UnitTestResult executionId="721be65a-9695-4a71-9812-02a3a965bdd0" testId="ab314fe1-f5d9-fb29-05d1-33969afa6d68" testName="Player_InitializesWithDefenseAttribute" computerName="OMEN25L" duration="00:00:00.0001550" startTime="2026-02-22T11:51:36.8794090-08:00" endTime="2026-02-22T11:51:36.8795645-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="721be65a-9695-4a71-9812-02a3a965bdd0" />
+    <UnitTestResult executionId="a8d59bb3-352b-494b-8592-f7e42279a086" testId="05f365f9-d2b4-a069-7b23-b30f4b949a9e" testName="MonsterDebuff_Apply_ReducesMonsterStat_ClampedAtOne" computerName="OMEN25L" duration="00:00:00.0003550" startTime="2026-02-22T11:51:36.8670704-08:00" endTime="2026-02-22T11:51:36.8674252-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a8d59bb3-352b-494b-8592-f7e42279a086" />
+    <UnitTestResult executionId="cf4ea6b4-28c3-45cc-b952-45a81ebee19a" testId="eb8d5d8f-070b-ce9d-8d4d-bc90854aa5e9" testName="GetSaveData_ReturnsCorrectData" computerName="OMEN25L" duration="00:00:00.0007290" startTime="2026-02-22T11:51:36.9038701-08:00" endTime="2026-02-22T11:51:36.9045987-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cf4ea6b4-28c3-45cc-b952-45a81ebee19a">
+      <Output>
+        <ErrorInfo>
+          <Message>  Assert.That(saveData.Player, Is.Not.Null)&#xD;
+  Expected: not null&#xD;
+  But was:  null&#xD;
+</Message>
+          <StackTrace>   at PocketSquire.Arena.Tests.GameStateTests.GetSaveData_ReturnsCorrectData() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 73&#xD;
+
+1)    at PocketSquire.Arena.Tests.GameStateTests.GetSaveData_ReturnsCorrectData() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 73&#xD;
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="63f1770a-14d6-4413-a6dd-23206c5e0c06" testId="63762f8d-2b4b-daf7-079f-df3b865be921" testName="Generate_HighLuck_MoreRarePowerUps" computerName="OMEN25L" duration="00:00:00.0014090" startTime="2026-02-22T11:51:36.8728731-08:00" endTime="2026-02-22T11:51:36.8742821-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="63f1770a-14d6-4413-a6dd-23206c5e0c06" />
+    <UnitTestResult executionId="fceb7d17-1f74-4c85-b386-7da708c094ce" testId="add8baf5-1c51-af1f-55a1-71a0d6d3bed6" testName="RemoveItem_ReturnsFalse_WhenInsufficientQuantity" computerName="OMEN25L" duration="00:00:00.0000600" startTime="2026-02-22T11:51:36.9206373-08:00" endTime="2026-02-22T11:51:36.9206975-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fceb7d17-1f74-4c85-b386-7da708c094ce" />
+    <UnitTestResult executionId="5d0649ff-5503-4229-af80-ab89a922b3f1" testId="2667226b-f31f-3838-f430-c3ea0583fab1" testName="Monster_InitializesWithDefenseAttribute" computerName="OMEN25L" duration="00:00:00.0001530" startTime="2026-02-22T11:51:36.8790570-08:00" endTime="2026-02-22T11:51:36.8792096-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5d0649ff-5503-4229-af80-ab89a922b3f1" />
+    <UnitTestResult executionId="491cbf4e-0fa7-4001-8a6b-231cd19fc9f9" testId="c249724c-d6bb-5f42-b999-7f69330785f3" testName="Generate_QuadraticCurve_ShouldAccumulateQuadratically" computerName="OMEN25L" duration="00:00:00.0000910" startTime="2026-02-22T11:51:36.8649839-08:00" endTime="2026-02-22T11:51:36.8650753-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="491cbf4e-0fa7-4001-8a6b-231cd19fc9f9" />
+    <UnitTestResult executionId="f15320a2-6963-412b-94a2-7fd626be7de8" testId="8510466c-868d-eb69-e0e4-5b3fa163f491" testName="CreateNewGame_GivesPlayerStartingHealthPotion" computerName="OMEN25L" duration="00:00:00.0179320" startTime="2026-02-22T11:51:36.8839337-08:00" endTime="2026-02-22T11:51:36.9018641-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f15320a2-6963-412b-94a2-7fd626be7de8">
+      <Output>
+        <ErrorInfo>
+          <Message>  Assert.That(GameState.Player, Is.Not.Null)&#xD;
+  Expected: not null&#xD;
+  But was:  null&#xD;
+</Message>
+          <StackTrace>   at PocketSquire.Arena.Tests.GameStateTests.CreateNewGame_GivesPlayerStartingHealthPotion() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 157&#xD;
+
+1)    at PocketSquire.Arena.Tests.GameStateTests.CreateNewGame_GivesPlayerStartingHealthPotion() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 157&#xD;
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6e39ceba-b3b1-4da0-904d-b41cc515eb31" testId="1bd5c07f-6aa1-c6b5-6873-39d766403f05" testName="GetEligiblePerks_ShouldFilterByLevel" computerName="OMEN25L" duration="00:00:00.0050549" startTime="2026-02-22T11:51:36.8509764-08:00" endTime="2026-02-22T11:51:36.8560310-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6e39ceba-b3b1-4da0-904d-b41cc515eb31" />
+    <UnitTestResult executionId="428b100b-842a-457c-b320-d42ebe47efc6" testId="0fb00f98-3f9d-fd0a-85a7-c5c7c57b0a6b" testName="IsValid_ShouldReturnFalse_WhenNextLevelXPisLowerThanCurrent" computerName="OMEN25L" duration="00:00:00.0005419" startTime="2026-02-22T11:51:36.8639179-08:00" endTime="2026-02-22T11:51:36.8644598-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="428b100b-842a-457c-b320-d42ebe47efc6" />
+    <UnitTestResult executionId="be4b8215-fa7a-4aff-8a7f-1bfcc5bbe608" testId="af71f0df-8217-04fd-68a5-9d84b57ad10e" testName="Load_ShouldLoadClassTemplatesFromFile" computerName="OMEN25L" duration="00:00:00.0008860" startTime="2026-02-22T11:51:36.9168525-08:00" endTime="2026-02-22T11:51:36.9177379-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="be4b8215-fa7a-4aff-8a7f-1bfcc5bbe608" />
+    <UnitTestResult executionId="5f333dda-34d9-4963-a708-e517d7b95c08" testId="f2ab5a1e-af07-be52-cec2-40fcc608a68a" testName="Battle_IsOver_WhenMonsterDies" computerName="OMEN25L" duration="00:00:00.0000560" startTime="2026-02-22T11:51:36.8827714-08:00" endTime="2026-02-22T11:51:36.8828274-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5f333dda-34d9-4963-a708-e517d7b95c08" />
+    <UnitTestResult executionId="c9c37d75-0057-4618-89c9-40d3a2687a4a" testId="e56d604a-dc43-3cc4-4aa3-01c4d66c7441" testName="LoseAction_ApplyEffect_ExecutesWithoutError" computerName="OMEN25L" duration="00:00:00.0007890" startTime="2026-02-22T11:51:36.9217943-08:00" endTime="2026-02-22T11:51:36.9225831-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c9c37d75-0057-4618-89c9-40d3a2687a4a" />
+    <UnitTestResult executionId="26775dcf-d5fd-4518-a6fa-3b112b3cbd00" testId="79fb5913-b02e-f7df-82eb-1b49768f4b28" testName="HasRoom_ReturnsTrue_WhenEmptySlotAvailable" computerName="OMEN25L" duration="00:00:00.0000440" startTime="2026-02-22T11:51:36.9200538-08:00" endTime="2026-02-22T11:51:36.9200974-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="26775dcf-d5fd-4518-a6fa-3b112b3cbd00" />
+    <UnitTestResult executionId="df74132a-198f-4163-ac5f-a3c0e79a1693" testId="c02cfd83-38b0-582e-e426-3a33599d7aef" testName="RemoveItem_DecreasesQuantity" computerName="OMEN25L" duration="00:00:00.0002160" startTime="2026-02-22T11:51:36.9203242-08:00" endTime="2026-02-22T11:51:36.9205398-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="df74132a-198f-4163-ac5f-a3c0e79a1693" />
+    <UnitTestResult executionId="a34cdc92-7bc5-4778-ba23-5bd8281db26b" testId="71f9005b-b0dc-2c58-f719-8afd17f8ee00" testName="TakeDamage_RoundingWhenDefending_RoundsUp" computerName="OMEN25L" duration="00:00:00.0000430" startTime="2026-02-22T11:51:36.8838138-08:00" endTime="2026-02-22T11:51:36.8838571-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a34cdc92-7bc5-4778-ba23-5bd8281db26b" />
+    <UnitTestResult executionId="406d244c-e489-41bc-9597-eaa185a83a00" testId="8ab8ce52-1d32-4c6b-d440-492bc5b15136" testName="SpecialAttackAction_ApplyEffect_DealsDamageToTarget" computerName="OMEN25L" duration="00:00:00.0001620" startTime="2026-02-22T11:51:36.9317031-08:00" endTime="2026-02-22T11:51:36.9318646-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="406d244c-e489-41bc-9597-eaa185a83a00">
+      <Output>
+        <StdOut>Test Monster uses a special attack on Test Player for 10 damage!</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1bb2b7d0-b54f-46a0-9184-c9a6c6620fdb" testId="946c08b6-d92f-a452-d904-78cf71903e95" testName="DialogueOption_Shop_Factory_CreatesCorrectOption" computerName="OMEN25L" duration="00:00:00.0000649" startTime="2026-02-22T11:51:36.9330733-08:00" endTime="2026-02-22T11:51:36.9331378-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1bb2b7d0-b54f-46a0-9184-c9a6c6620fdb" />
+    <UnitTestResult executionId="415cbafa-95a1-4a9c-ba8e-ae48c9e1f68a" testId="242030ff-5567-ee3d-6857-d9fb88fa050b" testName="PlayTime_RoundTrip_PreservesValue" computerName="OMEN25L" duration="00:00:00.0001410" startTime="2026-02-22T11:51:36.9312819-08:00" endTime="2026-02-22T11:51:36.9314233-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="415cbafa-95a1-4a9c-ba8e-ae48c9e1f68a">
+      <Output>
+        <StdOut>Loaded Player: m_spellcaster</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7bdcc447-3082-4359-8b6c-38ac3ad95ed0" testId="c3f8fef2-2107-4533-0ae7-a5757a6d1943" testName="DetermineAction_ReturnsAttackOrSpecialAttack" computerName="OMEN25L" duration="00:00:00.0003130" startTime="2026-02-22T11:51:36.9230058-08:00" endTime="2026-02-22T11:51:36.9233185-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7bdcc447-3082-4359-8b6c-38ac3ad95ed0" />
+    <UnitTestResult executionId="68d97443-e6fa-4664-b4ec-7113589b234e" testId="490e5be8-43be-f948-f7d6-31def9c5ddbc" testName="DialogueOption_DefaultStruct_HasNoneAction" computerName="OMEN25L" duration="00:00:00.0000500" startTime="2026-02-22T11:51:36.9328755-08:00" endTime="2026-02-22T11:51:36.9329253-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="68d97443-e6fa-4664-b4ec-7113589b234e" />
+    <UnitTestResult executionId="65221012-fed5-41ff-8da9-386497896539" testId="ab7aea6c-30f2-2936-8f5d-f17132abd09e" testName="Item_DefaultValues_AreCorrect" computerName="OMEN25L" duration="00:00:00.0003850" startTime="2026-02-22T11:51:36.9211765-08:00" endTime="2026-02-22T11:51:36.9215611-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="65221012-fed5-41ff-8da9-386497896539" />
+    <UnitTestResult executionId="3ad69597-bc3c-4ae9-bb35-fc579a687efb" testId="e1416f0e-3d0c-bb41-c4b0-03ee740082e1" testName="InventorySlot_CanStack_ReturnsTrue_ForMatchingItem" computerName="OMEN25L" duration="00:00:00.0000380" startTime="2026-02-22T11:51:36.9201874-08:00" endTime="2026-02-22T11:51:36.9202249-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3ad69597-bc3c-4ae9-bb35-fc579a687efb" />
+    <UnitTestResult executionId="457b9c63-4056-4225-8e25-4b4fe431ab81" testId="b12e23f8-4cdc-905f-e84b-282aa54890cc" testName="UtilityHeal_Apply_RestoresPercentHealth" computerName="OMEN25L" duration="00:00:00.0004720" startTime="2026-02-22T11:51:36.8686452-08:00" endTime="2026-02-22T11:51:36.8691176-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="457b9c63-4056-4225-8e25-4b4fe431ab81" />
+    <UnitTestResult executionId="87289e7f-cb2d-4f06-8213-670a60fc9d95" testId="bb579791-cb05-7468-24c1-28b2552fc97c" testName="TakeDamage_ReducesHealth" computerName="OMEN25L" duration="00:00:00.0000640" startTime="2026-02-22T11:51:36.8837454-08:00" endTime="2026-02-22T11:51:36.8838098-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="87289e7f-cb2d-4f06-8213-670a60fc9d95" />
+    <UnitTestResult executionId="b877f301-634b-4b0f-a981-37af4b4ff9a5" testId="db8962a2-cd5c-8853-3712-5fa5651f2f22" testName="SpecialAttackAction_Target_IsCorrectlySet" computerName="OMEN25L" duration="00:00:00.0000510" startTime="2026-02-22T11:51:36.9322962-08:00" endTime="2026-02-22T11:51:36.9323470-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b877f301-634b-4b0f-a981-37af4b4ff9a5" />
+    <UnitTestResult executionId="1e4189f4-3a79-47bf-a27d-a0f5e56a4281" testId="86d1e921-75f5-d05a-3b77-c355cb6723ae" testName="GetItemCount_ReturnsZero_WhenItemNotPresent" computerName="OMEN25L" duration="00:00:00.0000370" startTime="2026-02-22T11:51:36.9196831-08:00" endTime="2026-02-22T11:51:36.9197202-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1e4189f4-3a79-47bf-a27d-a0f5e56a4281" />
+    <UnitTestResult executionId="f51261eb-b255-4f2f-8309-afcd406580c2" testId="f262c033-da0a-6112-cdc6-04c3f4ae176f" testName="Battle_ChangeTurns_SwitchesActor" computerName="OMEN25L" duration="00:00:00.0002560" startTime="2026-02-22T11:51:36.8804438-08:00" endTime="2026-02-22T11:51:36.8806999-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f51261eb-b255-4f2f-8309-afcd406580c2">
+      <Output>
+        <StdOut>Changing turns&#xD;
+Changing turns</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6df1f57c-1130-4f6e-aa44-2940b47b987a" testId="88c812f2-60bc-4824-4811-18e8685b65d6" testName="Battle_IsOver_WhenPlayerDies" computerName="OMEN25L" duration="00:00:00.0000470" startTime="2026-02-22T11:51:36.8828312-08:00" endTime="2026-02-22T11:51:36.8828780-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6df1f57c-1130-4f6e-aa44-2940b47b987a" />
+    <UnitTestResult executionId="f3c88c23-18df-4314-b35f-57fba4f627e8" testId="a660a2a4-a1a6-5fe5-435b-48b9ba252f3b" testName="IsValid_ShouldReturnTrue_WhenRequirementsAreMonotonic" computerName="OMEN25L" duration="00:00:00.0001240" startTime="2026-02-22T11:51:36.8644672-08:00" endTime="2026-02-22T11:51:36.8645911-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f3c88c23-18df-4314-b35f-57fba4f627e8" />
+    <UnitTestResult executionId="0b2efbf9-038b-4d78-b87e-ebbf11978ddb" testId="d01ebab7-25d5-ef97-2195-81d2f7db9c74" testName="Attributes_InitializesWithDefaultValues" computerName="OMEN25L" duration="00:00:00.0000790" startTime="2026-02-22T11:51:36.8789211-08:00" endTime="2026-02-22T11:51:36.8789999-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0b2efbf9-038b-4d78-b87e-ebbf11978ddb" />
+    <UnitTestResult executionId="0d1a312f-a6ba-4b23-9f1b-c3381a606c63" testId="7d1effd3-a6c2-f142-173b-6f70774ce743" testName="LoadFromSaveData_RestoresPlayTime" computerName="OMEN25L" duration="00:00:00.0001200" startTime="2026-02-22T11:51:36.9311527-08:00" endTime="2026-02-22T11:51:36.9312730-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0d1a312f-a6ba-4b23-9f1b-c3381a606c63">
+      <Output>
+        <StdOut>Loaded Player:</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="79b5a09e-5936-46bf-bdce-329d0d8ecaa8" testId="8ecacf1c-8950-f1be-f1b3-828fe517a916" testName="SaveLoadRoundtrip_PreservesInventory" computerName="OMEN25L" duration="00:00:00.0011199" startTime="2026-02-22T11:51:36.9051296-08:00" endTime="2026-02-22T11:51:36.9062496-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79b5a09e-5936-46bf-bdce-329d0d8ecaa8">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at PocketSquire.Arena.Tests.GameStateTests.SaveLoadRoundtrip_PreservesInventory() in C:\Users\David\PocketSquire-Arena\tests\unit\GameStateTests.cs:line 167&#xD;
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9fa46da3-49e1-4e24-9d7b-bda3105b3670" testId="ef7789f1-9bd7-f105-f83c-dd6b19746ea5" testName="GetActionSoundId_ReturnsEmptyForYield" computerName="OMEN25L" duration="00:00:00.0000349" startTime="2026-02-22T11:51:36.9234696-08:00" endTime="2026-02-22T11:51:36.9235041-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9fa46da3-49e1-4e24-9d7b-bda3105b3670" />
+    <UnitTestResult executionId="f18b2444-4f6c-4aa9-8460-1fecda13e576" testId="a44606e8-87ef-1105-c453-fdc255c023e0" testName="AddItem_ReturnsFalse_WhenAllSlotsFull" computerName="OMEN25L" duration="00:00:00.0000620" startTime="2026-02-22T11:51:36.9192445-08:00" endTime="2026-02-22T11:51:36.9193066-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f18b2444-4f6c-4aa9-8460-1fecda13e576" />
+    <UnitTestResult executionId="8abd38c4-ee2a-4383-96fb-47d6e8222d13" testId="c19a5771-a4a2-c323-ae72-230842824140" testName="DecrementDefenseAttribute_ShouldIncreaseAvailablePoints_AndDecreaseDefense" computerName="OMEN25L" duration="00:00:00.0037440" startTime="2026-02-22T11:51:36.8448833-08:00" endTime="2026-02-22T11:51:36.8485978-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8abd38c4-ee2a-4383-96fb-47d6e8222d13" />
+    <UnitTestResult executionId="651b6f42-d0a9-45cc-8561-5acab13a660d" testId="3219d486-6584-a295-6e23-4fe4f5c9fb1b" testName="LoadFromSaveData_SetsCorrectValues" computerName="OMEN25L" duration="00:00:00.0005100" startTime="2026-02-22T11:51:36.9046094-08:00" endTime="2026-02-22T11:51:36.9051195-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="651b6f42-d0a9-45cc-8561-5acab13a660d">
+      <Output>
+        <StdOut>Loaded Player: Test Player</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="575310cd-7958-45ac-b654-d896f9e5d7ba" testId="41a7d1d8-691c-6af8-41ed-78ad6df552fa" testName="SpendGold_Throws_WhenInsufficientGold" computerName="OMEN25L" duration="00:00:00.0006340" startTime="2026-02-22T11:51:36.9251908-08:00" endTime="2026-02-22T11:51:36.9258242-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="575310cd-7958-45ac-b654-d896f9e5d7ba" />
+    <UnitTestResult executionId="45b7fedf-0a0e-4755-905e-5b2444cf7b02" testId="b795b020-9268-9421-10b2-9c44f7365bdf" testName="ComputeValue_Level1_CommonRankI_ReturnsBaseValue" computerName="OMEN25L" duration="00:00:00.0001260" startTime="2026-02-22T11:51:36.8762086-08:00" endTime="2026-02-22T11:51:36.8763340-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="45b7fedf-0a0e-4755-905e-5b2444cf7b02" />
+    <UnitTestResult executionId="266a4a5e-009e-412d-864f-78101eb98369" testId="8a4a2dea-fb8c-f213-8a87-01fefad81e97" testName="WinAction_Properties_CorrectlySet" computerName="OMEN25L" duration="00:00:00.0001030" startTime="2026-02-22T11:51:36.9349062-08:00" endTime="2026-02-22T11:51:36.9350086-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="266a4a5e-009e-412d-864f-78101eb98369" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="DecrementDefenseAttribute_ShouldIncreaseAvailablePoints_AndDecreaseDefense" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="c19a5771-a4a2-c323-ae72-230842824140">
+      <Execution id="8abd38c4-ee2a-4383-96fb-47d6e8222d13" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="DecrementDefenseAttribute_ShouldIncreaseAvailablePoints_AndDecreaseDefense" />
+    </UnitTest>
+    <UnitTest name="Constructor_ShouldSetItemData_UsingId" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="f4761b4a-2396-1833-382a-0b4d95e85ca0">
+      <Execution id="a5380f5c-a555-4760-b89d-e8110a666fa0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.Unit.ItemActionTests" name="Constructor_ShouldSetItemData_UsingId" />
+    </UnitTest>
+    <UnitTest name="Player_HasEmptyInventory_ByDefault" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="abec147f-407e-7237-d63e-320c662f4147">
+      <Execution id="ad92d7f2-13ec-4d4f-a76c-3c38e8e0ee54" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="Player_HasEmptyInventory_ByDefault" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Actor_IsCorrectlySet" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="cee31143-0f63-3919-6463-472248416dd6">
+      <Execution id="21954747-ef08-464e-9037-c1e7935e34cb" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Actor_IsCorrectlySet" />
+    </UnitTest>
+    <UnitTest name="Heal_CannotExceedMaxHealth" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="807b8cd7-3255-058d-aefd-e21ebc62fd4f">
+      <Execution id="638bb572-dace-4d67-8a29-f5d9504f2e34" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="Heal_CannotExceedMaxHealth" />
+    </UnitTest>
+    <UnitTest name="UpdateCapacity_Tier3_Expands" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="2c4ab924-45ee-7d5e-6159-23f24eb1ce4d">
+      <Execution id="d86ff510-7912-4df6-a428-1b8f1b19bc5b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="UpdateCapacity_Tier3_Expands" />
+    </UnitTest>
+    <UnitTest name="SelectPerk_ShouldNotUnlock_IfNotPending" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="b8978565-4315-ee08-76ec-520a117a4605">
+      <Execution id="d0274b46-04aa-4e14-bd8b-2a369880bfe3" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="SelectPerk_ShouldNotUnlock_IfNotPending" />
+    </UnitTest>
+    <UnitTest name="RollRarity_ZeroLuck_MostlyCommon" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8c90f9a4-934a-bf5e-6885-854d1c135c54">
+      <Execution id="969b8cdc-cddc-4417-8fc2-a65e56549f16" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpScalingTests" name="RollRarity_ZeroLuck_MostlyCommon" />
+    </UnitTest>
+    <UnitTest name="PowerUpCollection_Add_RanksUpExisting" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="85248fcc-5b4e-42cd-da61-51cddd6ef14b">
+      <Execution id="95b6f76d-1753-44bd-871c-0aca7286e818" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="PowerUpCollection_Add_RanksUpExisting" />
+    </UnitTest>
+    <UnitTest name="GetXpToNextLevel_ShouldReturnCorrectDelta" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="5b4df009-9256-a341-40bd-70b5ed5704d8">
+      <Execution id="4b650e76-1f3c-4a82-a7bd-1f3e65cde18f" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.ProgressionTests" name="GetXpToNextLevel_ShouldReturnCorrectDelta" />
+    </UnitTest>
+    <UnitTest name="AddItem_AddsNewSlot_WhenItemNotPresent" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="7f8b0778-3e3d-c24d-211d-796d181fad3a">
+      <Execution id="4b6e4330-d1d9-4632-935f-b4a27dd04120" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="AddItem_AddsNewSlot_WhenItemNotPresent" />
+    </UnitTest>
+    <UnitTest name="RemoveItem_ReturnsFalse_WhenInsufficientQuantity" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="add8baf5-1c51-af1f-55a1-71a0d6d3bed6">
+      <Execution id="fceb7d17-1f74-4c85-b386-7da708c094ce" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="RemoveItem_ReturnsFalse_WhenInsufficientQuantity" />
+    </UnitTest>
+    <UnitTest name="GetLevelForExperience_ShouldReturnCorrectLevel" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="91423e92-c74d-04ea-a976-58d974a27829">
+      <Execution id="7750a330-c005-4104-bdac-f7c6fac10bd0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.ProgressionTests" name="GetLevelForExperience_ShouldReturnCorrectLevel" />
+    </UnitTest>
+    <UnitTest name="Generate_LinearCurve_ShouldAccumulateLinearly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="cdef03a0-c713-0f4e-9aae-5155fcd55464">
+      <Execution id="5b865a95-3d30-427f-b661-dddbd1abbf4d" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.XpCurveGeneratorTests" name="Generate_LinearCurve_ShouldAccumulateLinearly" />
+    </UnitTest>
+    <UnitTest name="FindMostRecentSave_WithEmptyArray_ReturnsNull" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="363452ec-d654-7a8b-04ff-8e9dddf9e662">
+      <Execution id="75b4a92f-7f38-41d0-9457-d440c2c92555" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="FindMostRecentSave_WithEmptyArray_ReturnsNull" />
+    </UnitTest>
+    <UnitTest name="Item_DefaultValues_AreCorrect" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ab7aea6c-30f2-2936-8f5d-f17132abd09e">
+      <Execution id="65221012-fed5-41ff-8da9-386497896539" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.ItemTests" name="Item_DefaultValues_AreCorrect" />
+    </UnitTest>
+    <UnitTest name="InventorySlot_IsFull_ReturnsTrue_WhenAtLimit" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8c4e915c-7f86-e4c8-8139-38690f022b42">
+      <Execution id="783eae6d-6225-489a-b376-ddce479d0a54" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="InventorySlot_IsFull_ReturnsTrue_WhenAtLimit" />
+    </UnitTest>
+    <UnitTest name="ApplyEffect_ShouldLogWarning_IfItemNotInInventory" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="c4a54757-ec5b-0226-25c7-d570b82fb9e7">
+      <Execution id="643c578f-b969-4951-bf18-b1de444471a1" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.Unit.ItemActionTests" name="ApplyEffect_ShouldLogWarning_IfItemNotInInventory" />
+    </UnitTest>
+    <UnitTest name="TryPurchaseItem_Succeeds_WithEnoughGold" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3f02eea4-c3a4-d8cb-0bb8-f8966a32e5aa">
+      <Execution id="250935a5-72fd-4640-aaa2-c04191f608b2" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="TryPurchaseItem_Succeeds_WithEnoughGold" />
+    </UnitTest>
+    <UnitTest name="LootModifier_GetBonusValue_ReturnsPercentage" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="d2635712-b1be-d551-ee4b-b5f2c8c95327">
+      <Execution id="fce84cb1-370e-4428-b967-498247feb142" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="LootModifier_GetBonusValue_ReturnsPercentage" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Constructor_ThrowsOnNullTarget" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="bdac1ae3-ab04-24b5-c553-35d228dfa09b">
+      <Execution id="2d82f495-865f-46c4-bb4c-c3203d9498cc" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Constructor_ThrowsOnNullTarget" />
+    </UnitTest>
+    <UnitTest name="LoadFromSaveData_RestoresPlayTime" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="7d1effd3-a6c2-f142-173b-6f70774ce743">
+      <Execution id="0d1a312f-a6ba-4b23-9f1b-c3381a606c63" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="LoadFromSaveData_RestoresPlayTime" />
+    </UnitTest>
+    <UnitTest name="GetActionSoundId_ReturnsEmptyStringByDefault" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="7fc57561-0ddd-952e-1bf7-032a720c934d">
+      <Execution id="f298e529-bfb6-4436-9473-047a8cfe20e3" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="GetActionSoundId_ReturnsEmptyStringByDefault" />
+    </UnitTest>
+    <UnitTest name="TakeDamage_RoundingWhenDefending_RoundsUp" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="71f9005b-b0dc-2c58-f719-8afd17f8ee00">
+      <Execution id="a34cdc92-7bc5-4778-ba23-5bd8281db26b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="TakeDamage_RoundingWhenDefending_RoundsUp" />
+    </UnitTest>
+    <UnitTest name="TakeDamage_CannotGoBelowZero" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="436dcab7-461b-4e45-5734-9d0affd2113c">
+      <Execution id="462f71f2-1afe-4c98-8782-d2b2bcb2e763" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="TakeDamage_CannotGoBelowZero" />
+    </UnitTest>
+    <UnitTest name="GetEligiblePerks_ShouldFilterAlreadyUnlocked" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3d52ba6d-cd0e-97ba-be88-ef1bdb23db9d">
+      <Execution id="aa163b66-1f82-4e80-b0c1-286f974abb0f" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="GetEligiblePerks_ShouldFilterAlreadyUnlocked" />
+    </UnitTest>
+    <UnitTest name="AccumulatePlaytime_WithNullPlayTime_InitializesToZero" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="750ae2cc-4b42-7978-20ce-f4d71778b1ef">
+      <Execution id="f375973c-ef2f-4cce-a42f-194aef56c732" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="AccumulatePlaytime_WithNullPlayTime_InitializesToZero" />
+    </UnitTest>
+    <UnitTest name="Battle_Initialization_PlayerGoesFirst" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="0808429d-736d-eba3-681a-cea18c10201d">
+      <Execution id="5e5603bb-d99a-451d-b414-5ca6e64f1795" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_Initialization_PlayerGoesFirst" />
+    </UnitTest>
+    <UnitTest name="GetEligiblePerks_ShouldFilterByPrerequisites" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="6a32665a-4f63-32a5-8270-a74ca6eaaefb">
+      <Execution id="81c2292c-9421-4edd-9f87-533a20fe5237" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="GetEligiblePerks_ShouldFilterByPrerequisites" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Target_IsCorrectlySet" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="db8962a2-cd5c-8853-3712-5fa5651f2f22">
+      <Execution id="b877f301-634b-4b0f-a981-37af4b4ff9a5" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Target_IsCorrectlySet" />
+    </UnitTest>
+    <UnitTest name="RemoveItem_DecreasesQuantity" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="c02cfd83-38b0-582e-e426-3a33599d7aef">
+      <Execution id="df74132a-198f-4163-ac5f-a3c0e79a1693" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="RemoveItem_DecreasesQuantity" />
+    </UnitTest>
+    <UnitTest name="UpdateCapacity_BaseValues_WithNoPerks" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="6721ca22-b0b9-4cf8-1ab9-28df1cf2c83a">
+      <Execution id="8aa3a391-88fa-4f20-88de-1c7d3e7d724b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="UpdateCapacity_BaseValues_WithNoPerks" />
+    </UnitTest>
+    <UnitTest name="Constructor_ShouldThrow_IfItemNotFound" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3b46d970-cb65-f280-4f4f-99f1fcc1867b">
+      <Execution id="e3732308-14c4-430b-821b-4615d39c88b9" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.Unit.ItemActionTests" name="Constructor_ShouldThrow_IfItemNotFound" />
+    </UnitTest>
+    <UnitTest name="Generate_LowHealth_BoostsHealWeight" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ca50111e-ae3d-c47c-7642-62cb0952ecc9">
+      <Execution id="58251742-1092-4f47-8605-942d910226da" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpFactoryTests" name="Generate_LowHealth_BoostsHealWeight" />
+    </UnitTest>
+    <UnitTest name="Select_ShouldRespectPrerequisites" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="87c0395f-e73b-310e-5399-de5036c07234">
+      <Execution id="efd03b02-1481-41d2-bc72-94bdfb1f92b8" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.PerkSelectorTests" name="Select_ShouldRespectPrerequisites" />
+    </UnitTest>
+    <UnitTest name="LootModifier_FlatBonus_ReturnsBaseValue" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="46943e0b-65b9-317b-a173-8c3ddb09f305">
+      <Execution id="500c9d24-c0bc-4265-83a0-c7baff575341" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="LootModifier_FlatBonus_ReturnsBaseValue" />
+    </UnitTest>
+    <UnitTest name="Battle_HandleActionComplete_ReturnsChangeTurnsAction" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="19b675d6-8c38-c6fb-9ef6-c3c568c2a52d">
+      <Execution id="799ac844-5238-4b0e-bb62-7398a54714ac" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_HandleActionComplete_ReturnsChangeTurnsAction" />
+    </UnitTest>
+    <UnitTest name="GetActionSoundId_ReturnsConfiguredSoundIds" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="9b9bc092-3274-fb6c-2aae-9689c6c5620d">
+      <Execution id="1cc5f67c-6d55-49c5-b765-ad88ec9ffd53" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="GetActionSoundId_ReturnsConfiguredSoundIds" />
+    </UnitTest>
+    <UnitTest name="Player_Initialization_SetsStatsCorrectly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="52037813-3836-4cb2-ee29-a16cfc6b3021">
+      <Execution id="5bb4d8e5-8b65-4fcc-81ab-95fb879aa50b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="Player_Initialization_SetsStatsCorrectly" />
+    </UnitTest>
+    <UnitTest name="Generate_AllMaxRank_ReturnsCoinFallback" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="2b4f38b7-0f90-a903-1501-208bfa2f1400">
+      <Execution id="64a580c7-4d6c-44ff-8e3a-164a7465bdaf" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpFactoryTests" name="Generate_AllMaxRank_ReturnsCoinFallback" />
+    </UnitTest>
+    <UnitTest name="SpendGold_ReducesGold" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="5facf8e2-7e55-537b-2e63-f182aad0d69f">
+      <Execution id="d48febe8-1900-40bb-a8bb-dc0377252423" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="SpendGold_ReducesGold" />
+    </UnitTest>
+    <UnitTest name="HasItem_ReturnsFalse_WhenItemNotPresent" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="5fe7480c-9c6b-d90e-ceeb-daaa10a86040">
+      <Execution id="bd69ee00-4084-4bd5-9775-3d0ba247ffa5" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="HasItem_ReturnsFalse_WhenItemNotPresent" />
+    </UnitTest>
+    <UnitTest name="Battle_ChangeTurns_SwitchesActor" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="f262c033-da0a-6112-cdc6-04c3f4ae176f">
+      <Execution id="f51261eb-b255-4f2f-8309-afcd406580c2" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_ChangeTurns_SwitchesActor" />
+    </UnitTest>
+    <UnitTest name="Entity_InitializesWithDefenseAttribute" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="d2bad1b2-9fdd-0cab-df1c-081aa28cc05a">
+      <Execution id="f7be28a3-cf3e-411d-9568-ba5fd50bec29" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.AttributesTests" name="Entity_InitializesWithDefenseAttribute" />
+    </UnitTest>
+    <UnitTest name="AccumulatePlaytime_MultipleSessions_AccumulatesCorrectly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="00a78271-4fc8-26db-37e5-b4dfb36befd1">
+      <Execution id="26a62898-df5c-4460-9fac-aeff15f1d293" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="AccumulatePlaytime_MultipleSessions_AccumulatesCorrectly" />
+    </UnitTest>
+    <UnitTest name="AddItem_ReturnsFalse_WhenAllSlotsFull" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="a44606e8-87ef-1105-c453-fdc255c023e0">
+      <Execution id="f18b2444-4f6c-4aa9-8460-1fecda13e576" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="AddItem_ReturnsFalse_WhenAllSlotsFull" />
+    </UnitTest>
+    <UnitTest name="UpdateCapacity_HigherTierOverridesLower" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="96108a37-5d9c-2bde-f17c-2586286b0ab4">
+      <Execution id="40991ccb-515a-466d-bc45-91734a3ebb5b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="UpdateCapacity_HigherTierOverridesLower" />
+    </UnitTest>
+    <UnitTest name="HasRoom_ReturnsTrue_WhenSlotCanStack" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="f15565f9-fa10-980d-54cc-f732bad8277f">
+      <Execution id="4ac7c204-1f6f-427d-ac5a-69edc150dfbb" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="HasRoom_ReturnsTrue_WhenSlotCanStack" />
+    </UnitTest>
+    <UnitTest name="DetermineAction_ReturnsAttackOrSpecialAttack" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="c3f8fef2-2107-4533-0ae7-a5757a6d1943">
+      <Execution id="7bdcc447-3082-4359-8b6c-38ac3ad95ed0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="DetermineAction_ReturnsAttackOrSpecialAttack" />
+    </UnitTest>
+    <UnitTest name="CreateNewGame_InitializesPlayTimeToZero" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="01644d33-48e7-0186-4d82-d144eb5e152a">
+      <Execution id="fd2a7b8c-5f3b-4da3-be7a-2987c37f019c" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="CreateNewGame_InitializesPlayTimeToZero" />
+    </UnitTest>
+    <UnitTest name="GetActionSoundId_ReturnsEmptyForUnknownAction" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="dd3474e0-e8cc-ed02-5e3a-338c53868a26">
+      <Execution id="606edd75-5f8b-4e33-9213-c961f68af6e3" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="GetActionSoundId_ReturnsEmptyForUnknownAction" />
+    </UnitTest>
+    <UnitTest name="GetItemCount_ReturnsZero_WhenItemNotPresent" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="86d1e921-75f5-d05a-3b77-c355cb6723ae">
+      <Execution id="1e4189f4-3a79-47bf-a27d-a0f5e56a4281" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="GetItemCount_ReturnsZero_WhenItemNotPresent" />
+    </UnitTest>
+    <UnitTest name="Select_ShouldExcludeBelowMinLevel" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="672b30d7-7154-5928-a9d9-4d706123bc94">
+      <Execution id="a0040220-f7ec-41db-8f39-ed171354bdb3" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.PerkSelectorTests" name="Select_ShouldExcludeBelowMinLevel" />
+    </UnitTest>
+    <UnitTest name="GetItemCount_ReturnsCorrectQuantity" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8dbc05a2-8980-dea0-8ce9-06a1e311ef8e">
+      <Execution id="4ef121a2-b6d9-4fa9-901d-1de02f1162ac" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="GetItemCount_ReturnsCorrectQuantity" />
+    </UnitTest>
+    <UnitTest name="ComputeValue_Level1_CommonRankI_ReturnsBaseValue" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="b795b020-9268-9421-10b2-9c44f7365bdf">
+      <Execution id="45b7fedf-0a0e-4755-905e-5b2444cf7b02" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpScalingTests" name="ComputeValue_Level1_CommonRankI_ReturnsBaseValue" />
+    </UnitTest>
+    <UnitTest name="HasItem_ReturnsTrue_WhenItemPresent" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="4b7e72fa-a480-f8cc-bc7e-1aecd58a57bc">
+      <Execution id="d7448318-77ac-47e8-bbea-7c65020410ee" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="HasItem_ReturnsTrue_WhenItemPresent" />
+    </UnitTest>
+    <UnitTest name="UtilityHeal_Apply_RestoresPercentHealth" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="b12e23f8-4cdc-905f-e84b-282aa54890cc">
+      <Execution id="457b9c63-4056-4225-8e25-4b4fe431ab81" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="UtilityHeal_Apply_RestoresPercentHealth" />
+    </UnitTest>
+    <UnitTest name="AddItem_StacksOntoExistingSlot_BeforeOpeningNewSlot" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="85f4ec50-c25a-bc2c-6f5b-de6bbff1de77">
+      <Execution id="8e32c29f-1870-4d32-9c0d-980d9b550685" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="AddItem_StacksOntoExistingSlot_BeforeOpeningNewSlot" />
+    </UnitTest>
+    <UnitTest name="LoseAction_ApplyEffect_ExecutesWithoutError" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e56d604a-dc43-3cc4-4aa3-01c4d66c7441">
+      <Execution id="c9c37d75-0057-4618-89c9-40d3a2687a4a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.LoseActionTests" name="LoseAction_ApplyEffect_ExecutesWithoutError" />
+    </UnitTest>
+    <UnitTest name="ComputeValue_RarityAndRank_Multiply" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="04e1da1b-bffc-d771-99c9-822afdaec267">
+      <Execution id="a633a0ae-06fa-42be-a3e9-6402db3793f3" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpScalingTests" name="ComputeValue_RarityAndRank_Multiply" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Damage_UsesStrength" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="07c5bd17-f1ab-5bc7-1277-87092fc55518">
+      <Execution id="afee1235-b80c-4ee3-bb45-f4a264596d86" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Damage_UsesStrength" />
+    </UnitTest>
+    <UnitTest name="CreateNewGame_SetsCorrectSlotAndDates" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="9b2eaac3-8b3d-e55d-12ce-db16ec8dcf41">
+      <Execution id="5b6f0061-6821-43c2-8d3f-ae8c6213f4d5" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="CreateNewGame_SetsCorrectSlotAndDates" />
+    </UnitTest>
+    <UnitTest name="DialogueOption_Train_Factory_CreatesCorrectOption" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e3e7f60b-177a-b31e-283b-ca77c0aa35a1">
+      <Execution id="5912c26b-e23b-4f46-ba34-483636f2872d" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueOption_Train_Factory_CreatesCorrectOption" />
+    </UnitTest>
+    <UnitTest name="GetClassTemplate_ReturnsCorrectPlayer" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="94ef0350-bd4c-ab9e-5d04-bfb2ccc7134b">
+      <Execution id="f7bcb596-c232-42b9-9419-db7df1ac7918" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameWorldTests" name="GetClassTemplate_ReturnsCorrectPlayer" />
+    </UnitTest>
+    <UnitTest name="Battle_ChangeTurns_ResetsDefendingState" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1ec8340c-5b62-e439-eafb-c05462f7daf0">
+      <Execution id="9fd4577f-8901-44e8-86ed-586cd860b3d9" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_ChangeTurns_ResetsDefendingState" />
+    </UnitTest>
+    <UnitTest name="AddItem_ReturnsFalse_WhenStackLimitReached" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="9fe26c8b-d2f7-16fb-ea71-1f0fe174c9ee">
+      <Execution id="7a341bef-9f1b-4d5b-83f0-3a36aa82d404" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="AddItem_ReturnsFalse_WhenStackLimitReached" />
+    </UnitTest>
+    <UnitTest name="Battle_IsOver_WhenPlayerDies" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="88c812f2-60bc-4824-4811-18e8685b65d6">
+      <Execution id="6df1f57c-1130-4f6e-aa44-2940b47b987a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_IsOver_WhenPlayerDies" />
+    </UnitTest>
+    <UnitTest name="SaveLoadRoundtrip_PreservesInventory" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8ecacf1c-8950-f1be-f1b3-828fe517a916">
+      <Execution id="79b5a09e-5936-46bf-bdce-329d0d8ecaa8" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="SaveLoadRoundtrip_PreservesInventory" />
+    </UnitTest>
+    <UnitTest name="TakeDamage_ReducesDamageWhenDefending" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1b6f1483-fbb8-ec4e-4f4b-bb945d965018">
+      <Execution id="ee222d7f-c33c-40fa-8078-366ef98b48aa" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="TakeDamage_ReducesDamageWhenDefending" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Type_IsSpecialAttack" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e6c6d025-5b7b-79ba-d9fb-a0ddd6083919">
+      <Execution id="cc49a252-a828-4a95-b050-750e3254d125" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Type_IsSpecialAttack" />
+    </UnitTest>
+    <UnitTest name="CreateNewGame_GivesPlayerStartingHealthPotion" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8510466c-868d-eb69-e0e4-5b3fa163f491">
+      <Execution id="f15320a2-6963-412b-94a2-7fd626be7de8" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="CreateNewGame_GivesPlayerStartingHealthPotion" />
+    </UnitTest>
+    <UnitTest name="Load_ShouldLoadMonstersFromFile" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="dd3ff07d-954b-df53-6f01-0336bc88278b">
+      <Execution id="875fa11f-09b3-4e0d-99db-ba02c3410964" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameWorldTests" name="Load_ShouldLoadMonstersFromFile" />
+    </UnitTest>
+    <UnitTest name="FindMostRecentSave_WithNullElements_IgnoresThem" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="664589b3-c194-8c34-82ec-c8436f1b3f79">
+      <Execution id="ee01f7f4-c93a-494c-aa15-445ba8049f89" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="FindMostRecentSave_WithNullElements_IgnoresThem" />
+    </UnitTest>
+    <UnitTest name="GainGold_IncreasesGold" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="00036e7e-14f8-66d8-f0b0-d2080ae70d82">
+      <Execution id="7371be4d-618a-415a-b82e-12e074ed9af0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="GainGold_IncreasesGold" />
+    </UnitTest>
+    <UnitTest name="InventorySlot_CanStack_ReturnsFalse_ForDifferentItem" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="51b01569-7daa-6221-74a2-82a92ef791e6">
+      <Execution id="07918312-1be0-4f03-8495-80960baa82d1" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="InventorySlot_CanStack_ReturnsFalse_ForDifferentItem" />
+    </UnitTest>
+    <UnitTest name="OnDeath_InvokedWhenHealthReachesZero" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="037b82c0-3327-bce4-08bb-70c02a69c412">
+      <Execution id="882b6497-586f-4b66-bbc0-770c26fb0760" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="OnDeath_InvokedWhenHealthReachesZero" />
+    </UnitTest>
+    <UnitTest name="RemoveItem_ReturnsFalse_WhenItemNotPresent" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="90a0c7c6-e2a0-8e8f-2ba3-21025e1a64cb">
+      <Execution id="4a4f8587-c2b8-40a8-b3a1-1bd9360a848d" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="RemoveItem_ReturnsFalse_WhenItemNotPresent" />
+    </UnitTest>
+    <UnitTest name="Generate_ReturnsThreeDistinctPowerUps" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="58570cbf-b990-a08e-61a9-69ee0424eade">
+      <Execution id="e4ae888d-f50d-4715-b73b-871d24653eb2" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpFactoryTests" name="Generate_ReturnsThreeDistinctPowerUps" />
+    </UnitTest>
+    <UnitTest name="HasRoom_ReturnsFalse_WhenAllSlotsFullAndAtMaxStack" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ff2bbe5a-76ba-1a50-9806-26b7c1cc0659">
+      <Execution id="e190e06b-b1ba-47c8-9d33-59d0acd61749" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="HasRoom_ReturnsFalse_WhenAllSlotsFullAndAtMaxStack" />
+    </UnitTest>
+    <UnitTest name="GetHitSoundId_ReturnsEmptyStringByDefault" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="5606f69a-fa68-c635-1acc-3bf2f229187e">
+      <Execution id="a7c552d0-db07-41b6-8ab1-84e82cd79aa2" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="GetHitSoundId_ReturnsEmptyStringByDefault" />
+    </UnitTest>
+    <UnitTest name="DefeatSoundId_CanBeSetAndRetrieved" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="13b9ad0a-7429-629f-58b4-c7e1fea8ba44">
+      <Execution id="0a5fed47-212f-4b33-b631-8eefa7a40777" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="DefeatSoundId_CanBeSetAndRetrieved" />
+    </UnitTest>
+    <UnitTest name="DialogueOption_Leave_Factory_CreatesCorrectOption" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="a1eef36c-592a-8272-1bbe-effb66fbad10">
+      <Execution id="7b33487c-febc-40ac-bd04-1933e5e06157" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueOption_Leave_Factory_CreatesCorrectOption" />
+    </UnitTest>
+    <UnitTest name="SelectPerk_ShouldUnlockPerk_IfPending" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="efe9919f-ac8c-b547-6314-a0f1fe67768b">
+      <Execution id="d6e18c0a-699e-4828-92f5-ca4bed4a4b9d" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="SelectPerk_ShouldUnlockPerk_IfPending" />
+    </UnitTest>
+    <UnitTest name="WinAction_ApplyEffect_ExecutesWithoutError" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="cec32c2c-a219-bb10-7dc5-6ea1f96b13ab">
+      <Execution id="1b0ba175-4aaa-443d-9668-2b33ae5dad43" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.WinActionTests" name="WinAction_ApplyEffect_ExecutesWithoutError" />
+    </UnitTest>
+    <UnitTest name="InventorySlot_CanStack_ReturnsTrue_ForMatchingItem" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e1416f0e-3d0c-bb41-c4b0-03ee740082e1">
+      <Execution id="3ad69597-bc3c-4ae9-bb35-fc579a687efb" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="InventorySlot_CanStack_ReturnsTrue_ForMatchingItem" />
+    </UnitTest>
+    <UnitTest name="MonsterDebuff_Apply_ReducesMonsterStat_ClampedAtOne" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="05f365f9-d2b4-a069-7b23-b30f4b949a9e">
+      <Execution id="a8d59bb3-352b-494b-8592-f7e42279a086" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="MonsterDebuff_Apply_ReducesMonsterStat_ClampedAtOne" />
+    </UnitTest>
+    <UnitTest name="GetSaveData_ReturnsCorrectData" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="eb8d5d8f-070b-ce9d-8d4d-bc90854aa5e9">
+      <Execution id="cf4ea6b4-28c3-45cc-b952-45a81ebee19a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="GetSaveData_ReturnsCorrectData" />
+    </UnitTest>
+    <UnitTest name="ResetAllMonsters_ShouldRestoreHealthToMax" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="7569b01d-9e6f-7550-a3a6-df53fa9d9c00">
+      <Execution id="3efcc31a-f429-465f-97b6-445cea1fb6c2" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameWorldTests" name="ResetAllMonsters_ShouldRestoreHealthToMax" />
+    </UnitTest>
+    <UnitTest name="AccumulatePlaytime_WithZeroDuration_DoesNotChangePlayTime" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="2d6156c4-386e-3414-4cc3-c823cfad0a0e">
+      <Execution id="1d5e53a0-e55b-4c82-ae17-fd6c72bd81f6" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="AccumulatePlaytime_WithZeroDuration_DoesNotChangePlayTime" />
+    </UnitTest>
+    <UnitTest name="GetActionSoundId_ReturnsSpecialAttackSound" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="0eeab6c2-de1d-f324-e270-11ef4e41c493">
+      <Execution id="85734d34-f509-429e-90d3-e20c91f1c2e4" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="GetActionSoundId_ReturnsSpecialAttackSound" />
+    </UnitTest>
+    <UnitTest name="GetXpToReachLevel_ShouldMatchLogic" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ca19414c-30c5-e885-e9ae-d76d5825c14e">
+      <Execution id="03585d9a-ba3b-4b62-a1f9-ae11bdc65660" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.ProgressionSimulatorTests" name="GetXpToReachLevel_ShouldMatchLogic" />
+    </UnitTest>
+    <UnitTest name="Monster_SpriteIds_ReturnCorrectFormattedStrings" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8853993b-ef62-d357-ff8e-470beb084ef5">
+      <Execution id="f247931a-0232-416e-837c-69dbdbefaa69" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="Monster_SpriteIds_ReturnCorrectFormattedStrings" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Damage_MinimumIsOne" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="448dd452-c229-ed6d-8585-3d393e9e357d">
+      <Execution id="f3cf31f9-45d1-4cec-be2f-c751c2242b5e" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Damage_MinimumIsOne" />
+    </UnitTest>
+    <UnitTest name="ComputeValue_HigherArenaLevel_GrowsSubLinearly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="afaa487b-a1e2-f80d-8887-310abdb54bc5">
+      <Execution id="36a4f02f-f0d2-4d22-9d23-1c72733b927d" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpScalingTests" name="ComputeValue_HigherArenaLevel_GrowsSubLinearly" />
+    </UnitTest>
+    <UnitTest name="GetMonsterByName_ReturnsNullForUnknownName" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="044189e2-b214-ff9f-1d5c-a13f9fdbfe2d">
+      <Execution id="1df3803f-9651-4eaf-9a3a-6f11e6972880" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameWorldTests" name="GetMonsterByName_ReturnsNullForUnknownName" />
+    </UnitTest>
+    <UnitTest name="TryPurchaseItem_Fails_WithInsufficientGold" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="10246a54-5024-c01c-e654-b3364237a9f7">
+      <Execution id="de0b85be-5bdf-4884-bfae-05e7b025b579" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="TryPurchaseItem_Fails_WithInsufficientGold" />
+    </UnitTest>
+    <UnitTest name="Heal_IncreasesHealth" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="47c33613-2e9b-d515-dab8-b7bc62f121e5">
+      <Execution id="bdcdedf2-d62b-4267-a433-58d3459355c3" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="Heal_IncreasesHealth" />
+    </UnitTest>
+    <UnitTest name="LoseAction_Properties_CorrectlySet" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="9261c8e4-38e3-bc79-2fd5-2fc06d0d0a89">
+      <Execution id="db2c3b9d-4389-4b4a-856e-51f238ebd9e4" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.LoseActionTests" name="LoseAction_Properties_CorrectlySet" />
+    </UnitTest>
+    <UnitTest name="TryPurchaseItem_Fails_WhenInventoryFull" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e8624b22-1fe4-bc25-5b06-6900934f8b1b">
+      <Execution id="84639873-ae5a-4cc0-82fd-4001418c7dc9" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="TryPurchaseItem_Fails_WhenInventoryFull" />
+    </UnitTest>
+    <UnitTest name="Generate_ExistingPowerUp_RanksUp" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="980a7fbb-e48f-7f3d-8367-a61c3b45cd6d">
+      <Execution id="92feb50e-a164-48bb-9c69-9bccdd366452" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpFactoryTests" name="Generate_ExistingPowerUp_RanksUp" />
+    </UnitTest>
+    <UnitTest name="PlayTime_RoundTrip_PreservesValue" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="242030ff-5567-ee3d-6857-d9fb88fa050b">
+      <Execution id="415cbafa-95a1-4a9c-ba8e-ae48c9e1f68a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="PlayTime_RoundTrip_PreservesValue" />
+    </UnitTest>
+    <UnitTest name="Item_TargetEnum_SupportsEnemyTarget" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="dc0636ac-75f1-dd33-3ace-1ed3866453b4">
+      <Execution id="30deb7f8-464e-40ff-b835-62bedbea7c3a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.ItemTests" name="Item_TargetEnum_SupportsEnemyTarget" />
+    </UnitTest>
+    <UnitTest name="AddItem_SupportsMultipleItemTypes_WithExpandedCapacity" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3d4957b1-c7d3-2f30-829a-daea31880fed">
+      <Execution id="20215edb-709a-415b-8245-0966055f8b16" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="AddItem_SupportsMultipleItemTypes_WithExpandedCapacity" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_ApplyEffect_DealsDamageToTarget" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8ab8ce52-1d32-4c6b-d440-492bc5b15136">
+      <Execution id="406d244c-e489-41bc-9597-eaa185a83a00" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_ApplyEffect_DealsDamageToTarget" />
+    </UnitTest>
+    <UnitTest name="UpdateCapacity_Tier2_Expands" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="02f892b7-2bcc-3130-0945-e4b2ffb55acd">
+      <Execution id="09c0786a-296b-4a34-bfe1-d6ec148176ba" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="UpdateCapacity_Tier2_Expands" />
+    </UnitTest>
+    <UnitTest name="WinAction_Properties_CorrectlySet" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8a4a2dea-fb8c-f213-8a87-01fefad81e97">
+      <Execution id="266a4a5e-009e-412d-864f-78101eb98369" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.WinActionTests" name="WinAction_Properties_CorrectlySet" />
+    </UnitTest>
+    <UnitTest name="DialogueOption_Prepare_Factory_CreatesCorrectOption" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="34cf3235-59fc-bd62-0a66-ed102c78a652">
+      <Execution id="5c49795d-9a17-42d9-8566-c4c96c5dad8b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueOption_Prepare_Factory_CreatesCorrectOption" />
+    </UnitTest>
+    <UnitTest name="GetHitSoundId_ReturnsConfiguredHitSound" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ba9fb217-9d96-691f-2a08-b28d9ffddcc2">
+      <Execution id="84069b43-680e-456d-91cc-70f481e7e92c" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="GetHitSoundId_ReturnsConfiguredHitSound" />
+    </UnitTest>
+    <UnitTest name="HasRoom_ReturnsTrue_WhenEmptySlotAvailable" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="79fb5913-b02e-f7df-82eb-1b49768f4b28">
+      <Execution id="26775dcf-d5fd-4518-a6fa-3b112b3cbd00" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="HasRoom_ReturnsTrue_WhenEmptySlotAvailable" />
+    </UnitTest>
+    <UnitTest name="Battle_HandleActionComplete_ReturnsWinAction_WhenMonsterDies" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e45293dd-bcb2-e0d8-6bfc-d941594ee0cb">
+      <Execution id="0c4a0872-1bb5-465c-bdde-d347f419c29a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_HandleActionComplete_ReturnsWinAction_WhenMonsterDies" />
+    </UnitTest>
+    <UnitTest name="SpecialAttackAction_Constructor_ThrowsOnNullActor" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="804fbda1-3112-1f9b-0ada-acab74480814">
+      <Execution id="c57406b3-b11c-45d9-9955-f33a8f69ac41" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.SpecialAttackActionTests" name="SpecialAttackAction_Constructor_ThrowsOnNullActor" />
+    </UnitTest>
+    <UnitTest name="Player_Inventory_PersistsItemsCorrectly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1a1cb1b7-823d-542a-8965-96114bae828e">
+      <Execution id="5ecf38e3-534a-4060-ab91-21ffa8ed68d4" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="Player_Inventory_PersistsItemsCorrectly" />
+    </UnitTest>
+    <UnitTest name="GainExperience_IncreasesExperience" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3d3a8076-fcaf-92e2-886f-922f4742e497">
+      <Execution id="210e7b56-6f45-458c-a9e0-2815399fb42c" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="GainExperience_IncreasesExperience" />
+    </UnitTest>
+    <UnitTest name="SpendGold_Throws_WhenInsufficientGold" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="41a7d1d8-691c-6af8-41ed-78ad6df552fa">
+      <Execution id="575310cd-7958-45ac-b654-d896f9e5d7ba" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="SpendGold_Throws_WhenInsufficientGold" />
+    </UnitTest>
+    <UnitTest name="UpdateCapacity_Tier1_Expands" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="99e2c6bd-fa1d-883d-5122-4d29f7c0f945">
+      <Execution id="34dff987-12f1-45f9-aeea-b7ecca02ef9b" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="UpdateCapacity_Tier1_Expands" />
+    </UnitTest>
+    <UnitTest name="UpdateCapacity_DoesNotLoseExistingItems" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="bcf1bfbe-2a98-e398-398d-c5f0393cda18">
+      <Execution id="7ab81d12-8ee8-44c3-8689-5ecfa79fb513" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="UpdateCapacity_DoesNotLoseExistingItems" />
+    </UnitTest>
+    <UnitTest name="AddItem_PartialAdd_WhenSomeUnitsFit" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="4c959f4c-c3fc-032b-57d1-77831b27c688">
+      <Execution id="9820fb8d-28a0-4d55-9fff-322ed07299f6" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="AddItem_PartialAdd_WhenSomeUnitsFit" />
+    </UnitTest>
+    <UnitTest name="GetActionSoundId_ReturnsEmptyForYield" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ef7789f1-9bd7-f105-f83c-dd6b19746ea5">
+      <Execution id="9fa46da3-49e1-4e24-9d7b-bda3105b3670" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.MonsterTests" name="GetActionSoundId_ReturnsEmptyForYield" />
+    </UnitTest>
+    <UnitTest name="FindMostRecentSave_ReturnsLatestSave" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3d8c44e1-3ecb-6c1e-e2d8-b7675c87df52">
+      <Execution id="42c476c6-b0e5-4039-bc5d-9182acc90ba6" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="FindMostRecentSave_ReturnsLatestSave" />
+    </UnitTest>
+    <UnitTest name="Select_ShouldRespectCountLimit" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="bc002b8f-c140-f11b-2a29-b80ce7cc52c2">
+      <Execution id="1f2a7283-09ce-49ec-8c1d-9728c783473a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.PerkSelectorTests" name="Select_ShouldRespectCountLimit" />
+    </UnitTest>
+    <UnitTest name="ApplyEffect_ShouldHealPlayer_WhenUsingHealthPotion" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8c69fcec-4e3e-1ff4-c2ef-336d40310ecb">
+      <Execution id="d5568940-9bb1-4db7-bfb1-e6511fde2067" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.Unit.ItemActionTests" name="ApplyEffect_ShouldHealPlayer_WhenUsingHealthPotion" />
+    </UnitTest>
+    <UnitTest name="IncrementAttribute_ShouldDecreaseAvailablePoints_AndIncreaseAttribute" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="b3deacfd-8d29-a79b-8c63-dae8e7a3beef">
+      <Execution id="06f51cfd-53b4-43f0-a770-9ca157caf3f9" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="IncrementAttribute_ShouldDecreaseAvailablePoints_AndIncreaseAttribute" />
+    </UnitTest>
+    <UnitTest name="AttributeModifier_Apply_IncreasesPlayerStat" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="198152a9-e5ec-1955-62ae-1aef8fcc102d">
+      <Execution id="de0d21f4-39cd-4a04-b0dc-8a4e4a711715" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="AttributeModifier_Apply_IncreasesPlayerStat" />
+    </UnitTest>
+    <UnitTest name="TryPurchaseItem_AddsItemToInventory" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e47eeef2-0eac-7019-5dea-3ed2e7d6a4c9">
+      <Execution id="61af3fe2-4cfd-47e7-aa25-830063b00c54" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="TryPurchaseItem_AddsItemToInventory" />
+    </UnitTest>
+    <UnitTest name="DialogueOption_DefaultStruct_HasNoneAction" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="490e5be8-43be-f948-f7d6-31def9c5ddbc">
+      <Execution id="68d97443-e6fa-4664-b4ec-7113589b234e" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueOption_DefaultStruct_HasNoneAction" />
+    </UnitTest>
+    <UnitTest name="IsValid_ShouldReturnTrue_WhenRequirementsAreMonotonic" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="a660a2a4-a1a6-5fe5-435b-48b9ba252f3b">
+      <Execution id="f3c88c23-18df-4314-b35f-57fba4f627e8" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.ProgressionTests" name="IsValid_ShouldReturnTrue_WhenRequirementsAreMonotonic" />
+    </UnitTest>
+    <UnitTest name="Select_ShouldExcludeAlreadyUnlocked" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="058abee9-48dc-f7af-1686-c1900e712dbd">
+      <Execution id="5da5823a-c288-4a96-a5b1-e0c53076c9c8" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.PerkSelectorTests" name="Select_ShouldExcludeAlreadyUnlocked" />
+    </UnitTest>
+    <UnitTest name="Monster_InitializesWithDefenseAttribute" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="2667226b-f31f-3838-f430-c3ea0583fab1">
+      <Execution id="5d0649ff-5503-4229-af80-ab89a922b3f1" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.AttributesTests" name="Monster_InitializesWithDefenseAttribute" />
+    </UnitTest>
+    <UnitTest name="AccumulatePlaytime_WithExistingPlayTime_AddsSessionDuration" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3d2795b3-024c-f640-d867-b527e4bb9a16">
+      <Execution id="d82583d9-2654-48d9-b780-392dadc6eb15" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="AccumulatePlaytime_WithExistingPlayTime_AddsSessionDuration" />
+    </UnitTest>
+    <UnitTest name="Player_InitializesWithDefenseAttribute" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ab314fe1-f5d9-fb29-05d1-33969afa6d68">
+      <Execution id="721be65a-9695-4a71-9812-02a3a965bdd0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.AttributesTests" name="Player_InitializesWithDefenseAttribute" />
+    </UnitTest>
+    <UnitTest name="RemoveItem_RemovesSlot_WhenQuantityReachesZero" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="4c2b2e7f-0c24-7405-4e48-3af56275379e">
+      <Execution id="79fcfcab-51aa-44b3-8bac-26ef923baaa4" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="RemoveItem_RemovesSlot_WhenQuantityReachesZero" />
+    </UnitTest>
+    <UnitTest name="PowerUp_IncrementRank_UpgradesRank" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="bf46b43f-09cf-142d-64d9-cdeba2b3adea">
+      <Execution id="8c4f81ba-a464-41b8-95b7-18b32810f92c" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpComponentTests" name="PowerUp_IncrementRank_UpgradesRank" />
+    </UnitTest>
+    <UnitTest name="DialogueOption_Shop_Factory_CreatesCorrectOption" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="946c08b6-d92f-a452-d904-78cf71903e95">
+      <Execution id="1bb2b7d0-b54f-46a0-9184-c9a6c6620fdb" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueOption_Shop_Factory_CreatesCorrectOption" />
+    </UnitTest>
+    <UnitTest name="IsValid_ShouldReturnFalse_WhenNextLevelXPisLowerThanCurrent" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="0fb00f98-3f9d-fd0a-85a7-c5c7c57b0a6b">
+      <Execution id="428b100b-842a-457c-b320-d42ebe47efc6" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.ProgressionTests" name="IsValid_ShouldReturnFalse_WhenNextLevelXPisLowerThanCurrent" />
+    </UnitTest>
+    <UnitTest name="DialogueOption_Constructor_SetsProperties" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1922bca6-e263-9af0-8771-43736fd50f46">
+      <Execution id="c0537ca2-ad55-42a1-9320-7b63cd0771cf" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueOption_Constructor_SetsProperties" />
+    </UnitTest>
+    <UnitTest name="Attributes_InitializesWithDefaultValues" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="d01ebab7-25d5-ef97-2195-81d2f7db9c74">
+      <Execution id="0b2efbf9-038b-4d78-b87e-ebbf11978ddb" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.AttributesTests" name="Attributes_InitializesWithDefaultValues" />
+    </UnitTest>
+    <UnitTest name="LoadFromSaveData_SetsCorrectValues" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="3219d486-6584-a295-6e23-4fe4f5c9fb1b">
+      <Execution id="651b6f42-d0a9-45cc-8561-5acab13a660d" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameStateTests" name="LoadFromSaveData_SetsCorrectValues" />
+    </UnitTest>
+    <UnitTest name="Initialization_ShouldSetCorrectValues" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1c89793e-100d-65e6-f43e-6437d6bf5755">
+      <Execution id="c2506d84-9ba4-49b9-93a9-b8b8898d612c" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="Initialization_ShouldSetCorrectValues" />
+    </UnitTest>
+    <UnitTest name="GetEligiblePerks_ShouldFilterByLevel" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1bd5c07f-6aa1-c6b5-6873-39d766403f05">
+      <Execution id="6e39ceba-b3b1-4da0-904d-b41cc515eb31" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="GetEligiblePerks_ShouldFilterByLevel" />
+    </UnitTest>
+    <UnitTest name="RollRarity_HighLuck_ShiftsDistribution" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="d042cc0e-cccf-6837-7a64-c0cbce3c0118">
+      <Execution id="fdd2e965-b224-47c3-bf23-ef07ef12b821" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpScalingTests" name="RollRarity_HighLuck_ShiftsDistribution" />
+    </UnitTest>
+    <UnitTest name="Generate_ShouldStartAtZero" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="ae9b5bec-2378-d64e-ce46-8186013c3266">
+      <Execution id="95ef5a15-5c01-4221-8113-addbf53956a0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.XpCurveGeneratorTests" name="Generate_ShouldStartAtZero" />
+    </UnitTest>
+    <UnitTest name="TakeDamage_ReducesHealth" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="bb579791-cb05-7468-24c1-28b2552fc97c">
+      <Execution id="87289e7f-cb2d-4f06-8213-670a60fc9d95" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.EntityTests" name="TakeDamage_ReducesHealth" />
+    </UnitTest>
+    <UnitTest name="ApplyEffect_ShouldRemoveItemFromInventory" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="2355f38c-7f2b-032e-9436-238a97a6c0b7">
+      <Execution id="32dcfa72-4df8-433f-9308-afcc17591afa" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.Unit.ItemActionTests" name="ApplyEffect_ShouldRemoveItemFromInventory" />
+    </UnitTest>
+    <UnitTest name="Player_SpriteIds_ReturnCorrectFormattedStrings" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="058138c9-31a9-6633-a871-bd26b990a216">
+      <Execution id="a73c1a00-5409-4a7f-9fe9-5757bfb34976" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlayerTests" name="Player_SpriteIds_ReturnCorrectFormattedStrings" />
+    </UnitTest>
+    <UnitTest name="InventorySlot_IsFull_ReturnsFalse_WhenBelowLimit" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8d981af1-15fb-435d-6868-e20718a18fd3">
+      <Execution id="ea7de0f0-d60d-4d79-840d-9c911fa8f407" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.InventoryTests" name="InventorySlot_IsFull_ReturnsFalse_WhenBelowLimit" />
+    </UnitTest>
+    <UnitTest name="GetMonsterByName_ReturnsCorrectMonster" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="791729b9-f970-eaf2-6a00-c268c03bc693">
+      <Execution id="6a759a30-b304-4844-8a4f-59d710bcebe1" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameWorldTests" name="GetMonsterByName_ReturnsCorrectMonster" />
+    </UnitTest>
+    <UnitTest name="DialogueAction_HasExpectedValues" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="1c4e6a12-ed3e-8f9b-08b6-48966518600c">
+      <Execution id="d4cae7f6-2890-459e-b11e-0a115c957cea" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.TownLocationTests" name="DialogueAction_HasExpectedValues" />
+    </UnitTest>
+    <UnitTest name="Attributes_CanSetAllAttributes" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="0452651a-b748-d9b1-e0bf-5b12ff9995ca">
+      <Execution id="4788418e-853c-4dbc-ad7c-1fe36570a30a" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.AttributesTests" name="Attributes_CanSetAllAttributes" />
+    </UnitTest>
+    <UnitTest name="ApplyEffect_ShouldUseCorrectActor" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="8de85d42-4507-9ad4-78a8-fe2412e3fc55">
+      <Execution id="71fefb18-f95e-471b-a4b8-fbf63dae207e" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.Unit.ItemActionTests" name="ApplyEffect_ShouldUseCorrectActor" />
+    </UnitTest>
+    <UnitTest name="Item_Initialization_SetsPropertiesCorrectly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e567233e-8c00-619f-28dc-910126bfb2a0">
+      <Execution id="9972ea32-3c88-48d4-86a8-dd85ec4a2f70" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.ItemTests" name="Item_Initialization_SetsPropertiesCorrectly" />
+    </UnitTest>
+    <UnitTest name="Load_ShouldLoadClassTemplatesFromFile" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="af71f0df-8217-04fd-68a5-9d84b57ad10e">
+      <Execution id="be4b8215-fa7a-4aff-8a7f-1bfcc5bbe608" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.GameWorldTests" name="Load_ShouldLoadClassTemplatesFromFile" />
+    </UnitTest>
+    <UnitTest name="GetSaveData_IncludesPlayTimeTicks" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="e13a4b73-0a50-307b-4285-aa743162b977">
+      <Execution id="9c121ba9-78b6-4ed0-b221-e82e9eefc216" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.PlaytimeTrackingTests" name="GetSaveData_IncludesPlayTimeTicks" />
+    </UnitTest>
+    <UnitTest name="SimulateRun_ShouldLevelUpCorrectly" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="963e39ff-eecd-ffa8-87c6-3ba9d748ba0e">
+      <Execution id="423c055e-da49-4594-bcd3-45d6b023bca0" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.ProgressionSimulatorTests" name="SimulateRun_ShouldLevelUpCorrectly" />
+    </UnitTest>
+    <UnitTest name="Generate_QuadraticCurve_ShouldAccumulateQuadratically" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="c249724c-d6bb-5f42-b999-7f69330785f3">
+      <Execution id="491cbf4e-0fa7-4001-8a6b-231cd19fc9f9" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.XpCurveGeneratorTests" name="Generate_QuadraticCurve_ShouldAccumulateQuadratically" />
+    </UnitTest>
+    <UnitTest name="IncrementDefenseAttribute_ShouldDecreaseAvailablePoints_AndIncreaseDefense" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="0d05136c-3f66-484f-9c53-ece08fd7f15d">
+      <Execution id="05b05cfa-1c6a-47b4-967b-31dec35da3ff" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.LevelUp.LevelUpModelTests" name="IncrementDefenseAttribute_ShouldDecreaseAvailablePoints_AndIncreaseDefense" />
+    </UnitTest>
+    <UnitTest name="Battle_IsOver_WhenMonsterDies" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="f2ab5a1e-af07-be52-cec2-40fcc608a68a">
+      <Execution id="5f333dda-34d9-4963-a708-e517d7b95c08" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Tests.BattleTests" name="Battle_IsOver_WhenMonsterDies" />
+    </UnitTest>
+    <UnitTest name="Generate_HighLuck_MoreRarePowerUps" storage="c:\users\david\pocketsquire-arena\tests\unit\bin\debug\net10.0\pocketsquire.arena.tests.dll" id="63762f8d-2b4b-daf7-079f-df3b865be921">
+      <Execution id="63f1770a-14d6-4413-a6dd-23206c5e0c06" />
+      <TestMethod codeBase="C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="PocketSquire.Arena.Core.Tests.PowerUps.PowerUpFactoryTests" name="Generate_HighLuck_MoreRarePowerUps" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="58570cbf-b990-a08e-61a9-69ee0424eade" executionId="e4ae888d-f50d-4715-b73b-871d24653eb2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c69fcec-4e3e-1ff4-c2ef-336d40310ecb" executionId="d5568940-9bb1-4db7-bfb1-e6511fde2067" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6a32665a-4f63-32a5-8270-a74ca6eaaefb" executionId="81c2292c-9421-4edd-9f87-533a20fe5237" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="34cf3235-59fc-bd62-0a66-ed102c78a652" executionId="5c49795d-9a17-42d9-8566-c4c96c5dad8b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0eeab6c2-de1d-f324-e270-11ef4e41c493" executionId="85734d34-f509-429e-90d3-e20c91f1c2e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="198152a9-e5ec-1955-62ae-1aef8fcc102d" executionId="de0d21f4-39cd-4a04-b0dc-8a4e4a711715" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="672b30d7-7154-5928-a9d9-4d706123bc94" executionId="a0040220-f7ec-41db-8f39-ed171354bdb3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4b7e72fa-a480-f8cc-bc7e-1aecd58a57bc" executionId="d7448318-77ac-47e8-bbea-7c65020410ee" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1922bca6-e263-9af0-8771-43736fd50f46" executionId="c0537ca2-ad55-42a1-9320-7b63cd0771cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="46943e0b-65b9-317b-a173-8c3ddb09f305" executionId="500c9d24-c0bc-4265-83a0-c7baff575341" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="94ef0350-bd4c-ab9e-5d04-bfb2ccc7134b" executionId="f7bcb596-c232-42b9-9419-db7df1ac7918" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8d981af1-15fb-435d-6868-e20718a18fd3" executionId="ea7de0f0-d60d-4d79-840d-9c911fa8f407" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e3e7f60b-177a-b31e-283b-ca77c0aa35a1" executionId="5912c26b-e23b-4f46-ba34-483636f2872d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="448dd452-c229-ed6d-8585-3d393e9e357d" executionId="f3cf31f9-45d1-4cec-be2f-c751c2242b5e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="00a78271-4fc8-26db-37e5-b4dfb36befd1" executionId="26a62898-df5c-4460-9fac-aeff15f1d293" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ca19414c-30c5-e885-e9ae-d76d5825c14e" executionId="03585d9a-ba3b-4b62-a1f9-ae11bdc65660" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9fe26c8b-d2f7-16fb-ea71-1f0fe174c9ee" executionId="7a341bef-9f1b-4d5b-83f0-3a36aa82d404" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0808429d-736d-eba3-681a-cea18c10201d" executionId="5e5603bb-d99a-451d-b414-5ca6e64f1795" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3b46d970-cb65-f280-4f4f-99f1fcc1867b" executionId="e3732308-14c4-430b-821b-4615d39c88b9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="91423e92-c74d-04ea-a976-58d974a27829" executionId="7750a330-c005-4104-bdac-f7c6fac10bd0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9261c8e4-38e3-bc79-2fd5-2fc06d0d0a89" executionId="db2c3b9d-4389-4b4a-856e-51f238ebd9e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="044189e2-b214-ff9f-1d5c-a13f9fdbfe2d" executionId="1df3803f-9651-4eaf-9a3a-6f11e6972880" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d2635712-b1be-d551-ee4b-b5f2c8c95327" executionId="fce84cb1-370e-4428-b967-498247feb142" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9b2eaac3-8b3d-e55d-12ce-db16ec8dcf41" executionId="5b6f0061-6821-43c2-8d3f-ae8c6213f4d5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f4761b4a-2396-1833-382a-0b4d95e85ca0" executionId="a5380f5c-a555-4760-b89d-e8110a666fa0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7f8b0778-3e3d-c24d-211d-796d181fad3a" executionId="4b6e4330-d1d9-4632-935f-b4a27dd04120" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="07c5bd17-f1ab-5bc7-1277-87092fc55518" executionId="afee1235-b80c-4ee3-bb45-f4a264596d86" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1eef36c-592a-8272-1bbe-effb66fbad10" executionId="7b33487c-febc-40ac-bd04-1933e5e06157" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e45293dd-bcb2-e0d8-6bfc-d941594ee0cb" executionId="0c4a0872-1bb5-465c-bdde-d347f419c29a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5606f69a-fa68-c635-1acc-3bf2f229187e" executionId="a7c552d0-db07-41b6-8ab1-84e82cd79aa2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cec32c2c-a219-bb10-7dc5-6ea1f96b13ab" executionId="1b0ba175-4aaa-443d-9668-2b33ae5dad43" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bcf1bfbe-2a98-e398-398d-c5f0393cda18" executionId="7ab81d12-8ee8-44c3-8689-5ecfa79fb513" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ae9b5bec-2378-d64e-ce46-8186013c3266" executionId="95ef5a15-5c01-4221-8113-addbf53956a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="750ae2cc-4b42-7978-20ce-f4d71778b1ef" executionId="f375973c-ef2f-4cce-a42f-194aef56c732" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ca50111e-ae3d-c47c-7642-62cb0952ecc9" executionId="58251742-1092-4f47-8605-942d910226da" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="058138c9-31a9-6633-a871-bd26b990a216" executionId="a73c1a00-5409-4a7f-9fe9-5757bfb34976" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bdac1ae3-ab04-24b5-c553-35d228dfa09b" executionId="2d82f495-865f-46c4-bb4c-c3203d9498cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e567233e-8c00-619f-28dc-910126bfb2a0" executionId="9972ea32-3c88-48d4-86a8-dd85ec4a2f70" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7569b01d-9e6f-7550-a3a6-df53fa9d9c00" executionId="3efcc31a-f429-465f-97b6-445cea1fb6c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b8978565-4315-ee08-76ec-520a117a4605" executionId="d0274b46-04aa-4e14-bd8b-2a369880bfe3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5b4df009-9256-a341-40bd-70b5ed5704d8" executionId="4b650e76-1f3c-4a82-a7bd-1f3e65cde18f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b3deacfd-8d29-a79b-8c63-dae8e7a3beef" executionId="06f51cfd-53b4-43f0-a770-9ca157caf3f9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d8c44e1-3ecb-6c1e-e2d8-b7675c87df52" executionId="42c476c6-b0e5-4039-bc5d-9182acc90ba6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d3a8076-fcaf-92e2-886f-922f4742e497" executionId="210e7b56-6f45-458c-a9e0-2815399fb42c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="13b9ad0a-7429-629f-58b4-c7e1fea8ba44" executionId="0a5fed47-212f-4b33-b631-8eefa7a40777" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="90a0c7c6-e2a0-8e8f-2ba3-21025e1a64cb" executionId="4a4f8587-c2b8-40a8-b3a1-1bd9360a848d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e47eeef2-0eac-7019-5dea-3ed2e7d6a4c9" executionId="61af3fe2-4cfd-47e7-aa25-830063b00c54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="791729b9-f970-eaf2-6a00-c268c03bc693" executionId="6a759a30-b304-4844-8a4f-59d710bcebe1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10246a54-5024-c01c-e654-b3364237a9f7" executionId="de0b85be-5bdf-4884-bfae-05e7b025b579" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="436dcab7-461b-4e45-5734-9d0affd2113c" executionId="462f71f2-1afe-4c98-8782-d2b2bcb2e763" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="51b01569-7daa-6221-74a2-82a92ef791e6" executionId="07918312-1be0-4f03-8495-80960baa82d1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="963e39ff-eecd-ffa8-87c6-3ba9d748ba0e" executionId="423c055e-da49-4594-bcd3-45d6b023bca0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cdef03a0-c713-0f4e-9aae-5155fcd55464" executionId="5b865a95-3d30-427f-b661-dddbd1abbf4d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8de85d42-4507-9ad4-78a8-fe2412e3fc55" executionId="71fefb18-f95e-471b-a4b8-fbf63dae207e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8dbc05a2-8980-dea0-8ce9-06a1e311ef8e" executionId="4ef121a2-b6d9-4fa9-901d-1de02f1162ac" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="afaa487b-a1e2-f80d-8887-310abdb54bc5" executionId="36a4f02f-f0d2-4d22-9d23-1c72733b927d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c4a54757-ec5b-0226-25c7-d570b82fb9e7" executionId="643c578f-b969-4951-bf18-b1de444471a1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="058abee9-48dc-f7af-1686-c1900e712dbd" executionId="5da5823a-c288-4a96-a5b1-e0c53076c9c8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="980a7fbb-e48f-7f3d-8367-a61c3b45cd6d" executionId="92feb50e-a164-48bb-9c69-9bccdd366452" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d52ba6d-cd0e-97ba-be88-ef1bdb23db9d" executionId="aa163b66-1f82-4e80-b0c1-286f974abb0f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ba9fb217-9d96-691f-2a08-b28d9ffddcc2" executionId="84069b43-680e-456d-91cc-70f481e7e92c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="99e2c6bd-fa1d-883d-5122-4d29f7c0f945" executionId="34dff987-12f1-45f9-aeea-b7ecca02ef9b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f15565f9-fa10-980d-54cc-f732bad8277f" executionId="4ac7c204-1f6f-427d-ac5a-69edc150dfbb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="efe9919f-ac8c-b547-6314-a0f1fe67768b" executionId="d6e18c0a-699e-4828-92f5-ca4bed4a4b9d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1a1cb1b7-823d-542a-8965-96114bae828e" executionId="5ecf38e3-534a-4060-ab91-21ffa8ed68d4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c4e915c-7f86-e4c8-8139-38690f022b42" executionId="783eae6d-6225-489a-b376-ddce479d0a54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="00036e7e-14f8-66d8-f0b0-d2080ae70d82" executionId="7371be4d-618a-415a-b82e-12e074ed9af0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="807b8cd7-3255-058d-aefd-e21ebc62fd4f" executionId="638bb572-dace-4d67-8a29-f5d9504f2e34" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="96108a37-5d9c-2bde-f17c-2586286b0ab4" executionId="40991ccb-515a-466d-bc45-91734a3ebb5b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1ec8340c-5b62-e439-eafb-c05462f7daf0" executionId="9fd4577f-8901-44e8-86ed-586cd860b3d9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2d6156c4-386e-3414-4cc3-c823cfad0a0e" executionId="1d5e53a0-e55b-4c82-ae17-fd6c72bd81f6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3f02eea4-c3a4-d8cb-0bb8-f8966a32e5aa" executionId="250935a5-72fd-4640-aaa2-c04191f608b2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c89793e-100d-65e6-f43e-6437d6bf5755" executionId="c2506d84-9ba4-49b9-93a9-b8b8898d612c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="037b82c0-3327-bce4-08bb-70c02a69c412" executionId="882b6497-586f-4b66-bbc0-770c26fb0760" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd3ff07d-954b-df53-6f01-0336bc88278b" executionId="875fa11f-09b3-4e0d-99db-ba02c3410964" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c2b2e7f-0c24-7405-4e48-3af56275379e" executionId="79fcfcab-51aa-44b3-8bac-26ef923baaa4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="47c33613-2e9b-d515-dab8-b7bc62f121e5" executionId="bdcdedf2-d62b-4267-a433-58d3459355c3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d4957b1-c7d3-2f30-829a-daea31880fed" executionId="20215edb-709a-415b-8245-0966055f8b16" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6721ca22-b0b9-4cf8-1ab9-28df1cf2c83a" executionId="8aa3a391-88fa-4f20-88de-1c7d3e7d724b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e8624b22-1fe4-bc25-5b06-6900934f8b1b" executionId="84639873-ae5a-4cc0-82fd-4001418c7dc9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cee31143-0f63-3919-6463-472248416dd6" executionId="21954747-ef08-464e-9037-c1e7935e34cb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e13a4b73-0a50-307b-4285-aa743162b977" executionId="9c121ba9-78b6-4ed0-b221-e82e9eefc216" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="abec147f-407e-7237-d63e-320c662f4147" executionId="ad92d7f2-13ec-4d4f-a76c-3c38e8e0ee54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="87c0395f-e73b-310e-5399-de5036c07234" executionId="efd03b02-1481-41d2-bc72-94bdfb1f92b8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="804fbda1-3112-1f9b-0ada-acab74480814" executionId="c57406b3-b11c-45d9-9955-f33a8f69ac41" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="04e1da1b-bffc-d771-99c9-822afdaec267" executionId="a633a0ae-06fa-42be-a3e9-6402db3793f3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02f892b7-2bcc-3130-0945-e4b2ffb55acd" executionId="09c0786a-296b-4a34-bfe1-d6ec148176ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5fe7480c-9c6b-d90e-ceeb-daaa10a86040" executionId="bd69ee00-4084-4bd5-9775-3d0ba247ffa5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2355f38c-7f2b-032e-9436-238a97a6c0b7" executionId="32dcfa72-4df8-433f-9308-afcc17591afa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d2bad1b2-9fdd-0cab-df1c-081aa28cc05a" executionId="f7be28a3-cf3e-411d-9568-ba5fd50bec29" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5facf8e2-7e55-537b-2e63-f182aad0d69f" executionId="d48febe8-1900-40bb-a8bb-dc0377252423" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9b9bc092-3274-fb6c-2aae-9689c6c5620d" executionId="1cc5f67c-6d55-49c5-b765-ad88ec9ffd53" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0452651a-b748-d9b1-e0bf-5b12ff9995ca" executionId="4788418e-853c-4dbc-ad7c-1fe36570a30a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c90f9a4-934a-bf5e-6885-854d1c135c54" executionId="969b8cdc-cddc-4417-8fc2-a65e56549f16" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dc0636ac-75f1-dd33-3ace-1ed3866453b4" executionId="30deb7f8-464e-40ff-b835-62bedbea7c3a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf46b43f-09cf-142d-64d9-cdeba2b3adea" executionId="8c4f81ba-a464-41b8-95b7-18b32810f92c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="664589b3-c194-8c34-82ec-c8436f1b3f79" executionId="ee01f7f4-c93a-494c-aa15-445ba8049f89" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b4f38b7-0f90-a903-1501-208bfa2f1400" executionId="64a580c7-4d6c-44ff-8e3a-164a7465bdaf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bc002b8f-c140-f11b-2a29-b80ce7cc52c2" executionId="1f2a7283-09ce-49ec-8c1d-9728c783473a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d2795b3-024c-f640-d867-b527e4bb9a16" executionId="d82583d9-2654-48d9-b780-392dadc6eb15" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="363452ec-d654-7a8b-04ff-8e9dddf9e662" executionId="75b4a92f-7f38-41d0-9457-d440c2c92555" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1b6f1483-fbb8-ec4e-4f4b-bb945d965018" executionId="ee222d7f-c33c-40fa-8078-366ef98b48aa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c4e6a12-ed3e-8f9b-08b6-48966518600c" executionId="d4cae7f6-2890-459e-b11e-0a115c957cea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0d05136c-3f66-484f-9c53-ece08fd7f15d" executionId="05b05cfa-1c6a-47b4-967b-31dec35da3ff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="85248fcc-5b4e-42cd-da61-51cddd6ef14b" executionId="95b6f76d-1753-44bd-871c-0aca7286e818" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="01644d33-48e7-0186-4d82-d144eb5e152a" executionId="fd2a7b8c-5f3b-4da3-be7a-2987c37f019c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="85f4ec50-c25a-bc2c-6f5b-de6bbff1de77" executionId="8e32c29f-1870-4d32-9c0d-980d9b550685" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7fc57561-0ddd-952e-1bf7-032a720c934d" executionId="f298e529-bfb6-4436-9473-047a8cfe20e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d042cc0e-cccf-6837-7a64-c0cbce3c0118" executionId="fdd2e965-b224-47c3-bf23-ef07ef12b821" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="52037813-3836-4cb2-ee29-a16cfc6b3021" executionId="5bb4d8e5-8b65-4fcc-81ab-95fb879aa50b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6c6d025-5b7b-79ba-d9fb-a0ddd6083919" executionId="cc49a252-a828-4a95-b050-750e3254d125" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8853993b-ef62-d357-ff8e-470beb084ef5" executionId="f247931a-0232-416e-837c-69dbdbefaa69" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ff2bbe5a-76ba-1a50-9806-26b7c1cc0659" executionId="e190e06b-b1ba-47c8-9d33-59d0acd61749" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="19b675d6-8c38-c6fb-9ef6-c3c568c2a52d" executionId="799ac844-5238-4b0e-bb62-7398a54714ac" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2c4ab924-45ee-7d5e-6159-23f24eb1ce4d" executionId="d86ff510-7912-4df6-a428-1b8f1b19bc5b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c959f4c-c3fc-032b-57d1-77831b27c688" executionId="9820fb8d-28a0-4d55-9fff-322ed07299f6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd3474e0-e8cc-ed02-5e3a-338c53868a26" executionId="606edd75-5f8b-4e33-9213-c961f68af6e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab314fe1-f5d9-fb29-05d1-33969afa6d68" executionId="721be65a-9695-4a71-9812-02a3a965bdd0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="05f365f9-d2b4-a069-7b23-b30f4b949a9e" executionId="a8d59bb3-352b-494b-8592-f7e42279a086" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eb8d5d8f-070b-ce9d-8d4d-bc90854aa5e9" executionId="cf4ea6b4-28c3-45cc-b952-45a81ebee19a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="63762f8d-2b4b-daf7-079f-df3b865be921" executionId="63f1770a-14d6-4413-a6dd-23206c5e0c06" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="add8baf5-1c51-af1f-55a1-71a0d6d3bed6" executionId="fceb7d17-1f74-4c85-b386-7da708c094ce" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2667226b-f31f-3838-f430-c3ea0583fab1" executionId="5d0649ff-5503-4229-af80-ab89a922b3f1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c249724c-d6bb-5f42-b999-7f69330785f3" executionId="491cbf4e-0fa7-4001-8a6b-231cd19fc9f9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8510466c-868d-eb69-e0e4-5b3fa163f491" executionId="f15320a2-6963-412b-94a2-7fd626be7de8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1bd5c07f-6aa1-c6b5-6873-39d766403f05" executionId="6e39ceba-b3b1-4da0-904d-b41cc515eb31" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0fb00f98-3f9d-fd0a-85a7-c5c7c57b0a6b" executionId="428b100b-842a-457c-b320-d42ebe47efc6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="af71f0df-8217-04fd-68a5-9d84b57ad10e" executionId="be4b8215-fa7a-4aff-8a7f-1bfcc5bbe608" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f2ab5a1e-af07-be52-cec2-40fcc608a68a" executionId="5f333dda-34d9-4963-a708-e517d7b95c08" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e56d604a-dc43-3cc4-4aa3-01c4d66c7441" executionId="c9c37d75-0057-4618-89c9-40d3a2687a4a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="79fb5913-b02e-f7df-82eb-1b49768f4b28" executionId="26775dcf-d5fd-4518-a6fa-3b112b3cbd00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c02cfd83-38b0-582e-e426-3a33599d7aef" executionId="df74132a-198f-4163-ac5f-a3c0e79a1693" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="71f9005b-b0dc-2c58-f719-8afd17f8ee00" executionId="a34cdc92-7bc5-4778-ba23-5bd8281db26b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8ab8ce52-1d32-4c6b-d440-492bc5b15136" executionId="406d244c-e489-41bc-9597-eaa185a83a00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="946c08b6-d92f-a452-d904-78cf71903e95" executionId="1bb2b7d0-b54f-46a0-9184-c9a6c6620fdb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="242030ff-5567-ee3d-6857-d9fb88fa050b" executionId="415cbafa-95a1-4a9c-ba8e-ae48c9e1f68a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c3f8fef2-2107-4533-0ae7-a5757a6d1943" executionId="7bdcc447-3082-4359-8b6c-38ac3ad95ed0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="490e5be8-43be-f948-f7d6-31def9c5ddbc" executionId="68d97443-e6fa-4664-b4ec-7113589b234e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab7aea6c-30f2-2936-8f5d-f17132abd09e" executionId="65221012-fed5-41ff-8da9-386497896539" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e1416f0e-3d0c-bb41-c4b0-03ee740082e1" executionId="3ad69597-bc3c-4ae9-bb35-fc579a687efb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b12e23f8-4cdc-905f-e84b-282aa54890cc" executionId="457b9c63-4056-4225-8e25-4b4fe431ab81" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb579791-cb05-7468-24c1-28b2552fc97c" executionId="87289e7f-cb2d-4f06-8213-670a60fc9d95" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="db8962a2-cd5c-8853-3712-5fa5651f2f22" executionId="b877f301-634b-4b0f-a981-37af4b4ff9a5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="86d1e921-75f5-d05a-3b77-c355cb6723ae" executionId="1e4189f4-3a79-47bf-a27d-a0f5e56a4281" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f262c033-da0a-6112-cdc6-04c3f4ae176f" executionId="f51261eb-b255-4f2f-8309-afcd406580c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88c812f2-60bc-4824-4811-18e8685b65d6" executionId="6df1f57c-1130-4f6e-aa44-2940b47b987a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a660a2a4-a1a6-5fe5-435b-48b9ba252f3b" executionId="f3c88c23-18df-4314-b35f-57fba4f627e8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d01ebab7-25d5-ef97-2195-81d2f7db9c74" executionId="0b2efbf9-038b-4d78-b87e-ebbf11978ddb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7d1effd3-a6c2-f142-173b-6f70774ce743" executionId="0d1a312f-a6ba-4b23-9f1b-c3381a606c63" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8ecacf1c-8950-f1be-f1b3-828fe517a916" executionId="79b5a09e-5936-46bf-bdce-329d0d8ecaa8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ef7789f1-9bd7-f105-f83c-dd6b19746ea5" executionId="9fa46da3-49e1-4e24-9d7b-bda3105b3670" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a44606e8-87ef-1105-c453-fdc255c023e0" executionId="f18b2444-4f6c-4aa9-8460-1fecda13e576" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c19a5771-a4a2-c323-ae72-230842824140" executionId="8abd38c4-ee2a-4383-96fb-47d6e8222d13" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3219d486-6584-a295-6e23-4fe4f5c9fb1b" executionId="651b6f42-d0a9-45cc-8561-5acab13a660d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="41a7d1d8-691c-6af8-41ed-78ad6df552fa" executionId="575310cd-7958-45ac-b654-d896f9e5d7ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b795b020-9268-9421-10b2-9c44f7365bdf" executionId="45b7fedf-0a0e-4755-905e-5b2444cf7b02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8a4a2dea-fb8c-f213-8a87-01fefad81e97" executionId="266a4a5e-009e-412d-864f-78101eb98369" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="157" executed="157" passed="153" failed="4" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 5.0.0.0: Test execution started&#xD;
+Running all tests in C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll&#xD;
+   NUnit3TestExecutor discovered 157 of 157 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+Changing turns&#xD;
+Changing turns&#xD;
+&#xD;
+Changing turns&#xD;
+Changing turns&#xD;
+&#xD;
+Loaded Player: Test Player&#xD;
+&#xD;
+Loaded Player: &#xD;
+&#xD;
+Loaded Player: m_spellcaster&#xD;
+&#xD;
+Test Monster uses a special attack on Test Player for 10 damage!&#xD;
+&#xD;
+Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 75/100&#xD;
+Removed 1x Small Health Potion from inventory&#xD;
+&#xD;
+Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 100/100&#xD;
+Failed to remove item 1 from inventory&#xD;
+&#xD;
+Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 100/100&#xD;
+Removed 1x Small Health Potion from inventory&#xD;
+&#xD;
+Using item: Small Health Potion&#xD;
+Healed TestPlayer for 25 HP. Current HP: 100/100&#xD;
+Removed 1x Small Health Potion from inventory&#xD;
+&#xD;
+NUnit Adapter 5.0.0.0: Test execution complete&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
