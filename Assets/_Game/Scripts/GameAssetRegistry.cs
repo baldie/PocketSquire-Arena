@@ -38,7 +38,7 @@ public class GameAssetRegistry : ScriptableObject {
     private Dictionary<string, GameObject> _prefabCache;
 
     public Sprite GetSprite(string id) {
-        _spriteCache ??= sprites.ToDictionary(x => x.id, x => x.asset);
+        _spriteCache ??= sprites.ToDictionary(x => x.id, x => x.asset, System.StringComparer.OrdinalIgnoreCase);
         return _spriteCache.GetValueOrDefault(id);
     }
 

@@ -64,9 +64,7 @@
                 "battle": "show this character standing at the ready",
                 "win": "raise the free hand in the air as a fist in triumph",
                 "hit": "show this character off balance as though getting hit. no impact effects",
-                "attack": "show this character attacking by holding the staff straight up with both hands looking up into the sky as if summoning",
-                "defeat": "make his ear rounded instead of pointy",
-                "item": "add wraps to their forearms (not hands)"
+                "attack": "show this character attacking by holding up the staff with "
             }
         }
     },

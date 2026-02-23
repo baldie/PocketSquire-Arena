@@ -64,6 +64,7 @@ namespace PocketSquire.Unity.UI
         public GameObject skillTreePrefab;
 
         private bool isOpen = false;
+        private PauseMenu _pauseMenu;
 
         public bool IsOpen => isOpen;
         
@@ -127,6 +128,14 @@ namespace PocketSquire.Unity.UI
 
         private void Update()
         {
+            // Lazy-cache the PauseMenu so we can guard against it being open.
+            if (_pauseMenu == null)
+                _pauseMenu = FindFirstObjectByType<PauseMenu>();
+
+            // Do nothing with the Inventory key while the pause menu is showing.
+            bool pauseMenuOpen = _pauseMenu != null && _pauseMenu.pauseMenuUI != null && _pauseMenu.pauseMenuUI.activeSelf;
+            if (pauseMenuOpen) return;
+
             if (GameInput.Instance.GetButtonDown(GameInput.Instance.InventoryAction))
             {
                 if (isOpen) 
@@ -172,7 +181,7 @@ namespace PocketSquire.Unity.UI
                 levelAndClassText.text = $"Level {player.Level} {player.Class}";
 
                 if (classImage == null) return;
-                var playerSprite = GameAssetRegistry.Instance.GetSprite(player.Class.ToString());
+                var playerSprite = GameAssetRegistry.Instance.GetSprite(player.Class.ToString().ToLower());
                 if (playerSprite != null)
                 {
                     classImage.sprite = playerSprite;

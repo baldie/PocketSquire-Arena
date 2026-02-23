@@ -46,5 +46,21 @@
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
         "gender": "m"
+    },
+    {
+        "name": "m_mage",
+        "class": "Mage",
+        "attackSoundId": "large_fireball",
+        "defendSoundId": "magic_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "m_druid",
+        "class": "Druid",
+        "attackSoundId": "earth_spell",
+        "defendSoundId": "druid_shield_impact",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
     }
 ]

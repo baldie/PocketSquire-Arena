@@ -50,6 +50,23 @@
                 "battle": "Show this character with an arrow nocked, bow taut",
                 "win": "the wrapped gloves cover his fingers",
                 "item": "gloves cover their fingers"
+            },
+            "mage": {
+                "idle": "make the top of the staff wooden instead of having a gem",
+                "battle": "make this wizard standing at the ready",
+                "attack": "both arms stretched out",
+                "win": "show this little mage raising their empty hand in a fist triumphantly",
+                "hit": "show this character off balance as if they were getting hit. no impact effects. white background",
+                "defeat": "show this character on their hands and knees, head down dejected. staff on the ground by their side. white background no shadows",
+                "item": "remove the tray of drinks so that its just their empty hand in the air"
+            },
+            "druid": {
+                "battle": "show this character standing at the ready",
+                "win": "raise the free hand in the air as a fist in triumph",
+                "hit": "show this character off balance as though getting hit. no impact effects",
+                "attack": "show this character attacking by holding the staff straight up with both hands looking up into the sky as if summoning",
+                "defeat": "make his ear rounded instead of pointy",
+                "item": "add wraps to their forearms (not hands)"
             }
         }
     },

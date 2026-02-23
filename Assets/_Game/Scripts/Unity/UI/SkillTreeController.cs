@@ -41,6 +41,10 @@ namespace PocketSquire.Unity.UI
         {
             Debug.Log("Closing skill tree");
             gameObject.SetActive(false);
+
+            // Refresh the player menu so it reflects any class change made in the skill tree
+            var playerMenu = FindFirstObjectByType<PlayerMenuController>();
+            if (playerMenu != null) playerMenu.Refresh();
         }
 
         public void ShowHoverDescription(string description)

@@ -87,8 +87,6 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: c0a37c0945dacc34eb3dfe3d5547d5bd, type: 3}
   - id: sorcerer
     asset: {fileID: 21300000, guid: ea9960179a340a14fb3bc8e5793b715f, type: 3}
-  - id: SpellCaster
-    asset: {fileID: 21300000, guid: f8bfb43bd130bf44bbcd309b7a0296d2, type: 3}
   - id: squire
     asset: {fileID: 21300000, guid: 079722428bc71414b9c1f5820dda22b1, type: 3}
   - id: warden
@@ -147,6 +145,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 1b003c8d66af0614ab46a6c85409b2c8, type: 3}
   - id: f_bowman_win
     asset: {fileID: 21300000, guid: f8b0a11a7a1a3634d84b2c6499a65e0d, type: 3}
+  - id: f_fighter_attack
+    asset: {fileID: 21300000, guid: 0f4d0621f87e28d4b8b647c5f7562547, type: 3}
+  - id: f_fighter_battle
+    asset: {fileID: 21300000, guid: 132739dc4955c244a928e1f69063a30d, type: 3}
+  - id: f_fighter_defeat
+    asset: {fileID: 21300000, guid: 4e06e232cadf4164786b980eb37d0503, type: 3}
+  - id: f_fighter_defend
+    asset: {fileID: 21300000, guid: 5329920f00c811c4da7f4fc02eec4bfd, type: 3}
+  - id: f_fighter_hit
+    asset: {fileID: 21300000, guid: 45a939df412ee90429c6d4779b0a5680, type: 3}
+  - id: f_fighter_idle
+    asset: {fileID: 21300000, guid: 08caebcfccd44894f9ed42a04949c404, type: 3}
+  - id: f_fighter_item
+    asset: {fileID: 21300000, guid: 506386fddb9090147a6e3e86b13546c8, type: 3}
+  - id: f_fighter_win
+    asset: {fileID: 21300000, guid: 9dddd16ebdd572e458a486c709d367ac, type: 3}
+  - id: f_mage_attack
+    asset: {fileID: 21300000, guid: fd22e8f3fad4b4c4b9e4dd15fd5be3ff, type: 3}
+  - id: f_mage_battle
+    asset: {fileID: 21300000, guid: e8f4bbec995371d48b9e1dcb3f1144ab, type: 3}
+  - id: f_mage_defeat
+    asset: {fileID: 21300000, guid: 4b3e4b42fbf62f2499776edfc268fd04, type: 3}
+  - id: f_mage_defend
+    asset: {fileID: 21300000, guid: 7fc9fa1905c80f146954ad89cc3fcb2b, type: 3}
+  - id: f_mage_hit
+    asset: {fileID: 21300000, guid: aa6773cdba3fb9f4dac9f5d95cd53bfd, type: 3}
+  - id: f_mage_idle
+    asset: {fileID: 21300000, guid: cbd79de99efc9cb48a6ec109188a729b, type: 3}
+  - id: f_mage_item
+    asset: {fileID: 21300000, guid: 829fc40ae2b0de444a61272b6a57ad71, type: 3}
+  - id: f_mage_win
+    asset: {fileID: 21300000, guid: 5b0f00bc12e6fc04a8055ac968863297, type: 3}
   - id: f_spellcaster_attack
     asset: {fileID: 21300000, guid: e48a83b7ac5e45e459f7765e56302c97, type: 3}
   - id: f_spellcaster_battle
@@ -195,6 +225,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 3d6e42ca9d2d97f42910718b40a571ae, type: 3}
   - id: m_bowman_win
     asset: {fileID: 21300000, guid: e65411e06371ecb418cefe452661e310, type: 3}
+  - id: m_druid_attack
+    asset: {fileID: 21300000, guid: 8a7fe850101b76745acdc67c55ac5d91, type: 3}
+  - id: m_druid_battle
+    asset: {fileID: 21300000, guid: 1ba1aa1e28f536345806514772ac4bf0, type: 3}
+  - id: m_druid_defeat
+    asset: {fileID: 21300000, guid: d109f6be8eac142449bd29b02ac33bdb, type: 3}
+  - id: m_druid_defend
+    asset: {fileID: 21300000, guid: 47a0c9923c1239545a760126c05c1819, type: 3}
+  - id: m_druid_hit
+    asset: {fileID: 21300000, guid: bbaa72abc413f1d478b21a0f5d1d59bd, type: 3}
+  - id: m_druid_idle
+    asset: {fileID: 21300000, guid: d7aa29f1bb72ffd4a810c2e9b958de6e, type: 3}
+  - id: m_druid_item
+    asset: {fileID: 21300000, guid: a0ce1fe542f391341a726aa1e65a5be1, type: 3}
+  - id: m_druid_win
+    asset: {fileID: 21300000, guid: 131dca6c483498c48bbd7006e1d983dc, type: 3}
   - id: m_fighter_attack
     asset: {fileID: 21300000, guid: acf5b66e434a4bf4ba4ded266c370a37, type: 3}
   - id: m_fighter_battle
@@ -211,6 +257,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 848bd73f69ab8004cad5e4893541440d, type: 3}
   - id: m_fighter_win
     asset: {fileID: 21300000, guid: c62c8f3a5d4b049429e1487ef4eb1267, type: 3}
+  - id: m_mage_attack
+    asset: {fileID: 21300000, guid: 66b6d31a35ef6eb48a37af0ae663b974, type: 3}
+  - id: m_mage_battle
+    asset: {fileID: 21300000, guid: 200ba7b471dbbc7479bb8e1646de40b3, type: 3}
+  - id: m_mage_defeat
+    asset: {fileID: 21300000, guid: 7df66ffb6a99e4b43865ed27322a85fb, type: 3}
+  - id: m_mage_defend
+    asset: {fileID: 21300000, guid: 487126f6f7c89be428621d2bdd1dae21, type: 3}
+  - id: m_mage_hit
+    asset: {fileID: 21300000, guid: 6d5bfec206ef6b24a87a702e6f181a4b, type: 3}
+  - id: m_mage_idle
+    asset: {fileID: 21300000, guid: de4659c88cfb96e4d90bd8c172dec603, type: 3}
+  - id: m_mage_item
+    asset: {fileID: 21300000, guid: b1fe6f3dadf02bc4eb0d0920362f0d8b, type: 3}
+  - id: m_mage_win
+    asset: {fileID: 21300000, guid: 04632cf713f78544b9e325e7b548e9d1, type: 3}
   - id: m_spellcaster_attack
     asset: {fileID: 21300000, guid: 71e58aee82c59514e82967bdc2866323, type: 3}
   - id: m_spellcaster_battle
@@ -300,14 +362,22 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
   - id: arrow_loosed
     asset: {fileID: 8300000, guid: 0db1563f226b8e341b9a6ed8d1eb173b, type: 3}
+  - id: druid_shield_impact
+    asset: {fileID: 8300000, guid: 35df3a83a5efbbb44a868514dce7a337, type: 3}
+  - id: earth_spell
+    asset: {fileID: 8300000, guid: b92f5b8a653cca640835509b00bc25ad, type: 3}
   - id: f_physical_attack
     asset: {fileID: 8300000, guid: 8abe9f07b96f2f64b9dfa144b5cd961a, type: 3}
   - id: fire_attack
     asset: {fileID: 8300000, guid: d3b951d1aad59104d819ab546c0417f3, type: 3}
   - id: force_field_defend
     asset: {fileID: 8300000, guid: 5943efc78dafe3c45aace42422b68dd7, type: 3}
+  - id: large_fireball
+    asset: {fileID: 8300000, guid: 556d0a09d396e9e49a0a306313b9e28f, type: 3}
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
+  - id: magic_defend
+    asset: {fileID: 8300000, guid: a702f555066044047a49f8b7a7fcc23b, type: 3}
   - id: physical_defend
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: physical_hit
