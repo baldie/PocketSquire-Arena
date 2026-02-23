@@ -30,6 +30,26 @@
                 "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
                 "win": "Make this character a girl with short straight hair, but keep the same facial expression",
                 "item": "Make this character a girl with short straight hair, but keep the same facial expression"
+            },
+            "bowman": {
+                "idle": "Give this character a small bow and quiver. Make their tunic green, and give them shoes",
+                "attack": "the closed eye should be squinting, and the open eye should be looking to the right",
+                "defend": "Show this holding their bow in front of them to block",
+                "hit": "Show this character off balance as though taking a hit",
+                "defeat": "show this character on their knees hands on the ground in defeat looking dejected. bow is flat on the ground next to them. No ground or shadows",
+                "battle": "Show this character with an arrow nocked, bow taut",
+                "win": "Show this character with their free hand raised in a fist, other hand holding bow, triumphant facial expression",
+                "item": "show this character with the bow in the other hand, and really reaching with the now free hand to the top right in the air"
+            },
+            "fighter": {
+                "idle": "Give this character a small bow and quiver. Make their tunic green, and give them shoes",
+                "attack": "the closed eye should be squinting, and the open eye should be looking to the right",
+                "defend": "He is crouching down and has his shield ",
+                "hit": "sword put away, and free hand really reaching up and to the right as much as possible - hand open in the sky",
+                "defeat": "show this character on their knees hands on the ground in defeat looking dejected. bow is flat on the ground next to them. No ground or shadows",
+                "battle": "Show this character with an arrow nocked, bow taut",
+                "win": "the wrapped gloves cover his fingers",
+                "item": "gloves cover their fingers"
             }
         }
     },

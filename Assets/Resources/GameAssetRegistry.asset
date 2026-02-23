@@ -131,6 +131,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
+  - id: f_bowman_attack
+    asset: {fileID: 21300000, guid: aee7aa4e9b9a72f4ca3efb88436e3c04, type: 3}
+  - id: f_bowman_battle
+    asset: {fileID: 21300000, guid: 677531f25e0e96849b468249b7129b94, type: 3}
+  - id: f_bowman_defeat
+    asset: {fileID: 21300000, guid: 85abb24c08b297140aabe79fb87b42ae, type: 3}
+  - id: f_bowman_defend
+    asset: {fileID: 21300000, guid: 055c117c4e2177848b4a978eecb4de56, type: 3}
+  - id: f_bowman_hit
+    asset: {fileID: 21300000, guid: 60a8426fcb6c875489fbcde2296db98e, type: 3}
+  - id: f_bowman_idle
+    asset: {fileID: 21300000, guid: 21275afa1f3df1345bb21594ffa7805e, type: 3}
+  - id: f_bowman_item
+    asset: {fileID: 21300000, guid: 1b003c8d66af0614ab46a6c85409b2c8, type: 3}
+  - id: f_bowman_win
+    asset: {fileID: 21300000, guid: f8b0a11a7a1a3634d84b2c6499a65e0d, type: 3}
+  - id: f_spellcaster_attack
+    asset: {fileID: 21300000, guid: e48a83b7ac5e45e459f7765e56302c97, type: 3}
+  - id: f_spellcaster_battle
+    asset: {fileID: 21300000, guid: 8861e9d7db67fd24093ea908ddf12ff2, type: 3}
+  - id: f_spellcaster_defeat
+    asset: {fileID: 21300000, guid: 70d2139dc44c1d64888bf197dcbeae67, type: 3}
+  - id: f_spellcaster_defend
+    asset: {fileID: 21300000, guid: da6e10cda5f7d24478fd77fa2aec2590, type: 3}
+  - id: f_spellcaster_hit
+    asset: {fileID: 21300000, guid: fb3e1b0d1437f7749a869d37bff136ec, type: 3}
+  - id: f_spellcaster_idle
+    asset: {fileID: 21300000, guid: 45363fe7fbe80dd45a97924d5bcf48a6, type: 3}
+  - id: f_spellcaster_item
+    asset: {fileID: 21300000, guid: 0d8e3f9c1c1c54b479b3825c3aa4447e, type: 3}
+  - id: f_spellcaster_win
+    asset: {fileID: 21300000, guid: 417fb4d4bb610374e981cf0db3433731, type: 3}
   - id: f_squire_attack
     asset: {fileID: 21300000, guid: 12c497977f3c1be41abd7229c908283d, type: 3}
   - id: f_squire_battle
@@ -147,6 +179,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8196c3106646dcc46a02441f97cb72a3, type: 3}
   - id: f_squire_win
     asset: {fileID: 21300000, guid: 74b8f531df44d444a92f21341ae623a3, type: 3}
+  - id: m_bowman_attack
+    asset: {fileID: 21300000, guid: 5ca5e2c96ddf3b0459fb845456346a68, type: 3}
+  - id: m_bowman_battle
+    asset: {fileID: 21300000, guid: fb8a9a2e92ebe5f489cd4296aca24206, type: 3}
+  - id: m_bowman_defeat
+    asset: {fileID: 21300000, guid: 1e453e95fafc5b342b5de5cd06fbf9ce, type: 3}
+  - id: m_bowman_defend
+    asset: {fileID: 21300000, guid: d4e65ab36bb6dc642b1446d2a4b604e6, type: 3}
+  - id: m_bowman_hit
+    asset: {fileID: 21300000, guid: d124c218a9bf9d4449d908c78551880c, type: 3}
+  - id: m_bowman_idle
+    asset: {fileID: 21300000, guid: 364024b2d8510c2489a4df5ca78d60f2, type: 3}
+  - id: m_bowman_item
+    asset: {fileID: 21300000, guid: 3d6e42ca9d2d97f42910718b40a571ae, type: 3}
+  - id: m_bowman_win
+    asset: {fileID: 21300000, guid: e65411e06371ecb418cefe452661e310, type: 3}
+  - id: m_fighter_attack
+    asset: {fileID: 21300000, guid: acf5b66e434a4bf4ba4ded266c370a37, type: 3}
+  - id: m_fighter_battle
+    asset: {fileID: 21300000, guid: fcbd2850a2afcb24a9e9136b2dfc5235, type: 3}
+  - id: m_fighter_defeat
+    asset: {fileID: 21300000, guid: 6532c0c8562761a40808e68bc3c143c1, type: 3}
+  - id: m_fighter_defend
+    asset: {fileID: 21300000, guid: 82d760063fde28c44b976fe91e911c80, type: 3}
+  - id: m_fighter_hit
+    asset: {fileID: 21300000, guid: a4920026cd189df4785c2c5fca41119b, type: 3}
+  - id: m_fighter_idle
+    asset: {fileID: 21300000, guid: 6941368f84ed4b04fb2b2240d3910941, type: 3}
+  - id: m_fighter_item
+    asset: {fileID: 21300000, guid: 848bd73f69ab8004cad5e4893541440d, type: 3}
+  - id: m_fighter_win
+    asset: {fileID: 21300000, guid: c62c8f3a5d4b049429e1487ef4eb1267, type: 3}
   - id: m_spellcaster_attack
     asset: {fileID: 21300000, guid: 71e58aee82c59514e82967bdc2866323, type: 3}
   - id: m_spellcaster_battle
@@ -234,6 +298,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}
   - id: MushroomMarauderSpecialAttack
     asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
+  - id: arrow_loosed
+    asset: {fileID: 8300000, guid: 0db1563f226b8e341b9a6ed8d1eb173b, type: 3}
   - id: f_physical_attack
     asset: {fileID: 8300000, guid: 8abe9f07b96f2f64b9dfa144b5cd961a, type: 3}
   - id: fire_attack
@@ -246,6 +312,10 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
+  - id: wooden_block
+    asset: {fileID: 8300000, guid: 286973a110610fb428d9fd2c1e2fa6c7, type: 3}
+  - id: wooden_chop
+    asset: {fileID: 8300000, guid: 43567b353ea5c244eb8ce827bf038026, type: 3}
   - id: battle_menu_tick
     asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}
   - id: chest_opening

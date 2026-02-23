@@ -1,6 +1,7 @@
 [
     {
         "name": "m_squire",
+        "class": "Squire",
         "attackSoundId": "m_physical_attack",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
@@ -8,6 +9,7 @@
     },
     {
         "name": "f_squire",
+        "class": "Squire",
         "attackSoundId": "f_physical_attack",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
@@ -15,8 +17,33 @@
     },
     {
         "name": "m_spellcaster",
+        "class": "SpellCaster",
         "attackSoundId": "fire_attack",
-        "defendSoundId": "",
+        "defendSoundId": "force_field_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_spellcaster",
+        "class": "SpellCaster",
+        "attackSoundId": "fire_attack",
+        "defendSoundId": "force_field_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
+    },
+    {
+        "name": "m_bowman",
+        "class": "Bowman",
+        "attackSoundId": "arrow_loosed",
+        "defendSoundId": "physical_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "m_fighter",
+        "class": "Fighter",
+        "attackSoundId": "wooden_chop",
+        "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
         "gender": "m"
     }

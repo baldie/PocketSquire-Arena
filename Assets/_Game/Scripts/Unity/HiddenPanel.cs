@@ -9,6 +9,7 @@ public class HiddenPanel : MonoBehaviour
     [SerializeField] private Button healButton;
     [SerializeField] private Button killMonsterButton;
     [SerializeField] private Button rerollPowerUpsButton;
+    [SerializeField] private Button toggleGender;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,6 +50,17 @@ public class HiddenPanel : MonoBehaviour
                 {
                      lootScript.Reroll();
                      Debug.Log("Rerolled PowerUps");
+                }
+            });
+        }
+
+        if (toggleGender != null)
+        {
+            toggleGender.onClick.AddListener(() => {
+                if (GameState.Player != null)
+                {
+                    GameState.Player.Gender = GameState.Player.Gender == Player.Genders.m ? Player.Genders.f : Player.Genders.m;
+                    Debug.Log("Toggled Gender to " + GameState.Player.Gender);
                 }
             });
         }

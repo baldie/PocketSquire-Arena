@@ -15,7 +15,7 @@ namespace PocketSquire.Arena.Core
         public int Level { get; private set; } = 1;
 
         [JsonProperty("class")]
-        public PlayerClass.ClassName Class { get; set; } = PlayerClass.ClassName.Squire;
+        public PlayerClass.ClassName Class { get; private set; } = PlayerClass.ClassName.Squire;
 
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
 
@@ -140,6 +140,32 @@ namespace PocketSquire.Arena.Core
         public void AcceptNewLevel() {
             if (GameWorld.Progression != null) {
                 this.Level = GameWorld.Progression.GetLevelForExperience(this.Experience);
+            }
+        }
+
+        public void ChangeClass(PlayerClass.ClassName newClass)
+        {
+            this.Class = newClass;
+            var template = GameWorld.GetClassTemplate(this.Gender, newClass);
+            if (template != null)
+            {
+                this.Health = this.MaxHealth;
+                Console.WriteLine($"Player health reset to {this.Health}");
+                this.Attributes = new Attributes
+                {
+                    Strength = template.Attributes.Strength,
+                    Constitution = template.Attributes.Constitution,
+                    Magic = template.Attributes.Magic,
+                    Dexterity = template.Attributes.Dexterity,
+                    Luck = template.Attributes.Luck,
+                    Defense = template.Attributes.Defense
+                };
+                // Also update attack/defend/hit/defeat sound ids if applicable
+                this.AttackSoundId = template.AttackSoundId;
+                this.DefendSoundId = template.DefendSoundId;
+                this.HitSoundId = template.HitSoundId;
+                this.DefeatSoundId = template.DefeatSoundId;
+                this.SpecialAttackSoundId = template.SpecialAttackSoundId;
             }
         }
 

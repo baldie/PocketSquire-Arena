@@ -201,7 +201,7 @@ namespace PocketSquire.Unity.UI
 
             if (GameState.Player != null)
             {
-                GameState.Player.Class = nodeClass;
+                GameState.Player.ChangeClass(nodeClass);
 
                 // Refresh all nodes' pulse indicators
                 var allNodes = FindObjectsOfType<NodeController>();

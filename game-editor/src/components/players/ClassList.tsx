@@ -5,11 +5,15 @@ import type { PlayerClassName } from "../../constants";
 import { readImageAsDataUrl } from "../../utils/fileSystem";
 
 
-function useClassCompletionCheck(dirHandle: FileSystemDirectoryHandle | null) {
+function useClassCompletionCheck(
+    dirHandle: FileSystemDirectoryHandle | null,
+    saveStatus: string,
+    activeTab: string
+) {
     const [missingMap, setMissingMap] = useState<Record<string, number>>({});
 
     useEffect(() => {
-        if (!dirHandle) return;
+        if (!dirHandle || saveStatus === "saving") return;
         let cancelled = false;
 
         async function check() {
@@ -38,7 +42,7 @@ function useClassCompletionCheck(dirHandle: FileSystemDirectoryHandle | null) {
 
         void check();
         return () => { cancelled = true; };
-    }, [dirHandle]);
+    }, [dirHandle, saveStatus, activeTab]);
 
     return missingMap;
 }
@@ -49,7 +53,7 @@ interface ClassListProps {
 
 export default function ClassList({ onRefreshCompletion: _ }: ClassListProps) {
     const { state, dispatch } = useAppContext();
-    const missingMap = useClassCompletionCheck(state.dirHandle);
+    const missingMap = useClassCompletionCheck(state.dirHandle, state.saveStatus, state.activeTab);
 
     return (
         <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">

@@ -20,7 +20,7 @@ public class GameStateTests
         // Ensure GameWorld has the expected player for CreateNewGame
         GameWorld.ClassTemplates.Clear();
         var template = new Player("m_spellcaster", 20, 20, new Attributes(), Player.Genders.m);
-        template.Class = PlayerClass.ClassName.SpellCaster;
+        template.ChangeClass(PlayerClass.ClassName.SpellCaster);
         GameWorld.ClassTemplates.Add(template);
     }
 
