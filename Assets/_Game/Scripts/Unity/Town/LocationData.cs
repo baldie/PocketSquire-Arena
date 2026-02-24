@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core.Town;
+using PocketSquire.Arena.Unity.LevelUp;
 
 namespace PocketSquire.Arena.Unity.Town
 {
@@ -28,6 +29,7 @@ namespace PocketSquire.Arena.Unity.Town
 
         [Header("Shop")]
         [HideInInspector] [SerializeField] private List<int> shopItemIds = new List<int>();
+        [SerializeField] private List<PerkNode> shopPerkNodes = new List<PerkNode>();
 
         // Public accessors
         public string LocationName => locationName;
@@ -37,6 +39,7 @@ namespace PocketSquire.Arena.Unity.Town
         public string InitialGreeting => initialGreeting;
         public IReadOnlyList<DialogueOption> DialogueOptions => dialogueOptions;
         public IReadOnlyList<int> ShopItemIds => shopItemIds;
+        public IReadOnlyList<PerkNode> ShopPerkNodes => shopPerkNodes;
 
         private void OnValidate()
         {
@@ -47,3 +50,4 @@ namespace PocketSquire.Arena.Unity.Town
         }
     }
 }
+

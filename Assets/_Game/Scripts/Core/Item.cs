@@ -9,7 +9,7 @@ namespace PocketSquire.Arena.Core
     }
 
     [Serializable]
-    public class Item
+    public class Item : IMerchandise
     {
         public int Id;
         public string Name = string.Empty;
@@ -20,5 +20,10 @@ namespace PocketSquire.Arena.Core
         [Newtonsoft.Json.JsonProperty("sound_effect")]
         public string SoundEffect = string.Empty;
         public int Price;
+
+        // IMerchandise
+        string IMerchandise.DisplayName => Name;
+        string IMerchandise.Description => Description;
+        int IMerchandise.Price => Price;
     }
 }

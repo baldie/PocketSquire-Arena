@@ -23,3 +23,7 @@ MonoBehaviour:
   - buttonText: Leave
     action: 1
   shopItemIds: 010000000200000003000000
+  shopPerkNodes:
+  - {fileID: 11400000, guid: e0a8aa00118ee934992be95296abad81, type: 2}
+  - {fileID: 11400000, guid: d580f3ca1ec2cea4abdc10ad5b16ac18, type: 2}
+  - {fileID: 11400000, guid: db56f94238c4fa3479180723f49bd387, type: 2}

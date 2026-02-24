@@ -13,16 +13,21 @@ namespace PocketSquire.Arena.Unity.LevelUp
         [SerializeField] private string displayName;
         [SerializeField] private string description;
         [SerializeField] private int minLevel;
+        [SerializeField] private int price;
+        [SerializeField] private PerkEffectType effectType = PerkEffectType.None;
+        [SerializeField] private Sprite icon;
         [SerializeField] private List<PerkNode> prerequisites = new List<PerkNode>();
         public List<PlayerClass.ClassName> allowedClasses = new List<PlayerClass.ClassName>();
 
         public string Id => id;
+        public int Price => price;
+        public Sprite Icon => icon;
 
         public Perk ToCorePerk()
         {
             var prereqIds = prerequisites.Where(p => p != null).Select(p => p.Id).ToList();
-            // Pass the allowedClasses through to the core logic
-            return new Perk(id, displayName, description, minLevel, prereqIds, new List<PlayerClass.ClassName>(allowedClasses));
+            // Pass allowedClasses, price, and effectType through to the core logic
+            return new Perk(id, displayName, description, minLevel, prereqIds, new List<PlayerClass.ClassName>(allowedClasses), price, effectType);
         }
         
         private void OnValidate()

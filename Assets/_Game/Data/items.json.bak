@@ -28,5 +28,15 @@
         "sprite": "health_potion_l",
         "sound_effect": "gulp",
         "price": 8
+    },
+    {
+        "id": 4,
+        "name": "New Item",
+        "description": "",
+        "target": "self",
+        "stackable": true,
+        "sprite": "new_item",
+        "sound_effect": "",
+        "price": 1
     }
 ]

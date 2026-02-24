@@ -7,7 +7,11 @@ using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Arena.Unity.UI
 {
-    public class ItemRow : MonoBehaviour, ISelectHandler
+    /// <summary>
+    /// A shop row that can display any IMerchandise — both Items and Perks.
+    /// Replaces the old ItemRow for all shop display purposes.
+    /// </summary>
+    public class MerchandiseRow : MonoBehaviour, ISelectHandler
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI nameText;
@@ -17,9 +21,7 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private Button button;
         [SerializeField] private EventTrigger eventTrigger;
 
-        public Action<Item> OnSelected;
-        public Action<IMerchandise> OnMerchandiseSelected;
-        private Item currentItem;
+        public Action<IMerchandise> OnSelected;
         private IMerchandise currentMerchandise;
 
         private void Awake()
@@ -32,57 +34,35 @@ namespace PocketSquire.Arena.Unity.UI
             if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
         }
 
-        public void Initialize(Item item, int quantity, Sprite itemSprite, Action onClick, bool showPrice = true)
-        {
-            if (item == null) return;
-            currentItem = item;
-            currentMerchandise = item;
-
-            if (nameText != null) nameText.text = item.Name;
-            if (descriptionText != null) descriptionText.text = item.Description;
-            
-            if (quantityText != null)
-            {
-                quantityText.gameObject.SetActive(true);
-                quantityText.text = quantity > 1 ? $"x{quantity}" : "";
-            }
-
-            SetPriceAndIcon(item.Price, itemSprite, showPrice);
-            SetButtonAction(onClick);
-        }
-
         /// <summary>
-        /// Initialize the row with any IMerchandise (e.g. a Perk).
-        /// Quantity text is hidden since it doesn't apply to generic merchandise.
+        /// Initialize the row with any IMerchandise (Item or Perk).
         /// </summary>
         public void Initialize(IMerchandise merchandise, Sprite merchandiseIcon, Action onClick, bool showPrice = true)
         {
             if (merchandise == null) return;
-            currentItem = null;
             currentMerchandise = merchandise;
 
             if (nameText != null) nameText.text = merchandise.DisplayName;
             if (descriptionText != null) descriptionText.text = merchandise.Description;
-            if (quantityText != null) quantityText.gameObject.SetActive(false);
 
-            SetPriceAndIcon(merchandise.Price, merchandiseIcon, showPrice);
-            SetButtonAction(onClick);
-        }
+            if (quantityText != null)
+            {
+                // Quantity not applicable for generic merchandise — hide by default
+                quantityText.gameObject.SetActive(false);
+            }
 
-        private void SetPriceAndIcon(int price, Sprite sprite, bool showPrice)
-        {
             if (priceText != null)
             {
                 priceText.gameObject.SetActive(showPrice);
-                priceText.text = $"{price}";
+                priceText.text = $"{merchandise.Price}";
             }
 
             if (icon != null)
             {
                 icon.gameObject.SetActive(true);
-                if (sprite != null)
+                if (merchandiseIcon != null)
                 {
-                    icon.sprite = sprite;
+                    icon.sprite = merchandiseIcon;
                     icon.color = Color.white;
                 }
                 else
@@ -91,10 +71,7 @@ namespace PocketSquire.Arena.Unity.UI
                     icon.color = Color.clear;
                 }
             }
-        }
 
-        private void SetButtonAction(Action onClick)
-        {
             if (button != null)
             {
                 button.onClick.RemoveAllListeners();
@@ -102,12 +79,21 @@ namespace PocketSquire.Arena.Unity.UI
             }
         }
 
-        public void OnSelect(BaseEventData eventData)
+        /// <summary>
+        /// Legacy: initialize with a quantity label (e.g. "x2") for stacked items.
+        /// </summary>
+        public void SetQuantity(int quantity)
         {
-            if (currentItem != null)
-                OnSelected?.Invoke(currentItem);
-            else if (currentMerchandise != null)
-                OnMerchandiseSelected?.Invoke(currentMerchandise);
+            if (quantityText == null) return;
+            if (quantity > 1)
+            {
+                quantityText.gameObject.SetActive(true);
+                quantityText.text = $"x{quantity}";
+            }
+            else
+            {
+                quantityText.gameObject.SetActive(false);
+            }
         }
 
         public void HidePriceText()
@@ -117,7 +103,6 @@ namespace PocketSquire.Arena.Unity.UI
 
         public void InitializeCustom(string title, Action onClick)
         {
-            currentItem = null;
             currentMerchandise = null;
             if (nameText != null) nameText.text = title;
             if (descriptionText != null) descriptionText.text = "";
@@ -125,38 +110,49 @@ namespace PocketSquire.Arena.Unity.UI
             if (priceText != null) priceText.gameObject.SetActive(false);
             if (icon != null) icon.gameObject.SetActive(false);
 
-            SetButtonAction(onClick);
+            if (button != null)
+            {
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => onClick?.Invoke());
+            }
         }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (currentMerchandise != null)
+            {
+                OnSelected?.Invoke(currentMerchandise);
+            }
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
             if (Application.isPlaying) return;
-            
+
             if (button == null) button = GetComponent<Button>();
             if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
-            
+
             if (button != null && eventTrigger != null)
             {
                 bool hasPointerEnter = false;
-                foreach(var entry in eventTrigger.triggers)
+                foreach (var entry in eventTrigger.triggers)
                 {
-                    if(entry.eventID == EventTriggerType.PointerEnter)
+                    if (entry.eventID == EventTriggerType.PointerEnter)
                     {
                         hasPointerEnter = true;
                         break;
                     }
                 }
-                
+
                 if (!hasPointerEnter)
                 {
                     var entry = new EventTrigger.Entry();
                     entry.eventID = EventTriggerType.PointerEnter;
-                    
                     UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(
                         entry.callback,
                         button.Select
                     );
-                    
                     eventTrigger.triggers.Add(entry);
                     UnityEditor.EditorUtility.SetDirty(this);
                     UnityEditor.EditorUtility.SetDirty(eventTrigger);
@@ -164,7 +160,5 @@ namespace PocketSquire.Arena.Unity.UI
             }
         }
 #endif
-
     }
 }
-

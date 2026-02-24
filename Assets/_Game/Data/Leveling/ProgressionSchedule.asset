@@ -17,8 +17,14 @@ MonoBehaviour:
   maxLevel: 50
   rewards:
   - level: 2
+    ValidClasses: 
     statPoints: 2
     perkChoices: []
     perkPoolTag: 
     perkPoolDrawCount: 0
-  perkPools: []
+  perkPools:
+  - tag: 
+    perks:
+    - {fileID: 11400000, guid: e0a8aa00118ee934992be95296abad81, type: 2}
+    - {fileID: 11400000, guid: d580f3ca1ec2cea4abdc10ad5b16ac18, type: 2}
+    - {fileID: 11400000, guid: db56f94238c4fa3479180723f49bd387, type: 2}

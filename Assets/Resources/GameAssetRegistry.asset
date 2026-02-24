@@ -129,6 +129,12 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
+  - id: satchel_1
+    asset: {fileID: 21300000, guid: ad25249e67aa58546a26910dcc955cef, type: 3}
+  - id: satchel_2
+    asset: {fileID: 21300000, guid: afb1e65f768c8fa49aa43fb6401b5c8e, type: 3}
+  - id: satchel_3
+    asset: {fileID: 21300000, guid: 7c9131348cbbebe4781f546d2523854d, type: 3}
   - id: f_bowman_attack
     asset: {fileID: 21300000, guid: aee7aa4e9b9a72f4ca3efb88436e3c04, type: 3}
   - id: f_bowman_battle

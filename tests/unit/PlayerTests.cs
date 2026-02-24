@@ -196,5 +196,61 @@ namespace PocketSquire.Arena.Tests
             Assert.That(player.Inventory.GetItemCount(3), Is.EqualTo(0));
         }
 
+        [Test]
+        public void TryPurchasePerk_Succeeds_WithEnoughGold()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
+            player.GainGold(200);
+            var perk = new PocketSquire.Arena.Core.LevelUp.Perk("satchel_tier1", "Satchel", "Bigger bag", 1, null,
+                new System.Collections.Generic.List<PlayerClass.ClassName>(), price: 100);
+
+            // Act
+            var result = player.TryPurchasePerk(perk);
+
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(player.Gold, Is.EqualTo(100));
+            Assert.That(player.UnlockedPerks.Contains("satchel_tier1"), Is.True);
+        }
+
+        [Test]
+        public void TryPurchasePerk_Fails_WithInsufficientGold()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
+            player.GainGold(50);
+            var perk = new PocketSquire.Arena.Core.LevelUp.Perk("satchel_tier1", "Satchel", "Bigger bag", 1, null,
+                new System.Collections.Generic.List<PlayerClass.ClassName>(), price: 100);
+
+            // Act
+            var result = player.TryPurchasePerk(perk);
+
+            // Assert
+            Assert.That(result, Is.False);
+            Assert.That(player.Gold, Is.EqualTo(50), "Gold should not change on failed purchase");
+            Assert.That(player.UnlockedPerks.Contains("satchel_tier1"), Is.False);
+        }
+
+        [Test]
+        public void TryPurchasePerk_Fails_WhenAlreadyOwned()
+        {
+            // Arrange
+            var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
+            player.GainGold(500);
+            var perk = new PocketSquire.Arena.Core.LevelUp.Perk("satchel_tier1", "Satchel", "Bigger bag", 1, null,
+                new System.Collections.Generic.List<PlayerClass.ClassName>(), price: 100);
+
+            // Buy it once
+            player.TryPurchasePerk(perk);
+
+            // Act — attempt to buy again
+            var result = player.TryPurchasePerk(perk);
+
+            // Assert
+            Assert.That(result, Is.False, "Cannot purchase the same perk twice");
+            Assert.That(player.Gold, Is.EqualTo(400), "Gold should only be spent once");
+        }
+
     }
 }

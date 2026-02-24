@@ -4,24 +4,35 @@ using System.Collections.Generic;
 
 namespace PocketSquire.Arena.Core.LevelUp
 {
-    public class Perk
+    public class Perk : IMerchandise
     {
         public string Id { get; private set; }
         public string DisplayName { get; private set; }
         public string Description { get; private set; }
         public int MinLevel { get; private set; }
+        public int Price { get; private set; }
+        public PerkEffectType EffectType { get; private set; }
         public List<PlayerClass.ClassName> AllowedClasses { get; }
         public List<string> PrerequisitePerkIds { get; private set; }
 
-        public Perk(string id, string displayName, string description, int minLevel, List<string>? prerequisitePerkIds, List<PlayerClass.ClassName> allowedClasses)
+        public Perk(
+            string id,
+            string displayName,
+            string description,
+            int minLevel,
+            List<string>? prerequisitePerkIds,
+            List<PlayerClass.ClassName> allowedClasses,
+            int price = 0,
+            PerkEffectType effectType = PerkEffectType.None)
         {
             Id = id;
             DisplayName = displayName;
             Description = description;
             MinLevel = minLevel;
+            Price = price;
+            EffectType = effectType;
             AllowedClasses = allowedClasses;
             PrerequisitePerkIds = prerequisitePerkIds ?? new List<string>();
         }
     }
 }
-

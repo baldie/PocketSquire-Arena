@@ -61,12 +61,19 @@
                 "item": "remove the tray of drinks so that its just their empty hand in the air"
             },
             "druid": {
-                "battle": "show this character standing at the ready",
-                "win": "raise the free hand in the air as a fist in triumph",
-                "hit": "show this character off balance as though getting hit. no impact effects",
-                "attack": "show this character attacking by holding the staff straight up with both hands looking up into the sky as if summoning",
-                "defeat": "make his ear rounded instead of pointy",
-                "item": "add wraps to their forearms (not hands)"
+                "idle": "Make this character a girl with short straight hair, but keep the same adventurous facial expression",
+                "attack": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defend": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "hit": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defeat": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "win": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "item": "Make this character a girl with short straight hair, but keep the same facial expression"
+            },
+            "archer": {
+                "idle": "add some red in the feather, and the belt black",
+                "attack": "show this character at the ready",
+                "battle": "raise he bow so that the arrow is at eye level. make the arrow longer"
             }
         }
     },

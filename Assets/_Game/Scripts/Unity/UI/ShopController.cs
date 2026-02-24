@@ -5,6 +5,8 @@ using TMPro;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.LevelUp;
+using PocketSquire.Arena.Unity.LevelUp;
 using PocketSquire.Arena.Unity.Town;
 using PocketSquire.Unity.UI;
 using PocketSquire.Unity;
@@ -14,8 +16,9 @@ using PocketSquire.Unity;
 namespace PocketSquire.Arena.Unity.UI
 {
     /// <summary>
-    /// Controls the Shop UI window that displays purchasable items from a location.
-    /// Reads shop item IDs from LocationData and cross-references with GameWorld.Items.
+    /// Controls the Shop UI window that displays purchasable items and perks from a location.
+    /// Reads shop item IDs and perk nodes from LocationData.
+    /// Perks that the player already owns are hidden from the shop listing.
     /// </summary>
     public class ShopController : MonoBehaviour
     {
@@ -76,7 +79,8 @@ namespace PocketSquire.Arena.Unity.UI
         }
 
         /// <summary>
-        /// Opens the shop window and populates it with items from the location's shop inventory.
+        /// Opens the shop window and populates it with items and perks from the location.
+        /// Already-owned perks are excluded from the listing.
         /// </summary>
         public void Open(LocationData location)
         {
@@ -101,7 +105,28 @@ namespace PocketSquire.Arena.Unity.UI
                         continue;
                     }
 
-                    CreateItemRow(item);
+                    Sprite icon = null;
+                    if (!string.IsNullOrEmpty(item.Sprite))
+                        icon = GameAssetRegistry.Instance.GetSprite(item.Sprite);
+
+                    CreateMerchandiseRow(item, icon, () => OnItemPurchased(item));
+                }
+            }
+
+            // Populate shop perks — skip any the player already owns
+            if (location.ShopPerkNodes != null && location.ShopPerkNodes.Count > 0)
+            {
+                var ownedPerks = GameState.Player?.UnlockedPerks ?? new System.Collections.Generic.HashSet<string>();
+
+                foreach (var perkNode in location.ShopPerkNodes)
+                {
+                    if (perkNode == null) continue;
+
+                    // Hide perks the player already has
+                    if (ownedPerks.Contains(perkNode.Id)) continue;
+
+                    var corePerk = perkNode.ToCorePerk();
+                    CreateMerchandiseRow(corePerk, perkNode.Icon, () => OnPerkPurchased(perkNode), $"PerkRow_{perkNode.Id}");
                 }
             }
 
@@ -139,7 +164,10 @@ namespace PocketSquire.Arena.Unity.UI
             OnShopClosed?.Invoke();
         }
 
-        private void CreateItemRow(Item item)
+        /// <summary>
+        /// Creates a single merchandise row for any IMerchandise (item or perk).
+        /// </summary>
+        private void CreateMerchandiseRow(IMerchandise merchandise, Sprite icon, System.Action onPurchase, string rowName = null)
         {
             var prefab = GameAssetRegistry.Instance.itemRowPrefab;
             if (shopScrollContent == null || prefab == null)
@@ -152,24 +180,18 @@ namespace PocketSquire.Arena.Unity.UI
             rowObj.SetActive(true);
             spawnedRows.Add(rowObj);
 
-            // Hook up the audio source for the item row
+            // Hook up audio
             var menuButtonSound = rowObj.GetComponent<MenuButtonSound>();
             if (menuButtonSound != null && audioSource != null)
-            {
                 menuButtonSound.source = audioSource;
-            }
 
-            // Ensure scale is correct
             rowObj.transform.localScale = Vector3.one;
             rowObj.transform.localPosition = Vector3.zero;
+            if (!string.IsNullOrEmpty(rowName)) rowObj.name = rowName;
 
             // Configure MenuCursorTarget
             var cursorTarget = rowObj.GetComponent<MenuCursorTarget>();
-            if (cursorTarget == null)
-            {
-                cursorTarget = rowObj.AddComponent<MenuCursorTarget>();
-            }
-            // Use default offset from MenuSelectionCursor on ShopWindow
+            if (cursorTarget == null) cursorTarget = rowObj.AddComponent<MenuCursorTarget>();
             cursorTarget.cursorOffset = new Vector3(-60f, 0f, 0f);
             cursorTarget.useLocalOffset = true;
 
@@ -183,24 +205,46 @@ namespace PocketSquire.Arena.Unity.UI
                 layoutElement.flexibleWidth = 1f;
             }
 
-            // Get sprite
-            Sprite icon = null;
-            if (!string.IsNullOrEmpty(item.Sprite))
+            // Try MerchandiseRow first, then fall back to legacy ItemRow
+            var merchandiseRow = rowObj.GetComponent<MerchandiseRow>();
+            if (merchandiseRow != null)
             {
-                icon = GameAssetRegistry.Instance.GetSprite(item.Sprite);
+                merchandiseRow.OnSelected = (m) => UpdateInventoryDisplayForMerchandise(m);
+                merchandiseRow.Initialize(merchandise, icon, onPurchase);
             }
-
-            // Initialize row
-            var row = rowObj.GetComponent<ItemRow>();
-            if (row != null)
+            else
             {
-                // Subscribe to selection to update inventory count labels
-                row.OnSelected = (selectedItem) => UpdateInventoryDisplay(selectedItem);
+                // Legacy fallback: prefab still has ItemRow — works for both items and perks
+                // via the new IMerchandise overload.
+                var itemRow = rowObj.GetComponent<ItemRow>();
+                if (itemRow != null)
+                {
+                    if (merchandise is Item item)
+                    {
+                        itemRow.OnSelected = (selectedItem) => UpdateInventoryDisplay(selectedItem);
+                        itemRow.Initialize(item, 1, icon, onPurchase);
+                    }
+                    else
+                    {
+                        itemRow.OnMerchandiseSelected = (m) => UpdateInventoryDisplayForMerchandise(m);
+                        itemRow.Initialize(merchandise, icon, onPurchase);
+                    }
+                }
+            }
+        }
 
-                // Use the item's intrinsic stack size or just 1 for shop display, 
-                // but the price field on ItemRow now handles the cost.
-                row.Initialize(item, 1, icon, () => OnItemPurchased(item));
-
+        private void UpdateInventoryDisplayForMerchandise(IMerchandise merchandise)
+        {
+            // Only items have inventory counts; hide the label for perks
+            if (merchandise is Item item)
+            {
+                UpdateInventoryDisplay(item);
+            }
+            else
+            {
+                // Perk selected — hide inventory count
+                if (inInventoryLabel != null) inInventoryLabel.gameObject.SetActive(false);
+                if (inventoryCountText != null) inventoryCountText.gameObject.SetActive(false);
             }
         }
 
@@ -215,8 +259,6 @@ namespace PocketSquire.Arena.Unity.UI
             }
 
             inventoryCountText.text = count.ToString();
-
-            // Set the label/count active (matching user design expectation)
             if (inInventoryLabel != null) inInventoryLabel.gameObject.SetActive(true);
             inventoryCountText.gameObject.SetActive(true);
         }
@@ -224,13 +266,7 @@ namespace PocketSquire.Arena.Unity.UI
         private void UpdateGoldDisplay()
         {
             if (goldText == null) return;
-
-            int gold = 0;
-            if (GameState.Player != null)
-            {
-                gold = GameState.Player.Gold;
-            }
-
+            int gold = GameState.Player?.Gold ?? 0;
             goldText.text = gold.ToString();
         }
 
@@ -244,53 +280,89 @@ namespace PocketSquire.Arena.Unity.UI
 
             if (!GameState.Player.TryPurchaseItem(item))
             {
-                var deniedClip = GameAssetRegistry.Instance.GetSound("denied");
-                if (audioSource != null && deniedClip != null)
-                {
-                    audioSource.PlayOneShot(deniedClip);
-                }
+                PlayDeniedSound();
                 if (item.Price >= GameState.Player.Gold)
-                {
                     interiorToast.ShowToast("Not enough gold");
-                    return;
-                } else {
+                else
                     interiorToast.ShowToast("Can't carry any more items");
-                    return;
-                }
+                return;
             }
 
-            // Play coins sound effect
-            if (audioSource != null)
-            {
-                var coinsClip = GameAssetRegistry.Instance.GetSound("coin_spend");
-                if (coinsClip != null)
-                {
-                    audioSource.PlayOneShot(coinsClip);
-                } else {
-                    Debug.LogWarning("[ShopController] No coins sound effect found");
-                }
-            } else {
-                Debug.LogWarning("[ShopController] No audio source found");
-            }
-
-            // Update UI
+            PlayCoinSound();
             UpdateGoldDisplay();
             UpdateInventoryDisplay(item);
-
-            Debug.Log($"[ShopController] Purchased {item.Name} for {item.Price} gold");
+            Debug.Log($"[ShopController] Purchased item '{item.Name}' for {item.Price} gold");
         }
 
+        private void OnPerkPurchased(PerkNode perkNode)
+        {
+            if (GameState.Player == null)
+            {
+                Debug.LogWarning("[ShopController] Cannot purchase perk - no player");
+                return;
+            }
 
+            var perk = perkNode.ToCorePerk();
 
+            if (!GameState.Player.TryPurchasePerk(perk))
+            {
+                PlayDeniedSound();
+                // TryPurchasePerk returns false for already-owned too, but those rows are never shown
+                interiorToast.ShowToast("Not enough gold");
+                return;
+            }
+
+            PlayCoinSound();
+            UpdateGoldDisplay();
+            Debug.Log($"[ShopController] Purchased perk '{perk.DisplayName}' for {perk.Price} gold");
+
+            // Remove the purchased perk row so it cannot be bought again this session
+            RemoveRowForPerkId(perkNode.Id);
+        }
+
+        /// <summary>
+        /// Removes and destroys the row associated with the given perk ID after purchase.
+        /// </summary>
+        private void RemoveRowForPerkId(string perkId)
+        {
+            string targetName = $"PerkRow_{perkId}";
+            for (int i = spawnedRows.Count - 1; i >= 0; i--)
+            {
+                var rowObj = spawnedRows[i];
+                if (rowObj != null && rowObj.name == targetName)
+                {
+                    Destroy(rowObj);
+                    spawnedRows.RemoveAt(i);
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(shopScrollContent as RectTransform);
+                    return;
+                }
+            }
+            Debug.LogWarning($"[ShopController] Could not find row to remove for perk '{perkId}'");
+        }
+
+        private void PlayCoinSound()
+        {
+            if (audioSource == null)
+            {
+                Debug.LogWarning("[ShopController] No audio source found");
+                return;
+            }
+            var clip = GameAssetRegistry.Instance.GetSound("coin_spend");
+            if (clip != null) audioSource.PlayOneShot(clip);
+            else Debug.LogWarning("[ShopController] No coins sound effect found");
+        }
+
+        private void PlayDeniedSound()
+        {
+            var clip = GameAssetRegistry.Instance.GetSound("denied");
+            if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
+        }
 
         private void ClearShop()
         {
             foreach (var rowObj in spawnedRows)
             {
-                if (rowObj != null)
-                {
-                    Destroy(rowObj);
-                }
+                if (rowObj != null) Destroy(rowObj);
             }
             spawnedRows.Clear();
         }
@@ -298,13 +370,9 @@ namespace PocketSquire.Arena.Unity.UI
         private void SelectFirstItem()
         {
             if (spawnedRows.Count > 0 && spawnedRows[0] != null)
-            {
                 EventSystem.current.SetSelectedGameObject(spawnedRows[0]);
-            }
             else if (doneButton != null)
-            {
                 EventSystem.current.SetSelectedGameObject(doneButton.gameObject);
-            }
         }
     }
 }

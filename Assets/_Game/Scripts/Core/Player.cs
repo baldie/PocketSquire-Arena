@@ -136,6 +136,47 @@ namespace PocketSquire.Arena.Core
             return true;
         }
 
+        public bool TryPurchasePerk(LevelUp.Perk perk)
+        {
+            if (perk == null)
+            {
+                throw new ArgumentNullException(nameof(perk));
+            }
+
+            // Perks are one-time purchases
+            if (UnlockedPerks.Contains(perk.Id))
+            {
+                return false;
+            }
+
+            if (Gold < perk.Price)
+            {
+                return false;
+            }
+
+            SpendGold(perk.Price);
+            UnlockedPerks.Add(perk.Id);
+
+            // Dispatch effect based on the perk's configured EffectType
+            ApplyPerkEffect(perk);
+
+            return true;
+        }
+
+        private void ApplyPerkEffect(LevelUp.Perk perk)
+        {
+            switch (perk.EffectType)
+            {
+                case LevelUp.PerkEffectType.InventoryExpansion:
+                    Inventory.UpdateCapacity(UnlockedPerks);
+                    break;
+                case LevelUp.PerkEffectType.None:
+                default:
+                    // Tracking or un-implemented mechanic
+                    break;
+            }
+        }
+
 
         public void AcceptNewLevel() {
             if (GameWorld.Progression != null) {
