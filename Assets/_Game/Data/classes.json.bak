@@ -94,5 +94,21 @@
         "defendSoundId": "druid_shield_impact",
         "hitSoundId": "physical_hit",
         "gender": "f"
+    },
+    {
+        "name": "f_archer",
+        "class": "Archer",
+        "attackSoundId": "arrow_loosed",
+        "defendSoundId": "physical_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
+    },
+    {
+        "name": "m_hunter",
+        "class": "Hunter",
+        "attackSoundId": "",
+        "defendSoundId": "",
+        "hitSoundId": "",
+        "gender": "m"
     }
 ]

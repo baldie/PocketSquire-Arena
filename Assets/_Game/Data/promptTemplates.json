@@ -71,9 +71,24 @@
                 "item": "Make this character a girl with short straight hair, but keep the same facial expression"
             },
             "archer": {
-                "idle": "add some red in the feather, and the belt black",
-                "attack": "show this character at the ready",
-                "battle": "raise he bow so that the arrow is at eye level. make the arrow longer"
+                "idle": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "attack": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "battle": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "defeat": "show this character as a girl with short straight hair, keep the facial expression the same. blonde hair",
+                "win": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "item": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "hit": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "defend": "show this character as a girl with short straight hair, keep the facial expression the same"
+            },
+            "hunter": {
+                "idle": "Give this character a small bow and quiver. Make their tunic green, and give them shoes",
+                "attack": "the closed eye should be squinting, and the open eye should be looking to the right",
+                "defend": "holding both knives up in defense",
+                "hit": "he is off balance, falling backwards, do not show any dust",
+                "defeat": "show this character on their knees hands on the ground in defeat looking dejected.",
+                "battle": "Show this character with an arrow nocked, bow taut",
+                "win": "arm up in the air as a fist, in triumph",
+                "item": "open hand reaching up above his head, and he is looking up and to the right as well"
             }
         }
     },

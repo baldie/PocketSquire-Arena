@@ -135,6 +135,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: afb1e65f768c8fa49aa43fb6401b5c8e, type: 3}
   - id: satchel_3
     asset: {fileID: 21300000, guid: 7c9131348cbbebe4781f546d2523854d, type: 3}
+  - id: f_archer_attack
+    asset: {fileID: 21300000, guid: 3b3e9e2ae7ea912409137a8e8236f9ff, type: 3}
+  - id: f_archer_battle
+    asset: {fileID: 21300000, guid: 2764786737ae3bc41883052abda5ced1, type: 3}
+  - id: f_archer_defeat
+    asset: {fileID: 21300000, guid: 92ea2d0ece343044687dbbab1de8b872, type: 3}
+  - id: f_archer_defend
+    asset: {fileID: 21300000, guid: 492c027fd5648e249b08320e49443eba, type: 3}
+  - id: f_archer_hit
+    asset: {fileID: 21300000, guid: 6025d9766f0b6154f8e37cdc43ec7b30, type: 3}
+  - id: f_archer_idle
+    asset: {fileID: 21300000, guid: df0faf593aca9bd4ebc9c92c972aaf72, type: 3}
+  - id: f_archer_item
+    asset: {fileID: 21300000, guid: ace54402c4d09a9489b225696422bdde, type: 3}
+  - id: f_archer_win
+    asset: {fileID: 21300000, guid: dd633cd88fdfa6b4d9b9365147ecbc25, type: 3}
   - id: f_bowman_attack
     asset: {fileID: 21300000, guid: aee7aa4e9b9a72f4ca3efb88436e3c04, type: 3}
   - id: f_bowman_battle
@@ -151,6 +167,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 1b003c8d66af0614ab46a6c85409b2c8, type: 3}
   - id: f_bowman_win
     asset: {fileID: 21300000, guid: f8b0a11a7a1a3634d84b2c6499a65e0d, type: 3}
+  - id: f_druid_attack
+    asset: {fileID: 21300000, guid: 359310ae34f47b548b3e20a2542198d9, type: 3}
+  - id: f_druid_battle
+    asset: {fileID: 21300000, guid: 44cdcb28e2752484fb3a73c09eb0dabe, type: 3}
+  - id: f_druid_defeat
+    asset: {fileID: 21300000, guid: 14efd5b583a585f4196f06578ebb51d2, type: 3}
+  - id: f_druid_defend
+    asset: {fileID: 21300000, guid: 4bb04db519fbf7b40a3425f7f1183371, type: 3}
+  - id: f_druid_hit
+    asset: {fileID: 21300000, guid: c103c3e598abf70499c5aade24abaa35, type: 3}
+  - id: f_druid_idle
+    asset: {fileID: 21300000, guid: 2b1d6d88677e8de428fba9e133ea775d, type: 3}
+  - id: f_druid_item
+    asset: {fileID: 21300000, guid: 47973a6643b3ae04c8ce75202798bd69, type: 3}
+  - id: f_druid_win
+    asset: {fileID: 21300000, guid: 5063fed1b43ea63499cc1842983060b0, type: 3}
   - id: f_fighter_attack
     asset: {fileID: 21300000, guid: 0f4d0621f87e28d4b8b647c5f7562547, type: 3}
   - id: f_fighter_battle
@@ -215,6 +247,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8196c3106646dcc46a02441f97cb72a3, type: 3}
   - id: f_squire_win
     asset: {fileID: 21300000, guid: 74b8f531df44d444a92f21341ae623a3, type: 3}
+  - id: m_archer_attack
+    asset: {fileID: 21300000, guid: 6d3aa9853854e894a95f6845a18fd7f2, type: 3}
+  - id: m_archer_battle
+    asset: {fileID: 21300000, guid: 952896157e0dbec46bd1e1127674ef25, type: 3}
+  - id: m_archer_defeat
+    asset: {fileID: 21300000, guid: 1c26272a39521634989799e383277989, type: 3}
+  - id: m_archer_defend
+    asset: {fileID: 21300000, guid: 3cf1a065bfd1f38429df8893ebaa2599, type: 3}
+  - id: m_archer_hit
+    asset: {fileID: 21300000, guid: 3951ad1a6529459468e24a26f1b4ccd2, type: 3}
+  - id: m_archer_idle
+    asset: {fileID: 21300000, guid: 500c2387ccdd25148befb9e8e0f7af04, type: 3}
+  - id: m_archer_item
+    asset: {fileID: 21300000, guid: d4a785628a98cec448a8c146112f900a, type: 3}
+  - id: m_archer_win
+    asset: {fileID: 21300000, guid: a18ead7774e1d5f4992e2e9c447599d4, type: 3}
   - id: m_bowman_attack
     asset: {fileID: 21300000, guid: 5ca5e2c96ddf3b0459fb845456346a68, type: 3}
   - id: m_bowman_battle
@@ -431,6 +479,8 @@ MonoBehaviour:
   - id: wizards_tower
     asset: {fileID: 8300000, guid: 30092ab7bae229245a08722e3ec994e7, type: 3}
   prefabs:
+  - id: ClassTree
+    asset: {fileID: 8310868900610696175, guid: d29c8fab38ed1ea4fb55a5fb77b17c38, type: 3}
   - id: ConfirmationDialog
     asset: {fileID: 4599741090934638775, guid: 9b506c77e30b89a4aa765220614f6bf1, type: 3}
   - id: DialogueOptionButton
@@ -447,8 +497,6 @@ MonoBehaviour:
     asset: {fileID: 5277411691939063948, guid: 8ff8c5d4df81bae4e833d3de4edd46ce, type: 3}
   - id: PowerUpOption
     asset: {fileID: 5228159149513318820, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
-  - id: SkillTree
-    asset: {fileID: 8310868900610696175, guid: d29c8fab38ed1ea4fb55a5fb77b17c38, type: 3}
   - id: SkillTreeNode
     asset: {fileID: 100000001, guid: 8bd2bfc29ea0a0b459a014bb99140b5c, type: 3}
   - id: MenuCursor

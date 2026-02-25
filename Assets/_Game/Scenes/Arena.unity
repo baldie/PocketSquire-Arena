@@ -15122,6 +15122,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1472821177}
     - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
+      propertyPath: classTreeButton
+      value: 
+      objectReference: {fileID: 1627482851}
+    - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
+      propertyPath: classTreePrefab
+      value: 
+      objectReference: {fileID: 927611617}
+    - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: skillTreePrefab
       value: 
       objectReference: {fileID: 927611617}
@@ -15434,6 +15442,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 060837d267208b840886f24bc620e493, type: 3}
+--- !u!114 &1627482851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7804725082055166570, guid: 060837d267208b840886f24bc620e493, type: 3}
+  m_PrefabInstance: {fileID: 1627482850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1637999255
 GameObject:
   m_ObjectHideFlags: 0

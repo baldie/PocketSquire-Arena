@@ -3972,6 +3972,17 @@ MonoBehaviour:
   dialogueOptionButtonPrefab: {fileID: 1963485399801376877, guid: f7cead71891dc31419540b967e14814d, type: 3}
   audioSource: {fileID: 717625265}
   shopController: {fileID: 898408866}
+--- !u!114 &1457032889 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7804725082055166570, guid: 060837d267208b840886f24bc620e493, type: 3}
+  m_PrefabInstance: {fileID: 1874178498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1488010766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4997,14 +5008,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1436075398}
     m_Modifications:
-    - target: {fileID: 414234488610829681, guid: 060837d267208b840886f24bc620e493, type: 3}
-      propertyPath: m_Name
-      value: ClassTreeBackground
-      objectReference: {fileID: 0}
-    - target: {fileID: 674681451156341836, guid: 060837d267208b840886f24bc620e493, type: 3}
-      propertyPath: m_text
-      value: Class
-      objectReference: {fileID: 0}
     - target: {fileID: 697348835218249935, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: source
       value: 
@@ -5250,7 +5253,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2107889985}
     - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
-      propertyPath: skillTreePrefab
+      propertyPath: classTreeButton
+      value: 
+      objectReference: {fileID: 1457032889}
+    - target: {fileID: 4179308096265727747, guid: 060837d267208b840886f24bc620e493, type: 3}
+      propertyPath: classTreePrefab
       value: 
       objectReference: {fileID: 1180338502}
     - target: {fileID: 4771731085697937466, guid: 060837d267208b840886f24bc620e493, type: 3}
@@ -5300,10 +5307,6 @@ PrefabInstance:
     - target: {fileID: 4889773684383329619, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4999700743974664661, guid: 060837d267208b840886f24bc620e493, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5004844526936925500, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5644,10 +5647,6 @@ PrefabInstance:
     - target: {fileID: 8535686089910021735, guid: 060837d267208b840886f24bc620e493, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8952794019954848319, guid: 060837d267208b840886f24bc620e493, type: 3}
-      propertyPath: m_Name
-      value: ClassTreeButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
