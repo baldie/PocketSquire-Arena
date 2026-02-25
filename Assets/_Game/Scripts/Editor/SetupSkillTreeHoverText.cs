@@ -8,12 +8,12 @@ using System;
 
 namespace PocketSquire.EditorScripts
 {
-    public class SetupSkillTreeHoverText
+    public class SetupClassTreeHoverText
     {
         [MenuItem("PocketSquire/Setup Skill Tree Hover Text")]
         public static void Setup()
         {
-            string prefabPath = "Assets/_Game/Prefabs/SkillTree.prefab";
+            string prefabPath = "Assets/_Game/Prefabs/ClassTree.prefab";
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             if (prefab == null)
             {
@@ -25,19 +25,19 @@ namespace PocketSquire.EditorScripts
             GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
             PrefabUtility.UnpackPrefabInstance(instance, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
             
-            SkillTreeController controller = instance.GetComponent<SkillTreeController>();
+            ClassTreeController controller = instance.GetComponent<ClassTreeController>();
             
             // 1. Create the TextMeshProUGUI object
-            Transform container = instance.transform.Find("SkillTreeContainer");
+            Transform container = instance.transform.Find("ClassTreeContainer");
             if (container == null)
             {
-                Debug.LogError("Could not find SkillTreeContainer");
+                Debug.LogError("Could not find ClassTreeContainer");
                 UnityEngine.Object.DestroyImmediate(instance);
                 return;
             }
 
             // We make HoverDescriptionText a child of the root (instance) instead of container
-            // because SkillTreeContainer lacks a RectTransform, which breaks anchoring.
+            // because ClassTreeContainer lacks a RectTransform, which breaks anchoring.
             Transform existingText = instance.transform.Find("HoverDescriptionText");
             if (existingText == null)
             {

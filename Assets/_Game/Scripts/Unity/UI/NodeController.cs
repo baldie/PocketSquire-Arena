@@ -49,7 +49,7 @@ namespace PocketSquire.Unity.UI
         private Image _image;
         private Button _button;
         private NodeState _currentState = NodeState.Dormant;
-        private SkillTreeController _treeController;
+        private ClassTreeController _treeController;
         private Outline _hoverOutline;
         private Tween _pulseTween;
         private bool _isActiveClass = false;
@@ -61,7 +61,7 @@ namespace PocketSquire.Unity.UI
             if (!TryGetComponent( out _image)) Debug.LogError($"{name}: Missing Image component!");
             if (!TryGetComponent(out _button)) Debug.LogError($"{name}: Missing Button component!");
 
-            _treeController = GetComponentInParent<SkillTreeController>();
+            _treeController = GetComponentInParent<ClassTreeController>();
 
             if (audioSource == null)
             {

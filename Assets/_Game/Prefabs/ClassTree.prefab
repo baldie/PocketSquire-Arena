@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 6816333411880063091}
   - component: {fileID: 437733391960761435}
   m_Layer: 0
-  m_Name: SkillTreeContainer
+  m_Name: ClassTreeContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 401504867742551549}
   - component: {fileID: 7623057289575466446}
   m_Layer: 5
-  m_Name: SkillTree
+  m_Name: ClassTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

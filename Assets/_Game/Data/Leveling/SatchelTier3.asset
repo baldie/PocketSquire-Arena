@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b102f50b123e384da4b5e35a4348662, type: 3}
   m_Name: SatchelTier3
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.PerkNode
-  id: satcheltier3
+  id: satchel_tier_3
   displayName: Satchel of containing
   description: Largest satchel with 5 slots
   minLevel: 0

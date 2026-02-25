@@ -316,6 +316,10 @@ namespace PocketSquire.Arena.Unity.UI
             UpdateGoldDisplay();
             Debug.Log($"[ShopController] Purchased perk '{perk.DisplayName}' for {perk.Price} gold");
 
+            // Refresh the PlayerMenu so inventory slot changes (e.g. satchel expansion) are visible immediately.
+            var playerMenu = FindFirstObjectByType<PlayerMenuController>();
+            playerMenu?.Refresh();
+
             // Remove the purchased perk row so it cannot be bought again this session
             RemoveRowForPerkId(perkNode.Id);
         }

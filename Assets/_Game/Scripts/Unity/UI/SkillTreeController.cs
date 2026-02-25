@@ -4,12 +4,12 @@ using TMPro;
 namespace PocketSquire.Unity.UI
 {
     /// <summary>
-    /// MonoBehaviour for the SkillTree prefab.
-    /// Closes the skill tree when the player presses Escape (Cancel action).
+    /// MonoBehaviour for the ClassTree prefab.
+    /// Closes the class tree when the player presses Escape (Cancel action).
     /// Uses GameInput to avoid the deprecated legacy InputManager.
     /// </summary>
     [DefaultExecutionOrder(-50)]
-    public class SkillTreeController : MonoBehaviour
+    public class ClassTreeController : MonoBehaviour
     {
         [Header("UI References")]
         public TextMeshProUGUI hoverDescriptionText;

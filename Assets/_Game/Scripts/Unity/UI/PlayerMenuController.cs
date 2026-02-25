@@ -46,7 +46,7 @@ namespace PocketSquire.Unity.UI
         [SerializeField] private Transform badgesContainer;
 
         [Header("Footer")]
-        [SerializeField] private Button skillTreeButton;
+        [SerializeField] private Button classTreeButton;
         [SerializeField] private Button doneButton;
 
         [Header("Cursor Settings")]
@@ -59,9 +59,13 @@ namespace PocketSquire.Unity.UI
         [Tooltip("Material to use for grayscale effect (for monster debuffs)")]
         public Material grayscaleMaterial;
 
-        [Header("Skill Tree")]
-        [Tooltip("Prefab to show when opening the skill tree")]
-        public GameObject skillTreePrefab;
+        [Header("Class Tree")]
+        [Tooltip("Prefab to show when opening the class tree")]
+        public GameObject classTreePrefab;
+
+        [Header("Town")]
+        [Tooltip("The InteriorPanel shown when shopping in town — blocks the Inventory key while visible")]
+        [SerializeField] private GameObject interiorPanel;
 
         private bool isOpen = false;
         private PauseMenu _pauseMenu;
@@ -100,15 +104,15 @@ namespace PocketSquire.Unity.UI
         private void Start()
         {
             // Wire up footer button
-            if (skillTreeButton != null)
+            if (classTreeButton != null)
             {
-                skillTreeButton.onClick.RemoveAllListeners();
-                skillTreeButton.onClick.AddListener(OnSkillTreeButtonClicked);
+                classTreeButton.onClick.RemoveAllListeners();
+                classTreeButton.onClick.AddListener(OnClassTreeButtonClicked);
 
-                // Add MenuCursorTarget to SkillTreeButton if missing (or we can do this in Editor)
+                // Add MenuCursorTarget to ClassTreeButton if missing (or we can do this in Editor)
                 // But for safety/completeness based on plan:
-                var target = skillTreeButton.GetComponent<MenuCursorTarget>();
-                if (target == null) target = skillTreeButton.gameObject.AddComponent<MenuCursorTarget>();
+                var target = classTreeButton.GetComponent<MenuCursorTarget>();
+                if (target == null) target = classTreeButton.gameObject.AddComponent<MenuCursorTarget>();
                 // Value from Plan: (-60, 40.5, 0). 
                 if (target.cursorOffset == Vector3.zero) target.cursorOffset = new Vector3(-60f, 40.5f, 0f);
             }
@@ -135,6 +139,10 @@ namespace PocketSquire.Unity.UI
             // Do nothing with the Inventory key while the pause menu is showing.
             bool pauseMenuOpen = _pauseMenu != null && _pauseMenu.pauseMenuUI != null && _pauseMenu.pauseMenuUI.activeSelf;
             if (pauseMenuOpen) return;
+
+            // Do nothing with the Inventory key while the town interior/shop panel is visible.
+            bool shoppingInTown = interiorPanel != null && interiorPanel.activeSelf;
+            if (shoppingInTown) return;
 
             if (GameInput.Instance.GetButtonDown(GameInput.Instance.InventoryAction))
             {
@@ -389,13 +397,13 @@ namespace PocketSquire.Unity.UI
         }
 
         /// <summary>
-        /// Called when the footer button (Skill Tree) is clicked
+        /// Called when the footer button (Class Tree) is clicked
         /// </summary>
-        private void OnSkillTreeButtonClicked()
+        private void OnClassTreeButtonClicked()
         {
-            if (skillTreePrefab != null)
+            if (classTreePrefab != null)
             {
-                skillTreePrefab.SetActive(true);
+                classTreePrefab.SetActive(true);
             }
         }
 
@@ -440,9 +448,9 @@ namespace PocketSquire.Unity.UI
             }
 
             // 2. Fallback to Skill Tree Button
-            if (skillTreeButton != null && skillTreeButton.interactable)
+            if (classTreeButton != null && classTreeButton.interactable)
             {
-                EventSystem.current.SetSelectedGameObject(skillTreeButton.gameObject);
+                EventSystem.current.SetSelectedGameObject(classTreeButton.gameObject);
                 return;
             }
 
