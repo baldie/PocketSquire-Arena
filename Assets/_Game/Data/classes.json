@@ -106,9 +106,25 @@
     {
         "name": "m_hunter",
         "class": "Hunter",
-        "attackSoundId": "",
-        "defendSoundId": "",
+        "attackSoundId": "thrown_weapon",
+        "defendSoundId": "steel_parry",
         "hitSoundId": "physical_hit",
         "gender": "m"
+    },
+    {
+        "name": "f_hunter",
+        "class": "Hunter",
+        "attackSoundId": "thrown_weapon",
+        "defendSoundId": "steel_parry",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
+    },
+    {
+        "name": "f_warrior",
+        "class": "Warrior",
+        "attackSoundId": "heavy_swing",
+        "defendSoundId": "steel_block",
+        "hitSoundId": "armor_hit",
+        "gender": "f"
     }
 ]

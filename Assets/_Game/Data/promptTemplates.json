@@ -81,14 +81,24 @@
                 "defend": "show this character as a girl with short straight hair, keep the facial expression the same"
             },
             "hunter": {
-                "idle": "Give this character a small bow and quiver. Make their tunic green, and give them shoes",
-                "attack": "the closed eye should be squinting, and the open eye should be looking to the right",
-                "defend": "holding both knives up in defense",
-                "hit": "he is off balance, falling backwards, do not show any dust",
-                "defeat": "show this character on their knees hands on the ground in defeat looking dejected.",
-                "battle": "Show this character with an arrow nocked, bow taut",
-                "win": "arm up in the air as a fist, in triumph",
-                "item": "open hand reaching up above his head, and he is looking up and to the right as well"
+                "idle": "make this character a girl with short straight blonde hair but keep the same facial expression. don't forget the scar",
+                "battle": "make this wizard standing at the ready",
+                "attack": "make this character a girl with short straight blonde hair and keep the same facial expression",
+                "win": "show this little mage raising their empty hand in a fist triumphantly",
+                "hit": "make this character a girl with short straight hair but keep the same facial expression",
+                "defeat": "make this character a girl with short straight hair but keep the same facial expression",
+                "item": "remove the tray of drinks so that its just their empty hand in the air",
+                "defend": "make this character a girl with short straight hair but keep the same facial expression"
+            },
+            "warrior": {
+                "idle": "show this character with the halberd on their back and reaching up to the right with their hand over their head - they're looking at their hand with a smile",
+                "battle": "Show this little soldier in a battle stance on a white background",
+                "attack": "thrusting the weapon straight to the right with all his might",
+                "defeat": "make the background of this image white, and make one of his hands into a fist on the ground",
+                "defend": "make this character a boy and keep the same expression",
+                "win": "make this character a boy with blonde hair under his helmet and keep the same expression",
+                "item": "show this character reaching up and to the right with their hand open, the halberd is on their back",
+                "hit": "show this character off balance"
             }
         }
     },

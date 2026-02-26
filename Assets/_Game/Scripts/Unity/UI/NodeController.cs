@@ -85,9 +85,12 @@ namespace PocketSquire.Unity.UI
                 _button.onClick.AddListener(OnNodeClicked);
             }
 
-            if (initialState == NodeState.Activated)
+            bool isUnlocked = initialState == NodeState.Activated ||
+                              (GameState.Player != null && GameState.Player.UnlockedClasses.Contains(nodeClass.ToString()));
+
+            if (isUnlocked)
             {
-                Activate();
+                Activate(false);
             }
             else
             {
@@ -181,13 +184,17 @@ namespace PocketSquire.Unity.UI
         /// </summary>
         public void OnNodeClicked()
         {
+#if UNITY_EDITOR
+            if (_currentState == NodeState.Available || _currentState == NodeState.Activated)
+#else
             if (_currentState == NodeState.Available)
+#endif
             {
                 if (audioSource != null && clickSound != null)
                 {
                     audioSource.PlayOneShot(clickSound);
                 }
-                Activate();
+                Activate(true);
             }
         }
 
@@ -195,13 +202,18 @@ namespace PocketSquire.Unity.UI
         /// Activates this node: sets state to Activated, then
         /// activates all outgoing connectors.
         /// </summary>
-        public void Activate()
+        public void Activate(bool changePlayerClass = true)
         {
             SetState(NodeState.Activated);
 
             if (GameState.Player != null)
             {
-                GameState.Player.ChangeClass(nodeClass);
+                GameState.Player.UnlockedClasses.Add(nodeClass.ToString());
+
+                if (changePlayerClass && GameState.Player.Class != nodeClass)
+                {
+                    GameState.Player.ChangeClass(nodeClass);
+                }
 
                 // Refresh all nodes' pulse indicators
                 var allNodes = FindObjectsOfType<NodeController>();
@@ -249,10 +261,14 @@ namespace PocketSquire.Unity.UI
         {
             if (_button == null) return;
 
-            // If already activated, not interactable (but visually distinct)
+            // If already activated, still allow interactions to swap classes
             if (_currentState == NodeState.Activated)
             {
+#if UNITY_EDITOR
+                _button.interactable = true;
+#else
                 _button.interactable = false;
+#endif
                 return;
             }
 

@@ -18,6 +18,7 @@ namespace PocketSquire.Arena.Core
         public PlayerClass.ClassName Class { get; private set; } = PlayerClass.ClassName.Squire;
 
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
+        public System.Collections.Generic.HashSet<string> UnlockedClasses { get; set; } = new System.Collections.Generic.HashSet<string> { PlayerClass.ClassName.Squire.ToString() };
 
         public override string SpriteId {
             get

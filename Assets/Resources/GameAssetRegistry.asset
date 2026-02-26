@@ -199,6 +199,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 506386fddb9090147a6e3e86b13546c8, type: 3}
   - id: f_fighter_win
     asset: {fileID: 21300000, guid: 9dddd16ebdd572e458a486c709d367ac, type: 3}
+  - id: f_hunter_attack
+    asset: {fileID: 21300000, guid: a4b48503996e0e84bbaf9686d581c247, type: 3}
+  - id: f_hunter_battle
+    asset: {fileID: 21300000, guid: 7d20a4e5ca828254b9dac218dfa058aa, type: 3}
+  - id: f_hunter_defeat
+    asset: {fileID: 21300000, guid: 7facf2e1a3f2d8742bf754cbfbe200e6, type: 3}
+  - id: f_hunter_defend
+    asset: {fileID: 21300000, guid: 21cf4dea9013c3140a96188b8c9b03bb, type: 3}
+  - id: f_hunter_hit
+    asset: {fileID: 21300000, guid: 292e992514974a044aaea6707129df85, type: 3}
+  - id: f_hunter_idle
+    asset: {fileID: 21300000, guid: 6fda14ff641395347885c34d27ff7ead, type: 3}
+  - id: f_hunter_item
+    asset: {fileID: 21300000, guid: bbac5803e149e494cb240b710d3f16b1, type: 3}
+  - id: f_hunter_win
+    asset: {fileID: 21300000, guid: 7fb65e7d8a7ce7143a5464cf14b6096a, type: 3}
   - id: f_mage_attack
     asset: {fileID: 21300000, guid: fd22e8f3fad4b4c4b9e4dd15fd5be3ff, type: 3}
   - id: f_mage_battle
@@ -247,6 +263,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8196c3106646dcc46a02441f97cb72a3, type: 3}
   - id: f_squire_win
     asset: {fileID: 21300000, guid: 74b8f531df44d444a92f21341ae623a3, type: 3}
+  - id: f_warrior_attack
+    asset: {fileID: 21300000, guid: 61cdb0f4b1d8b07438cc4a333a4a3474, type: 3}
+  - id: f_warrior_battle
+    asset: {fileID: 21300000, guid: f0f7b383d6d4d1341b40009cc1f065f5, type: 3}
+  - id: f_warrior_defeat
+    asset: {fileID: 21300000, guid: 8e227c914cbdde446b2036945e78c730, type: 3}
+  - id: f_warrior_defend
+    asset: {fileID: 21300000, guid: 2dd64a25884ea8f45afed3549b0a94de, type: 3}
+  - id: f_warrior_hit
+    asset: {fileID: 21300000, guid: 6e43bfade1119394e8e853222e49820c, type: 3}
+  - id: f_warrior_idle
+    asset: {fileID: 21300000, guid: cd64446f892f8d246a2ffd954e7bd7d8, type: 3}
+  - id: f_warrior_item
+    asset: {fileID: 21300000, guid: bbad429484c65ca44aa1debceae152ed, type: 3}
+  - id: f_warrior_win
+    asset: {fileID: 21300000, guid: d78a103c5f80a714c8e384b147b55168, type: 3}
   - id: m_archer_attack
     asset: {fileID: 21300000, guid: 6d3aa9853854e894a95f6845a18fd7f2, type: 3}
   - id: m_archer_battle
@@ -311,6 +343,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 848bd73f69ab8004cad5e4893541440d, type: 3}
   - id: m_fighter_win
     asset: {fileID: 21300000, guid: c62c8f3a5d4b049429e1487ef4eb1267, type: 3}
+  - id: m_hunter_attack
+    asset: {fileID: 21300000, guid: bb0861936d57dc147b4737c688772515, type: 3}
+  - id: m_hunter_battle
+    asset: {fileID: 21300000, guid: 08efd91adfb2bef4697bf3eadec5237f, type: 3}
+  - id: m_hunter_defeat
+    asset: {fileID: 21300000, guid: e9b6a323c2fa3c043bd82f6d3d1bda4d, type: 3}
+  - id: m_hunter_defend
+    asset: {fileID: 21300000, guid: bc136fd76ddaf364abfc169538bb7645, type: 3}
+  - id: m_hunter_hit
+    asset: {fileID: 21300000, guid: 84a10b31d1d118641bff45aaf78fd276, type: 3}
+  - id: m_hunter_idle
+    asset: {fileID: 21300000, guid: ade42f2dd39cf0d48b40f2623af4e61b, type: 3}
+  - id: m_hunter_item
+    asset: {fileID: 21300000, guid: 1324d220e7c32af48918804fc0a2fbe0, type: 3}
+  - id: m_hunter_win
+    asset: {fileID: 21300000, guid: 4c496f72e6767b744a07ada006c46d91, type: 3}
   - id: m_mage_attack
     asset: {fileID: 21300000, guid: 66b6d31a35ef6eb48a37af0ae663b974, type: 3}
   - id: m_mage_battle
@@ -359,6 +407,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8ce105a276362c54993b9f2dabc2bc4e, type: 3}
   - id: m_squire_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
+  - id: m_warrior_attack
+    asset: {fileID: 21300000, guid: 286dfec01be58d74eb73f57f21cd34ea, type: 3}
+  - id: m_warrior_battle
+    asset: {fileID: 21300000, guid: 7de8add380f03bb46a18a97bb7765a6e, type: 3}
+  - id: m_warrior_defeat
+    asset: {fileID: 21300000, guid: d79657a8615be9b4190c7d111e1052d6, type: 3}
+  - id: m_warrior_defend
+    asset: {fileID: 21300000, guid: ae46f00acbfa9cb45b10727504c2661d, type: 3}
+  - id: m_warrior_hit
+    asset: {fileID: 21300000, guid: 723504303ecd5e648a04149046a296cc, type: 3}
+  - id: m_warrior_idle
+    asset: {fileID: 21300000, guid: 65671167d9706bd4aaa82a384bd30246, type: 3}
+  - id: m_warrior_item
+    asset: {fileID: 21300000, guid: 839c9f56ff7fdb64cbdf54455ce32191, type: 3}
+  - id: m_warrior_win
+    asset: {fileID: 21300000, guid: 31f509405f3df2341b2ce9614f736fb6, type: 3}
   - id: constitution
     asset: {fileID: 21300000, guid: 4b01cc08772854e4c8c9e8c43ceda8f3, type: 3}
   - id: curse
@@ -414,6 +478,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: d0f166575306db84091dc03fce0eff69, type: 3}
   - id: MushroomMarauderSpecialAttack
     asset: {fileID: 8300000, guid: 376a3c83916624b43a95d2dab2c50900, type: 3}
+  - id: armor_hit
+    asset: {fileID: 8300000, guid: 686ce910db504a44a8d435a606deba87, type: 3}
   - id: arrow_loosed
     asset: {fileID: 8300000, guid: 0db1563f226b8e341b9a6ed8d1eb173b, type: 3}
   - id: druid_shield_impact
@@ -426,6 +492,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: d3b951d1aad59104d819ab546c0417f3, type: 3}
   - id: force_field_defend
     asset: {fileID: 8300000, guid: 5943efc78dafe3c45aace42422b68dd7, type: 3}
+  - id: heavy_swing
+    asset: {fileID: 8300000, guid: 04333e5daa17efb4797b7fe7179739ad, type: 3}
   - id: large_fireball
     asset: {fileID: 8300000, guid: 556d0a09d396e9e49a0a306313b9e28f, type: 3}
   - id: m_physical_attack
@@ -436,6 +504,12 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
+  - id: steel_block
+    asset: {fileID: 8300000, guid: 2f21bb6afb479c2499847cdf2893ec7a, type: 3}
+  - id: steel_parry
+    asset: {fileID: 8300000, guid: 8e86b9dcad43fba48bf7a81d31ba7d5a, type: 3}
+  - id: thrown_weapon
+    asset: {fileID: 8300000, guid: acaf9bfa78c101146bb780cecc3e491d, type: 3}
   - id: wooden_block
     asset: {fileID: 8300000, guid: 286973a110610fb428d9fd2c1e2fa6c7, type: 3}
   - id: wooden_chop

@@ -1,0 +1,118 @@
+{
+    "player": {
+        "global": {
+            "idle": "A full-body fantasy RPG sprite of a {class} {gender}, idle stance, pixel art, transparent background",
+            "attack": "A full-body fantasy RPG sprite of a {class} {gender}, attacking with weapon, pixel art, transparent background",
+            "defend": "A full-body fantasy RPG sprite of a {class} {gender}, defensive guard stance, pixel art, transparent background",
+            "hit": "A full-body fantasy RPG sprite of a {class} {gender}, recoiling from a hit, pixel art, transparent background",
+            "defeat": "A full-body fantasy RPG sprite of a {class} {gender}, collapsed in defeat, pixel art, transparent background",
+            "yield": "A full-body fantasy RPG sprite of a {class} {gender}, surrendering with hands raised, pixel art, transparent background",
+            "win": "A full-body fantasy RPG sprite of a {class} {gender}, celebrating victory, pixel art, transparent background",
+            "item": "A full-body fantasy RPG sprite of a {class} {gender}, using an item, pixel art, transparent background"
+        },
+        "overrides": {
+            "squire": {
+                "idle": "Make this character a girl with short straight hair, but keep the same adventurous facial expression",
+                "attack": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defend": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "hit": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defeat": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "win": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "item": "Make this character a girl with short straight hair, but keep the same facial expression"
+            },
+            "spellcaster": {
+                "idle": "Make this character a girl with short straight hair, but keep the same adventurous facial expression",
+                "attack": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defend": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "hit": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defeat": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "win": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "item": "Make this character a girl with short straight hair, but keep the same facial expression"
+            },
+            "bowman": {
+                "idle": "Give this character a small bow and quiver. Make their tunic green, and give them shoes",
+                "attack": "the closed eye should be squinting, and the open eye should be looking to the right",
+                "defend": "Show this holding their bow in front of them to block",
+                "hit": "Show this character off balance as though taking a hit",
+                "defeat": "show this character on their knees hands on the ground in defeat looking dejected. bow is flat on the ground next to them. No ground or shadows",
+                "battle": "Show this character with an arrow nocked, bow taut",
+                "win": "Show this character with their free hand raised in a fist, other hand holding bow, triumphant facial expression",
+                "item": "show this character with the bow in the other hand, and really reaching with the now free hand to the top right in the air"
+            },
+            "fighter": {
+                "idle": "Give this character a small bow and quiver. Make their tunic green, and give them shoes",
+                "attack": "the closed eye should be squinting, and the open eye should be looking to the right",
+                "defend": "He is crouching down and has his shield ",
+                "hit": "sword put away, and free hand really reaching up and to the right as much as possible - hand open in the sky",
+                "defeat": "show this character on their knees hands on the ground in defeat looking dejected. bow is flat on the ground next to them. No ground or shadows",
+                "battle": "Show this character with an arrow nocked, bow taut",
+                "win": "the wrapped gloves cover his fingers",
+                "item": "gloves cover their fingers"
+            },
+            "mage": {
+                "idle": "make the top of the staff wooden instead of having a gem",
+                "battle": "make this wizard standing at the ready",
+                "attack": "both arms stretched out",
+                "win": "show this little mage raising their empty hand in a fist triumphantly",
+                "hit": "show this character off balance as if they were getting hit. no impact effects. white background",
+                "defeat": "show this character on their hands and knees, head down dejected. staff on the ground by their side. white background no shadows",
+                "item": "remove the tray of drinks so that its just their empty hand in the air"
+            },
+            "druid": {
+                "idle": "Make this character a girl with short straight hair, but keep the same adventurous facial expression",
+                "attack": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defend": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "hit": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "defeat": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "battle": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "win": "Make this character a girl with short straight hair, but keep the same facial expression",
+                "item": "Make this character a girl with short straight hair, but keep the same facial expression"
+            },
+            "archer": {
+                "idle": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "attack": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "battle": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "defeat": "show this character as a girl with short straight hair, keep the facial expression the same. blonde hair",
+                "win": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "item": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "hit": "show this character as a girl with short straight hair, keep the facial expression the same",
+                "defend": "show this character as a girl with short straight hair, keep the facial expression the same"
+            },
+            "hunter": {
+                "idle": "make this character a girl with short straight blonde hair but keep the same facial expression. don't forget the scar",
+                "battle": "make this wizard standing at the ready",
+                "attack": "make this character a girl with short straight blonde hair and keep the same facial expression",
+                "win": "show this little mage raising their empty hand in a fist triumphantly",
+                "hit": "make this character a girl with short straight hair but keep the same facial expression",
+                "defeat": "make this character a girl with short straight hair but keep the same facial expression",
+                "item": "remove the tray of drinks so that its just their empty hand in the air",
+                "defend": "make this character a girl with short straight hair but keep the same facial expression"
+            },
+            "warrior": {
+                "idle": "give him a proper medieval warrior's outfit",
+                "battle": "Show this little soldier in a battle stance on a white background",
+                "attack": "thrusting the weapon straight to the right with all his might",
+                "defeat": "make the background of this image white, and make one of his hands into a fist on the ground",
+                "defend": "show this character using his halberd to prepare to defend against "
+            }
+        }
+    },
+    "monster": {
+        "global": {
+            "battle": "A fantasy monster named {name} (rank {rank}), idle battle stance, pixel art, transparent background",
+            "attack": "A fantasy monster named {name} (rank {rank}), lunging to attack, pixel art, transparent background",
+            "special_attack": "A fantasy monster named {name} (rank {rank}), unleashing a special attack, pixel art, transparent background",
+            "hit": "A fantasy monster named {name} (rank {rank}), recoiling from damage, pixel art, transparent background",
+            "defend": "A fantasy monster named {name} (rank {rank}), bracing in defense, pixel art, transparent background"
+        },
+        "overrides": {}
+    },
+    "item": {
+        "global": {
+            "icon": "A fantasy RPG item icon of {name}, pixel art style, 64x64, transparent background"
+        },
+        "overrides": {}
+    }
+}
