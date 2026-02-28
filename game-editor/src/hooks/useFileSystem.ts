@@ -17,6 +17,36 @@ export function useFileSystem() {
                 let promptTemplates: PromptTemplates;
                 try {
                     promptTemplates = await readJsonFile<PromptTemplates>(handle, ["Data", "promptTemplates.json"]);
+
+                    // Migration: check if player.global is still a flat record instead of {m, f}
+                    // We check if "idle" exists directly on player.global
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const anyGlobals = promptTemplates.player.global as any;
+                    if (typeof anyGlobals.idle === "string") {
+                        const legacyGlobals = { ...anyGlobals };
+                        const legacyOverrides = { ...promptTemplates.player.overrides };
+
+                        promptTemplates.player.global = {
+                            m: legacyGlobals,
+                            f: DEFAULT_TEMPLATES.player.global.f
+                        };
+
+                        // Migrate existing overrides to male prefix if they don't have it
+                        const newOverrides: typeof promptTemplates.player.overrides = {};
+                        for (const [key, value] of Object.entries(legacyOverrides)) {
+                            if (!key.startsWith("m_") && !key.startsWith("f_")) {
+                                newOverrides[`m_${key}`] = value;
+                            } else {
+                                newOverrides[key] = value;
+                            }
+                        }
+                        promptTemplates.player.overrides = newOverrides;
+
+                        // Save migrated format immediately
+                        await writeJsonFile(handle, ["Data", "promptTemplates.json"], promptTemplates);
+                        console.log("[useFileSystem] Migrated promptTemplates to new gendered format.");
+                    }
+
                 } catch {
                     // Bootstrap: first run
                     promptTemplates = DEFAULT_TEMPLATES;

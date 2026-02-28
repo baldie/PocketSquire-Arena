@@ -60,7 +60,10 @@ export interface ItemData {
 
 export interface PromptTemplates {
     player: {
-        global: Record<PlayerSlot, string>;
+        global: {
+            m: Record<PlayerSlot, string>;
+            f: Record<PlayerSlot, string>;
+        };
         overrides: Record<string, Partial<Record<PlayerSlot, string>>>;
     };
     monster: {

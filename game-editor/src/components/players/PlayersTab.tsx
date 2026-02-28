@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAppContext } from "../../context/AppContext";
-import { PLAYER_SLOTS, GENDERS } from "../../constants";
+import { PLAYER_SLOTS } from "../../constants";
 import { useImageGeneration } from "../../hooks/useImageGeneration";
 import { slugify } from "../../utils/slugify";
-import { PLAYER_CLASSES } from "../../constants";
+
+import { readImageAsDataUrl } from "../../utils/fileSystem";
+import { getEffectiveTemplate, resolveTemplate } from "../../utils/resolveTemplate";
 
 import ClassList from "./ClassList";
 import ClassDetail from "./ClassDetail";
@@ -17,24 +19,60 @@ export default function PlayersTab() {
     const [failedSlots, setFailedSlots] = useState<Array<{ entityName: string; slot: ImageSlot; error?: string }>>([]);
 
     const handleBatchGenerate = async () => {
+        const cls = state.activePlayerClass;
+        const gender = state.activePlayerGender;
+        if (!cls) {
+            alert("No class selected. Please select a player class to batch generate.");
+            return;
+        }
+
+        if (!state.dirHandle) {
+            alert("Workspace directory is not loaded.");
+            return;
+        }
+
+        // Check if male idle frame exists
+        const maleIdlePath = ["Art", "Player", `m_${cls.toLowerCase()}_idle.png`];
+        const maleIdleBase64 = await readImageAsDataUrl(state.dirHandle, maleIdlePath);
+        if (!maleIdleBase64) {
+            alert(`Cannot batch generate: Male 'idle' frame is missing for ${cls}. Please generate it manually first.`);
+            return;
+        }
+
+        // Check for missing prompts for the ACTIVE gender only
+        const missingPrompts: string[] = [];
+        for (const slot of PLAYER_SLOTS) {
+            const key = `${gender}_${slugify(cls)}`;
+            const template = getEffectiveTemplate(state.promptTemplates, "player", key, slot);
+            const { unresolvedVars } = resolveTemplate(template, { class: cls, gender: gender === "m" ? "male" : "female" });
+            if (unresolvedVars.length > 0 || template.trim() === "") {
+                missingPrompts.push(`${gender === "m" ? "Male" : "Female"} ${slot}`);
+            }
+        }
+
+        if (missingPrompts.length > 0) {
+            alert(`Cannot batch generate. Missing or invalid prompts for:\n${missingPrompts.join("\n")}`);
+            return;
+        }
+
         setBatchOpen(true);
         setFailedSlots([]);
 
         const entities: Parameters<typeof batchGenerate>[0] = [];
 
-        for (const cls of PLAYER_CLASSES) {
-            for (const gender of GENDERS) {
-                for (const slot of PLAYER_SLOTS) {
-                    entities.push({
-                        slot,
-                        pathSegments: ["Art", "Player", `${gender}_${cls.toLowerCase()}_${slot}.png`],
-                        variables: { class: cls, gender: gender === "m" ? "male" : "female" },
-                        entityType: "player",
-                        entityKey: slugify(cls),
-                        entityName: `${cls} (${gender})`,
-                    });
-                }
-            }
+        // Generate ONLY for the active gender
+        for (const slot of PLAYER_SLOTS) {
+            entities.push({
+                slot,
+                pathSegments: ["Art", "Player", `${gender}_${cls.toLowerCase()}_${slot}.png`],
+                variables: { class: cls, gender: gender === "m" ? "male" : "female" },
+                entityType: "player",
+                entityKey: `${gender}_${slugify(cls)}`,
+                entityName: `${cls} (${gender})`,
+                referenceImagePathSegments: gender === "m"
+                    ? (slot === "idle" ? undefined : maleIdlePath)
+                    : ["Art", "Player", `m_${cls.toLowerCase()}_${slot}.png`]
+            });
         }
 
         await batchGenerate(

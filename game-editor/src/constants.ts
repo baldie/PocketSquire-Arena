@@ -45,14 +45,26 @@ export const GENDERS: Gender[] = ["m", "f"];
 export const DEFAULT_TEMPLATES: PromptTemplates = {
     player: {
         global: {
-            idle: "A full-body fantasy RPG sprite of a {class} {gender}, idle stance, pixel art, transparent background",
-            attack: "A full-body fantasy RPG sprite of a {class} {gender}, attacking with weapon, pixel art, transparent background",
-            defend: "A full-body fantasy RPG sprite of a {class} {gender}, defensive guard stance, pixel art, transparent background",
-            hit: "A full-body fantasy RPG sprite of a {class} {gender}, recoiling from a hit, pixel art, transparent background",
-            defeat: "A full-body fantasy RPG sprite of a {class} {gender}, collapsed in defeat, pixel art, transparent background",
-            battle: "A full-body fantasy RPG sprite of a {class} {gender}, standard battle stance, pixel art, transparent background",
-            win: "A full-body fantasy RPG sprite of a {class} {gender}, celebrating victory, pixel art, transparent background",
-            item: "A full-body fantasy RPG sprite of a {class} {gender}, using an item, pixel art, transparent background",
+            m: {
+                idle: "A full-body fantasy RPG sprite of a {class} male, idle stance, pixel art, transparent background",
+                attack: "A full-body fantasy RPG sprite of a {class} male, attacking with weapon, pixel art, transparent background",
+                defend: "A full-body fantasy RPG sprite of a {class} male, defensive guard stance, pixel art, transparent background",
+                hit: "A full-body fantasy RPG sprite of a {class} male, recoiling from a hit, pixel art, transparent background",
+                defeat: "A full-body fantasy RPG sprite of a {class} male, collapsed in defeat, pixel art, transparent background",
+                battle: "A full-body fantasy RPG sprite of a {class} male, standard battle stance, pixel art, transparent background",
+                win: "A full-body fantasy RPG sprite of a {class} male, celebrating victory, pixel art, transparent background",
+                item: "A full-body fantasy RPG sprite of a {class} male, using an item, pixel art, transparent background",
+            },
+            f: {
+                idle: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                attack: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                defend: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                hit: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                defeat: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                battle: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                win: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                item: "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+            }
         },
         overrides: {},
     },

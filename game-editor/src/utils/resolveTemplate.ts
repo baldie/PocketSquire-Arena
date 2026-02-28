@@ -30,5 +30,14 @@ export function getEffectiveTemplate(
     const slotStr = slot as string;
     const override: string | undefined = overrides ? (overrides as Record<string, string | undefined>)[slotStr] : undefined;
     if (override && override.trim() !== "") return override;
+
+    if (entityType === "player") {
+        const isFemale = entityKey.startsWith("f_");
+        const genderGlobals = isFemale
+            ? templates.player.global.f
+            : templates.player.global.m;
+        return genderGlobals[slot as import("../types").PlayerSlot] ?? "";
+    }
+
     return (entityTemplates.global as Record<string, string>)[slotStr] ?? "";
 }

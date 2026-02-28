@@ -7,6 +7,7 @@ interface ImageSlotGridProps {
     activeSlot: ImageSlotType | null;
     generatingSlot: ImageSlotType | null;
     onSlotClick: (slot: ImageSlotType) => void;
+    onDeleteSlot?: (slot: ImageSlotType) => void;
 }
 
 export default function ImageSlotGrid({
@@ -15,6 +16,7 @@ export default function ImageSlotGrid({
     activeSlot,
     generatingSlot,
     onSlotClick,
+    onDeleteSlot,
 }: ImageSlotGridProps) {
     return (
         <div className="grid grid-cols-4 gap-2">
@@ -26,6 +28,7 @@ export default function ImageSlotGrid({
                     isActive={activeSlot === slot}
                     isGenerating={generatingSlot === slot}
                     onClick={() => onSlotClick(slot)}
+                    onDelete={onDeleteSlot ? () => onDeleteSlot(slot) : undefined}
                 />
             ))}
         </div>

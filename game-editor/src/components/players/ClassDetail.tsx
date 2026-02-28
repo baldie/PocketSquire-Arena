@@ -11,6 +11,7 @@ import PromptPanel from "../shared/PromptPanel";
 import AudioInputField from "../shared/AudioInputField";
 import type { Gender, ImageSlot, PlayerData, PlayerSlot } from "../../types";
 import { slugify } from "../../utils/slugify";
+import { deleteFile } from "../../utils/fileSystem";
 
 function spritePath(gender: Gender, cls: string, slot: PlayerSlot): string[] {
     return ["Art", "Player", `${gender}_${cls.toLowerCase()}_${slot}.png`];
@@ -47,6 +48,15 @@ export default function ClassDetail() {
         void load();
         return () => { cancelled = true; };
     }, [cls, gender, state.dirHandle]);
+
+    // Live update when a new frame is generated (useful during batch generate)
+    useEffect(() => {
+        if (state.generationHistory.length === 0) return;
+        const lastEntry = state.generationHistory[state.generationHistory.length - 1];
+        if (lastEntry.entityKey === playerKey) {
+            setImageUrls((prev) => ({ ...prev, [lastEntry.slot]: lastEntry.imageDataUrl }));
+        }
+    }, [state.generationHistory, playerKey]);
 
     const handleFieldBlur = useCallback(
         (field: keyof PlayerData, value: string | number) => {
@@ -86,14 +96,14 @@ export default function ClassDetail() {
 
     const getLocalOverride = (slot: ImageSlot): string => {
         if (!cls) return "";
-        const key = slugify(cls);
+        const key = playerKey!; // format: "m_squire"
         return state.promptTemplates.player.overrides[key]?.[slot as PlayerSlot] ?? "";
     };
 
     const handleOverrideChange = useCallback(
         (slot: ImageSlot, value: string) => {
             if (!cls || !state.dirHandle) return;
-            const key = slugify(cls);
+            const key = playerKey!; // format: "m_squire"
             const updated = {
                 ...state.promptTemplates,
                 player: {
@@ -112,7 +122,7 @@ export default function ClassDetail() {
                 dispatch({ type: "SET_SAVE_STATUS", payload: s })
             );
         },
-        [cls, state.dirHandle, state.promptTemplates, dispatch]
+        [cls, playerKey, state.dirHandle, state.promptTemplates, dispatch]
     );
 
     const handleGenerate = useCallback(
@@ -125,7 +135,7 @@ export default function ClassDetail() {
             };
             const path = spritePath(gender, cls, slot as PlayerSlot);
             try {
-                const dataUrl = await generateImage(slot, path, variables, "player", slugify(cls), referenceDataUrl);
+                const dataUrl = await generateImage(slot, path, variables, "player", playerKey!, referenceDataUrl);
                 if (dataUrl) {
                     setImageUrls((prev) => ({ ...prev, [slot]: dataUrl }));
                 }
@@ -133,7 +143,22 @@ export default function ClassDetail() {
                 setGeneratingSlot(null);
             }
         },
-        [cls, gender, state.dirHandle, generateImage]
+        [cls, gender, playerKey, state.dirHandle, generateImage]
+    );
+
+    const handleDeleteSlot = useCallback(
+        async (slot: ImageSlot) => {
+            if (!cls || !state.dirHandle) return;
+            const path = spritePath(gender, cls, slot as PlayerSlot);
+            try {
+                await deleteFile(state.dirHandle, path);
+                setImageUrls((prev) => ({ ...prev, [slot]: null }));
+            } catch (err) {
+                console.error("Failed to delete image", err);
+                alert("Failed to delete image file. Is it locked?");
+            }
+        },
+        [cls, gender, state.dirHandle]
     );
 
     const activeSlot = state.activeSlot as PlayerSlot | null;
@@ -148,7 +173,7 @@ export default function ClassDetail() {
 
     const localOverride = activeSlot ? getLocalOverride(activeSlot) : "";
     const effectiveTemplate = activeSlot
-        ? getEffectiveTemplate(state.promptTemplates, "player", slugify(cls), activeSlot)
+        ? getEffectiveTemplate(state.promptTemplates, "player", playerKey!, activeSlot)
         : "";
     const variables = { class: cls, gender: gender === "m" ? "male" : "female" };
     const { resolved: resolvedPrompt, unresolvedVars } = activeSlot
@@ -213,8 +238,8 @@ export default function ClassDetail() {
                     onChange={(e) => {
                         const srcClass = e.target.value as PlayerClassName;
                         if (!srcClass || !cls) return;
-                        const srcKey = slugify(srcClass);
-                        const dstKey = slugify(cls);
+                        const srcKey = `${gender}_${slugify(srcClass)}`;
+                        const dstKey = playerKey!;
                         const srcOverrides = state.promptTemplates.player.overrides[srcKey] ?? {};
                         const updated = {
                             ...state.promptTemplates,
@@ -249,6 +274,7 @@ export default function ClassDetail() {
                 activeSlot={state.activeSlot}
                 generatingSlot={generatingSlot}
                 onSlotClick={(slot) => dispatch({ type: "SET_ACTIVE_SLOT", payload: slot })}
+                onDeleteSlot={handleDeleteSlot}
             />
 
             {/* Prompt panel */}

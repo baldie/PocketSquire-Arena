@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useAppContext } from "../context/AppContext";
-import { writeImageFile } from "../utils/fileSystem";
+import { writeImageFile, readImageAsDataUrl } from "../utils/fileSystem";
 import { resolveTemplate, getEffectiveTemplate } from "../utils/resolveTemplate";
 import { autoSave } from "../utils/autoSave";
 import type { ImageSlot, MonsterData, ItemData, PlayerData, GenerationHistoryEntry } from "../types";
@@ -145,6 +145,7 @@ export function useImageGeneration() {
                 entityType: "player" | "monster" | "item";
                 entityKey: string;
                 entityName: string;
+                referenceImagePathSegments?: string[];
             }>,
             onProgress: (current: number, total: number) => void,
             onFailure: (entityName: string, slot: ImageSlot, error: string) => void
@@ -157,13 +158,32 @@ export function useImageGeneration() {
             dispatch({ type: "SET_GENERATION_PROGRESS", payload: { current: 0, total: entities.length } });
 
             for (let i = 0; i < entities.length; i++) {
-                const { slot, pathSegments, variables, entityType, entityKey, entityName } = entities[i];
+                const { slot, pathSegments, variables, entityType, entityKey, entityName, referenceImagePathSegments } = entities[i];
+
+                // Skip if image already exists
+                const existingImageData = await readImageAsDataUrl(dirHandle, pathSegments);
+                if (existingImageData) {
+                    onProgress(i + 1, entities.length);
+                    dispatch({ type: "SET_GENERATION_PROGRESS", payload: { current: i + 1, total: entities.length } });
+                    continue;
+                }
+
                 const template = getEffectiveTemplate(state.promptTemplates, entityType, entityKey, slot);
                 const { resolved, unresolvedVars } = resolveTemplate(template, variables);
 
                 if (unresolvedVars.length === 0) {
                     try {
-                        const base64 = await callGeminiImagen(apiKey, resolved);
+                        let referenceImageBase64: string | undefined = undefined;
+                        if (referenceImagePathSegments) {
+                            const refData = await readImageAsDataUrl(dirHandle, referenceImagePathSegments);
+                            if (refData) {
+                                referenceImageBase64 = refData;
+                            } else {
+                                throw new Error(`Reference image not found for ${entityName} ${slot}`);
+                            }
+                        }
+
+                        const base64 = await callGeminiImagen(apiKey, resolved, referenceImageBase64);
                         await writeImageFile(dirHandle, pathSegments, base64);
                         const dataUrl = `data:image/png;base64,${base64}`;
                         dispatch({

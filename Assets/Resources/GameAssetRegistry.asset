@@ -135,6 +135,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: afb1e65f768c8fa49aa43fb6401b5c8e, type: 3}
   - id: satchel_3
     asset: {fileID: 21300000, guid: 7c9131348cbbebe4781f546d2523854d, type: 3}
+  - id: f_archdruid_attack
+    asset: {fileID: 21300000, guid: 341c9c6476703f346a4b36cad33da2b3, type: 3}
+  - id: f_archdruid_battle
+    asset: {fileID: 21300000, guid: 24952a97154da3248b9b3d82fad243db, type: 3}
+  - id: f_archdruid_defeat
+    asset: {fileID: 21300000, guid: 9eb9393fcbae2bd409a7ef0904cd7b87, type: 3}
+  - id: f_archdruid_defend
+    asset: {fileID: 21300000, guid: 5595d7bb4fba3da458021c6f0718178d, type: 3}
+  - id: f_archdruid_hit
+    asset: {fileID: 21300000, guid: aab6324554acf09488b391dbad07c376, type: 3}
+  - id: f_archdruid_idle
+    asset: {fileID: 21300000, guid: e6ace9abdbc2ba84fbb331cfc4bc378c, type: 3}
+  - id: f_archdruid_item
+    asset: {fileID: 21300000, guid: e636e53ea8473f948a300bebe256045c, type: 3}
+  - id: f_archdruid_win
+    asset: {fileID: 21300000, guid: 5eb5ada346228574c9719eb71f1f9c23, type: 3}
   - id: f_archer_attack
     asset: {fileID: 21300000, guid: 3b3e9e2ae7ea912409137a8e8236f9ff, type: 3}
   - id: f_archer_battle
@@ -279,6 +295,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: bbad429484c65ca44aa1debceae152ed, type: 3}
   - id: f_warrior_win
     asset: {fileID: 21300000, guid: d78a103c5f80a714c8e384b147b55168, type: 3}
+  - id: f_wizard_attack
+    asset: {fileID: 21300000, guid: a9ef995168728564b8fbd1729ed27e97, type: 3}
+  - id: f_wizard_battle
+    asset: {fileID: 21300000, guid: 1f2207e0c036b444580e2fcf405361e9, type: 3}
+  - id: f_wizard_defeat
+    asset: {fileID: 21300000, guid: aad1dd7557531f14b9ee83ab264e5b98, type: 3}
+  - id: f_wizard_defend
+    asset: {fileID: 21300000, guid: 5a7d2d3719a69f941a1bd837dc1f5b7b, type: 3}
+  - id: f_wizard_hit
+    asset: {fileID: 21300000, guid: 0f407e1c3bf8d574497fbefe2db7443f, type: 3}
+  - id: f_wizard_idle
+    asset: {fileID: 21300000, guid: ded4c936e94300d4e9aa317234050ff0, type: 3}
+  - id: f_wizard_item
+    asset: {fileID: 21300000, guid: bce9aa10030dcff4fafcf53ee9cb7680, type: 3}
+  - id: f_wizard_win
+    asset: {fileID: 21300000, guid: 384689f736da2254f91211933cee4e4e, type: 3}
+  - id: m_archdruid_attack
+    asset: {fileID: 21300000, guid: 1f700ba639691bf4cb21fff9ba65024a, type: 3}
+  - id: m_archdruid_battle
+    asset: {fileID: 21300000, guid: 4c774befba12c1f4aa1d6a98153313c5, type: 3}
+  - id: m_archdruid_defeat
+    asset: {fileID: 21300000, guid: 212a7d758d1530a44bce36e9fa9ce31e, type: 3}
+  - id: m_archdruid_defend
+    asset: {fileID: 21300000, guid: e70b8492c19e13a4098c79b6af509ec4, type: 3}
+  - id: m_archdruid_hit
+    asset: {fileID: 21300000, guid: 4ce40b605d037c34f8d488e14ea5dbe9, type: 3}
+  - id: m_archdruid_idle
+    asset: {fileID: 21300000, guid: 40bd04a0dd8e3194283417e2bdbaadf6, type: 3}
+  - id: m_archdruid_item
+    asset: {fileID: 21300000, guid: 6b02ed76d43f03d4185811ef3f7ecb23, type: 3}
+  - id: m_archdruid_win
+    asset: {fileID: 21300000, guid: 806f79ce503e417489e5420d15de63dd, type: 3}
   - id: m_archer_attack
     asset: {fileID: 21300000, guid: 6d3aa9853854e894a95f6845a18fd7f2, type: 3}
   - id: m_archer_battle
@@ -375,6 +423,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: b1fe6f3dadf02bc4eb0d0920362f0d8b, type: 3}
   - id: m_mage_win
     asset: {fileID: 21300000, guid: 04632cf713f78544b9e325e7b548e9d1, type: 3}
+  - id: m_marksman_attack
+    asset: {fileID: 21300000, guid: dfd65e3f21dc6df4a9e857dad750c627, type: 3}
+  - id: m_marksman_battle
+    asset: {fileID: 21300000, guid: 866b1166dd0ed264ca219dac69a8da15, type: 3}
+  - id: m_marksman_defeat
+    asset: {fileID: 21300000, guid: d7323cccb8a26884ebf9b052624ed2eb, type: 3}
+  - id: m_marksman_defend
+    asset: {fileID: 21300000, guid: e660bec0999d21b4abeff43b4fbd918e, type: 3}
+  - id: m_marksman_hit
+    asset: {fileID: 21300000, guid: d6261f80ff2fccd469a3126b2dec5c00, type: 3}
+  - id: m_marksman_idle
+    asset: {fileID: 21300000, guid: 53e95eba76726064b9030fce0bd95046, type: 3}
+  - id: m_marksman_item
+    asset: {fileID: 21300000, guid: ed8e502e0b8de18489abaa1eb23823b7, type: 3}
+  - id: m_marksman_win
+    asset: {fileID: 21300000, guid: 20521a461bd273945ad38a76d3cc8c0d, type: 3}
   - id: m_spellcaster_attack
     asset: {fileID: 21300000, guid: 71e58aee82c59514e82967bdc2866323, type: 3}
   - id: m_spellcaster_battle
@@ -423,6 +487,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 839c9f56ff7fdb64cbdf54455ce32191, type: 3}
   - id: m_warrior_win
     asset: {fileID: 21300000, guid: 31f509405f3df2341b2ce9614f736fb6, type: 3}
+  - id: m_wizard_attack
+    asset: {fileID: 21300000, guid: a7fdac285304fad4e81a92bc1d0b1955, type: 3}
+  - id: m_wizard_battle
+    asset: {fileID: 21300000, guid: d9ab07e96328c9b429ea22800855d43c, type: 3}
+  - id: m_wizard_defeat
+    asset: {fileID: 21300000, guid: f1ac3077ff444d348bf6eeab59d99102, type: 3}
+  - id: m_wizard_defend
+    asset: {fileID: 21300000, guid: a5933bc951e8b274898e04558464505e, type: 3}
+  - id: m_wizard_hit
+    asset: {fileID: 21300000, guid: 79e187c6700b3eb458aca06c10b05791, type: 3}
+  - id: m_wizard_idle
+    asset: {fileID: 21300000, guid: 7bd6c768d921caa40bcc107bc46a73a4, type: 3}
+  - id: m_wizard_item
+    asset: {fileID: 21300000, guid: 9c783c140250b384fbd78301f20d82f4, type: 3}
+  - id: m_wizard_win
+    asset: {fileID: 21300000, guid: c112b57cab49ba14786fe768c82dd135, type: 3}
   - id: constitution
     asset: {fileID: 21300000, guid: 4b01cc08772854e4c8c9e8c43ceda8f3, type: 3}
   - id: curse
@@ -494,10 +574,14 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 5943efc78dafe3c45aace42422b68dd7, type: 3}
   - id: heavy_swing
     asset: {fileID: 8300000, guid: 04333e5daa17efb4797b7fe7179739ad, type: 3}
+  - id: ice_attack
+    asset: {fileID: 8300000, guid: 2d88cae8eea310f4381515be5872372b, type: 3}
   - id: large_fireball
     asset: {fileID: 8300000, guid: 556d0a09d396e9e49a0a306313b9e28f, type: 3}
   - id: m_physical_attack
     asset: {fileID: 8300000, guid: e9fc07538fb695a45bccfeebde1befaa, type: 3}
+  - id: magic_barrier_2
+    asset: {fileID: 8300000, guid: a4ebc79ef3a200842a4ee771833a913b, type: 3}
   - id: magic_defend
     asset: {fileID: 8300000, guid: a702f555066044047a49f8b7a7fcc23b, type: 3}
   - id: physical_defend

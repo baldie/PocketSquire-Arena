@@ -122,9 +122,33 @@
     {
         "name": "f_warrior",
         "class": "Warrior",
-        "attackSoundId": "heavy_swing",
+        "attackSoundId": "f_physical_attack",
         "defendSoundId": "steel_block",
         "hitSoundId": "armor_hit",
         "gender": "f"
+    },
+    {
+        "name": "m_warrior",
+        "class": "Warrior",
+        "attackSoundId": "m_physical_attack",
+        "defendSoundId": "",
+        "hitSoundId": "",
+        "gender": "m"
+    },
+    {
+        "name": "m_wizard",
+        "class": "Wizard",
+        "attackSoundId": "ice_attack",
+        "defendSoundId": "magic_barrier_2",
+        "hitSoundId": "",
+        "gender": "m"
+    },
+    {
+        "name": "m_archdruid",
+        "class": "Archdruid",
+        "attackSoundId": "",
+        "defendSoundId": "",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
     }
 ]
