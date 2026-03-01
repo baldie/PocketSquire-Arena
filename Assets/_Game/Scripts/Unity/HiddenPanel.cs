@@ -61,6 +61,20 @@ public class HiddenPanel : MonoBehaviour
                 {
                     GameState.Player.Gender = GameState.Player.Gender == Player.Genders.m ? Player.Genders.f : Player.Genders.m;
                     Debug.Log("Toggled Gender to " + GameState.Player.Gender);
+
+                    var playerSprite = GameObject.Find("PlayerSprite");
+                    if (playerSprite != null)
+                    {
+                        var playerImage = playerSprite.GetComponent<Image>();
+                        if (playerImage != null)
+                        {
+                            var loadedSprite = GameAssetRegistry.Instance.GetSprite(GameState.Player.GetSpriteId());
+                            if (loadedSprite != null)
+                            {
+                                playerImage.sprite = loadedSprite;
+                            }
+                        }
+                    }
                 }
             });
         }

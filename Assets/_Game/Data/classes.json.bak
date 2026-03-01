@@ -146,9 +146,97 @@
     {
         "name": "m_archdruid",
         "class": "Archdruid",
-        "attackSoundId": "",
-        "defendSoundId": "",
+        "attackSoundId": "earth_magic",
+        "defendSoundId": "force_field_defend",
         "hitSoundId": "physical_hit",
         "gender": "m"
+    },
+    {
+        "name": "f_archdruid",
+        "class": "Archdruid",
+        "attackSoundId": "earth_magic",
+        "defendSoundId": "magic_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
+    },
+    {
+        "name": "f_marksman",
+        "class": "Marksman",
+        "attackSoundId": "shots_fired",
+        "defendSoundId": "physical_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
+    },
+    {
+        "name": "m_marksman",
+        "class": "Marksman",
+        "attackSoundId": "shots_fired",
+        "defendSoundId": "physical_defend",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_ranger",
+        "class": "Ranger",
+        "attackSoundId": "arrow_loosed",
+        "defendSoundId": "steel_parry",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
+    },
+    {
+        "name": "m_ranger",
+        "class": "Ranger",
+        "attackSoundId": "arrow_loosed",
+        "defendSoundId": "steel_parry",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "m_knight",
+        "class": "Knight",
+        "attackSoundId": "heavy_swing",
+        "defendSoundId": "steel_block",
+        "hitSoundId": "armor_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_knight",
+        "class": "Knight",
+        "attackSoundId": "heavy_swing",
+        "defendSoundId": "steel_block",
+        "hitSoundId": "armor_hit",
+        "gender": "f"
+    },
+    {
+        "name": "m_sorcerer",
+        "class": "Sorcerer",
+        "attackSoundId": "sorcerer_attack",
+        "defendSoundId": "sorcerer_defense",
+        "hitSoundId": "dramatic_impact",
+        "gender": "m"
+    },
+    {
+        "name": "f_sorcerer",
+        "class": "Sorcerer",
+        "attackSoundId": "sorcerer_attack",
+        "defendSoundId": "sorcerer_defense",
+        "hitSoundId": "dramatic_impact",
+        "gender": "f"
+    },
+    {
+        "name": "m_warden",
+        "class": "Warden",
+        "attackSoundId": "swipe_attack",
+        "defendSoundId": "wooden_block",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_warden",
+        "class": "Warden",
+        "attackSoundId": "swipe_attack",
+        "defendSoundId": "wooden_block",
+        "hitSoundId": "physical_hit",
+        "gender": "f"
     }
 ]

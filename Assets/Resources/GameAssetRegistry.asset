@@ -231,6 +231,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: bbac5803e149e494cb240b710d3f16b1, type: 3}
   - id: f_hunter_win
     asset: {fileID: 21300000, guid: 7fb65e7d8a7ce7143a5464cf14b6096a, type: 3}
+  - id: f_knight_attack
+    asset: {fileID: 21300000, guid: f270dd5b1c7618d4a8060f13a4837d65, type: 3}
+  - id: f_knight_battle
+    asset: {fileID: 21300000, guid: 37a99129fed82a14fb8d821f03d8e054, type: 3}
+  - id: f_knight_defeat
+    asset: {fileID: 21300000, guid: 6afb9f0b53a798145af5887942709617, type: 3}
+  - id: f_knight_defend
+    asset: {fileID: 21300000, guid: 3780e8e7ccf58b24ebdd10a8586648c1, type: 3}
+  - id: f_knight_hit
+    asset: {fileID: 21300000, guid: 40dbb747dc58005478c50a674b50defe, type: 3}
+  - id: f_knight_idle
+    asset: {fileID: 21300000, guid: c8efac52f9a934d498967d61224c0316, type: 3}
+  - id: f_knight_item
+    asset: {fileID: 21300000, guid: d6e8ddb11fa64104dab01065f299de45, type: 3}
+  - id: f_knight_win
+    asset: {fileID: 21300000, guid: 7e46458e8082a014a8ac3b9f1d453248, type: 3}
   - id: f_mage_attack
     asset: {fileID: 21300000, guid: fd22e8f3fad4b4c4b9e4dd15fd5be3ff, type: 3}
   - id: f_mage_battle
@@ -247,6 +263,54 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 829fc40ae2b0de444a61272b6a57ad71, type: 3}
   - id: f_mage_win
     asset: {fileID: 21300000, guid: 5b0f00bc12e6fc04a8055ac968863297, type: 3}
+  - id: f_marksman_attack
+    asset: {fileID: 21300000, guid: c023b00f0d671f84b92d14c81e32b7e9, type: 3}
+  - id: f_marksman_battle
+    asset: {fileID: 21300000, guid: 5ee26cf01c1e653449cf29bd7b3f50ca, type: 3}
+  - id: f_marksman_defeat
+    asset: {fileID: 21300000, guid: ea413862b15aaf74d934fdd926656cbc, type: 3}
+  - id: f_marksman_defend
+    asset: {fileID: 21300000, guid: 374369aafb9cb8c48a98056333607c1c, type: 3}
+  - id: f_marksman_hit
+    asset: {fileID: 21300000, guid: 51658f411e233854da8d9bfcdb4bda3c, type: 3}
+  - id: f_marksman_idle
+    asset: {fileID: 21300000, guid: 718472e2c85c4f349b1a8b29250c4209, type: 3}
+  - id: f_marksman_item
+    asset: {fileID: 21300000, guid: d3b8ae1fcb6ee4b408ff3dc289e2acb2, type: 3}
+  - id: f_marksman_win
+    asset: {fileID: 21300000, guid: 11781a323ae03a34c8dbdf1ec437dcdb, type: 3}
+  - id: f_ranger_attack
+    asset: {fileID: 21300000, guid: ac2d8a7f5644f714d891a4dfaba0b56d, type: 3}
+  - id: f_ranger_battle
+    asset: {fileID: 21300000, guid: db3003fffadadee48934eea376b5649f, type: 3}
+  - id: f_ranger_defeat
+    asset: {fileID: 21300000, guid: 40e71bcbae01e6240afd04810ae845de, type: 3}
+  - id: f_ranger_defend
+    asset: {fileID: 21300000, guid: 6c8ebe3d1fb23d441980a6ff01df1d0a, type: 3}
+  - id: f_ranger_hit
+    asset: {fileID: 21300000, guid: f77e605e8e78ba24a93f64e720a15115, type: 3}
+  - id: f_ranger_idle
+    asset: {fileID: 21300000, guid: 8b1ef5164cc31e94ab4e62dae4510a67, type: 3}
+  - id: f_ranger_item
+    asset: {fileID: 21300000, guid: d2225121d090a4f4a9612c7f6cc1cf7a, type: 3}
+  - id: f_ranger_win
+    asset: {fileID: 21300000, guid: c4067436fed1c744889d901018b505da, type: 3}
+  - id: f_sorcerer_attack
+    asset: {fileID: 21300000, guid: 82a403bb87bd1414ea2c1f40f9aa8d2c, type: 3}
+  - id: f_sorcerer_battle
+    asset: {fileID: 21300000, guid: 232817f714540724c9a016ffce8455ee, type: 3}
+  - id: f_sorcerer_defeat
+    asset: {fileID: 21300000, guid: 4a824ab5f348185458e7e8d2a39a3a41, type: 3}
+  - id: f_sorcerer_defend
+    asset: {fileID: 21300000, guid: 065f0e284e2d0914eac75a295711a9a7, type: 3}
+  - id: f_sorcerer_hit
+    asset: {fileID: 21300000, guid: efb9188676fe9a64196493c813d099b4, type: 3}
+  - id: f_sorcerer_idle
+    asset: {fileID: 21300000, guid: d4015b183c23f7f458c578bcb42356fd, type: 3}
+  - id: f_sorcerer_item
+    asset: {fileID: 21300000, guid: 261eca6de3e715e4e87c04134bcbd34b, type: 3}
+  - id: f_sorcerer_win
+    asset: {fileID: 21300000, guid: 4f74fc69f14eb394db086a5d7c91ac07, type: 3}
   - id: f_spellcaster_attack
     asset: {fileID: 21300000, guid: e48a83b7ac5e45e459f7765e56302c97, type: 3}
   - id: f_spellcaster_battle
@@ -279,6 +343,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8196c3106646dcc46a02441f97cb72a3, type: 3}
   - id: f_squire_win
     asset: {fileID: 21300000, guid: 74b8f531df44d444a92f21341ae623a3, type: 3}
+  - id: f_warden_attack
+    asset: {fileID: 21300000, guid: 3b02f906b09c3d04e92528ca44de5441, type: 3}
+  - id: f_warden_battle
+    asset: {fileID: 21300000, guid: ac06d4c6b2d645e48950860e05de363a, type: 3}
+  - id: f_warden_defeat
+    asset: {fileID: 21300000, guid: 0e60abdf771c5224b913eab56570978c, type: 3}
+  - id: f_warden_defend
+    asset: {fileID: 21300000, guid: 95c7da3a8ab5d794db8bfed9eff50d2d, type: 3}
+  - id: f_warden_hit
+    asset: {fileID: 21300000, guid: e1b9587c91d5f8b47a36d2ab1692e68f, type: 3}
+  - id: f_warden_idle
+    asset: {fileID: 21300000, guid: 95433f1e236edf24bb62339b52491d43, type: 3}
+  - id: f_warden_item
+    asset: {fileID: 21300000, guid: 35871a6033ef81c499168c6291b74d67, type: 3}
+  - id: f_warden_win
+    asset: {fileID: 21300000, guid: ded287e3ba107a548be3b27fd65c89bb, type: 3}
   - id: f_warrior_attack
     asset: {fileID: 21300000, guid: 61cdb0f4b1d8b07438cc4a333a4a3474, type: 3}
   - id: f_warrior_battle
@@ -407,6 +487,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 1324d220e7c32af48918804fc0a2fbe0, type: 3}
   - id: m_hunter_win
     asset: {fileID: 21300000, guid: 4c496f72e6767b744a07ada006c46d91, type: 3}
+  - id: m_knight_attack
+    asset: {fileID: 21300000, guid: a3585525f43317748a79763b4c87fa42, type: 3}
+  - id: m_knight_battle
+    asset: {fileID: 21300000, guid: 1774966a2a9a97244b3c5cfda1ebd878, type: 3}
+  - id: m_knight_defeat
+    asset: {fileID: 21300000, guid: deeca17f0a2eaf24f8e2cd812d24d651, type: 3}
+  - id: m_knight_defend
+    asset: {fileID: 21300000, guid: 03285a91736e05246b78155c737f5d29, type: 3}
+  - id: m_knight_hit
+    asset: {fileID: 21300000, guid: 2e6d64e83a0b8974192fddfb09a6d0ab, type: 3}
+  - id: m_knight_idle
+    asset: {fileID: 21300000, guid: 6e6427a01eb7ed34eb72a5a21c9e72bd, type: 3}
+  - id: m_knight_item
+    asset: {fileID: 21300000, guid: 74990f0de561e474bb3805a6fb312138, type: 3}
+  - id: m_knight_win
+    asset: {fileID: 21300000, guid: d3ae33ddf4a0c7d4a9e1d00b9fd37af6, type: 3}
   - id: m_mage_attack
     asset: {fileID: 21300000, guid: 66b6d31a35ef6eb48a37af0ae663b974, type: 3}
   - id: m_mage_battle
@@ -439,6 +535,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: ed8e502e0b8de18489abaa1eb23823b7, type: 3}
   - id: m_marksman_win
     asset: {fileID: 21300000, guid: 20521a461bd273945ad38a76d3cc8c0d, type: 3}
+  - id: m_ranger_attack
+    asset: {fileID: 21300000, guid: 715c23eefc02c924c9b6965004e4c69b, type: 3}
+  - id: m_ranger_battle
+    asset: {fileID: 21300000, guid: 390e1b914048bfa4e9bbc9e71f756316, type: 3}
+  - id: m_ranger_defeat
+    asset: {fileID: 21300000, guid: 64222e9ac2b51244e885ee54be7f8744, type: 3}
+  - id: m_ranger_defend
+    asset: {fileID: 21300000, guid: a5de109c5cea3d848b5d7bdfc2ed73db, type: 3}
+  - id: m_ranger_hit
+    asset: {fileID: 21300000, guid: ce0a93600b7c398488481a6cbd63f4ce, type: 3}
+  - id: m_ranger_idle
+    asset: {fileID: 21300000, guid: 9f8fbc58826183947ad6a7597538db70, type: 3}
+  - id: m_ranger_item
+    asset: {fileID: 21300000, guid: 8d66945dfb0f4ad4dacce7a6cc42cfa1, type: 3}
+  - id: m_ranger_win
+    asset: {fileID: 21300000, guid: 34039346f8a945e4ab00d1f56702faa8, type: 3}
+  - id: m_sorcerer_attack
+    asset: {fileID: 21300000, guid: df966d3f9fe9f214b9ff29cf497e43d6, type: 3}
+  - id: m_sorcerer_battle
+    asset: {fileID: 21300000, guid: 953d03bf73d5f8244a33bbc2c2fb9f22, type: 3}
+  - id: m_sorcerer_defeat
+    asset: {fileID: 21300000, guid: 17e417e9c2fa2864599ee74b99f7bab6, type: 3}
+  - id: m_sorcerer_defend
+    asset: {fileID: 21300000, guid: 2bf599c6fe0c8fb4ab599547cfe55b2d, type: 3}
+  - id: m_sorcerer_hit
+    asset: {fileID: 21300000, guid: 977c9fc4ecb987e4387efbb8d10bf251, type: 3}
+  - id: m_sorcerer_idle
+    asset: {fileID: 21300000, guid: fa25e901fbea4dc4892dce8b250aefaa, type: 3}
+  - id: m_sorcerer_item
+    asset: {fileID: 21300000, guid: 12f53af8fa1357440a7483a286b7d34d, type: 3}
+  - id: m_sorcerer_win
+    asset: {fileID: 21300000, guid: d1ac0a65777c01e47bc1bf8623faaa08, type: 3}
   - id: m_spellcaster_attack
     asset: {fileID: 21300000, guid: 71e58aee82c59514e82967bdc2866323, type: 3}
   - id: m_spellcaster_battle
@@ -471,6 +599,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8ce105a276362c54993b9f2dabc2bc4e, type: 3}
   - id: m_squire_win
     asset: {fileID: 21300000, guid: ef364908ca48d91449eacc7f6f2c00f2, type: 3}
+  - id: m_warden_attack
+    asset: {fileID: 21300000, guid: 73c5f072110ba9f418e347ac94258c2e, type: 3}
+  - id: m_warden_battle
+    asset: {fileID: 21300000, guid: 8815c17f06b882941bcd1628e9743dee, type: 3}
+  - id: m_warden_defeat
+    asset: {fileID: 21300000, guid: a600af91db9a13a489072e1b678d13fb, type: 3}
+  - id: m_warden_defend
+    asset: {fileID: 21300000, guid: 9b43049b5ce00ad4786dff5554d634b0, type: 3}
+  - id: m_warden_hit
+    asset: {fileID: 21300000, guid: 28beee252d8a96045b967e980e3c7f34, type: 3}
+  - id: m_warden_idle
+    asset: {fileID: 21300000, guid: c1f7daa874315a84fbea945a12c936e3, type: 3}
+  - id: m_warden_item
+    asset: {fileID: 21300000, guid: 30dc67cae406bb244a6306c1dd0fb20c, type: 3}
+  - id: m_warden_win
+    asset: {fileID: 21300000, guid: 20fcd055b0a3ad842b2c63386a16aa93, type: 3}
   - id: m_warrior_attack
     asset: {fileID: 21300000, guid: 286dfec01be58d74eb73f57f21cd34ea, type: 3}
   - id: m_warrior_battle
@@ -562,8 +706,12 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 686ce910db504a44a8d435a606deba87, type: 3}
   - id: arrow_loosed
     asset: {fileID: 8300000, guid: 0db1563f226b8e341b9a6ed8d1eb173b, type: 3}
+  - id: dramatic_impact
+    asset: {fileID: 8300000, guid: c8339223078fec44b86236c2f0fdd737, type: 3}
   - id: druid_shield_impact
     asset: {fileID: 8300000, guid: 35df3a83a5efbbb44a868514dce7a337, type: 3}
+  - id: earth_magic
+    asset: {fileID: 8300000, guid: 538c8f9bf14dc2d4e8250c85f0696e5e, type: 3}
   - id: earth_spell
     asset: {fileID: 8300000, guid: b92f5b8a653cca640835509b00bc25ad, type: 3}
   - id: f_physical_attack
@@ -588,10 +736,18 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
+  - id: shots_fired
+    asset: {fileID: 8300000, guid: 6093f9dfa968d8b4e956fad2ef9759b4, type: 3}
+  - id: sorcerer_attack
+    asset: {fileID: 8300000, guid: 7e5ce0f5edf98ce438c7c0deba0581a9, type: 3}
+  - id: sorcerer_defense
+    asset: {fileID: 8300000, guid: 02d2f808e4c55714194e5fff30dc2ce3, type: 3}
   - id: steel_block
     asset: {fileID: 8300000, guid: 2f21bb6afb479c2499847cdf2893ec7a, type: 3}
   - id: steel_parry
     asset: {fileID: 8300000, guid: 8e86b9dcad43fba48bf7a81d31ba7d5a, type: 3}
+  - id: swipe_attack
+    asset: {fileID: 8300000, guid: 4f300b928fd06db4cb465a485b6b64f6, type: 3}
   - id: thrown_weapon
     asset: {fileID: 8300000, guid: acaf9bfa78c101146bb780cecc3e491d, type: 3}
   - id: wooden_block

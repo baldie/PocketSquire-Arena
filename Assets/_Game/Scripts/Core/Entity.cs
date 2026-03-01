@@ -15,11 +15,11 @@ namespace PocketSquire.Arena.Core
         public Inventory Inventory = new();
         public Attributes Attributes = new Attributes();
         public int Rank = 0;
-        public string AttackSoundId = string.Empty;
-        public string DefendSoundId = string.Empty;
-        public string HitSoundId = string.Empty;
-        public string DefeatSoundId = string.Empty;
-        public string SpecialAttackSoundId = string.Empty;
+        public virtual string AttackSoundId { get; set; } = string.Empty;
+        public virtual string DefendSoundId { get; set; } = string.Empty;
+        public virtual string HitSoundId { get; set; } = string.Empty;
+        public virtual string DefeatSoundId { get; set; } = string.Empty;
+        public virtual string SpecialAttackSoundId { get; set; } = string.Empty;
         public bool IsDefending { get; set; }
         public event Action? onDeath;
         public virtual string SpriteId => string.Empty;

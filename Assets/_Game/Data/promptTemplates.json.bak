@@ -154,6 +154,54 @@
                 "win": "eyes closed with a smug look, arms crossed",
                 "item": "show this character reaching up and to the right with their hand open. their eyes are looking up and to the right",
                 "hit": "show this character off balance as if struck. no impact effects. white background"
+            },
+            "m_ranger": {
+                "battle": "",
+                "defend": "fix the bow on his back so it doesn't look twisted. also his eyes should look straight ahead of him ",
+                "defeat": "remove the bow on the ground, ,and fix the bow he is leaning on"
+            },
+            "f_ranger": {
+                "defend": "Make this character a girl with short, straight, blonde hair. Keep the expression the same. White background",
+                "battle": "Make this character a girl with short, straight, blonde hair. Keep the looking ahead (not at the camera)"
+            },
+            "m_knight": {
+                "idle": "show this character with the halberd on their back and reaching up to the right with their hand over their head - they're looking at their hand with a smile",
+                "battle": "",
+                "attack": "show him jabbing his sword out to the right with his left hand. no dust. no shadows",
+                "defeat": "show this character on his hands and knees in defeat. no dirt or ground. white background",
+                "defend": "holding his shield in front of his face",
+                "win": "fist raised in the air in triumph",
+                "item": "sword in the existing sheath. show this character reaching up and to the right with their hand open. their eyes are looking up and to the right",
+                "hit": "show this character taking a small hit. do not show any impact effects or shadows. white background\n"
+            },
+            "m_sorcerer": {
+                "attack": "he is casting a major spell - do not show any ground or effects",
+                "win": "the back of his head should not be magical",
+                "defeat": "a small pile of smoking ash with his thin circlet on top",
+                "defend": "he is holding 1 hand up in prayer",
+                "hit": "a hazy distorted version of him",
+                "item": "one hand is extended to the right",
+                "battle": "he looks angry",
+                "idle": "his eyes are no longer smoking and his arms are down by his side. everything else is the same"
+            },
+            "f_sorcerer": {
+                "idle": "Make this character a girl with short, straight, grey hair. Keep everything else the same. White background",
+                "defeat": "same image",
+                "battle": "Make this character a girl with short, straight, grey hair. Keep everything else the same. White background",
+                "attack": "Make this character a girl with short, straight, grey hair. Keep everything else the same. White background",
+                "defend": "Make these character a girl with short, straight, grey hair. Keep everything else the same. White background",
+                "win": "Make this character a girl with short, straight, grey hair. Keep everything else the same. White background",
+                "item": "Make this character a girl with short, straight, grey hair. Keep everything else the same. White background",
+                "hit": "Make this character a girl with short, straight, grey hair. Keep everything else the same. White background"
+            },
+            "m_warden": {
+                "battle": "make him look in front of him, not at the camera",
+                "attack": "he is jumping in the air and swiping with his claws. looking to the right. white background, no motion effects",
+                "defend": "he is crouching down, fully cloaked, hood up, only shadow in the hood",
+                "hit": "he is grimmacing off balance as he takes a hit",
+                "item": "he is holding his arm stretched out to the upper right. his hand is open and he is looking at up and to the right",
+                "win": "he has a big grin, and is fist pumping. eyes open. white background",
+                "defeat": "only his brown cloak in a small pile on the floor. white background"
             }
         }
     },
