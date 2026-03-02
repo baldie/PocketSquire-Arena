@@ -202,6 +202,40 @@
                 "item": "he is holding his arm stretched out to the upper right. his hand is open and he is looking at up and to the right",
                 "win": "he has a big grin, and is fist pumping. eyes open. white background",
                 "defeat": "only his brown cloak in a small pile on the floor. white background"
+            },
+            "m_sniper": {
+                "battle": "make his shirt light beige instead of green. pants stay green. no holster",
+                "attack": "make his shirt light beige instead of green. pants stay green. no holster",
+                "defend": "make his shirt light beige instead of green. pants stay green. no holster",
+                "hit": "make the blunderbuss metal gold and remove the holster",
+                "defeat": "no character - only the hat and poncho laying in a crumpled pile on the ground. do not show the ground or dirt",
+                "win": "make his shirt light beige instead of green. pants stay green. no holster",
+                "item": "fix the outline of the hat and keep it upside down please",
+                "idle": "make his blunderbuss muzzle grey in color instead of gold"
+            },
+            "f_sniper": {
+                "hit": "make the blunderbuss metal gold and remove the holster"
+            },
+            "m_sentinel": {
+                "attack": "both swords jabbing forward out to the right in a stabbing motion. no motion effects. white background",
+                "defeat": "the sentinel is gone, instead there is only a smal pile of broken, dented, armor, and a broken sword. do not show the ground. white background",
+                "battle": "this sentinel has taken out both swords and is standing at the ready",
+                "defend": "arms crossed",
+                "hit": "head slightly tilted up",
+                "win": "one sword in the ground in front of him. hand resting on the pommel. the other sword on his back. do not show the ground. white background",
+                "item": "one hand open out to the right"
+            },
+            "f_sentinel": {
+                "attack": ""
+            },
+            "m_paladin": {
+                "battle": "his cape is not flowing, shield is longer",
+                "attack": "make his sword longer and more horizontal as a stab",
+                "defend": "holding his shield higher up",
+                "win": "hands clasped praying, eyes closed",
+                "item": "shield on back, arm reaching all the way up and to the right, he is looking up and to the right",
+                "hit": "show him grimacing and off balance",
+                "defeat": "no character - just his shield laying on the ground with a faint ray of light shining down on it. do not show the ground. white background"
             }
         }
     },

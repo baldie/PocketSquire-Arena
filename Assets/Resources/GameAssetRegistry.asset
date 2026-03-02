@@ -279,6 +279,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: d3b8ae1fcb6ee4b408ff3dc289e2acb2, type: 3}
   - id: f_marksman_win
     asset: {fileID: 21300000, guid: 11781a323ae03a34c8dbdf1ec437dcdb, type: 3}
+  - id: f_paladin_attack
+    asset: {fileID: 21300000, guid: 51a395894d82e1341a91054f37a22453, type: 3}
+  - id: f_paladin_battle
+    asset: {fileID: 21300000, guid: 62686d2e48b6c7f45a3a4b9c1953ac58, type: 3}
+  - id: f_paladin_defeat
+    asset: {fileID: 21300000, guid: 3efaad35ac796334e986d8615e7d663b, type: 3}
+  - id: f_paladin_defend
+    asset: {fileID: 21300000, guid: 1907f00c7125cda4eba96cf0bd85ad50, type: 3}
+  - id: f_paladin_hit
+    asset: {fileID: 21300000, guid: 91dd4bb222a147943be87fc51c552a31, type: 3}
+  - id: f_paladin_idle
+    asset: {fileID: 21300000, guid: b37433c0d4564c54686fd2d7b97e9b41, type: 3}
+  - id: f_paladin_item
+    asset: {fileID: 21300000, guid: fa9f63eb2c82a3f4c9b0d73fedd3e9e6, type: 3}
+  - id: f_paladin_win
+    asset: {fileID: 21300000, guid: b5f517c1f0f870548a558edd948c0b3a, type: 3}
   - id: f_ranger_attack
     asset: {fileID: 21300000, guid: ac2d8a7f5644f714d891a4dfaba0b56d, type: 3}
   - id: f_ranger_battle
@@ -295,6 +311,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: d2225121d090a4f4a9612c7f6cc1cf7a, type: 3}
   - id: f_ranger_win
     asset: {fileID: 21300000, guid: c4067436fed1c744889d901018b505da, type: 3}
+  - id: f_sentinel_attack
+    asset: {fileID: 21300000, guid: 57445c6574c4aad4e9f3a9d631279e4a, type: 3}
+  - id: f_sentinel_battle
+    asset: {fileID: 21300000, guid: f0e21d1cbece970499c85f56911f6101, type: 3}
+  - id: f_sentinel_defeat
+    asset: {fileID: 21300000, guid: e30ab0791766a654fb525cb716938a58, type: 3}
+  - id: f_sentinel_defend
+    asset: {fileID: 21300000, guid: fb688e23e90337c4e8787657ebb6cdc0, type: 3}
+  - id: f_sentinel_hit
+    asset: {fileID: 21300000, guid: 598a07359eaf78643ab9ec8d3be87fa2, type: 3}
+  - id: f_sentinel_idle
+    asset: {fileID: 21300000, guid: 497bf14db6ec89f4d83ac949d8f6d496, type: 3}
+  - id: f_sentinel_item
+    asset: {fileID: 21300000, guid: e3db749452021fd45bc57e7d6ea82273, type: 3}
+  - id: f_sentinel_win
+    asset: {fileID: 21300000, guid: 2ab7f75fe13f78741b8b1cc6b71f8c12, type: 3}
+  - id: f_sniper_attack
+    asset: {fileID: 21300000, guid: 0f2d287c3c4e5a44b928a145b2ad31d8, type: 3}
+  - id: f_sniper_battle
+    asset: {fileID: 21300000, guid: 5955e903e1bc0934285928e1c87ef6b6, type: 3}
+  - id: f_sniper_defeat
+    asset: {fileID: 21300000, guid: 803ce92ee0253fc4e8550a0ee82c9995, type: 3}
+  - id: f_sniper_defend
+    asset: {fileID: 21300000, guid: 47fad93e686f2bd459824e8fab51b52e, type: 3}
+  - id: f_sniper_hit
+    asset: {fileID: 21300000, guid: 952b09250b225a2458d88ddf43d5e843, type: 3}
+  - id: f_sniper_idle
+    asset: {fileID: 21300000, guid: 7124313851c00ae41a06fdf3ec8a61ee, type: 3}
+  - id: f_sniper_item
+    asset: {fileID: 21300000, guid: 54c3489fefc31dd419fb27ababf73474, type: 3}
+  - id: f_sniper_win
+    asset: {fileID: 21300000, guid: 2ddfc0be795e21045ace0c811ce09b8c, type: 3}
   - id: f_sorcerer_attack
     asset: {fileID: 21300000, guid: 82a403bb87bd1414ea2c1f40f9aa8d2c, type: 3}
   - id: f_sorcerer_battle
@@ -535,6 +583,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: ed8e502e0b8de18489abaa1eb23823b7, type: 3}
   - id: m_marksman_win
     asset: {fileID: 21300000, guid: 20521a461bd273945ad38a76d3cc8c0d, type: 3}
+  - id: m_paladin_attack
+    asset: {fileID: 21300000, guid: 1d2a20f6b5cd0ea489e5709ffe5ee4c7, type: 3}
+  - id: m_paladin_battle
+    asset: {fileID: 21300000, guid: 453e541b0a2ef8b4bb1d7147f3e7eaf9, type: 3}
+  - id: m_paladin_defeat
+    asset: {fileID: 21300000, guid: 8b916674646fda943930df3c12c321ce, type: 3}
+  - id: m_paladin_defend
+    asset: {fileID: 21300000, guid: bd20e2c7e38f22f4593a796bc51f487d, type: 3}
+  - id: m_paladin_hit
+    asset: {fileID: 21300000, guid: ad63b5e9a24ae8740a0eef89a717da18, type: 3}
+  - id: m_paladin_idle
+    asset: {fileID: 21300000, guid: 306d360165b1a64449d32ed1bd5e1f79, type: 3}
+  - id: m_paladin_item
+    asset: {fileID: 21300000, guid: 69040d38ccdacdd4a930d8d75043a7e4, type: 3}
+  - id: m_paladin_win
+    asset: {fileID: 21300000, guid: 3462b4a6555cc1047b9c02a6599a29c6, type: 3}
   - id: m_ranger_attack
     asset: {fileID: 21300000, guid: 715c23eefc02c924c9b6965004e4c69b, type: 3}
   - id: m_ranger_battle
@@ -551,6 +615,38 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 8d66945dfb0f4ad4dacce7a6cc42cfa1, type: 3}
   - id: m_ranger_win
     asset: {fileID: 21300000, guid: 34039346f8a945e4ab00d1f56702faa8, type: 3}
+  - id: m_sentinel_attack
+    asset: {fileID: 21300000, guid: 8a4ef0ae1ac447c4ab9f2677b1143ac0, type: 3}
+  - id: m_sentinel_battle
+    asset: {fileID: 21300000, guid: 809fd588c92f6b14a9834b721e5f3af2, type: 3}
+  - id: m_sentinel_defeat
+    asset: {fileID: 21300000, guid: 004d0adf290d8cb4fa22c0123f4d8ef4, type: 3}
+  - id: m_sentinel_defend
+    asset: {fileID: 21300000, guid: 8339221537fed4c43b1542fb7b17c7b4, type: 3}
+  - id: m_sentinel_hit
+    asset: {fileID: 21300000, guid: 25db5c975fb8fcb42b1e870be5c78383, type: 3}
+  - id: m_sentinel_idle
+    asset: {fileID: 21300000, guid: 37330f74d0a04ea45966a6070fdcfd2f, type: 3}
+  - id: m_sentinel_item
+    asset: {fileID: 21300000, guid: 18e6f2d4c841f8e409e7b851d4e8a515, type: 3}
+  - id: m_sentinel_win
+    asset: {fileID: 21300000, guid: 34dc0b83212a3214398d62523d58fc1f, type: 3}
+  - id: m_sniper_attack
+    asset: {fileID: 21300000, guid: 097fb619430553d4db18af4bf5034c05, type: 3}
+  - id: m_sniper_battle
+    asset: {fileID: 21300000, guid: ded88890b8ced0849a8c1af2f4b23adb, type: 3}
+  - id: m_sniper_defeat
+    asset: {fileID: 21300000, guid: 03e7a8518c064c04b8db6e01852367e9, type: 3}
+  - id: m_sniper_defend
+    asset: {fileID: 21300000, guid: fcc27752d4ec3244bbaaa025c13495d4, type: 3}
+  - id: m_sniper_hit
+    asset: {fileID: 21300000, guid: d82e01cac165ab7448ade744c16dfe8d, type: 3}
+  - id: m_sniper_idle
+    asset: {fileID: 21300000, guid: abb7b333be544f84bbb3a4970fb124e6, type: 3}
+  - id: m_sniper_item
+    asset: {fileID: 21300000, guid: 5b89627e11a2a3747bb420651e207750, type: 3}
+  - id: m_sniper_win
+    asset: {fileID: 21300000, guid: 0480e0a5ed2ae6a439d463133a934d2b, type: 3}
   - id: m_sorcerer_attack
     asset: {fileID: 21300000, guid: df966d3f9fe9f214b9ff29cf497e43d6, type: 3}
   - id: m_sorcerer_battle
@@ -720,6 +816,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: d3b951d1aad59104d819ab546c0417f3, type: 3}
   - id: force_field_defend
     asset: {fileID: 8300000, guid: 5943efc78dafe3c45aace42422b68dd7, type: 3}
+  - id: gun_shot
+    asset: {fileID: 8300000, guid: 8f1b603f4e24da1409267bb9d0b8766c, type: 3}
   - id: heavy_swing
     asset: {fileID: 8300000, guid: 04333e5daa17efb4797b7fe7179739ad, type: 3}
   - id: ice_attack
@@ -736,6 +834,12 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: physical_hit
     asset: {fileID: 8300000, guid: 6356e5b8912225c4480bd1753e47d2ee, type: 3}
+  - id: sentinel_attack
+    asset: {fileID: 8300000, guid: 22656953130c5c94f8babce222174320, type: 3}
+  - id: sentinel_defend
+    asset: {fileID: 8300000, guid: c6c6a0e8477d7cc45b5bb588bdbc6d04, type: 3}
+  - id: sentinel_hit
+    asset: {fileID: 8300000, guid: 3d4e3dfd33eec224f8e2d369df4b20c8, type: 3}
   - id: shots_fired
     asset: {fileID: 8300000, guid: 6093f9dfa968d8b4e956fad2ef9759b4, type: 3}
   - id: sorcerer_attack

@@ -238,5 +238,53 @@
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
         "gender": "f"
+    },
+    {
+        "name": "m_sniper",
+        "class": "Sniper",
+        "attackSoundId": "gun_shot",
+        "defendSoundId": "wooden_block",
+        "hitSoundId": "physical_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_sniper",
+        "class": "Sniper",
+        "attackSoundId": "",
+        "defendSoundId": "",
+        "hitSoundId": "",
+        "gender": "f"
+    },
+    {
+        "name": "m_sentinel",
+        "class": "Sentinel",
+        "attackSoundId": "sentinel_attack",
+        "defendSoundId": "sentinel_defend",
+        "hitSoundId": "sentinel_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_sentinel",
+        "class": "Sentinel",
+        "attackSoundId": "sentinel_attack",
+        "defendSoundId": "sentinel_defend",
+        "hitSoundId": "sentinel_hit",
+        "gender": "f"
+    },
+    {
+        "name": "m_paladin",
+        "class": "Paladin",
+        "attackSoundId": "heavy_swing",
+        "defendSoundId": "steel_block",
+        "hitSoundId": "armor_hit",
+        "gender": "m"
+    },
+    {
+        "name": "f_paladin",
+        "class": "Paladin",
+        "attackSoundId": "heavy_swing",
+        "defendSoundId": "steel_block",
+        "hitSoundId": "",
+        "gender": "f"
     }
 ]
