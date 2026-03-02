@@ -20,20 +20,32 @@ namespace PocketSquire.Arena.Core
         public static Run? CurrentRun = null;
         public static Battle? Battle { get; set; } = null;
 
-        public static void CreateNewGame(SaveSlots slot)
+        /// <summary>
+        /// Reserves a save slot and initialises metadata (dates, playtime).
+        /// Player remains null until CreateNewGame is called after gender selection.
+        /// </summary>
+        public static void RegisterSaveSlot(SaveSlots slot)
         {
             SelectedSaveSlot = slot;
             CharacterCreationDate = DateTime.Now;
             PlayTime = TimeSpan.Zero;
             LastSaveDate = DateTime.Now;
-            //TODO: character creation to select gender & starting attributes
-            var prototype = GameWorld.GetClassTemplate(Player.Genders.m, PlayerClass.ClassName.Squire);
+            Player = null;
+        }
+
+        /// <summary>
+        /// Creates the Player from the chosen gender template. Call after RegisterSaveSlot.
+        /// </summary>
+        public static void CreateNewGame(Player.Genders gender)
+        {
+            var prototype = GameWorld.GetClassTemplate(gender, PlayerClass.ClassName.Squire);
             if (prototype != null)
             {
                 // Deep clone via JSON to avoid reference issues
                 var json = JsonConvert.SerializeObject(prototype);
                 Player = JsonConvert.DeserializeObject<Player>(json);
-                if (Player != null){
+                if (Player != null)
+                {
                     Player.MaxHealth = 20;
                     Player.Health = 20;
                     Player.Gold = 100;

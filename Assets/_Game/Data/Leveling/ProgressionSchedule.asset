@@ -16,6 +16,12 @@ MonoBehaviour:
   exponent: 1.6
   maxLevel: 50
   rewards:
+  - level: 1
+    ValidClasses: 
+    statPoints: 2
+    perkChoices: []
+    perkPoolTag: 
+    perkPoolDrawCount: 0
   - level: 2
     ValidClasses: 
     statPoints: 2

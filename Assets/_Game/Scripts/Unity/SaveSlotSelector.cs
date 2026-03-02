@@ -144,11 +144,9 @@ namespace PocketSquire.Unity
 
         private void StartNewGame(SaveSlots slot, GameObject buttonObj, bool skipSound = false)
         {
-            GameState.CreateNewGame(slot);
-            // Immediately save to reserve the slot
-            SaveSystem.SaveGame(slot);
-            Debug.Log($"[SaveSlotSelector] Created New Game in Slot: {slot}");
-            TransitionToTown(buttonObj, skipSound);
+            GameState.RegisterSaveSlot(slot);
+            Debug.Log($"[SaveSlotSelector] Registered New Game in Slot: {slot}");
+            StartCoroutine(PlaySoundThenLoad("CharacterCreation", buttonObj, skipSound));
         }
 
         private void TransitionToTown(GameObject buttonObj, bool skipSound = false)

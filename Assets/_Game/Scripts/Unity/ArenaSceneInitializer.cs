@@ -26,7 +26,7 @@ public class ArenaSceneInitializer : MonoBehaviour
         if (GameWorld.AllMonsters.Count == 0 || GameState.Player == null)
         {
             if (GameWorld.AllMonsters.Count == 0) GameWorld.Load();
-            if (GameState.Player == null) GameState.CreateNewGame(SaveSlots.Unknown);
+            if (GameState.Player == null) { GameState.RegisterSaveSlot(SaveSlots.Unknown); GameState.CreateNewGame(Player.Genders.m); }
         }
 
         // Ensure progression logic is loaded

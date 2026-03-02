@@ -54,6 +54,13 @@ namespace PocketSquire.Arena.Unity.UI.LevelUp
             UpdateUI();
         }
 
+/// <summary>Registers the callback invoked when the player clicks Accept.</summary>
+public void SetOnAccept(Action callback)
+{
+    _onAccept = callback;
+}
+
+
         private void InitializeRows()
         {
             _attributeRows.Clear();

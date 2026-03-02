@@ -61,37 +61,32 @@ namespace PocketSquire.Arena.Core
 
         /// <summary>
         /// Returns true if there is room to add at least one of the given item.
-        /// Each item type occupies exactly one slot; checks if that slot has room
-        /// or if a new slot can be opened.
+        /// Checks if any existing slot for the item has room, or if a new slot can be opened.
         /// </summary>
         public bool HasRoom(int itemId)
         {
-            var existing = Slots.FirstOrDefault(s => s.CanStack(itemId));
-            if (existing != null) return !existing.IsFull(MaxStackSize);
+            var existingWithRoom = Slots.FirstOrDefault(s => s.CanStack(itemId) && !s.IsFull(MaxStackSize));
+            if (existingWithRoom != null) return true;
             return Slots.Count < MaxSlots;
         }
 
         /// <summary>
-        /// Adds items one unit at a time, stacking onto the item's existing slot first.
-        /// Each item type occupies exactly one slot; once that slot is full, further
-        /// additions are rejected. Returns false as soon as a unit cannot be placed.
-        /// Items added before the failure are kept.
+        /// Adds items one unit at a time. It adds to any existing matching stackable 
+        /// items where there is room. Failing that, it looks for an existing free 
+        /// inventory slot. Failing that, it fails. Items added before failure are kept.
         /// </summary>
         public bool AddItem(int itemId, int quantity = 1)
         {
             for (int i = 0; i < quantity; i++)
             {
-                var existing = Slots.FirstOrDefault(s => s.CanStack(itemId));
+                var existingWithRoom = Slots.FirstOrDefault(s => s.CanStack(itemId) && !s.IsFull(MaxStackSize));
 
-                if (existing != null)
+                if (existingWithRoom != null)
                 {
-                    // Item already has a slot — stack if room, otherwise reject
-                    if (existing.IsFull(MaxStackSize)) return false;
-                    existing.Quantity++;
+                    existingWithRoom.Quantity++;
                 }
                 else
                 {
-                    // No slot yet — open one if capacity allows
                     if (Slots.Count >= MaxSlots) return false;
                     Slots.Add(new InventorySlot { ItemId = itemId, Quantity = 1 });
                 }
@@ -104,28 +99,37 @@ namespace PocketSquire.Arena.Core
         /// </summary>
         public bool RemoveItem(int itemId, int quantity = 1)
         {
-            var existingSlot = Slots.FirstOrDefault(s => s.ItemId == itemId);
+            int totalOwned = GetItemCount(itemId);
+            if (totalOwned < quantity) return false;
 
-            if (existingSlot == null || existingSlot.Quantity < quantity)
+            int remainingToRemove = quantity;
+            for (int i = Slots.Count - 1; i >= 0; i--)
             {
-                return false;
-            }
+                var slot = Slots[i];
+                if (slot.ItemId == itemId)
+                {
+                    if (slot.Quantity <= remainingToRemove)
+                    {
+                        remainingToRemove -= slot.Quantity;
+                        Slots.RemoveAt(i);
+                    }
+                    else
+                    {
+                        slot.Quantity -= remainingToRemove;
+                        remainingToRemove = 0;
+                    }
 
-            existingSlot.Quantity -= quantity;
-
-            if (existingSlot.Quantity == 0)
-            {
-                Slots.Remove(existingSlot);
+                    if (remainingToRemove == 0) break;
+                }
             }
 
             return true;
         }
 
-        /// <summary>Returns the quantity of a specific item in the inventory.</summary>
+        /// <summary>Returns the total quantity of a specific item across all stacks in the inventory.</summary>
         public int GetItemCount(int itemId)
         {
-            var slot = Slots.FirstOrDefault(s => s.ItemId == itemId);
-            return slot?.Quantity ?? 0;
+            return Slots.Where(s => s.ItemId == itemId).Sum(s => s.Quantity);
         }
 
         /// <summary>Checks if the inventory contains at least one of the specified item.</summary>

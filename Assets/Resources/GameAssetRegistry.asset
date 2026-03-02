@@ -25,12 +25,22 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 51506f0317754fb4a9b9e29ddc79faec, type: 3}
   - id: chest_opened
     asset: {fileID: 21300000, guid: 832ac8272f8821a46a0aefa86e5db525, type: 3}
+  - id: classroom
+    asset: {fileID: 21300000, guid: d280c744daa1a7c4aa4fe511ecb30dab, type: 3}
+  - id: classroom_exit
+    asset: {fileID: 21300000, guid: 2770de23fe8b41143b5de8f4cf2a34e8, type: 3}
+  - id: female_selected
+    asset: {fileID: 21300000, guid: c4eb4971d41ccbf4fa40fee118a6ce0c, type: 3}
   - id: general_store_interior
     asset: {fileID: 21300000, guid: 265623c560d1eb840bff738c1bac502d, type: 3}
   - id: GUI_0
     asset: {fileID: 21300000, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   - id: home_interior
     asset: {fileID: 21300000, guid: 8774bd719a4407b44bfd8460387ae490, type: 3}
+  - id: male_selected
+    asset: {fileID: 21300000, guid: 9c1d609bd57916c45a1e9b71749ab54f, type: 3}
+  - id: neither_selected
+    asset: {fileID: 21300000, guid: d5f2d1215a46c4a4383df62a1badb822, type: 3}
   - id: save_indicator
     asset: {fileID: 21300000, guid: 0a2765f5c85983b48b3191b093e8304f, type: 3}
   - id: skilltree_background
@@ -812,8 +822,12 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: b92f5b8a653cca640835509b00bc25ad, type: 3}
   - id: f_physical_attack
     asset: {fileID: 8300000, guid: 8abe9f07b96f2f64b9dfa144b5cd961a, type: 3}
+  - id: female_huh
+    asset: {fileID: 8300000, guid: 1a0b72b30e9f61540a4830386cf298d1, type: 3}
   - id: fire_attack
     asset: {fileID: 8300000, guid: d3b951d1aad59104d819ab546c0417f3, type: 3}
+  - id: footsteps
+    asset: {fileID: 8300000, guid: 2c2753d0ce7ce0b4a86cf90cc466323e, type: 3}
   - id: force_field_defend
     asset: {fileID: 8300000, guid: 5943efc78dafe3c45aace42422b68dd7, type: 3}
   - id: gun_shot
@@ -830,6 +844,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: a4ebc79ef3a200842a4ee771833a913b, type: 3}
   - id: magic_defend
     asset: {fileID: 8300000, guid: a702f555066044047a49f8b7a7fcc23b, type: 3}
+  - id: male_huh
+    asset: {fileID: 8300000, guid: d759450f65f0b8a45b66d6710d9130a8, type: 3}
   - id: physical_defend
     asset: {fileID: 8300000, guid: 51bc07582ba22de43806eb14f97eeaa8, type: 3}
   - id: physical_hit
@@ -860,8 +876,12 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 43567b353ea5c244eb8ce827bf038026, type: 3}
   - id: battle_menu_tick
     asset: {fileID: 8300000, guid: b5c95b143d4cc954abd3d585e174c3c6, type: 3}
+  - id: chair_push_back
+    asset: {fileID: 8300000, guid: e3691d99fddf74641a6ae0715df15f30, type: 3}
   - id: chest_opening
     asset: {fileID: 8300000, guid: d08ab70175977484dac2a1a09038750e, type: 3}
+  - id: class_door_close
+    asset: {fileID: 8300000, guid: d8d17a172389657449838d3e6f13f016, type: 3}
   - id: class_unlocked
     asset: {fileID: 8300000, guid: a60f044c39d06434e94ee2606ef1e6fe, type: 3}
   - id: coin_spend
@@ -917,6 +937,8 @@ MonoBehaviour:
     asset: {fileID: 5228159149513318820, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
   - id: SkillTreeNode
     asset: {fileID: 100000001, guid: 8bd2bfc29ea0a0b459a014bb99140b5c, type: 3}
+  - id: LevelUpBackground
+    asset: {fileID: 1470581127705022147, guid: 298ff07bd48f1b047a46bd0de823bc3c, type: 3}
   - id: MenuCursor
     asset: {fileID: 5743983063834753278, guid: 3dea88bb4a5d7f34db445f404da4d38d, type: 3}
   itemRowPrefab: {fileID: 7679988491501550547, guid: 887fa1c10124f2940a07fd9ba88e79bd, type: 3}

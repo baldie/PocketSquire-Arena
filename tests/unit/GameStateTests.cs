@@ -25,13 +25,61 @@ public class GameStateTests
     }
 
     [Test]
+    public void RegisterSaveSlot_SetsSlotAndDates_PlayerIsNull()
+    {
+        // Act
+        GameState.RegisterSaveSlot(SaveSlots.Slot1);
+
+        // Assert
+        Assert.That(GameState.SelectedSaveSlot, Is.EqualTo(SaveSlots.Slot1));
+        Assert.That(GameState.CharacterCreationDate, Is.Not.Null);
+        Assert.That(GameState.PlayTime, Is.EqualTo(TimeSpan.Zero));
+        Assert.That(GameState.Player, Is.Null, "Player should not be created until CreateNewGame is called");
+    }
+
+    [Test]
+    public void CreateNewGame_Male_CreatesPlayerWithMaleGender()
+    {
+        // Arrange
+        var maleTemplate = new Player("m_squire", 20, 20, new Attributes(), Player.Genders.m);
+        maleTemplate.ChangeClass(PlayerClass.ClassName.Squire);
+        GameWorld.ClassTemplates.Clear();
+        GameWorld.ClassTemplates.Add(maleTemplate);
+
+        // Act
+        GameState.CreateNewGame(Player.Genders.m);
+
+        // Assert
+        Assert.That(GameState.Player, Is.Not.Null);
+        Assert.That(GameState.Player!.Gender, Is.EqualTo(Player.Genders.m));
+    }
+
+    [Test]
+    public void CreateNewGame_Female_CreatesPlayerWithFemaleGender()
+    {
+        // Arrange
+        var femaleTemplate = new Player("f_squire", 20, 20, new Attributes(), Player.Genders.f);
+        femaleTemplate.ChangeClass(PlayerClass.ClassName.Squire);
+        GameWorld.ClassTemplates.Clear();
+        GameWorld.ClassTemplates.Add(femaleTemplate);
+
+        // Act
+        GameState.CreateNewGame(Player.Genders.f);
+
+        // Assert
+        Assert.That(GameState.Player, Is.Not.Null);
+        Assert.That(GameState.Player!.Gender, Is.EqualTo(Player.Genders.f));
+    }
+
+    [Test]
     public void CreateNewGame_SetsCorrectSlotAndDates()
     {
         // Arrange
         var slot = SaveSlots.Slot1;
 
         // Act
-        GameState.CreateNewGame(slot);
+        GameState.RegisterSaveSlot(slot);
+        GameState.CreateNewGame(Player.Genders.m);
 
         // Assert
         Assert.That(GameState.SelectedSaveSlot, Is.EqualTo(slot));
@@ -52,7 +100,8 @@ public class GameStateTests
     {
         // Arrange
         var slot = SaveSlots.Slot2;
-        GameState.CreateNewGame(slot);
+        GameState.RegisterSaveSlot(slot);
+        GameState.CreateNewGame(Player.Genders.m);
         
         // Manually set some values to be sure
         var creationDate = new DateTime(2023, 1, 1);
@@ -152,7 +201,8 @@ public class GameStateTests
         var slot = SaveSlots.Slot1;
 
         // Act
-        GameState.CreateNewGame(slot);
+        GameState.RegisterSaveSlot(slot);
+        GameState.CreateNewGame(Player.Genders.m);
 
         // Assert
         Assert.That(GameState.Player, Is.Not.Null);
@@ -164,7 +214,8 @@ public class GameStateTests
     public void SaveLoadRoundtrip_PreservesInventory()
     {
         // Arrange — start with 1 potion, add 1 more to fill slot 1 (stack 2), add item 2 to fill slot 2
-        GameState.CreateNewGame(SaveSlots.Slot1);
+        GameState.RegisterSaveSlot(SaveSlots.Slot1);
+        GameState.CreateNewGame(Player.Genders.m);
         GameState.Player!.Inventory.AddItem(1, 1); // slot 1: qty 2 (full)
         GameState.Player.Inventory.AddItem(2, 2);  // slot 2: qty 2 (full)
 

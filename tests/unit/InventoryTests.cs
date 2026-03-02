@@ -152,13 +152,25 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void AddItem_ReturnsFalse_WhenStackLimitReached()
+        public void AddItem_CreatesNewStack_WhenFirstStackFull()
         {
-            var inv = new Inventory(); // stack 2
-            inv.AddItem(1, 2);         // slot full
+            var inv = new Inventory(); // 2 slots, stack limit 2
+            inv.AddItem(1, 2);         // slot 1 full
+            var result = inv.AddItem(1, 1); // should spill to slot 2
+            Assert.That(result, Is.True);
+            Assert.That(inv.GetItemCount(1), Is.EqualTo(3));
+            Assert.That(inv.Slots.Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void AddItem_ReturnsFalse_WhenAllSlotsFullAndStackLimitReached()
+        {
+            var inv = new Inventory(); // stack 2, 2 slots
+            inv.AddItem(1, 2);         // slot 1 full
+            inv.AddItem(1, 2);         // slot 2 full
             var result = inv.AddItem(1, 1);
             Assert.That(result, Is.False);
-            Assert.That(inv.GetItemCount(1), Is.EqualTo(2), "Quantity must not change");
+            Assert.That(inv.GetItemCount(1), Is.EqualTo(4), "Quantity must not change");
         }
 
         [Test]

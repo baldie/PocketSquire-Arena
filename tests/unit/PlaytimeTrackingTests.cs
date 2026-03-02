@@ -76,7 +76,8 @@ public class PlaytimeTrackingTests
     public void GetSaveData_IncludesPlayTimeTicks()
     {
         // Arrange
-        GameState.CreateNewGame(SaveSlots.Slot1);
+        GameState.RegisterSaveSlot(SaveSlots.Slot1);
+        GameState.CreateNewGame(Player.Genders.m);
         GameState.PlayTime = TimeSpan.FromMinutes(25);
 
         // Act
@@ -110,7 +111,8 @@ public class PlaytimeTrackingTests
     public void PlayTime_RoundTrip_PreservesValue()
     {
         // Arrange
-        GameState.CreateNewGame(SaveSlots.Slot2);
+        GameState.RegisterSaveSlot(SaveSlots.Slot2);
+        GameState.CreateNewGame(Player.Genders.m);
         var originalPlayTime = TimeSpan.FromHours(2).Add(TimeSpan.FromMinutes(37)).Add(TimeSpan.FromSeconds(15));
         GameState.PlayTime = originalPlayTime;
 
@@ -127,7 +129,8 @@ public class PlaytimeTrackingTests
     public void CreateNewGame_InitializesPlayTimeToZero()
     {
         // Act
-        GameState.CreateNewGame(SaveSlots.Slot3);
+        GameState.RegisterSaveSlot(SaveSlots.Slot3);
+        GameState.CreateNewGame(Player.Genders.m);
 
         // Assert
         Assert.That(GameState.PlayTime, Is.Not.Null);
