@@ -250,8 +250,8 @@
     {
         "name": "f_sniper",
         "class": "Sniper",
-        "attackSoundId": "",
-        "defendSoundId": "",
+        "attackSoundId": "gun_shot",
+        "defendSoundId": "wooden_block",
         "hitSoundId": "",
         "gender": "f"
     },
@@ -284,7 +284,7 @@
         "class": "Paladin",
         "attackSoundId": "heavy_swing",
         "defendSoundId": "steel_block",
-        "hitSoundId": "",
+        "hitSoundId": "armor_hit",
         "gender": "f"
     }
 ]
