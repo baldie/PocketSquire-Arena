@@ -6,20 +6,25 @@ namespace PocketSquire.Arena.Core
     {
         public enum ClassName
         {
+            // Tier 0
             Squire,
+            // Tier 1
             SpellCaster,
             Bowman,
             Fighter,
+            // Tier 2
             Mage,
             Druid,
             Archer,
             Hunter,
             Warrior,
+            // Tier 3
             Wizard,
             Archdruid,
             Marksman,
             Ranger,
             Knight,
+            // Prestige Classes
             Sorcerer,
             Warden,
             Sniper,

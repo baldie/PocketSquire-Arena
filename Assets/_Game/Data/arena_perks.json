@@ -1,0 +1,546 @@
+{
+  "perks": [
+    {
+      "id": "keen_eye",
+      "name": "Keen Eye",
+      "description": "Increases hit chance by 5%",
+      "icon": "keen_eye.png",
+      "type": "Passive",
+      "soldBy": "Shopkeeper",
+      "cost": 100,
+      "tier": 0,
+      "prerequisites": {
+        "minLevel": 1
+      }
+    },
+    {
+      "id": "second_wind",
+      "name": "Second Wind",
+      "description": "When HP drops below 30%, restore 15% max HP once per battle",
+      "icon": "second_wind.png",
+      "type": "Triggered",
+      "soldBy": "Shopkeeper",
+      "cost": 200,
+      "tier": 0,
+      "prerequisites": {
+        "minLevel": 3
+      },
+      "event": "HPBelowThreshold",
+      "threshold": 30,
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "RestoreHP",
+      "value": 15,
+      "isPercent": true,
+      "oncePerBattle": true
+    },
+    {
+      "id": "bargain_hunter",
+      "name": "Bargain Hunter",
+      "description": "All shop purchases cost 10% less gold",
+      "icon": "bargain_hunter.png",
+      "type": "Passive",
+      "soldBy": "Shopkeeper",
+      "cost": 300,
+      "tier": 1,
+      "prerequisites": {
+        "minLevel": 4
+      }
+    },
+    {
+      "id": "lucky_strike",
+      "name": "Lucky Strike",
+      "description": "5% chance to deal double damage on any attack",
+      "icon": "lucky_strike.png",
+      "type": "Triggered",
+      "soldBy": "Shopkeeper",
+      "cost": 450,
+      "tier": 1,
+      "prerequisites": {
+        "minLevel": 7
+      },
+      "event": "PlayerAttackedMonster",
+      "perkTarget": "Damage",
+      "procPercent": 5,
+      "effect": "DoubleDamage"
+    },
+    {
+      "id": "treasure_hunter",
+      "name": "Treasure Hunter",
+      "description": "10% more gold from all sources",
+      "icon": "treasure_hunter.png",
+      "type": "Passive",
+      "soldBy": "Shopkeeper",
+      "cost": 400,
+      "tier": 1,
+      "prerequisites": {
+        "minLevel": 6
+      }
+    },
+    {
+      "id": "comeback_kid",
+      "name": "Comeback Kid",
+      "description": "After losing a battle, gain 20% bonus damage for the next battle",
+      "icon": "comeback_kid.png",
+      "type": "Triggered",
+      "soldBy": "Shopkeeper",
+      "cost": 350,
+      "tier": 2,
+      "prerequisites": {
+        "minLevel": 9
+      },
+      "event": "BattleLost",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "DamageBuff",
+      "value": 20,
+      "duration": 1
+    },
+    {
+      "id": "warriors_resolve",
+      "name": "Warrior's Resolve",
+      "description": "Each consecutive hit increases damage by 3% (stacks up to 5 times)",
+      "icon": "warriors_resolve.png",
+      "type": "Triggered",
+      "soldBy": "FightersBlacksmith",
+      "cost": 300,
+      "tier": 1,
+      "prerequisites": {
+        "class": "Fighter",
+        "minLevel": 5
+      },
+      "event": "PlayerHitMonster",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "StackDamageBuff",
+      "value": 3,
+      "maxStacks": 5,
+      "resetOn": "PlayerMissedMonster"
+    },
+    {
+      "id": "iron_skin",
+      "name": "Iron Skin",
+      "description": "Reduce all incoming damage by 5%",
+      "icon": "iron_skin.png",
+      "type": "Passive",
+      "soldBy": "FightersBlacksmith",
+      "cost": 400,
+      "tier": 1,
+      "prerequisites": {
+        "minLevel": 6
+      }
+    },
+    {
+      "id": "shield_bearer",
+      "name": "Shield Bearer",
+      "description": "When defending, reduce incoming damage by an additional 15%",
+      "icon": "shield_bearer.png",
+      "type": "Triggered",
+      "soldBy": "FightersBlacksmith",
+      "cost": 400,
+      "tier": 2,
+      "prerequisites": {
+        "class": "Warrior",
+        "minLevel": 8
+      },
+      "event": "PlayerDefended",
+      "perkTarget": "IncomingDamage",
+      "procPercent": 100,
+      "effect": "ReduceDamage",
+      "value": 15,
+      "isPercent": true
+    },
+    {
+      "id": "blood_rage",
+      "name": "Blood Rage",
+      "description": "Below 50% HP, gain 25% bonus damage",
+      "icon": "blood_rage.png",
+      "type": "Triggered",
+      "soldBy": "FightersBlacksmith",
+      "cost": 650,
+      "tier": 2,
+      "prerequisites": {
+        "minLevel": 11
+      },
+      "event": "HPBelowThreshold",
+      "threshold": 50,
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "DamageBuff",
+      "value": 25,
+      "activeWhile": "HPBelow50"
+    },
+    {
+      "id": "unbreakable",
+      "name": "Unbreakable",
+      "description": "After 2 consecutive defends, gain 20% damage reduction for 2 turns",
+      "icon": "unbreakable.png",
+      "type": "Triggered",
+      "soldBy": "FightersBlacksmith",
+      "cost": 700,
+      "tier": 3,
+      "prerequisites": {
+        "class": "Knight",
+        "minLevel": 13,
+        "requiredPerks": ["shield_bearer"]
+      },
+      "event": "ConsecutiveDefends",
+      "consecutiveCount": 2,
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "DamageReduction",
+      "value": 20,
+      "duration": 2
+    },
+    {
+      "id": "pious",
+      "name": "Pious",
+      "description": "Each battle won increases max HP by 2 (resets when returning home)",
+      "icon": "pious.png",
+      "type": "Triggered",
+      "soldBy": "FightersBlacksmith",
+      "cost": 750,
+      "tier": 3,
+      "prerequisites": {
+        "class": "Paladin",
+        "minLevel": 15
+      },
+      "event": "BattleWon",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "IncreaseMaxHP",
+      "value": 2,
+      "resetOn": "ReturnedHome"
+    },
+    {
+      "id": "divine_favor",
+      "name": "Divine Favor",
+      "description": "10% chance to nullify all damage when hit",
+      "icon": "divine_favor.png",
+      "type": "Triggered",
+      "soldBy": "FightersBlacksmith",
+      "cost": 1000,
+      "tier": 4,
+      "prerequisites": {
+        "class": "Paladin",
+        "minLevel": 18,
+        "requiredPerks": ["shield_bearer", "pious"]
+      },
+      "event": "MonsterAttackHitPlayer",
+      "perkTarget": "Player",
+      "procPercent": 10,
+      "effect": "NullifyDamage"
+    },
+    {
+      "id": "arcane_recovery",
+      "name": "Arcane Recovery",
+      "description": "Restore 10 MP at the start of each battle",
+      "icon": "arcane_recovery.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 250,
+      "tier": 1,
+      "prerequisites": {
+        "class": "SpellCaster",
+        "minLevel": 4
+      },
+      "event": "BattleStarted",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "RestoreMP",
+      "value": 10
+    },
+    {
+      "id": "glass_cannon",
+      "name": "Glass Cannon",
+      "description": "Deal 30% more damage but take 15% more damage",
+      "icon": "glass_cannon.png",
+      "type": "Passive",
+      "soldBy": "Wizard",
+      "cost": 600,
+      "tier": 2,
+      "prerequisites": {
+        "minLevel": 8
+      }
+    },
+    {
+      "id": "elemental_mastery",
+      "name": "Elemental Mastery",
+      "description": "Special attacks deal 25% more damage",
+      "icon": "elemental_mastery.png",
+      "type": "Passive",
+      "soldBy": "Wizard",
+      "cost": 600,
+      "tier": 2,
+      "prerequisites": {
+        "class": "Mage",
+        "minLevel": 10,
+        "requiredPerks": ["arcane_recovery"]
+      }
+    },
+    {
+      "id": "natures_blessing",
+      "name": "Nature's Blessing",
+      "description": "Restore 3% max HP at the start of each turn",
+      "icon": "natures_blessing.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 550,
+      "tier": 2,
+      "prerequisites": {
+        "class": "Druid",
+        "minLevel": 9
+      },
+      "event": "PlayerTurnStarted",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "RestoreHP",
+      "value": 3,
+      "isPercent": true
+    },
+    {
+      "id": "arcane_surge",
+      "name": "Arcane Surge",
+      "description": "When special attack lands, reduce its cooldown by 1 turn",
+      "icon": "arcane_surge.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 700,
+      "tier": 3,
+      "prerequisites": {
+        "class": "Wizard",
+        "minLevel": 12,
+        "requiredPerks": ["elemental_mastery"]
+      },
+      "event": "SpecialAttackLanded",
+      "perkTarget": "SpecialAttackCooldown",
+      "procPercent": 100,
+      "effect": "ReduceCooldown",
+      "value": 1
+    },
+    {
+      "id": "forest_warden",
+      "name": "Forest Warden",
+      "description": "Every 3rd dodge grants 15% damage boost for 2 turns",
+      "icon": "forest_warden.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 650,
+      "tier": 3,
+      "prerequisites": {
+        "class": "Archdruid",
+        "minLevel": 13,
+        "requiredPerks": ["natures_blessing"]
+      },
+      "event": "ConsecutiveDodges",
+      "consecutiveCount": 3,
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "DamageBuff",
+      "value": 15,
+      "duration": 2
+    },
+    {
+      "id": "mana_infusion",
+      "name": "Mana Infusion",
+      "description": "30% chance for special attacks to cost no MP",
+      "icon": "mana_infusion.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 900,
+      "tier": 4,
+      "prerequisites": {
+        "class": "Sorcerer",
+        "minLevel": 16,
+        "requiredPerks": ["arcane_surge"]
+      },
+      "event": "SpecialAttackLanded",
+      "perkTarget": "MPCost",
+      "procPercent": 30,
+      "effect": "RefundMPCost"
+    },
+    {
+      "id": "natures_wrath",
+      "name": "Nature's Wrath",
+      "description": "When entering arena, apply thorns that deal 5 damage when monster attacks",
+      "icon": "natures_wrath.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 850,
+      "tier": 4,
+      "prerequisites": {
+        "class": "Warden",
+        "minLevel": 16,
+        "requiredPerks": ["forest_warden"]
+      },
+      "event": "PlayerEnteredArena",
+      "perkTarget": "Monster",
+      "procPercent": 100,
+      "effect": "ApplyThorns",
+      "value": 5
+    },
+    {
+      "id": "phoenix_heart",
+      "name": "Phoenix Heart",
+      "description": "Once per arena run, survive a fatal blow with 1 HP",
+      "icon": "phoenix_heart.png",
+      "type": "Triggered",
+      "soldBy": "Wizard",
+      "cost": 1200,
+      "tier": 4,
+      "prerequisites": {
+        "minLevel": 20
+      },
+      "event": "WouldDie",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "SurviveFatalBlow",
+      "value": 1,
+      "oncePerRun": true
+    },
+    {
+      "id": "precision_strike",
+      "name": "Precision Strike",
+      "description": "After 3 consecutive hits, next attack deals 50% bonus damage",
+      "icon": "precision_strike.png",
+      "type": "Triggered",
+      "soldBy": "ArcheryTrainer",
+      "cost": 350,
+      "tier": 1,
+      "prerequisites": {
+        "class": "Bowman",
+        "minLevel": 5
+      },
+      "event": "ConsecutiveHits",
+      "consecutiveCount": 3,
+      "perkTarget": "NextAttack",
+      "procPercent": 100,
+      "effect": "BonusDamage",
+      "value": 50,
+      "isPercent": true,
+      "consumeOnUse": true
+    },
+    {
+      "id": "eagle_eye",
+      "name": "Eagle Eye",
+      "description": "Critical hit chance increased by 15%",
+      "icon": "eagle_eye.png",
+      "type": "Passive",
+      "soldBy": "ArcheryTrainer",
+      "cost": 500,
+      "tier": 2,
+      "prerequisites": {
+        "class": "Archer",
+        "minLevel": 9
+      }
+    },
+    {
+      "id": "predator_instinct",
+      "name": "Predator Instinct",
+      "description": "Deal 20% more damage to monsters below 40% HP",
+      "icon": "predator_instinct.png",
+      "type": "Passive",
+      "soldBy": "ArcheryTrainer",
+      "cost": 450,
+      "tier": 2,
+      "prerequisites": {
+        "class": "Hunter",
+        "minLevel": 8
+      }
+    },
+    {
+      "id": "bulls_eye",
+      "name": "Bull's Eye",
+      "description": "After missing, your next attack cannot miss",
+      "icon": "bulls_eye.png",
+      "type": "Triggered",
+      "soldBy": "ArcheryTrainer",
+      "cost": 600,
+      "tier": 3,
+      "prerequisites": {
+        "class": "Marksman",
+        "minLevel": 12,
+        "requiredPerks": ["eagle_eye"]
+      },
+      "event": "PlayerMissedMonster",
+      "perkTarget": "NextAttack",
+      "procPercent": 100,
+      "effect": "GuaranteedHit",
+      "consumeOnUse": true
+    },
+    {
+      "id": "survivalist",
+      "name": "Survivalist",
+      "description": "Each item used grants +5% dodge chance for 3 turns (stacks up to 3 times)",
+      "icon": "survivalist.png",
+      "type": "Triggered",
+      "soldBy": "ArcheryTrainer",
+      "cost": 550,
+      "tier": 3,
+      "prerequisites": {
+        "class": "Ranger",
+        "minLevel": 11
+      },
+      "event": "PlayerUsedItem",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "StackDodgeBuff",
+      "value": 5,
+      "maxStacks": 3,
+      "duration": 3
+    },
+    {
+      "id": "headshot",
+      "name": "Headshot",
+      "description": "Critical hits deal 100% bonus damage instead of 50%",
+      "icon": "headshot.png",
+      "type": "Passive",
+      "soldBy": "ArcheryTrainer",
+      "cost": 950,
+      "tier": 4,
+      "prerequisites": {
+        "class": "Sniper",
+        "minLevel": 17,
+        "requiredPerks": ["bulls_eye"]
+      }
+    },
+    {
+      "id": "tactical_retreat",
+      "name": "Tactical Retreat",
+      "description": "Yield attempts have +30% success rate and restore 10% HP on success",
+      "icon": "tactical_retreat.png",
+      "type": "Triggered",
+      "soldBy": "ArcheryTrainer",
+      "cost": 700,
+      "tier": 4,
+      "prerequisites": {
+        "class": "Sentinel",
+        "minLevel": 15
+      },
+      "event": "PlayerYieldedSuccessfully",
+      "perkTarget": "Player",
+      "procPercent": 100,
+      "effect": "YieldBonus",
+      "yieldChanceBonus": 30,
+      "hpRestore": 10,
+      "isPercent": true
+    }
+  ],
+  "metadata": {
+    "version": "2.0",
+    "totalPerks": 30,
+    "tierDistribution": {
+      "tier0": 2,
+      "tier1": 8,
+      "tier2": 8,
+      "tier3": 6,
+      "tier4": 6
+    },
+    "vendorDistribution": {
+      "Shopkeeper": 6,
+      "Wizard": 8,
+      "FightersBlacksmith": 8,
+      "ArcheryTrainer": 8
+    }
+  }
+}

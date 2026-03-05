@@ -72,6 +72,9 @@ namespace PocketSquire.Unity.UI
 
         public bool IsOpen => isOpen;
         
+        // Default text color for attributes (captured from prefab in Awake)
+        private Color _defaultAttributeColor = Color.white;
+
         // State tracking for background UI disabling
         private class CanvasState
         {
@@ -99,6 +102,11 @@ namespace PocketSquire.Unity.UI
                 menuParent.SetActive(false);
             }
             isOpen = false;
+
+            // Capture the default text color if one of the fields is assigned
+            if (strText != null) _defaultAttributeColor = strText.color;
+            else if (defText != null) _defaultAttributeColor = defText.color;
+            else if (intText != null) _defaultAttributeColor = intText.color;
         }
 
         private void Start()
@@ -305,7 +313,7 @@ namespace PocketSquire.Unity.UI
             }
             else
             {
-                textComponent.color = Color.white;
+                textComponent.color = _defaultAttributeColor;
             }
         }
 
