@@ -48,7 +48,7 @@ namespace PocketSquire.Arena.Core
                 {
                     Player.MaxHealth = 20;
                     Player.Health = 20;
-                    Player.Gold = 100;
+                    Player.Gold = 1000;
                     Player.Attributes = Attributes.GetDefaultAttributes();
                     // Give starting item: 1 Small Health Potion
                     Player.Inventory.AddItem(1, 1);

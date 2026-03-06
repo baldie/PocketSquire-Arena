@@ -929,6 +929,8 @@ MonoBehaviour:
     asset: {fileID: 100000001, guid: af9a29dc531db274cb4e51e65f280f88, type: 3}
   - id: PauseManager
     asset: {fileID: 6880249474966106816, guid: 1da34531698cbd64abbde06381d51a22, type: 3}
+  - id: PerkPrefab
+    asset: {fileID: 8643873071916005523, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
   - id: PlayerMenu
     asset: {fileID: 6951523177587671113, guid: 060837d267208b840886f24bc620e493, type: 3}
   - id: PowerUpIcon

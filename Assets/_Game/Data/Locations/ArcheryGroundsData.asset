@@ -20,5 +20,11 @@ MonoBehaviour:
   dialogueOptions:
   - buttonText: Train
     action: 3
+  - buttonText: Shop
+    action: 2
   - buttonText: Leave
     action: 1
+  shopItemIds: 
+  shopPerkNodes: []
+  hasVendorType: 1
+  vendorType: 3

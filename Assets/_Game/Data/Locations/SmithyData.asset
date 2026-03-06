@@ -23,3 +23,8 @@ MonoBehaviour:
     action: 2
   - buttonText: Leave
     action: 1
+  shopItemIds: 
+  shopPerkNodes:
+  - {fileID: 0}
+  hasVendorType: 1
+  vendorType: 2
