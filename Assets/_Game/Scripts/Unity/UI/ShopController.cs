@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.LevelUp;
+using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Unity.LevelUp;
 using PocketSquire.Arena.Unity.Town;
 using PocketSquire.Unity.UI;
@@ -127,6 +128,23 @@ namespace PocketSquire.Arena.Unity.UI
 
                     var corePerk = perkNode.ToCorePerk();
                     CreateMerchandiseRow(corePerk, perkNode.Icon, () => OnPerkPurchased(perkNode), $"PerkRow_{perkNode.Id}");
+                }
+            }
+
+            // Populate arena perks from runtime JSON data
+            if (location.VendorType.HasValue)
+            {
+                var ownedArenaPerks = GameState.Player?.UnlockedArenaPerks ?? new System.Collections.Generic.HashSet<string>();
+                var available = GameWorld.GetArenaPerksByVendor(location.VendorType.Value)
+                    .Where(p => !ownedArenaPerks.Contains(p.Id));
+
+                foreach (var arenaPerk in available)
+                {
+                    // Capture loop variable for the closure
+                    var captured = arenaPerk;
+                    // TODO: icon lookup from GameAssetRegistry when perk icons are added as assets
+                    CreateMerchandiseRow(captured, null, () => OnArenaPerkPurchased(captured),
+                        $"ArenaPerkRow_{captured.Id}");
                 }
             }
 
@@ -322,6 +340,29 @@ namespace PocketSquire.Arena.Unity.UI
 
             // Remove the purchased perk row so it cannot be bought again this session
             RemoveRowForPerkId(perkNode.Id);
+        }
+
+        private void OnArenaPerkPurchased(ArenaPerk arenaPerk)
+        {
+            if (GameState.Player == null)
+            {
+                Debug.LogWarning("[ShopController] Cannot purchase arena perk - no player");
+                return;
+            }
+
+            if (!GameState.Player.TryPurchaseArenaPerk(arenaPerk))
+            {
+                PlayDeniedSound();
+                interiorToast.ShowToast("Not enough gold");
+                return;
+            }
+
+            PlayCoinSound();
+            UpdateGoldDisplay();
+            Debug.Log($"[ShopController] Purchased arena perk '{arenaPerk.DisplayName}' for {arenaPerk.Cost} gold");
+
+            // Remove row so it can't be purchased again this session
+            RemoveRowForPerkId($"ArenaPerkRow_{arenaPerk.Id}");
         }
 
         /// <summary>

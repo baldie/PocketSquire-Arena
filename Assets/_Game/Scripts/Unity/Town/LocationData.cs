@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core.Town;
+using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Unity.LevelUp;
 
 namespace PocketSquire.Arena.Unity.Town
@@ -31,6 +32,10 @@ namespace PocketSquire.Arena.Unity.Town
         [HideInInspector] [SerializeField] private List<int> shopItemIds = new List<int>();
         [SerializeField] private List<PerkNode> shopPerkNodes = new List<PerkNode>();
 
+        [Header("Arena Perks")]
+        [SerializeField] private bool hasVendorType;
+        [SerializeField] private VendorType vendorType;
+
         // Public accessors
         public string LocationName => locationName;
         public Sprite BackgroundSprite => backgroundSprite;
@@ -40,6 +45,12 @@ namespace PocketSquire.Arena.Unity.Town
         public IReadOnlyList<DialogueOption> DialogueOptions => dialogueOptions;
         public IReadOnlyList<int> ShopItemIds => shopItemIds;
         public IReadOnlyList<PerkNode> ShopPerkNodes => shopPerkNodes;
+
+        /// <summary>
+        /// The vendor type for arena perks. Null if this location doesn't sell arena perks.
+        /// Assign in the Unity Editor.
+        /// </summary>
+        public VendorType? VendorType => hasVendorType ? vendorType : (VendorType?)null;
 
         private void OnValidate()
         {

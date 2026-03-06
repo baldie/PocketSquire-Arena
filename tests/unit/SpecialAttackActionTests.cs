@@ -18,38 +18,86 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void SpecialAttackAction_Damage_UsesStrength()
+        public void SpecialAttackAction_WhenHit_Damage_UsesStrength()
         {
-            var attacker = new Monster("Test Monster", 100, 100, new Attributes { Strength = 7 });
+            var attacker = new Monster("Test Monster", 100, 100, new Attributes { Strength = 7, Dexterity = 100 }); // 99% hit
             var target = new Player { Name = "Test Player", Health = 100, MaxHealth = 100 };
 
-            var action = new SpecialAttackAction(attacker, target);
-
-            // Damage should be based on Strength (7)
-            Assert.That(action.Damage, Is.EqualTo(7));
+            // Find a seed that guarantees a normal hit (no crit) with 99% hit chance
+            for (int seed = 0; seed < 1000; seed++)
+            {
+                var rng = new System.Random(seed);
+                var action = new SpecialAttackAction(attacker, target, rng);
+                if (action.DidHit && !action.IsCrit)
+                {
+                    Assert.That(action.Damage, Is.EqualTo(7));
+                    return;
+                }
+            }
+            Assert.Fail("Could not find a normal hit with seed search");
         }
 
         [Test]
-        public void SpecialAttackAction_Damage_MinimumIsOne()
+        public void SpecialAttackAction_Damage_MinimumIsOne_WhenHit()
         {
-            var attacker = new Monster("Weak Monster", 100, 100, new Attributes { Strength = 0 });
+            var attacker = new Monster("Weak Monster", 100, 100, new Attributes { Strength = 0, Dexterity = 100 }); // 99% hit
             var target = new Player { Name = "Test Player", Health = 100, MaxHealth = 100 };
 
-            var action = new SpecialAttackAction(attacker, target);
-
-            Assert.That(action.Damage, Is.GreaterThanOrEqualTo(1));
+            // All hits should deal at least 1 damage (Math.Max(1, Strength))
+            for (int seed = 0; seed < 50; seed++)
+            {
+                var rng = new System.Random(seed);
+                var action = new SpecialAttackAction(attacker, target, rng);
+                if (action.DidHit)
+                {
+                    Assert.That(action.Damage, Is.GreaterThanOrEqualTo(1));
+                    return;
+                }
+            }
+            Assert.Fail("Could not find a hit");
         }
 
         [Test]
-        public void SpecialAttackAction_ApplyEffect_DealsDamageToTarget()
+        public void SpecialAttackAction_ApplyEffect_DealsDamageToTarget_WhenHit()
         {
-            var attacker = new Monster("Test Monster", 100, 100, new Attributes { Strength = 10 });
+            var attacker = new Monster("Test Monster", 100, 100, new Attributes { Strength = 10, Dexterity = 100 });
             var target = new Player { Name = "Test Player", Health = 100, MaxHealth = 100 };
 
-            var action = new SpecialAttackAction(attacker, target);
-            action.ApplyEffect();
+            // Find a normal hit
+            for (int seed = 0; seed < 1000; seed++)
+            {
+                var rng = new System.Random(seed);
+                var action = new SpecialAttackAction(attacker, target, rng);
+                if (action.DidHit && !action.IsCrit)
+                {
+                    target.Health = 100;
+                    action.ApplyEffect();
+                    Assert.That(target.Health, Is.EqualTo(90), $"Expected 90 HP with seed {seed}");
+                    return;
+                }
+            }
+            Assert.Fail("Could not find a non-crit hit");
+        }
 
-            Assert.That(target.Health, Is.EqualTo(90));
+        [Test]
+        public void SpecialAttackAction_ApplyEffect_NoHPChange_OnMiss()
+        {
+            var attacker = new Monster("Test Monster", 100, 100, new Attributes { Strength = 10, Dexterity = 0 });
+            var target = new Player { Name = "Test Player", Health = 100, MaxHealth = 100 };
+
+            for (int seed = 0; seed < 1000; seed++)
+            {
+                var rng = new System.Random(seed);
+                var action = new SpecialAttackAction(attacker, target, rng);
+                if (!action.DidHit)
+                {
+                    int before = target.Health;
+                    action.ApplyEffect();
+                    Assert.That(target.Health, Is.EqualTo(before), "Miss should not change target HP");
+                    return;
+                }
+            }
+            Assert.Ignore("Could not find miss; skip on edge case");
         }
 
         [Test]

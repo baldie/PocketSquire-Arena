@@ -32,6 +32,37 @@ namespace PocketSquire.Arena.Core
             Paladin
         }
 
+        /// <summary>Returns the tier (0–4) for a class. Prestige classes are tier 4.</summary>
+        public static int GetTier(ClassName className)
+        {
+            switch (className)
+            {
+                case ClassName.Squire: return 0;
+                case ClassName.SpellCaster:
+                case ClassName.Bowman:
+                case ClassName.Fighter: return 1;
+                case ClassName.Mage:
+                case ClassName.Druid:
+                case ClassName.Archer:
+                case ClassName.Hunter:
+                case ClassName.Warrior: return 2;
+                case ClassName.Wizard:
+                case ClassName.Archdruid:
+                case ClassName.Marksman:
+                case ClassName.Ranger:
+                case ClassName.Knight: return 3;
+                default: return 4; // Prestige classes
+            }
+        }
+
+        /// <summary>
+        /// Tier 0→2 slots, Tier 1→4, Tier 2→6, Tier 3→8, Prestige→10.
+        /// </summary>
+        public static int GetMaxPerkSlots(ClassName className)
+        {
+            return (GetTier(className) + 1) * 2;
+        }
+
         public static string GetDescription(ClassName className)
         {
             switch (className)

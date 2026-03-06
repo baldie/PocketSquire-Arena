@@ -1,9 +1,12 @@
+#nullable enable
 using System;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
     /// <summary>
-    /// Action that handles changing turns
+    /// Action that handles changing turns in a battle.
+    /// Also ticks duration on active perk states and fires PlayerTurnStarted/Ended events.
     /// </summary>
     public class ChangeTurnsAction : IGameAction
     {
@@ -22,19 +25,40 @@ namespace PocketSquire.Arena.Core
         public void ApplyEffect()
         {
             if (_battle.IsOver()) return;
-            Console.WriteLine($"Changing turns");
+            Console.WriteLine("Changing turns");
             var player1 = _battle.Player1;
             var player2 = _battle.Player2;
-            
-            if (_battle.CurrentTurn!.IsPlayerTurn)
+
+            bool wasPlayerTurn = _battle.CurrentTurn!.IsPlayerTurn;
+
+            if (wasPlayerTurn)
             {
-                player2.IsDefending = false; // Reset defend for the new actor
+                player2.IsDefending = false;
                 _battle.CurrentTurn = new Turn(player2, player1);
             }
             else
             {
-                player1.IsDefending = false; // Reset defend for the new actor
+                player1.IsDefending = false;
                 _battle.CurrentTurn = new Turn(player1, player2);
+            }
+
+            // Tick down duration on player perk states each turn
+            if (player1 is Player p)
+            {
+                PerkProcessor.TickDuration(p);
+
+                // Fire PlayerTurnStarted / PlayerTurnEnded
+                var ctx = new PerkContext { Player = p };
+                if (!wasPlayerTurn)
+                {
+                    // Monster turn just ended → player turn starting
+                    PerkProcessor.ProcessEvent(PerkTriggerEvent.PlayerTurnStarted, p, ctx);
+                }
+                else
+                {
+                    // Player turn just ended
+                    PerkProcessor.ProcessEvent(PerkTriggerEvent.PlayerTurnEnded, p, ctx);
+                }
             }
         }
     }

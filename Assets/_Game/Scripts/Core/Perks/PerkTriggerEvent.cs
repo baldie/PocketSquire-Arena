@@ -1,0 +1,36 @@
+namespace PocketSquire.Arena.Core.Perks
+{
+    public enum PerkTriggerEvent
+    {
+        PlayerAttackedMonster,
+        PlayerMissedMonster,
+        PlayerHitMonster,
+        PlayerUsedItem,
+        PlayerDefended,
+        PlayerAttemptedYield,
+        PlayerYieldedSuccessfully,
+        PlayerEnteredArena,
+        BattleStarted,
+        BattleWon,
+        BattleLost,
+        ConsecutiveHits,
+        ConsecutiveWins,
+        ConsecutiveDodges,
+        ConsecutiveDefends,
+        ConsecutiveItemUses,
+        PurchasedItem,
+        ReturnedHome,
+        PlayerLeveledUp,
+        HPBelowThreshold,
+        MonsterMissedPlayer,
+        SpecialAttackMissed,
+        SpecialAttackLanded,
+        SpecialAttackCooldownCompleted,
+        PlayerTurnStarted,
+        PlayerTurnEnded,
+        MonsterTurnStarted,
+        MonsterTurnEnded,
+        MonsterAttackHitPlayer,
+        WouldDie
+    }
+}

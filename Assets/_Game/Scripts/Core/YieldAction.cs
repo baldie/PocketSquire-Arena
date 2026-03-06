@@ -1,9 +1,12 @@
+#nullable enable
 using System;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
     /// <summary>
-    /// Action that handles changing turns
+    /// Action that handles the player yielding (attempting to flee the battle).
+    /// Fires PlayerAttemptedYield perk event (YieldBonus modifier is readable by callers).
     /// </summary>
     public class YieldAction : IGameAction
     {
@@ -21,6 +24,14 @@ namespace PocketSquire.Arena.Core
         public void ApplyEffect()
         {
             Console.WriteLine($"{Actor.Name} yields!");
+
+            if (Actor is Player player)
+            {
+                var context = new PerkContext { Player = player };
+                var result = PerkProcessor.ProcessEvent(PerkTriggerEvent.PlayerAttemptedYield, player, context);
+                if (result.YieldChanceBonus > 0)
+                    Console.WriteLine($"[Perk] Yield chance boosted by {result.YieldChanceBonus}%.");
+            }
         }
     }
 }

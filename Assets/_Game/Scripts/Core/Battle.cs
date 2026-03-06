@@ -1,4 +1,5 @@
 using System;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
@@ -10,10 +11,8 @@ namespace PocketSquire.Arena.Core
         public Entity Player2 { get; private set; }
 
         /// <summary>
-        /// Creates a new battle. Player1 goes first. If both entities are monsters they fight each other
+        /// Creates a new battle. Player1 goes first. If both entities are monsters they fight each other.
         /// </summary>
-        /// <param name="player1"></param>
-        /// <param name="player2"></param>
         public Battle(Entity player1, Entity player2){
             if (player1 == null) throw new ArgumentNullException(nameof(player1));
             if (player2 == null) throw new ArgumentNullException(nameof(player2));
@@ -22,6 +21,10 @@ namespace PocketSquire.Arena.Core
             this.Player2 = player2;
             this.Player2.IsDefending = false;
             CurrentTurn = new Turn(player1, player2);
+
+            // Reset arena perk states (once-per-battle flags, stacks, duration, etc.)
+            if (player1 is Player p)
+                PerkProcessor.ResetPerksForBattle(p);
         }
 
         public bool IsOver()

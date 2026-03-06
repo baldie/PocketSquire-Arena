@@ -85,7 +85,10 @@ namespace PocketSquire.Arena.Core
             // Reapply perk-driven inventory capacity — MaxSlots is not serialised,
             // so it must be recalculated from the player's unlocked perks after every load.
             if (Player != null)
+            {
                 Player.Inventory.UpdateCapacity(Player.UnlockedPerks);
+                Player.InitializeArenaPerkStates();
+            }
             Console.WriteLine("Loaded Player: " + Player?.Name);
         }
 

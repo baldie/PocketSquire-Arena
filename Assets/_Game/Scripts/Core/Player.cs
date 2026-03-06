@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
@@ -19,6 +21,17 @@ namespace PocketSquire.Arena.Core
 
         public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
         public System.Collections.Generic.HashSet<string> UnlockedClasses { get; set; } = new System.Collections.Generic.HashSet<string> { PlayerClass.ClassName.Squire.ToString() };
+
+        // Arena Perk state — UnlockedArenaPerks and ActiveArenaPerkIds are serialised.
+        // ArenaPerkStates is runtime-only and rebuilt by InitializeArenaPerkStates() after load.
+        public HashSet<string> UnlockedArenaPerks { get; set; } = new();
+        public List<string> ActiveArenaPerkIds { get; set; } = new();
+
+        [JsonIgnore]
+        public Dictionary<string, ArenaPerkState> ArenaPerkStates { get; set; } = new();
+
+        [JsonIgnore]
+        public int MaxArenaPerkSlots => PlayerClass.GetMaxPerkSlots(Class);
 
         public override string SpriteId {
             get
@@ -178,7 +191,6 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-
         public void AcceptNewLevel() {
             if (GameWorld.Progression != null) {
                 this.Level = GameWorld.Progression.GetLevelForExperience(this.Experience);
@@ -234,6 +246,46 @@ namespace PocketSquire.Arena.Core
         public override string ToString()
         {
             return $"[Player: {Name} (Lvl {Level} {Class})] HP: {Health}/{MaxHealth}, Gold: {Gold}, Exp: {Experience}, Attr: [Str:{Attributes.Strength} Def:{Attributes.Defense} Lck:{Attributes.Luck}]";
+        }
+
+        // --- Arena Perk Methods ---
+
+        public bool TryPurchaseArenaPerk(ArenaPerk perk)
+        {
+            if (perk == null) throw new ArgumentNullException(nameof(perk));
+            if (UnlockedArenaPerks.Contains(perk.Id)) return false;
+            if (Gold < perk.Cost) return false;
+            SpendGold(perk.Cost);
+            UnlockedArenaPerks.Add(perk.Id);
+            return true;
+        }
+
+        public bool TryActivateArenaPerk(string perkId)
+        {
+            if (!UnlockedArenaPerks.Contains(perkId)) return false;
+            if (ActiveArenaPerkIds.Contains(perkId)) return false;
+            if (ActiveArenaPerkIds.Count >= MaxArenaPerkSlots) return false;
+            ActiveArenaPerkIds.Add(perkId);
+            ArenaPerkStates[perkId] = new ArenaPerkState { PerkId = perkId };
+            return true;
+        }
+
+        public bool TryDeactivateArenaPerk(string perkId)
+        {
+            if (!ActiveArenaPerkIds.Remove(perkId)) return false;
+            ArenaPerkStates.Remove(perkId);
+            return true;
+        }
+
+        /// <summary>
+        /// Rebuilds runtime ArenaPerkStates from the serialised ActiveArenaPerkIds list.
+        /// Call after loading a save file.
+        /// </summary>
+        public void InitializeArenaPerkStates()
+        {
+            ArenaPerkStates.Clear();
+            foreach (var id in ActiveArenaPerkIds)
+                ArenaPerkStates[id] = new ArenaPerkState { PerkId = id };
         }
     }
 }

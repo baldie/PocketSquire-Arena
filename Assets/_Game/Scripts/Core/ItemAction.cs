@@ -1,11 +1,12 @@
-
-
+#nullable enable
 using System;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
     /// <summary>
-    /// Action that handles using an item
+    /// Action that handles using an item.
+    /// Fires PlayerUsedItem perk event after applying the item effect.
     /// </summary>
     public class ItemAction : IGameAction
     {
@@ -20,7 +21,7 @@ namespace PocketSquire.Arena.Core
             var battle = GameState.Battle ?? throw new InvalidOperationException("No active battle");
             Actor = battle.CurrentTurn?.Actor ?? battle.Player1;
             Target = battle.CurrentTurn?.Target ?? battle.Player2;
-            
+
             ItemId = itemId;
             ItemData = GameWorld.GetItemById(itemId) ?? throw new InvalidOperationException($"Item with id {itemId} not found");
         }
@@ -28,11 +29,18 @@ namespace PocketSquire.Arena.Core
         public void ApplyEffect()
         {
             Console.WriteLine($"Using item: {ItemData.Name}");
-            
+
             // Apply item effect based on type
             if (IsHealthPotion(ItemData))
             {
                 ApplyHealing_HealthPotion(Actor, ItemData);
+            }
+
+            // Fire perk event after item effect
+            if (Actor is Player player)
+            {
+                var context = new PerkContext { Player = player };
+                PerkProcessor.ProcessEvent(PerkTriggerEvent.PlayerUsedItem, player, context);
             }
         }
 
@@ -60,12 +68,11 @@ namespace PocketSquire.Arena.Core
 
             actor.Heal(healAmount);
             Console.WriteLine($"Healed {actor.Name} for {healAmount} HP. Current HP: {actor.Health}/{actor.MaxHealth}");
-            
+
             // CRITICAL: Remove item from inventory AFTER effect is applied
             bool removed = Actor.Inventory.RemoveItem(ItemId, 1);
             if (!removed)
             {
-                // In Unity this would remain internal logic, logging handled by caller/wrapper if needed
                 Console.WriteLine($"Failed to remove item {ItemId} from inventory");
             }
             else

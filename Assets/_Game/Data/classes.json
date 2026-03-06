@@ -5,7 +5,9 @@
         "attackSoundId": "m_physical_attack",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_squire",
@@ -13,7 +15,9 @@
         "attackSoundId": "f_physical_attack",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_spellcaster",
@@ -21,7 +25,9 @@
         "attackSoundId": "fire_attack",
         "defendSoundId": "force_field_defend",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 20,
+        "maxMana": 20
     },
     {
         "name": "f_spellcaster",
@@ -29,7 +35,9 @@
         "attackSoundId": "fire_attack",
         "defendSoundId": "force_field_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 20,
+        "maxMana": 20
     },
     {
         "name": "m_bowman",
@@ -37,7 +45,9 @@
         "attackSoundId": "arrow_loosed",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_fighter",
@@ -45,7 +55,9 @@
         "attackSoundId": "wooden_chop",
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_mage",
@@ -53,7 +65,9 @@
         "attackSoundId": "large_fireball",
         "defendSoundId": "magic_defend",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 40,
+        "maxMana": 40
     },
     {
         "name": "m_druid",
@@ -61,7 +75,9 @@
         "attackSoundId": "earth_spell",
         "defendSoundId": "druid_shield_impact",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 30,
+        "maxMana": 30
     },
     {
         "name": "f_bowman",
@@ -69,7 +85,9 @@
         "attackSoundId": "arrow_loosed",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_fighter",
@@ -77,7 +95,9 @@
         "attackSoundId": "wooden_chop",
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_mage",
@@ -85,7 +105,9 @@
         "attackSoundId": "large_fireball",
         "defendSoundId": "magic_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 40,
+        "maxMana": 40
     },
     {
         "name": "f_druid",
@@ -93,7 +115,9 @@
         "attackSoundId": "earth_spell",
         "defendSoundId": "druid_shield_impact",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 30,
+        "maxMana": 30
     },
     {
         "name": "f_archer",
@@ -101,7 +125,9 @@
         "attackSoundId": "arrow_loosed",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_hunter",
@@ -109,7 +135,9 @@
         "attackSoundId": "thrown_weapon",
         "defendSoundId": "steel_parry",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_hunter",
@@ -117,7 +145,9 @@
         "attackSoundId": "thrown_weapon",
         "defendSoundId": "steel_parry",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_warrior",
@@ -125,7 +155,9 @@
         "attackSoundId": "f_physical_attack",
         "defendSoundId": "steel_block",
         "hitSoundId": "armor_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_warrior",
@@ -133,7 +165,9 @@
         "attackSoundId": "m_physical_attack",
         "defendSoundId": "",
         "hitSoundId": "",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_wizard",
@@ -141,7 +175,9 @@
         "attackSoundId": "ice_attack",
         "defendSoundId": "magic_barrier_2",
         "hitSoundId": "",
-        "gender": "m"
+        "gender": "m",
+        "mana": 80,
+        "maxMana": 80
     },
     {
         "name": "m_archdruid",
@@ -149,7 +185,9 @@
         "attackSoundId": "earth_magic",
         "defendSoundId": "force_field_defend",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 60,
+        "maxMana": 60
     },
     {
         "name": "f_archdruid",
@@ -157,7 +195,9 @@
         "attackSoundId": "earth_magic",
         "defendSoundId": "magic_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 60,
+        "maxMana": 60
     },
     {
         "name": "f_marksman",
@@ -165,7 +205,9 @@
         "attackSoundId": "shots_fired",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_marksman",
@@ -173,7 +215,9 @@
         "attackSoundId": "shots_fired",
         "defendSoundId": "physical_defend",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_ranger",
@@ -181,7 +225,9 @@
         "attackSoundId": "arrow_loosed",
         "defendSoundId": "steel_parry",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_ranger",
@@ -189,7 +235,9 @@
         "attackSoundId": "arrow_loosed",
         "defendSoundId": "steel_parry",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_knight",
@@ -197,7 +245,9 @@
         "attackSoundId": "heavy_swing",
         "defendSoundId": "steel_block",
         "hitSoundId": "armor_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_knight",
@@ -205,7 +255,9 @@
         "attackSoundId": "heavy_swing",
         "defendSoundId": "steel_block",
         "hitSoundId": "armor_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_sorcerer",
@@ -213,7 +265,9 @@
         "attackSoundId": "sorcerer_attack",
         "defendSoundId": "sorcerer_defense",
         "hitSoundId": "dramatic_impact",
-        "gender": "m"
+        "gender": "m",
+        "mana": 100,
+        "maxMana": 100
     },
     {
         "name": "f_sorcerer",
@@ -221,7 +275,9 @@
         "attackSoundId": "sorcerer_attack",
         "defendSoundId": "sorcerer_defense",
         "hitSoundId": "dramatic_impact",
-        "gender": "f"
+        "gender": "f",
+        "mana": 100,
+        "maxMana": 100
     },
     {
         "name": "m_warden",
@@ -229,7 +285,9 @@
         "attackSoundId": "swipe_attack",
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 70,
+        "maxMana": 70
     },
     {
         "name": "f_warden",
@@ -237,7 +295,9 @@
         "attackSoundId": "swipe_attack",
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 70,
+        "maxMana": 70
     },
     {
         "name": "m_sniper",
@@ -245,7 +305,9 @@
         "attackSoundId": "gun_shot",
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_sniper",
@@ -253,7 +315,9 @@
         "attackSoundId": "gun_shot",
         "defendSoundId": "wooden_block",
         "hitSoundId": "physical_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_sentinel",
@@ -261,7 +325,9 @@
         "attackSoundId": "sentinel_attack",
         "defendSoundId": "sentinel_defend",
         "hitSoundId": "sentinel_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "f_sentinel",
@@ -269,7 +335,9 @@
         "attackSoundId": "sentinel_attack",
         "defendSoundId": "sentinel_defend",
         "hitSoundId": "sentinel_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 0,
+        "maxMana": 0
     },
     {
         "name": "m_paladin",
@@ -277,7 +345,9 @@
         "attackSoundId": "heavy_swing",
         "defendSoundId": "steel_block",
         "hitSoundId": "armor_hit",
-        "gender": "m"
+        "gender": "m",
+        "mana": 50,
+        "maxMana": 50
     },
     {
         "name": "f_paladin",
@@ -285,6 +355,8 @@
         "attackSoundId": "heavy_swing",
         "defendSoundId": "steel_block",
         "hitSoundId": "armor_hit",
-        "gender": "f"
+        "gender": "f",
+        "mana": 50,
+        "maxMana": 50
     }
 ]

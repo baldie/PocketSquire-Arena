@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core.PowerUps;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
@@ -53,6 +54,8 @@ namespace PocketSquire.Arena.Core
                 {
                     GameState.Player.Health = GameState.Player.MaxHealth;
                 }
+                // Reset per-run perk state (e.g. Phoenix Heart once-per-run flag)
+                PerkProcessor.ResetPerksForRun(GameState.Player);
             }
             GameWorld.ResetAllMonsters();
             State = RunState.NoStarted;

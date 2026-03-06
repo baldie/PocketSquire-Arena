@@ -10,6 +10,20 @@ namespace PocketSquire.Arena.Core
         public string Name = string.Empty;
         public int Health;
         public int MaxHealth;
+        public int Mana;
+        public int MaxMana;
+
+        public void RestoreMana(int amount)
+        {
+            Mana = Math.Min(Mana + amount, MaxMana);
+        }
+
+        public bool SpendMana(int amount)
+        {
+            if (Mana < amount) return false;
+            Mana -= amount;
+            return true;
+        }
         public int Experience;
         public int Gold;
         public Inventory Inventory = new();
@@ -57,12 +71,21 @@ namespace PocketSquire.Arena.Core
             if (Health > MaxHealth) Health = MaxHealth;
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(int amount, Func<int, bool>? wouldDieCheck = null)
         {
             if (IsDefending)
             {
                 amount = (int)Math.Ceiling(amount * 0.5f); // 50% damage reduction, rounded up
             }
+
+            // Allow a perk (e.g. Phoenix Heart) to intercept a killing blow before damage is applied.
+            // The callback fires synchronously; if it returns true we survive with exactly 1 HP.
+            if (amount >= Health && wouldDieCheck != null && wouldDieCheck(amount))
+            {
+                Health = 1;
+                return;
+            }
+
             Health -= amount;
             if (Health < 0) Health = 0;
             if (Health == 0) onDeath?.Invoke();

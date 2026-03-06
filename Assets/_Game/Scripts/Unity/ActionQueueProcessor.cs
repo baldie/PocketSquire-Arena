@@ -145,22 +145,44 @@ public class ActionQueueProcessor : MonoBehaviour
         // 3. Trigger Target Hit Effects (if it was an attack or special attack)
         if ((action.Type == ActionType.Attack || action.Type == ActionType.SpecialAttack) && action.Target != null)
         {
-            // Extract damage from either AttackAction or SpecialAttackAction
-            int damage = action switch
-            {
-                AttackAction atk => atk.Damage,
-                SpecialAttackAction spAtk => spAtk.Damage,
-                _ => 0
-            };
+            // Extract damage and hit/crit from either AttackAction or SpecialAttackAction
+            int damage = 0;
+            bool didHit = true;
+            bool isCrit = false;
 
-            if (action.Target.IsDefending)
+            if (action is AttackAction atk)
             {
-                PlayDefendEffects(action.Target, damage);
+                damage = atk.Damage;
+                didHit = atk.DidHit;
+                isCrit = atk.IsCrit;
+            }
+            else if (action is SpecialAttackAction spAtk)
+            {
+                damage = spAtk.Damage;
+                didHit = spAtk.DidHit;
+                isCrit = spAtk.IsCrit;
+            }
+
+            if (!didHit)
+            {
+                // Show MISS on the target
+                var missControl = action.Target is Player ? playerEffectText : monsterEffectText;
+                ShowTextEffect(missControl, "MISS", new Color(0.6f, 0.6f, 0.6f, 1f)); // gray
             }
             else
             {
-                PlayHitEffects(action.Target, damage);
+                // Show damage — gold for crits, red for normal hits
+                Color damageColor = isCrit ? new Color(1f, 0.85f, 0f, 1f) : Color.red;
+                if (action.Target.IsDefending)
+                {
+                    PlayDefendEffects(action.Target, damage);
+                }
+                else
+                {
+                    PlayHitEffects(action.Target, damage, damageColor);
+                }
             }
+
             // 4. Wait for remainder of animation
             yield return new WaitForSeconds(0.5f);
         }       
@@ -197,7 +219,7 @@ public class ActionQueueProcessor : MonoBehaviour
         TriggerVisuals(action.Actor, action.Type, action);
     }
 
-    private void PlayHitEffects(Entity target, int damage)
+    private void PlayHitEffects(Entity target, int damage, Color? damageColor = null)
     {
         if (target == null) return;
 
@@ -206,9 +228,9 @@ public class ActionQueueProcessor : MonoBehaviour
         AudioClip clip = !string.IsNullOrEmpty(hitSoundId) ? assetRegistry?.GetSound(hitSoundId) : null;
         if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
 
-        // Show Damage Number
+        // Show Damage Number (color depends on crit/normal)
         var textControl = target is Player ? playerEffectText : monsterEffectText;
-        ShowNumberEffect(textControl, damage, Color.red);
+        ShowNumberEffect(textControl, damage, damageColor ?? Color.red);
 
         var healthbarActual = target is Player ? playerHealthBarActual : monsterHealthBarActual;
         var healthbarGhost = target is Player ? playerHealthBarGhost : monsterHealthBarGhost;
@@ -605,6 +627,24 @@ public class ActionQueueProcessor : MonoBehaviour
         
         // Optional: Reset scale back to 0 so it's ready for next time
         effectSequence.OnComplete(() => textControl.transform.localScale = Vector3.zero);
+    }
+
+    /// <summary>Shows a text label (non-numeric) such as "MISS" or a perk name, then fades it out.</summary>
+    public void ShowTextEffect(TextMeshProUGUI textControl, string message, Color textColor)
+    {
+        if (textControl == null) return;
+        textControl.text = message;
+        textControl.color = textColor;
+        textControl.alpha = 0;
+        textControl.transform.localScale = Vector3.one;
+        Vector3 originalPos = textControl.transform.localPosition;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(textControl.DOFade(1f, 0.1f));
+        seq.Join(textControl.transform.DOLocalMoveY(originalPos.y + 120f, 0.4f).SetEase(Ease.OutQuad));
+        seq.AppendInterval(0.4f);
+        seq.Append(textControl.DOFade(0f, 0.3f));
+        seq.OnComplete(() => textControl.transform.localPosition = originalPos);
     }
 
     private GameObject FindGameObjectForEntity(Entity entity)

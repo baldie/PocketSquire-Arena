@@ -1,4 +1,6 @@
+#nullable enable
 using System;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
@@ -9,18 +11,25 @@ namespace PocketSquire.Arena.Core
     {
         public ActionType Type => ActionType.Defend;
         public Entity Actor { get; }
-        public Entity Target { get; } // For defend, target is self or null, but we keep interface consistency
+        public Entity Target { get; } // For defend, target is self
 
         public DefendAction(Entity actor)
         {
             Actor = actor ?? throw new ArgumentNullException(nameof(actor));
-            Target = actor; // Target acts on self
+            Target = actor;
         }
 
         public void ApplyEffect()
         {
             Actor.IsDefending = true;
             Console.WriteLine($"{Actor.Name} is defending!");
+
+            // Only trigger perks for the player, not monsters
+            if (Actor is Player player)
+            {
+                var context = new PerkContext { Player = player };
+                PerkProcessor.ProcessEvent(PerkTriggerEvent.PlayerDefended, player, context);
+            }
         }
     }
 }
