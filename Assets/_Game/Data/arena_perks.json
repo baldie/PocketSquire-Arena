@@ -89,10 +89,10 @@
       "isPercent": true
     },
     {
-      "id": "bargain_hunter",
-      "name": "Bargain Hunter",
+      "id": "rewards_membership",
+      "name": "Rewards Membership",
       "description": "Town shop prices are reduced by 10%.",
-      "icon": "bargain_hunter.png",
+      "icon": "rewards_membership.png",
       "type": "Passive",
       "soldBy": "Shopkeeper",
       "cost": 400,
@@ -357,29 +357,25 @@
       "value": 10
     },
     {
-      "id": "warcry",
-      "name": "Warcry",
-      "description": "+15% damage on the turn after an item is used.",
-      "icon": "warcry.png",
-      "type": "Triggered",
+      "id": "secret_stash",
+      "name": "Secret Stash",
+      "description": "Keep an additional 15% of your money on death.",
+      "icon": "secret_stash.png",
+      "type": "Passive",
       "soldBy": "FightersBlacksmith",
       "cost": 450,
       "tier": 2,
       "prerequisites": {
         "minLevel": 9
       },
-      "event": "PlayerUsedItem",
-      "perkTarget": "Player",
-      "procPercent": 100,
-      "effect": "DamageBuff",
-      "value": 15,
-      "duration": 1
+      "effect": "KeepMoney",
+      "value": 15
     },
     {
-      "id": "bulls_charge",
-      "name": "Bull's Charge",
+      "id": "warcry",
+      "name": "Warcry",
       "description": "First attack each battle deals +30% damage.",
-      "icon": "bulls_charge.png",
+      "icon": "warcry.png",
       "type": "Triggered",
       "soldBy": "FightersBlacksmith",
       "cost": 350,
@@ -472,10 +468,10 @@
       "value": 8
     },
     {
-      "id": "swift_reflexes",
-      "name": "Swift Reflexes",
-      "description": "On the monster's turn start, 20% chance to boost crit chance by 15% for 1 turn.",
-      "icon": "swift_reflexes.png",
+      "id": "riposte",
+      "name": "Riposte",
+      "description": "Activated on dodge, increase next hit chance by 30%.",
+      "icon": "riposte.png",
       "type": "Triggered",
       "soldBy": "ArcheryTrainer",
       "cost": 400,
@@ -483,11 +479,11 @@
       "prerequisites": {
         "minLevel": 8
       },
-      "event": "MonsterTurnStarted",
+      "event": "MonsterMissedPlayer",
       "perkTarget": "Player",
-      "procPercent": 20,
-      "effect": "IncreaseCritChance",
-      "value": 15,
+      "procPercent": 100,
+      "effect": "IncreaseHitChance",
+      "value": 30,
       "duration": 1
     },
     {
