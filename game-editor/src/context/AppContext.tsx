@@ -7,6 +7,8 @@ const initialState: AppState = {
     players: [],
     monsters: [],
     items: [],
+    arenaPerks: [],
+    activePerkId: null,
     promptTemplates: DEFAULT_TEMPLATES,
     activeTab: "classes",
     activePlayerClass: null,
@@ -108,6 +110,33 @@ function reducer(state: AppState, action: AppAction): AppState {
                 ...state,
                 notifications: state.notifications.filter((n) => n.id !== action.payload),
             };
+        // ── Perk cases ────────────────────────────────────────────
+        case "LOAD_ARENA_PERKS":
+            return { ...state, arenaPerks: action.payload };
+        case "SET_ACTIVE_PERK":
+            return { ...state, activePerkId: action.payload };
+        case "ADD_PERK":
+            return { ...state, arenaPerks: [...state.arenaPerks, action.payload], activePerkId: action.payload.id };
+        case "UPDATE_PERK": {
+            const arenaPerks = state.arenaPerks.map((p) =>
+                p.id === action.payload.id ? action.payload.data : p
+            );
+            return { ...state, arenaPerks };
+        }
+        case "DELETE_PERK": {
+            const arenaPerks = state.arenaPerks.filter((p) => p.id !== action.payload);
+            return {
+                ...state,
+                arenaPerks,
+                activePerkId: state.activePerkId === action.payload ? null : state.activePerkId,
+            };
+        }
+        case "DUPLICATE_PERK": {
+            const original = state.arenaPerks.find((p) => p.id === action.payload);
+            if (!original) return state;
+            const copy = { ...original, id: `${original.id}_copy`, icon: undefined };
+            return { ...state, arenaPerks: [...state.arenaPerks, copy], activePerkId: copy.id };
+        }
         default:
             return state;
     }

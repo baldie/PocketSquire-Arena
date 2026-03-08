@@ -1,6 +1,6 @@
 import { useAppContext } from "../../context/AppContext";
 
-type TabId = "classes" | "monsters" | "items";
+type TabId = "classes" | "monsters" | "items" | "perks";
 
 export default function TabBar() {
     const { state, dispatch } = useAppContext();
@@ -9,6 +9,7 @@ export default function TabBar() {
         { id: "classes", label: "Classes", count: 19 }, // Fixed 19 classes
         { id: "monsters", label: "Monsters", count: state.monsters.length },
         { id: "items", label: "Items", count: state.items.length },
+        { id: "perks", label: "⚡ Perks", count: state.arenaPerks.length },
     ];
 
     return (

@@ -142,8 +142,22 @@ namespace PocketSquire.Arena.Unity.UI
                 {
                     // Capture loop variable for the closure
                     var captured = arenaPerk;
-                    // TODO: icon lookup from GameAssetRegistry when perk icons are added as assets
-                    CreateMerchandiseRow(captured, null, () => OnArenaPerkPurchased(captured),
+                    Sprite icon = null;
+                    if (!string.IsNullOrEmpty(captured.Icon))
+                    {
+                        // Registry keys use the filename without extension (e.g. "keen_eye" not "keen_eye.png")
+                        string iconKey = System.IO.Path.GetFileNameWithoutExtension(captured.Icon);
+                        icon = GameAssetRegistry.Instance.GetSprite(iconKey);
+                        if (icon == null)
+                            Debug.LogWarning($"[ShopController] Arena perk icon not found in registry. Id='{captured.Id}' IconField='{captured.Icon}' LookupKey='{iconKey}'");
+                        else
+                            Debug.Log($"[ShopController] Arena perk icon resolved. Id='{captured.Id}' Key='{iconKey}'");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[ShopController] Arena perk has no icon field. Id='{captured.Id}'");
+                    }
+                    CreateMerchandiseRow(captured, icon, () => OnArenaPerkPurchased(captured),
                         $"ArenaPerkRow_{captured.Id}");
                 }
             }
@@ -237,6 +251,9 @@ namespace PocketSquire.Arena.Unity.UI
                 var itemRow = rowObj.GetComponent<ItemRow>();
                 if (itemRow != null)
                 {
+                    // Inject the shared description toast so the row can display it on select
+                    itemRow.SetDescriptionToast(interiorToast);
+
                     if (merchandise is Item item)
                     {
                         itemRow.OnSelected = (selectedItem) => UpdateInventoryDisplay(selectedItem);

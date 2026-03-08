@@ -139,12 +139,72 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: a0820b2e2c7bd484db419bd79f6fa16c, type: 3}
   - id: shopkeeper
     asset: {fileID: 21300000, guid: e03fa9549f0dd4a49989f9c28ca6bf23, type: 3}
+  - id: arcane_heart
+    asset: {fileID: 21300000, guid: 6d3693cdd01dc3c4798520705256100c, type: 3}
+  - id: arcane_reserves
+    asset: {fileID: 21300000, guid: dab1fc8fb7f303e40912bca33bcdcf0f, type: 3}
+  - id: arcane_shield
+    asset: {fileID: 21300000, guid: d37bded63e0161049954bac6d80af7da, type: 3}
+  - id: arcane_shield_old
+    asset: {fileID: 21300000, guid: 1992d4032c11b4c4bbd246f7e51f9626, type: 3}
+  - id: battle_hardened
+    asset: {fileID: 21300000, guid: c1c036e5dd7287f47b3f54666d7d05d4, type: 3}
+  - id: berserker_rage
+    asset: {fileID: 21300000, guid: bab8f2ce32edfde4d89fac3e38c0f62b, type: 3}
+  - id: casters_boon
+    asset: {fileID: 21300000, guid: e1417186594fefd498eaf69e36510954, type: 3}
+  - id: clairvoyant
+    asset: {fileID: 21300000, guid: 131a3319205b22a4daada81aa6037440, type: 3}
+  - id: elusive
+    asset: {fileID: 21300000, guid: 9922128039eadcd4e9728eb88e420811, type: 3}
+  - id: iron_will
+    asset: {fileID: 21300000, guid: 8de096b662b13134983aa4fcb2454a0e, type: 3}
+  - id: keen_eye
+    asset: {fileID: 21300000, guid: da78277a2210c0b45b8e4f58a9652edd, type: 3}
+  - id: keep_the_change
+    asset: {fileID: 21300000, guid: 57537cf25d93af244ad316c608b2f5e3, type: 3}
+  - id: last_stand
+    asset: {fileID: 21300000, guid: 85300620bd5701e4bb7a88237a353e4e, type: 3}
+  - id: lucky_strike
+    asset: {fileID: 21300000, guid: 0ce4718ef56192a458106916a34c3f6f, type: 3}
+  - id: mana_flow
+    asset: {fileID: 21300000, guid: 3309a762d1fac7646b65bfdb7d80e7fb, type: 3}
+  - id: mana_sight
+    asset: {fileID: 21300000, guid: 15b21fd1dfc0d9147bee94dc29edd729, type: 3}
+  - id: mending_aura
+    asset: {fileID: 21300000, guid: 1ce433e8475d56d4fadf9cea5a64140d, type: 3}
+  - id: phoenix_heart
+    asset: {fileID: 21300000, guid: 261bc3bbc6df7ab4ab18644a3d4c2d86, type: 3}
+  - id: precision_attacks
+    asset: {fileID: 21300000, guid: 5ad0f4148559b2e43b543f821c05dd7d, type: 3}
+  - id: precision_strike
+    asset: {fileID: 21300000, guid: c04176c699d8008499e920573a58949b, type: 3}
+  - id: rename
+    asset: {fileID: 21300000, guid: 948868e01f04b4644aeab26b5ac14652, type: 3}
+  - id: rewards_membership
+    asset: {fileID: 21300000, guid: 8a0ef7a2f604f41478ff70c7ee3e191d, type: 3}
   - id: satchel_1
     asset: {fileID: 21300000, guid: ad25249e67aa58546a26910dcc955cef, type: 3}
   - id: satchel_2
     asset: {fileID: 21300000, guid: afb1e65f768c8fa49aa43fb6401b5c8e, type: 3}
   - id: satchel_3
     asset: {fileID: 21300000, guid: 7c9131348cbbebe4781f546d2523854d, type: 3}
+  - id: second_wind
+    asset: {fileID: 21300000, guid: f8896ea7ea451a94aaf840ac7e29e8d5, type: 3}
+  - id: sharpshooter
+    asset: {fileID: 21300000, guid: 0a7ee6f1813a111428fabc0a4585aecc, type: 3}
+  - id: spell_surge
+    asset: {fileID: 21300000, guid: 6d9a5c735fd81574988b35a63dba2cc7, type: 3}
+  - id: tactical_retreat
+    asset: {fileID: 21300000, guid: d29e7c8348cfc1943b488a88518ca35c, type: 3}
+  - id: thick_skin
+    asset: {fileID: 21300000, guid: c0b7e7127a8687346ad2b452ad69032a, type: 3}
+  - id: treasure_hunter
+    asset: {fileID: 21300000, guid: f5556abfc1f9d5d4eb997f4aac040753, type: 3}
+  - id: war_horn
+    asset: {fileID: 21300000, guid: bd0b88949516dbe4584966758ccba4e0, type: 3}
+  - id: warriors_resolve
+    asset: {fileID: 21300000, guid: 6b76cffc36f4f464587d1bd3a40b0d0f, type: 3}
   - id: f_archdruid_attack
     asset: {fileID: 21300000, guid: 341c9c6476703f346a4b36cad33da2b3, type: 3}
   - id: f_archdruid_battle

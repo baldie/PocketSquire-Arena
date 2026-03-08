@@ -96,3 +96,66 @@ export interface TemplateVariables {
     rank?: string;
     slot?: string;
 }
+
+// ──────────────────────────────────────────────────────
+// Arena Perks
+// ──────────────────────────────────────────────────────
+
+export type ArenaPerkType = "Passive" | "Triggered";
+export type VendorType = "Shopkeeper" | "Wizard" | "FightersBlacksmith" | "ArcheryTrainer";
+export type PerkTarget = "Player" | "Monster";
+
+// Keep in sync with PerkTriggerEvent.cs
+export type PerkTriggerEvent =
+    | "PlayerAttackedMonster" | "PlayerMissedMonster" | "PlayerHitMonster"
+    | "PlayerUsedItem" | "PlayerDefended" | "PlayerAttemptedYield"
+    | "PlayerYieldedSuccessfully" | "PlayerEnteredArena" | "BattleStarted"
+    | "BattleWon" | "BattleLost" | "ConsecutiveHits" | "ConsecutiveWins"
+    | "ConsecutiveDodges" | "ConsecutiveDefends" | "ConsecutiveItemUses"
+    | "PurchasedItem" | "ReturnedHome" | "PlayerLeveledUp" | "HPBelowThreshold"
+    | "MonsterMissedPlayer" | "SpecialAttackMissed" | "SpecialAttackLanded"
+    | "SpecialAttackCooldownCompleted" | "PlayerTurnStarted" | "PlayerTurnEnded"
+    | "MonsterTurnStarted" | "MonsterTurnEnded" | "MonsterAttackHitPlayer" | "WouldDie";
+
+// Keep in sync with ArenaPerkEffectType.cs
+export type ArenaPerkEffectType =
+    | "RestoreHP" | "RestoreMP" | "DamageBuff" | "DamageReduction"
+    | "StackDamageBuff" | "StackDodgeBuff" | "BonusDamage" | "DoubleDamage"
+    | "GuaranteedHit" | "NullifyDamage" | "ReduceCooldown" | "RefundMPCost"
+    | "IncreaseMaxHP" | "ApplyThorns" | "SurviveFatalBlow" | "YieldBonus"
+    | "IncreaseHitChance" | "IncreaseCritChance" | "ReduceShopPrices"
+    | "IncreaseGoldGain" | "ReduceDamage";
+
+export interface ArenaPerkPrerequisites {
+    minLevel: number;
+    class?: string | null;
+    requiredPerks?: string[] | null;
+}
+
+export interface ArenaPerkData {
+    id: string;
+    name: string;
+    description: string;
+    icon?: string;
+    type: ArenaPerkType;
+    soldBy: VendorType;
+    cost: number;
+    tier: number; // 0-3
+    prerequisites: ArenaPerkPrerequisites;
+    event?: PerkTriggerEvent | null;
+    effect?: ArenaPerkEffectType | null;
+    perkTarget?: PerkTarget | null;
+    procPercent?: number;
+    value?: number;
+    isPercent?: boolean;
+    threshold?: number | null;
+    maxStacks?: number;
+    consecutiveCount?: number;
+    duration?: number;
+    oncePerBattle?: boolean;
+    oncePerRun?: boolean;
+    consumeOnUse?: boolean;
+    resetOn?: PerkTriggerEvent | null;
+    yieldChanceBonus?: number;
+    hpRestore?: number;
+}

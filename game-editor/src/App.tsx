@@ -6,6 +6,7 @@ import TabBar from "./components/layout/TabBar";
 import PlayersTab from "./components/players/PlayersTab";
 import MonstersTab from "./components/monsters/MonstersTab";
 import ItemsTab from "./components/items/ItemsTab";
+import PerksTab from "./components/perks/PerksTab";
 import NotificationToast from "./components/shared/NotificationToast";
 import { useFileSystem } from "./hooks/useFileSystem";
 
@@ -51,6 +52,7 @@ function AppContent() {
         {state.activeTab === "classes" && <PlayersTab />}
         {state.activeTab === "monsters" && <MonstersTab />}
         {state.activeTab === "items" && <ItemsTab />}
+        {state.activeTab === "perks" && <PerksTab />}
       </main>
     </div>
   );

@@ -1,4 +1,5 @@
 import type {
+    ArenaPerkData,
     Gender,
     GenerationHistoryEntry,
     ImageSlot,
@@ -15,8 +16,10 @@ export interface AppState {
     players: PlayerData[];
     monsters: MonsterData[];
     items: ItemData[];
+    arenaPerks: ArenaPerkData[];
+    activePerkId: string | null;
     promptTemplates: PromptTemplates;
-    activeTab: "classes" | "monsters" | "items";
+    activeTab: "classes" | "monsters" | "items" | "perks";
     activePlayerClass: PlayerClassName | null;
     activePlayerGender: Gender;
     activeMonsterIndex: number | null;
@@ -52,4 +55,11 @@ export type AppAction =
     | { type: "SET_GENERATING"; payload: boolean }
     | { type: "SET_GENERATION_PROGRESS"; payload: { current: number; total: number } | null }
     | { type: "ADD_NOTIFICATION"; payload: Notification }
-    | { type: "DISMISS_NOTIFICATION"; payload: string }; // payload = notification id
+    | { type: "DISMISS_NOTIFICATION"; payload: string } // payload = notification id
+    // Perk actions
+    | { type: "LOAD_ARENA_PERKS"; payload: ArenaPerkData[] }
+    | { type: "SET_ACTIVE_PERK"; payload: string | null }
+    | { type: "ADD_PERK"; payload: ArenaPerkData }
+    | { type: "UPDATE_PERK"; payload: { id: string; data: ArenaPerkData } }
+    | { type: "DELETE_PERK"; payload: string }
+    | { type: "DUPLICATE_PERK"; payload: string };

@@ -253,6 +253,10 @@
         "global": {
             "icon": "A fantasy RPG item icon of {name}, pixel art style, 64x64, transparent background"
         },
-        "overrides": {}
+        "overrides": {
+            "battle_hardened": {
+                "icon": "A fantasy RPG perk icon for 'Battle Hardened', stylized badge design. No text"
+            }
+        }
     }
 }

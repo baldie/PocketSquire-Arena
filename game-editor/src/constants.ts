@@ -1,4 +1,4 @@
-import type { Gender, ItemSlot, MonsterSlot, PlayerSlot, PromptTemplates } from "./types";
+import type { ArenaPerkEffectType, ArenaPerkType, Gender, ItemSlot, MonsterSlot, PlayerSlot, PerkTarget, PerkTriggerEvent, PromptTemplates, VendorType } from "./types";
 
 export const PLAYER_CLASSES = [
     "Squire", "SpellCaster", "Bowman", "Fighter", "Mage", "Druid",
@@ -85,3 +85,35 @@ export const DEFAULT_TEMPLATES: PromptTemplates = {
         overrides: {},
     },
 };
+
+// ──────────────────────────────────────────────────────
+// Arena Perk Enum Arrays (keep in sync with C# enums)
+// ──────────────────────────────────────────────────────
+
+export const VENDOR_TYPES: VendorType[] = ["Shopkeeper", "Wizard", "FightersBlacksmith", "ArcheryTrainer"];
+export const PERK_TYPES: ArenaPerkType[] = ["Passive", "Triggered"];
+export const PERK_TARGETS: PerkTarget[] = ["Player", "Monster"];
+
+export const PERK_TRIGGER_EVENTS: PerkTriggerEvent[] = [
+    "PlayerAttackedMonster", "PlayerMissedMonster", "PlayerHitMonster",
+    "PlayerUsedItem", "PlayerDefended", "PlayerAttemptedYield",
+    "PlayerYieldedSuccessfully", "PlayerEnteredArena", "BattleStarted",
+    "BattleWon", "BattleLost", "ConsecutiveHits", "ConsecutiveWins",
+    "ConsecutiveDodges", "ConsecutiveDefends", "ConsecutiveItemUses",
+    "PurchasedItem", "ReturnedHome", "PlayerLeveledUp", "HPBelowThreshold",
+    "MonsterMissedPlayer", "SpecialAttackMissed", "SpecialAttackLanded",
+    "SpecialAttackCooldownCompleted", "PlayerTurnStarted", "PlayerTurnEnded",
+    "MonsterTurnStarted", "MonsterTurnEnded", "MonsterAttackHitPlayer", "WouldDie",
+];
+
+export const PERK_EFFECT_TYPES: ArenaPerkEffectType[] = [
+    "RestoreHP", "RestoreMP", "DamageBuff", "DamageReduction",
+    "StackDamageBuff", "StackDodgeBuff", "BonusDamage", "DoubleDamage",
+    "GuaranteedHit", "NullifyDamage", "ReduceCooldown", "RefundMPCost",
+    "IncreaseMaxHP", "ApplyThorns", "SurviveFatalBlow", "YieldBonus",
+    "IncreaseHitChance", "IncreaseCritChance", "ReduceShopPrices",
+    "IncreaseGoldGain", "ReduceDamage",
+];
+
+// Tier options for dropdown
+export const PERK_TIERS = [0, 1, 2, 3] as const;

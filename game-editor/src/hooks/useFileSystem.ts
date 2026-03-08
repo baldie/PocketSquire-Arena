@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { DEFAULT_TEMPLATES } from "../constants";
 import { readJsonFile, writeJsonFile } from "../utils/fileSystem";
-import type { ItemData, MonsterData, PlayerData, PromptTemplates } from "../types";
+import type { ArenaPerkData, ItemData, MonsterData, PlayerData, PromptTemplates } from "../types";
 import { pushNotification, useAppContext } from "../context/AppContext";
 
 export function useFileSystem() {
@@ -57,6 +57,16 @@ export function useFileSystem() {
                     type: "LOAD_DATA",
                     payload: { players, monsters, items, promptTemplates },
                 });
+
+                // Load arena perks (gracefully handle missing file)
+                try {
+                    const perksRaw = await readJsonFile<{ perks?: ArenaPerkData[] }>(handle, ["Data", "arena_perks.json"]);
+                    const perks = perksRaw?.perks ?? [];
+                    dispatch({ type: "LOAD_ARENA_PERKS", payload: perks });
+                } catch {
+                    // File doesn't exist yet — start empty
+                    dispatch({ type: "LOAD_ARENA_PERKS", payload: [] });
+                }
             } catch (err) {
                 console.error("[useFileSystem] Failed to load game data:", err);
                 pushNotification(

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -11,11 +12,14 @@ namespace PocketSquire.Arena.Unity.UI
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI nameText;
-        [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI quantityText;
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private Button button;
         [SerializeField] private EventTrigger eventTrigger;
+
+        // Injected at runtime by ShopController — shared across all rows.
+        // When this row is selected, its merchandise description is displayed here.
+        private InteriorToast descriptionToast;
 
         public Action<Item> OnSelected;
         public Action<IMerchandise> OnMerchandiseSelected;
@@ -24,12 +28,21 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void Awake()
         {
-            if (icon == null) icon = transform.Find("ItemIcon")?.GetComponent<Image>();
-            if (nameText == null) nameText = transform.Find("ItemNameText")?.GetComponent<TextMeshProUGUI>();
+            if (icon == null)        icon        = transform.Find("ItemIcon")?.GetComponent<Image>();
+            if (nameText == null)    nameText     = transform.Find("ItemNameText")?.GetComponent<TextMeshProUGUI>();
             if (quantityText == null) quantityText = transform.Find("QuantityText")?.GetComponent<TextMeshProUGUI>();
-            if (priceText == null) priceText = transform.Find("PriceText")?.GetComponent<TextMeshProUGUI>();
-            if (button == null) button = GetComponent<Button>();
+            if (priceText == null)   priceText    = transform.Find("PriceText")?.GetComponent<TextMeshProUGUI>();
+            if (button == null)      button       = GetComponent<Button>();
             if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
+        }
+
+        /// <summary>
+        /// Provide a reference to the shared InteriorToast so this row can display
+        /// the item/perk description when selected.
+        /// </summary>
+        public void SetDescriptionToast(InteriorToast toast)
+        {
+            descriptionToast = toast;
         }
 
         public void Initialize(Item item, int quantity, Sprite itemSprite, Action onClick, bool showPrice = true)
@@ -39,8 +52,7 @@ namespace PocketSquire.Arena.Unity.UI
             currentMerchandise = item;
 
             if (nameText != null) nameText.text = item.Name;
-            if (descriptionText != null) descriptionText.text = item.Description;
-            
+
             if (quantityText != null)
             {
                 quantityText.gameObject.SetActive(true);
@@ -62,7 +74,6 @@ namespace PocketSquire.Arena.Unity.UI
             currentMerchandise = merchandise;
 
             if (nameText != null) nameText.text = merchandise.DisplayName;
-            if (descriptionText != null) descriptionText.text = merchandise.Description;
             if (quantityText != null) quantityText.gameObject.SetActive(false);
 
             SetPriceAndIcon(merchandise.Price, merchandiseIcon, showPrice);
@@ -108,6 +119,11 @@ namespace PocketSquire.Arena.Unity.UI
                 OnSelected?.Invoke(currentItem);
             else if (currentMerchandise != null)
                 OnMerchandiseSelected?.Invoke(currentMerchandise);
+
+            // Show description in the shared toast panel
+            string desc = currentMerchandise?.Description ?? "";
+            if (descriptionToast != null && !string.IsNullOrEmpty(desc))
+                descriptionToast.ShowDescription(desc);
         }
 
         public void HidePriceText()
@@ -120,7 +136,6 @@ namespace PocketSquire.Arena.Unity.UI
             currentItem = null;
             currentMerchandise = null;
             if (nameText != null) nameText.text = title;
-            if (descriptionText != null) descriptionText.text = "";
             if (quantityText != null) quantityText.gameObject.SetActive(false);
             if (priceText != null) priceText.gameObject.SetActive(false);
             if (icon != null) icon.gameObject.SetActive(false);
@@ -131,10 +146,10 @@ namespace PocketSquire.Arena.Unity.UI
         private void OnValidate()
         {
             if (Application.isPlaying) return;
-            
+
             if (button == null) button = GetComponent<Button>();
             if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
-            
+
             if (button != null && eventTrigger != null)
             {
                 bool hasPointerEnter = false;
@@ -146,17 +161,17 @@ namespace PocketSquire.Arena.Unity.UI
                         break;
                     }
                 }
-                
+
                 if (!hasPointerEnter)
                 {
                     var entry = new EventTrigger.Entry();
                     entry.eventID = EventTriggerType.PointerEnter;
-                    
+
                     UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(
                         entry.callback,
                         button.Select
                     );
-                    
+
                     eventTrigger.triggers.Add(entry);
                     UnityEditor.EditorUtility.SetDirty(this);
                     UnityEditor.EditorUtility.SetDirty(eventTrigger);
@@ -167,4 +182,3 @@ namespace PocketSquire.Arena.Unity.UI
 
     }
 }
-

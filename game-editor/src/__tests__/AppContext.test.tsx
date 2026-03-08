@@ -75,6 +75,8 @@ const baseState: AppState = {
     players: [],
     monsters: [],
     items: [],
+    arenaPerks: [],
+    activePerkId: null,
     promptTemplates: DEFAULT_TEMPLATES,
     activeTab: "classes",
     activePlayerClass: null,

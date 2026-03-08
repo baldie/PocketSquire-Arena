@@ -28,4 +28,21 @@ public class InteriorToast : MonoBehaviour
             .Append(toastText.DOFade(0, 0.5f))        // Fade out (0.5s)
             .OnComplete(() => toastText.text = "");   // Clear text at the end
     }
+
+    /// <summary>
+    /// Displays a persistent description (stays visible until replaced).
+    /// Used by ItemRow to show item/perk descriptions when hovered/selected.
+    /// </summary>
+    public void ShowDescription(string message)
+    {
+        toastTween?.Kill();
+        toastText.text = message;
+        toastText.alpha = 1f;
+    }
+
+    public void ClearDescription()
+    {
+        toastTween?.Kill();
+        toastText.DOFade(0, 0.3f).OnComplete(() => toastText.text = "");
+    }
 }
