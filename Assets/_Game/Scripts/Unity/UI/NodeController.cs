@@ -216,7 +216,7 @@ namespace PocketSquire.Unity.UI
                 }
 
                 // Refresh all nodes' pulse indicators
-                var allNodes = FindObjectsOfType<NodeController>();
+                var allNodes = FindObjectsByType<NodeController>(FindObjectsSortMode.None);
                 foreach (var node in allNodes)
                 {
                     node.CheckPulseIndicator();

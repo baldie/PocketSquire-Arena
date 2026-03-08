@@ -36,7 +36,7 @@ namespace PocketSquire.Arena.Tests
 
         private void UnlockAndActivate(Player player, string perkId)
         {
-            player.UnlockedArenaPerks.Add(perkId);
+            player.AcquiredPerks.Add(perkId);
             player.ActiveArenaPerkIds.Add(perkId);
             player.ArenaPerkStates[perkId] = new ArenaPerkState { PerkId = perkId };
         }

@@ -59,7 +59,7 @@ namespace PocketSquire.Arena.Tests
 
             Assert.That(result, Is.True);
             Assert.That(player.Gold, Is.EqualTo(400));
-            Assert.That(player.UnlockedArenaPerks, Contains.Item(perk.Id));
+            Assert.That(player.AcquiredPerks, Contains.Item(perk.Id));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace PocketSquire.Arena.Tests
 
             Assert.That(result, Is.False);
             Assert.That(player.Gold, Is.EqualTo(50), "Gold unchanged on failure");
-            Assert.That(player.UnlockedArenaPerks, Does.Not.Contain(perk.Id));
+            Assert.That(player.AcquiredPerks, Does.Not.Contain(perk.Id));
         }
 
         [Test]
@@ -223,7 +223,7 @@ namespace PocketSquire.Arena.Tests
             var reloaded = JsonConvert.DeserializeObject<Player>(json)!;
             reloaded.InitializeArenaPerkStates();
 
-            Assert.That(reloaded.UnlockedArenaPerks, Contains.Item(perk.Id));
+            Assert.That(reloaded.AcquiredPerks, Contains.Item(perk.Id));
             Assert.That(reloaded.ActiveArenaPerkIds, Contains.Item(perk.Id));
             Assert.That(reloaded.ArenaPerkStates.ContainsKey(perk.Id), Is.True);
         }

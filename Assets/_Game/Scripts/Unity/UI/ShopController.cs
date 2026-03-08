@@ -117,7 +117,7 @@ namespace PocketSquire.Arena.Unity.UI
             // Populate shop perks — skip any the player already owns
             if (location.ShopPerkNodes != null && location.ShopPerkNodes.Count > 0)
             {
-                var ownedPerks = GameState.Player?.UnlockedPerks ?? new System.Collections.Generic.HashSet<string>();
+                var ownedPerks = GameState.Player?.AcquiredPerks ?? new System.Collections.Generic.HashSet<string>();
 
                 foreach (var perkNode in location.ShopPerkNodes)
                 {
@@ -134,7 +134,7 @@ namespace PocketSquire.Arena.Unity.UI
             // Populate arena perks from runtime JSON data
             if (location.VendorType.HasValue)
             {
-                var ownedArenaPerks = GameState.Player?.UnlockedArenaPerks ?? new System.Collections.Generic.HashSet<string>();
+                var ownedArenaPerks = GameState.Player?.AcquiredPerks ?? new System.Collections.Generic.HashSet<string>();
                 var available = GameWorld.GetArenaPerksByVendor(location.VendorType.Value)
                     .Where(p => !ownedArenaPerks.Contains(p.Id));
 
@@ -146,12 +146,11 @@ namespace PocketSquire.Arena.Unity.UI
                     if (!string.IsNullOrEmpty(captured.Icon))
                     {
                         // Registry keys use the filename without extension (e.g. "keen_eye" not "keen_eye.png")
-                        string iconKey = System.IO.Path.GetFileNameWithoutExtension(captured.Icon);
-                        icon = GameAssetRegistry.Instance.GetSprite(iconKey);
+                        icon = GameAssetRegistry.Instance.GetSprite(captured.Icon);
                         if (icon == null)
-                            Debug.LogWarning($"[ShopController] Arena perk icon not found in registry. Id='{captured.Id}' IconField='{captured.Icon}' LookupKey='{iconKey}'");
+                            Debug.LogWarning($"[ShopController] Arena perk icon not found in registry. Id='{captured.Id}' IconField='{captured.Icon}' LookupKey='{captured.Icon}'");
                         else
-                            Debug.Log($"[ShopController] Arena perk icon resolved. Id='{captured.Id}' Key='{iconKey}'");
+                            Debug.Log($"[ShopController] Arena perk icon resolved. Id='{captured.Id}' Key='{captured.Icon}'");
                     }
                     else
                     {
@@ -356,7 +355,7 @@ namespace PocketSquire.Arena.Unity.UI
             playerMenu?.Refresh();
 
             // Remove the purchased perk row so it cannot be bought again this session
-            RemoveRowForPerkId(perkNode.Id);
+            RemoveRow($"PerkRow_{perkNode.Id}");
         }
 
         private void OnArenaPerkPurchased(ArenaPerk arenaPerk)
@@ -379,15 +378,14 @@ namespace PocketSquire.Arena.Unity.UI
             Debug.Log($"[ShopController] Purchased arena perk '{arenaPerk.DisplayName}' for {arenaPerk.Cost} gold");
 
             // Remove row so it can't be purchased again this session
-            RemoveRowForPerkId($"ArenaPerkRow_{arenaPerk.Id}");
+            RemoveRow($"ArenaPerkRow_{arenaPerk.Id}");
         }
 
         /// <summary>
-        /// Removes and destroys the row associated with the given perk ID after purchase.
+        /// Removes and destroys the row associated with the given target name after purchase.
         /// </summary>
-        private void RemoveRowForPerkId(string perkId)
+        private void RemoveRow(string targetName)
         {
-            string targetName = $"PerkRow_{perkId}";
             for (int i = spawnedRows.Count - 1; i >= 0; i--)
             {
                 var rowObj = spawnedRows[i];
@@ -399,7 +397,7 @@ namespace PocketSquire.Arena.Unity.UI
                     return;
                 }
             }
-            Debug.LogWarning($"[ShopController] Could not find row to remove for perk '{perkId}'");
+            Debug.LogWarning($"[ShopController] Could not find row to remove for perk '{targetName}'");
         }
 
         private void PlayCoinSound()

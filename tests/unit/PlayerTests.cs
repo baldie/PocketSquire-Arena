@@ -211,7 +211,7 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(result, Is.True);
             Assert.That(player.Gold, Is.EqualTo(100));
-            Assert.That(player.UnlockedPerks.Contains("satchel_tier1"), Is.True);
+            Assert.That(player.AcquiredPerks.Contains("satchel_tier1"), Is.True);
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(result, Is.False);
             Assert.That(player.Gold, Is.EqualTo(50), "Gold should not change on failed purchase");
-            Assert.That(player.UnlockedPerks.Contains("satchel_tier1"), Is.False);
+            Assert.That(player.AcquiredPerks.Contains("satchel_tier1"), Is.False);
         }
 
         [Test]

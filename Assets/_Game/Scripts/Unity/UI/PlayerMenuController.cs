@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Core.PowerUps;
 using PocketSquire.Arena.Unity.UI;
 
@@ -44,6 +45,10 @@ namespace PocketSquire.Unity.UI
 
         [Header("Containers")]
         [SerializeField] private Transform badgesContainer;
+
+        [Header("Perks")]
+        [SerializeField] private Transform perksContainer;
+        [SerializeField] private AcquiredPerkListController acquiredPerkList;
 
         [Header("Footer")]
         [SerializeField] private Button classTreeButton;
@@ -217,6 +222,9 @@ namespace PocketSquire.Unity.UI
 
             // Update inventory
             UpdateInventory(player);
+
+            // Update perk slots
+            RefreshPerks(player);
         }
 
         /// <summary>
@@ -314,6 +322,54 @@ namespace PocketSquire.Unity.UI
             else
             {
                 textComponent.color = _defaultAttributeColor;
+            }
+        }
+
+
+        /// <summary>
+        /// Reflects the player's active arena perks in the PerksContainer slots.
+        /// Slots with an active perk show its icon; empty slots show the 'empty' sprite.
+        /// Slots beyond MaxArenaPerkSlots are greyed out and non-interactive.
+        /// </summary>
+        private void RefreshPerks(Player player)
+        {
+            if (perksContainer == null) return;
+
+            // Collect all PerkUI children in sibling order.
+            var perkSlots = perksContainer.GetComponentsInChildren<PerkUI>(includeInactive: true);
+
+            for (int i = 0; i < perkSlots.Length; i++)
+            {
+                var slot = perkSlots[i];
+
+                // Inject the shared panel reference.
+                if (acquiredPerkList != null)
+                    slot.SetPerkListPanel(acquiredPerkList);
+
+                // Inject grayscale material if needed (forward from our own field).
+                // PerkUI already has its own grayscaleMaterial field; we only need to set
+                // interactability and perk data here.
+
+                bool isAvailable = i < player.MaxArenaPerkSlots;
+                slot.SetInteractable(isAvailable);
+
+                if (!isAvailable)
+                {
+                    slot.LoadLocked();
+                    continue;
+                }
+
+                if (i < player.ActiveArenaPerkIds.Count)
+                {
+                    var perk = GameWorld.GetArenaPerkById(player.ActiveArenaPerkIds[i]);
+                    if (perk != null)
+                    {
+                        slot.LoadPerk(perk);
+                        continue;
+                    }
+                }
+
+                slot.LoadEmpty();
             }
         }
 

@@ -157,6 +157,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 131a3319205b22a4daada81aa6037440, type: 3}
   - id: elusive
     asset: {fileID: 21300000, guid: 9922128039eadcd4e9728eb88e420811, type: 3}
+  - id: empty
+    asset: {fileID: 21300000, guid: 948868e01f04b4644aeab26b5ac14652, type: 3}
   - id: iron_will
     asset: {fileID: 21300000, guid: 8de096b662b13134983aa4fcb2454a0e, type: 3}
   - id: keen_eye
@@ -165,6 +167,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 57537cf25d93af244ad316c608b2f5e3, type: 3}
   - id: last_stand
     asset: {fileID: 21300000, guid: 85300620bd5701e4bb7a88237a353e4e, type: 3}
+  - id: locked
+    asset: {fileID: 21300000, guid: 237fd5f9fc33cee47b30f5d1b937b429, type: 3}
   - id: lucky_strike
     asset: {fileID: 21300000, guid: 0ce4718ef56192a458106916a34c3f6f, type: 3}
   - id: mana_flow
@@ -179,8 +183,6 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 5ad0f4148559b2e43b543f821c05dd7d, type: 3}
   - id: precision_strike
     asset: {fileID: 21300000, guid: c04176c699d8008499e920573a58949b, type: 3}
-  - id: rename
-    asset: {fileID: 21300000, guid: 948868e01f04b4644aeab26b5ac14652, type: 3}
   - id: rewards_membership
     asset: {fileID: 21300000, guid: 8a0ef7a2f604f41478ff70c7ee3e191d, type: 3}
   - id: satchel_1

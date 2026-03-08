@@ -19,12 +19,11 @@ namespace PocketSquire.Arena.Core
         [JsonProperty("class")]
         public PlayerClass.ClassName Class { get; private set; } = PlayerClass.ClassName.Squire;
 
-        public System.Collections.Generic.HashSet<string> UnlockedPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
+        public System.Collections.Generic.HashSet<string> AcquiredPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
         public System.Collections.Generic.HashSet<string> UnlockedClasses { get; set; } = new System.Collections.Generic.HashSet<string> { PlayerClass.ClassName.Squire.ToString() };
 
-        // Arena Perk state — UnlockedArenaPerks and ActiveArenaPerkIds are serialised.
+        // Arena Perk state — AcquiredPerks and ActiveArenaPerkIds are serialised.
         // ArenaPerkStates is runtime-only and rebuilt by InitializeArenaPerkStates() after load.
-        public HashSet<string> UnlockedArenaPerks { get; set; } = new();
         public List<string> ActiveArenaPerkIds { get; set; } = new();
 
         [JsonIgnore]
@@ -158,7 +157,7 @@ namespace PocketSquire.Arena.Core
             }
 
             // Perks are one-time purchases
-            if (UnlockedPerks.Contains(perk.Id))
+            if (AcquiredPerks.Contains(perk.Id))
             {
                 return false;
             }
@@ -169,7 +168,7 @@ namespace PocketSquire.Arena.Core
             }
 
             SpendGold(perk.Price);
-            UnlockedPerks.Add(perk.Id);
+            AcquiredPerks.Add(perk.Id);
 
             // Dispatch effect based on the perk's configured EffectType
             ApplyPerkEffect(perk);
@@ -182,7 +181,7 @@ namespace PocketSquire.Arena.Core
             switch (perk.EffectType)
             {
                 case LevelUp.PerkEffectType.InventoryExpansion:
-                    Inventory.UpdateCapacity(UnlockedPerks);
+                    Inventory.UpdateCapacity(AcquiredPerks);
                     break;
                 case LevelUp.PerkEffectType.None:
                 default:
@@ -253,16 +252,16 @@ namespace PocketSquire.Arena.Core
         public bool TryPurchaseArenaPerk(ArenaPerk perk)
         {
             if (perk == null) throw new ArgumentNullException(nameof(perk));
-            if (UnlockedArenaPerks.Contains(perk.Id)) return false;
+            if (AcquiredPerks.Contains(perk.Id)) return false;
             if (Gold < perk.Cost) return false;
             SpendGold(perk.Cost);
-            UnlockedArenaPerks.Add(perk.Id);
+            AcquiredPerks.Add(perk.Id);
             return true;
         }
 
         public bool TryActivateArenaPerk(string perkId)
         {
-            if (!UnlockedArenaPerks.Contains(perkId)) return false;
+            if (!AcquiredPerks.Contains(perkId)) return false;
             if (ActiveArenaPerkIds.Contains(perkId)) return false;
             if (ActiveArenaPerkIds.Count >= MaxArenaPerkSlots) return false;
             ActiveArenaPerkIds.Add(perkId);
