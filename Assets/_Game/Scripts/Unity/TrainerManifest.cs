@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core;
-using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.LevelUp;
 using PocketSquire.Arena.Unity.LevelUp;
 

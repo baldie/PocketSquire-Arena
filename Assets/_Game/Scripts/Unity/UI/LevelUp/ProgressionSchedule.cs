@@ -41,7 +41,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
         [Serializable]
         public class PerkPoolEntry
         {
-            public string tag;
+            public string tag = string.Empty;
             public List<PerkNode> perks = new List<PerkNode>();
         }
 

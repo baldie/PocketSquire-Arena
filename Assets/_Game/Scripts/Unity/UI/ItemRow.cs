@@ -8,14 +8,13 @@ using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Arena.Unity.UI
 {
-    public class ItemRow : MonoBehaviour, ISelectHandler
+    public class ItemRow : MonoBehaviour, ISelectHandler, IPointerEnterHandler
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI quantityText;
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private Button button;
-        [SerializeField] private EventTrigger eventTrigger;
 
         // Injected at runtime by ShopController — shared across all rows.
         // When this row is selected, its merchandise description is displayed here.
@@ -33,7 +32,14 @@ namespace PocketSquire.Arena.Unity.UI
             if (quantityText == null) quantityText = transform.Find("QuantityText")?.GetComponent<TextMeshProUGUI>();
             if (priceText == null)   priceText    = transform.Find("PriceText")?.GetComponent<TextMeshProUGUI>();
             if (button == null)      button       = GetComponent<Button>();
-            if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (button != null && button.interactable)
+            {
+                button.Select();
+            }
         }
 
         /// <summary>
@@ -142,43 +148,5 @@ namespace PocketSquire.Arena.Unity.UI
 
             SetButtonAction(onClick);
         }
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (Application.isPlaying) return;
-
-            if (button == null) button = GetComponent<Button>();
-            if (eventTrigger == null) eventTrigger = GetComponent<EventTrigger>();
-
-            if (button != null && eventTrigger != null)
-            {
-                bool hasPointerEnter = false;
-                foreach(var entry in eventTrigger.triggers)
-                {
-                    if(entry.eventID == EventTriggerType.PointerEnter)
-                    {
-                        hasPointerEnter = true;
-                        break;
-                    }
-                }
-
-                if (!hasPointerEnter)
-                {
-                    var entry = new EventTrigger.Entry();
-                    entry.eventID = EventTriggerType.PointerEnter;
-
-                    UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(
-                        entry.callback,
-                        button.Select
-                    );
-
-                    eventTrigger.triggers.Add(entry);
-                    UnityEditor.EditorUtility.SetDirty(this);
-                    UnityEditor.EditorUtility.SetDirty(eventTrigger);
-                }
-            }
-        }
-#endif
-
     }
 }

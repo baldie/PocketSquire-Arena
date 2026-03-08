@@ -282,8 +282,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Health Potion I
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d2f69f2ef7576674e9dfc066556db4fa, type: 2}
-  m_sharedMaterial: {fileID: 3278063576851637822, guid: d2f69f2ef7576674e9dfc066556db4fa, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 657641a92ef9a124bbb8524adcf823dc, type: 2}
+  m_sharedMaterial: {fileID: 3278063576851637822, guid: 657641a92ef9a124bbb8524adcf823dc, type: 2}
   m_fontSharedMaterials:
   - {fileID: 0}
   m_fontMaterial: {fileID: 0}
@@ -291,8 +291,8 @@ MonoBehaviour:
   - {fileID: 0}
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279182397
+  m_fontColor: {r: 0.23921569, g: 0.14117648, b: 0.05882353, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -506,7 +506,6 @@ GameObject:
   - component: {fileID: 8326578316657948700}
   - component: {fileID: 5474515064342537507}
   - component: {fileID: 229242782231460473}
-  - component: {fileID: 743221199982858154}
   - component: {fileID: 4395963931211233619}
   m_Layer: 0
   m_Name: ItemRow
@@ -633,40 +632,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.UI.ItemRow
   icon: {fileID: 8151136770869539497}
   nameText: {fileID: 1318839848221748587}
-  descriptionText: {fileID: 0}
   quantityText: {fileID: 3291911592745577294}
   priceText: {fileID: 8148170181312209076}
   button: {fileID: 5474515064342537507}
-  eventTrigger: {fileID: 743221199982858154}
---- !u!114 &743221199982858154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7679988491501550547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5474515064342537507}
-          m_TargetAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
-          m_MethodName: Select
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  eventTrigger: {fileID: 0}
 --- !u!114 &4395963931211233619
 MonoBehaviour:
   m_ObjectHideFlags: 0

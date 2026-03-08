@@ -2073,6 +2073,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2976733850115883476}
   - component: {fileID: 2544759252946791252}
+  - component: {fileID: 8000437901219168420}
+  - component: {fileID: 4406210700889937983}
+  - component: {fileID: 4998012125374152995}
   m_Layer: 0
   m_Name: ScrollView
   m_TagString: Untagged
@@ -2130,6 +2133,58 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!222 &8000437901219168420
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5149136148241100711}
+  m_CullTransparentMesh: 1
+--- !u!114 &4406210700889937983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5149136148241100711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4998012125374152995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5149136148241100711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdcd11a8c0533f48ace09087576ca71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Unity.UI.ScrollToSelected
+  padding: 10
+  scrollSpeed: 10
 --- !u!1 &5170074418012253982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,6 +2886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.UI.AcquiredPerkListController
   scrollContent: {fileID: 7987555524615170818}
   scrollRect: {fileID: 2544759252946791252}
+  audioSource: {fileID: 0}
 --- !u!1 &7030313673651124877
 GameObject:
   m_ObjectHideFlags: 0

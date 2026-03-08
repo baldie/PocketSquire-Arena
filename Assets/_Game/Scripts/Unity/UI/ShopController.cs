@@ -149,8 +149,6 @@ namespace PocketSquire.Arena.Unity.UI
                         icon = GameAssetRegistry.Instance.GetSprite(captured.Icon);
                         if (icon == null)
                             Debug.LogWarning($"[ShopController] Arena perk icon not found in registry. Id='{captured.Id}' IconField='{captured.Icon}' LookupKey='{captured.Icon}'");
-                        else
-                            Debug.Log($"[ShopController] Arena perk icon resolved. Id='{captured.Id}' Key='{captured.Icon}'");
                     }
                     else
                     {
@@ -325,7 +323,6 @@ namespace PocketSquire.Arena.Unity.UI
             PlayCoinSound();
             UpdateGoldDisplay();
             UpdateInventoryDisplay(item);
-            Debug.Log($"[ShopController] Purchased item '{item.Name}' for {item.Price} gold");
         }
 
         private void OnPerkPurchased(PerkNode perkNode)
@@ -348,7 +345,6 @@ namespace PocketSquire.Arena.Unity.UI
 
             PlayCoinSound();
             UpdateGoldDisplay();
-            Debug.Log($"[ShopController] Purchased perk '{perk.DisplayName}' for {perk.Price} gold");
 
             // Refresh the PlayerMenu so inventory slot changes (e.g. satchel expansion) are visible immediately.
             var playerMenu = FindFirstObjectByType<PlayerMenuController>();
@@ -375,7 +371,6 @@ namespace PocketSquire.Arena.Unity.UI
 
             PlayCoinSound();
             UpdateGoldDisplay();
-            Debug.Log($"[ShopController] Purchased arena perk '{arenaPerk.DisplayName}' for {arenaPerk.Cost} gold");
 
             // Remove row so it can't be purchased again this session
             RemoveRow($"ArenaPerkRow_{arenaPerk.Id}");
