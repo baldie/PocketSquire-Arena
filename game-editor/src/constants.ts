@@ -112,7 +112,7 @@ export const PERK_EFFECT_TYPES: ArenaPerkEffectType[] = [
     "GuaranteedHit", "NullifyDamage", "ReduceCooldown", "RefundMPCost",
     "IncreaseMaxHP", "ApplyThorns", "SurviveFatalBlow", "YieldBonus",
     "IncreaseHitChance", "IncreaseCritChance", "ReduceShopPrices",
-    "IncreaseGoldGain", "ReduceDamage",
+    "IncreaseGoldGain", "ReduceDamage", "InventoryExpansion"
 ];
 
 // Tier options for dropdown

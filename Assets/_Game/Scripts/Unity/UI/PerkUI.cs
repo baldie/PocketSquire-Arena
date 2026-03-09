@@ -12,7 +12,7 @@ namespace PocketSquire.Arena.Unity.UI
     /// Clicking opens AcquiredPerkList so the player can swap the perk.
     /// Slots beyond MaxArenaPerkSlots are visually locked and non-interactive.
     /// </summary>
-    public class PerkUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class PerkUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         [SerializeField] private Image perkIcon;
         [SerializeField] private Button button;
@@ -182,16 +182,29 @@ namespace PocketSquire.Arena.Unity.UI
         }
 
         // -----------------------------------------------------------------------
-        // Hover tooltip
+        // Hover and Select tooltip hookups
         // -----------------------------------------------------------------------
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_loadedPerk != null && perkDescriptionText != null)
-                perkDescriptionText.text = _loadedPerk.Description;
+            if (button != null && button.interactable)
+                button.Select();
         }
 
         public void OnPointerExit(PointerEventData eventData)
+        {
+            // Optional: clear selection if mouse leaves, to clear the text.
+            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == gameObject)
+                EventSystem.current.SetSelectedGameObject(null);
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (perkDescriptionText != null)
+                perkDescriptionText.text = _loadedPerk?.Description ?? "";
+        }
+
+        public void OnDeselect(BaseEventData eventData)
         {
             if (perkDescriptionText != null)
                 perkDescriptionText.text = string.Empty;

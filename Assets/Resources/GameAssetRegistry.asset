@@ -159,6 +159,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: 9922128039eadcd4e9728eb88e420811, type: 3}
   - id: empty
     asset: {fileID: 21300000, guid: 948868e01f04b4644aeab26b5ac14652, type: 3}
+  - id: high_roller
+    asset: {fileID: 21300000, guid: 28061b0e65070d64b8c5e8597ef0d176, type: 3}
   - id: iron_will
     asset: {fileID: 21300000, guid: 8de096b662b13134983aa4fcb2454a0e, type: 3}
   - id: keen_eye
@@ -185,12 +187,12 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: c04176c699d8008499e920573a58949b, type: 3}
   - id: rewards_membership
     asset: {fileID: 21300000, guid: 8a0ef7a2f604f41478ff70c7ee3e191d, type: 3}
-  - id: satchel_1
-    asset: {fileID: 21300000, guid: ad25249e67aa58546a26910dcc955cef, type: 3}
-  - id: satchel_2
-    asset: {fileID: 21300000, guid: afb1e65f768c8fa49aa43fb6401b5c8e, type: 3}
-  - id: satchel_3
-    asset: {fileID: 21300000, guid: 7c9131348cbbebe4781f546d2523854d, type: 3}
+  - id: satchel_tier_1
+    asset: {fileID: 21300000, guid: 1e3d15d896f35f447b2f94b4de31e846, type: 3}
+  - id: satchel_tier_2
+    asset: {fileID: 21300000, guid: 1d14caa6549b9124c857609932e7b7ff, type: 3}
+  - id: satchel_tier_3
+    asset: {fileID: 21300000, guid: 8759bdb729ea3104fb75160028f7b96a, type: 3}
   - id: second_wind
     asset: {fileID: 21300000, guid: f8896ea7ea451a94aaf840ac7e29e8d5, type: 3}
   - id: sharpshooter

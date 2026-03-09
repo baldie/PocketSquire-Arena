@@ -15,6 +15,7 @@ public class LootScript : MonoBehaviour
     public Sprite closedChestSprite;
     public Sprite highlightedChestSprite;
     public GameObject powerupSelectionDialog;
+    public GameObject rerollPowerUpButton;
     public Image playerImage;
     public ParticleSystem powerUpParticles;
 
@@ -91,6 +92,24 @@ public class LootScript : MonoBehaviour
 
     private void GenerateAndPopulatePowerUps(bool autoSelectFirst)
     {
+        bool hasHighRoller = GameState.Player?.ActiveArenaPerkIds?.Contains("high_roller") ?? false;
+
+        if (rerollPowerUpButton != null)
+        {
+            rerollPowerUpButton.SetActive(hasHighRoller);
+        }
+
+        if (powerupSelectionDialog != null)
+        {
+            var rectTransform = powerupSelectionDialog.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                var offsetMin = rectTransform.offsetMin;
+                offsetMin.y = hasHighRoller ? 260 : 384;
+                rectTransform.offsetMin = offsetMin;
+            }
+        }
+
         // Generate PowerUps
         var context = new PowerUpFactory.PowerUpGenerationContext
         {

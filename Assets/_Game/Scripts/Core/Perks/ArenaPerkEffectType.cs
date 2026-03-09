@@ -24,6 +24,7 @@ namespace PocketSquire.Arena.Core.Perks
         ReduceShopPrices,
         IncreaseGoldGain,
         ReduceDamage,
-        KeepMoney
+        KeepMoney,
+        InventoryExpansion
     }
 }

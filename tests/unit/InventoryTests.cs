@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
 using System.Collections.Generic;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Tests
 {
@@ -43,7 +44,7 @@ namespace PocketSquire.Arena.Tests
         public void UpdateCapacity_BaseValues_WithNoPerks()
         {
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string>());
+            inv.UpdateCapacity(new List<ArenaPerk>());
             Assert.That(inv.MaxSlots,     Is.EqualTo(2));
             Assert.That(inv.MaxStackSize, Is.EqualTo(2));
         }
@@ -52,7 +53,7 @@ namespace PocketSquire.Arena.Tests
         public void UpdateCapacity_Tier1_Expands()
         {
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_1" });
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_1" } });
             Assert.That(inv.MaxSlots,     Is.EqualTo(3));
             Assert.That(inv.MaxStackSize, Is.EqualTo(3));
         }
@@ -61,7 +62,7 @@ namespace PocketSquire.Arena.Tests
         public void UpdateCapacity_Tier2_Expands()
         {
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_2" });
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_2" } });
             Assert.That(inv.MaxSlots,     Is.EqualTo(4));
             Assert.That(inv.MaxStackSize, Is.EqualTo(4));
         }
@@ -70,7 +71,7 @@ namespace PocketSquire.Arena.Tests
         public void UpdateCapacity_Tier3_Expands()
         {
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_3" });
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_3" } });
             Assert.That(inv.MaxSlots,     Is.EqualTo(5));
             Assert.That(inv.MaxStackSize, Is.EqualTo(5));
         }
@@ -80,7 +81,7 @@ namespace PocketSquire.Arena.Tests
         {
             // Has tier 1 and tier 3 — should use tier 3
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_1", "satchel_tier_3" });
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_1" }, new ArenaPerk { Id = "satchel_tier_3" } });
             Assert.That(inv.MaxSlots,     Is.EqualTo(5));
             Assert.That(inv.MaxStackSize, Is.EqualTo(5));
         }
@@ -90,13 +91,13 @@ namespace PocketSquire.Arena.Tests
         {
             // Fill 3 slots at tier 1, then downgrade to base — items are kept
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_1" });
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_1" } });
             inv.AddItem(1, 1);
             inv.AddItem(2, 1);
             inv.AddItem(3, 1);
             Assert.That(inv.Slots.Count, Is.EqualTo(3));
 
-            inv.UpdateCapacity(new HashSet<string>()); // back to base (2 slots)
+            inv.UpdateCapacity(new List<ArenaPerk>()); // back to base (2 slots)
             // Existing items are preserved even though MaxSlots is now 2
             Assert.That(inv.Slots.Count, Is.EqualTo(3));
         }
@@ -188,7 +189,7 @@ namespace PocketSquire.Arena.Tests
         public void AddItem_SupportsMultipleItemTypes_WithExpandedCapacity()
         {
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_1" }); // 3 slots, stack 3
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_1" } }); // 3 slots, stack 3
             inv.AddItem(1, 3);
             inv.AddItem(2, 3);
             inv.AddItem(3, 1);
@@ -216,7 +217,7 @@ namespace PocketSquire.Arena.Tests
         public void RemoveItem_DecreasesQuantity()
         {
             var inv = new Inventory();
-            inv.UpdateCapacity(new HashSet<string> { "satchel_tier_1" }); // stack 3
+            inv.UpdateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_1" } }); // stack 3
             inv.AddItem(1, 3);
             var result = inv.RemoveItem(1, 2);
             Assert.That(result, Is.True);

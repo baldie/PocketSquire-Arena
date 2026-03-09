@@ -10,6 +10,9 @@ public class HiddenPanel : MonoBehaviour
     [SerializeField] private Button killMonsterButton;
     [SerializeField] private Button rerollPowerUpsButton;
     [SerializeField] private Button toggleGender;
+    [SerializeField] private Button addGoldButton;
+    [SerializeField] private Button addLevelButton;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -75,6 +78,30 @@ public class HiddenPanel : MonoBehaviour
                             }
                         }
                     }
+                }
+            });
+        }
+
+        if (addGoldButton != null)
+        {
+            addGoldButton.onClick.AddListener(() => {
+                if (GameState.Player != null)
+                {
+                    GameState.Player.Gold += 500;
+                    Debug.Log("Added 500 Gold");
+                }
+            });
+        }
+
+        if (addLevelButton != null)
+        {
+            addLevelButton.onClick.AddListener(() => {
+                if (GameState.Player != null)
+                {
+                    var player = GameState.Player;
+                    var xpToLevel = GameWorld.Progression.GetXpToNextLevel(player.Experience);
+                    player.GainExperience(xpToLevel);
+                    Debug.Log("Player has enough experience to level up to " + player.Level);
                 }
             });
         }

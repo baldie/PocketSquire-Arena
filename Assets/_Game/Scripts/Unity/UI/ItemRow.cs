@@ -8,13 +8,15 @@ using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Arena.Unity.UI
 {
-    public class ItemRow : MonoBehaviour, ISelectHandler, IPointerEnterHandler
+    public class ItemRow : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IDeselectHandler, IPointerExitHandler
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI quantityText;
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private Button button;
+
+        public TextMeshProUGUI descriptionTextTarget;
 
         // Injected at runtime by ShopController — shared across all rows.
         // When this row is selected, its merchandise description is displayed here.
@@ -40,6 +42,13 @@ namespace PocketSquire.Arena.Unity.UI
             {
                 button.Select();
             }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            // Clear selection natively if the mouse leaves, triggering OnDeselect
+            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == gameObject)
+                EventSystem.current.SetSelectedGameObject(null);
         }
 
         /// <summary>
@@ -130,6 +139,15 @@ namespace PocketSquire.Arena.Unity.UI
             string desc = currentMerchandise?.Description ?? "";
             if (descriptionToast != null && !string.IsNullOrEmpty(desc))
                 descriptionToast.ShowDescription(desc);
+
+            if (descriptionTextTarget != null)
+                descriptionTextTarget.text = desc;
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (descriptionTextTarget != null)
+                descriptionTextTarget.text = string.Empty;
         }
 
         public void HidePriceText()

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
@@ -21,7 +22,7 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Inventory
     {
-        // Satchel perk IDs — matched against the player's UnlockedPerks
+        // Satchel perk IDs — matched against the player's Active Perks
         private const string SatchelTier1 = "satchel_tier_1";
         private const string SatchelTier2 = "satchel_tier_2";
         private const string SatchelTier3 = "satchel_tier_3";
@@ -35,21 +36,21 @@ namespace PocketSquire.Arena.Core
         public List<InventorySlot> Slots = new();
 
         /// <summary>
-        /// Recalculates capacity from the player's unlocked perks.
+        /// Recalculates capacity from the player's active perks.
         /// Call this whenever a satchel perk is granted so the inventory
         /// immediately reflects the new limits without losing existing items.
         /// </summary>
-        public void UpdateCapacity(HashSet<string> ownedPerks)
+        public void UpdateCapacity(List<ArenaPerk> activePerks)
         {
-            if (ownedPerks.Contains(SatchelTier3))
+            if (activePerks.Any(p => p != null && p.Id == SatchelTier3))
             {
                 MaxSlots = 5; MaxStackSize = 5;
             }
-            else if (ownedPerks.Contains(SatchelTier2))
+            else if (activePerks.Any(p => p != null && p.Id == SatchelTier2))
             {
                 MaxSlots = 4; MaxStackSize = 4;
             }
-            else if (ownedPerks.Contains(SatchelTier1))
+            else if (activePerks.Any(p => p != null && p.Id == SatchelTier1))
             {
                 MaxSlots = 3; MaxStackSize = 3;
             }

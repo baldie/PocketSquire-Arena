@@ -124,7 +124,7 @@ export type ArenaPerkEffectType =
     | "GuaranteedHit" | "NullifyDamage" | "ReduceCooldown" | "RefundMPCost"
     | "IncreaseMaxHP" | "ApplyThorns" | "SurviveFatalBlow" | "YieldBonus"
     | "IncreaseHitChance" | "IncreaseCritChance" | "ReduceShopPrices"
-    | "IncreaseGoldGain" | "ReduceDamage";
+    | "IncreaseGoldGain" | "ReduceDamage" | "InventoryExpansion";
 
 export interface ArenaPerkPrerequisites {
     minLevel: number;

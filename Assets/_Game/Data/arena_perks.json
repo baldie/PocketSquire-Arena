@@ -500,10 +500,74 @@
             },
             "effect": "IncreaseHitChance",
             "value": 12
+        },
+        {
+            "id": "satchel_tier_1",
+            "name": "Satchel",
+            "description": "A pouch that can hold a few items",
+            "type": "Passive",
+            "soldBy": "Shopkeeper",
+            "cost": 5,
+            "tier": 0,
+            "prerequisites": {
+                "minLevel": 1
+            },
+            "procPercent": 100,
+            "value": 0,
+            "icon": "satchel_tier_1",
+            "effect": "InventoryExpansion"
+        },
+        {
+            "id": "satchel_tier_2",
+            "name": "Satchel",
+            "description": "A bag that can carry several items",
+            "type": "Passive",
+            "soldBy": "Shopkeeper",
+            "cost": 10,
+            "tier": 0,
+            "prerequisites": {
+                "minLevel": 1,
+                "requiredPerks": null
+            },
+            "procPercent": 100,
+            "value": 0,
+            "icon": "satchel_tier_2",
+            "effect": "InventoryExpansion"
+        },
+        {
+            "id": "satchel_tier_3",
+            "name": "Backpack",
+            "description": "A large pack that can carry many items",
+            "type": "Passive",
+            "soldBy": "Shopkeeper",
+            "cost": 100,
+            "tier": 0,
+            "prerequisites": {
+                "minLevel": 1
+            },
+            "procPercent": 100,
+            "value": 0,
+            "icon": "satchel_tier_3",
+            "effect": "InventoryExpansion"
+        },
+        {
+            "id": "high_roller",
+            "name": "High roller",
+            "description": "Reroll power ups",
+            "type": "Passive",
+            "soldBy": "Shopkeeper",
+            "cost": 100,
+            "tier": 0,
+            "prerequisites": {
+                "minLevel": 1
+            },
+            "procPercent": 100,
+            "value": 0,
+            "icon": "high_roller"
         }
     ],
     "metadata": {
         "version": "2.0",
-        "totalPerks": 28
+        "totalPerks": 32
     }
 }

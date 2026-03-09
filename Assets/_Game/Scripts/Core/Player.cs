@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using PocketSquire.Arena.Core.Perks;
 
@@ -25,6 +26,16 @@ namespace PocketSquire.Arena.Core
         // Arena Perk state — AcquiredPerks and ActiveArenaPerkIds are serialised.
         // ArenaPerkStates is runtime-only and rebuilt by InitializeArenaPerkStates() after load.
         public List<string> ActiveArenaPerkIds { get; set; } = new();
+
+        public List<ArenaPerk> GetActivePerks()
+        {
+            return ActiveArenaPerkIds.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
+        }
+
+        public List<ArenaPerk> GetAcquiredPerks()
+        {
+            return AcquiredPerks.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
+        }
 
         [JsonIgnore]
         public Dictionary<string, ArenaPerkState> ArenaPerkStates { get; set; } = new();
@@ -180,11 +191,10 @@ namespace PocketSquire.Arena.Core
         {
             switch (perk.EffectType)
             {
-                case LevelUp.PerkEffectType.InventoryExpansion:
-                    Inventory.UpdateCapacity(AcquiredPerks);
-                    break;
                 case LevelUp.PerkEffectType.None:
                 default:
+                    // Tracking or un-implemented mechanic
+                    break;
                     // Tracking or un-implemented mechanic
                     break;
             }
@@ -266,6 +276,7 @@ namespace PocketSquire.Arena.Core
             if (ActiveArenaPerkIds.Count >= MaxArenaPerkSlots) return false;
             ActiveArenaPerkIds.Add(perkId);
             ArenaPerkStates[perkId] = new ArenaPerkState { PerkId = perkId };
+            Inventory.UpdateCapacity(GetActivePerks());
             return true;
         }
 
@@ -273,6 +284,7 @@ namespace PocketSquire.Arena.Core
         {
             if (!ActiveArenaPerkIds.Remove(perkId)) return false;
             ArenaPerkStates.Remove(perkId);
+            Inventory.UpdateCapacity(GetActivePerks());
             return true;
         }
 

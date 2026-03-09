@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.Perks;
 
@@ -17,14 +18,14 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private Transform scrollContent;
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private AudioSource audioSource;
+        
+        public TextMeshProUGUI descriptionTextTarget;
 
         private List<GameObject> _rows = new List<GameObject>();
         private PerkUI _callerSlot;
 
         private void Awake()
         {
-            gameObject.SetActive(false);
-
             if (scrollContent != null)
             {
                 var rt = scrollContent.GetComponent<RectTransform>();
@@ -40,6 +41,12 @@ namespace PocketSquire.Arena.Unity.UI
         /// </summary>
         public void Open(PerkUI callerSlot)
         {
+            foreach (var go in _rows)
+            {
+                if (go != null) Destroy(go);
+            }
+            _rows.Clear();
+
             _callerSlot = callerSlot;
 
             var player = GameState.Player;
@@ -56,29 +63,14 @@ namespace PocketSquire.Arena.Unity.UI
                 return;
             }
 
-            Debug.Log($"[AcquiredPerkListController] Opening. Total AcquiredPerks: {player.AcquiredPerks.Count}. Active Perks: {player.ActiveArenaPerkIds.Count}");
-
             // --- "Remove" or "Empty slot" row first ---
             string topRowLabel = callerSlot.HasAssignedPerk ? "Remove" : "Empty slot";
             SpawnCustomRow(topRowLabel, null, prefab);
 
             // --- One row per acquired perk that is not currently active ---
-            foreach (var perkId in player.AcquiredPerks)
+            foreach (var perk in player.GetAcquiredPerks())
             {
-                if (player.ActiveArenaPerkIds.Contains(perkId))
-                {
-                    Debug.Log($"[AcquiredPerkListController] Skipping '{perkId}' because it is already active.");
-                    continue;
-                }
-
-                var perk = GameWorld.GetArenaPerkById(perkId);
-                if (perk == null)
-                {
-                    Debug.LogWarning($"[AcquiredPerkListController] Could not find perk definition for ID: '{perkId}'");
-                    continue;
-                }
-
-                Debug.Log($"[AcquiredPerkListController] Spawning row for perk: '{perk.DisplayName}' ({perk.Id})");
+                if (player.ActiveArenaPerkIds.Contains(perk.Id)) continue;
 
                 Sprite icon = null;
                 if (!string.IsNullOrEmpty(perk.Icon))
@@ -111,6 +103,8 @@ namespace PocketSquire.Arena.Unity.UI
 
             var row = go.GetComponent<ItemRow>();
             if (row == null) return;
+            
+            row.descriptionTextTarget = descriptionTextTarget;
 
             var capturedId = perkId; // null → "Remove"
             row.InitializeCustom(label, () =>
@@ -128,6 +122,8 @@ namespace PocketSquire.Arena.Unity.UI
 
             var row = go.GetComponent<ItemRow>();
             if (row == null) return;
+
+            row.descriptionTextTarget = descriptionTextTarget;
 
             var capturedPerk = perk;
             row.Initialize(perk, icon, () =>
@@ -171,6 +167,7 @@ namespace PocketSquire.Arena.Unity.UI
                 if (menuButtonSound != null)
                 {
                     menuButtonSound.source = audioSource;
+                    menuButtonSound.clickSound = GameAssetRegistry.Instance.GetSound("selection_made");
                 }
             }
         }

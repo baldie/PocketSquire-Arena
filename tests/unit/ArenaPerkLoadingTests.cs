@@ -31,10 +31,10 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void LoadArenaPerks_Loads28Perks()
+        public void LoadArenaPerks_Loads32Perks()
         {
-            Assert.That(GameWorld.AllArenaPerks.Count, Is.EqualTo(28),
-                "Expected 28 arena perks (metadata claims 30, trust the array)");
+            Assert.That(GameWorld.AllArenaPerks.Count, Is.EqualTo(32),
+                "Expected 32 arena perks");
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void GetArenaPerksByVendor_Shopkeeper_Returns6()
+        public void GetArenaPerksByVendor_Shopkeeper_Returns10()
         {
             var shopkeeperPerks = GameWorld.GetArenaPerksByVendor(VendorType.Shopkeeper);
-            Assert.That(shopkeeperPerks.Count, Is.EqualTo(6));
+            Assert.That(shopkeeperPerks.Count, Is.EqualTo(10));
         }
 
         [Test]

@@ -21,6 +21,7 @@ namespace PocketSquire.Unity.UI
         [Header("Character Info")]
         [SerializeField] private TextMeshProUGUI levelAndClassText;
         [SerializeField] private TextMeshProUGUI goldText;
+        [SerializeField] private TextMeshProUGUI playerMenuToastText;
 
         [Header("Images")]
         [SerializeField] private Image xpBarForeground;
@@ -112,6 +113,14 @@ namespace PocketSquire.Unity.UI
             if (strText != null) _defaultAttributeColor = strText.color;
             else if (defText != null) _defaultAttributeColor = defText.color;
             else if (intText != null) _defaultAttributeColor = intText.color;
+
+            // Fallback: auto-assign the toast text if user forgot to serialize it in the Inspector.
+            if (playerMenuToastText == null)
+            {
+                var toastObj = transform.Find("VisibilityContainer/PlayerMenuToast");
+                if (toastObj == null) toastObj = transform.Find("PlayerMenuToast"); // just in case
+                if (toastObj != null) playerMenuToastText = toastObj.GetComponent<TextMeshProUGUI>();
+            }
         }
 
         private void Start()
@@ -136,6 +145,11 @@ namespace PocketSquire.Unity.UI
                 doneButton.onClick.AddListener(() => {
                     Close();
                 });
+            }
+
+            if (acquiredPerkList != null)
+            {
+                acquiredPerkList.descriptionTextTarget = playerMenuToastText;
             }
                 
             // Initial refresh and ensure closed
@@ -346,6 +360,9 @@ namespace PocketSquire.Unity.UI
                 if (acquiredPerkList != null)
                     slot.SetPerkListPanel(acquiredPerkList);
 
+                // Inject the toast reference.
+                slot.perkDescriptionText = playerMenuToastText;
+
                 // Inject grayscale material if needed (forward from our own field).
                 // PerkUI already has its own grayscaleMaterial field; we only need to set
                 // interactability and perk data here.
@@ -440,6 +457,8 @@ namespace PocketSquire.Unity.UI
                 var itemRow = go.GetComponent<ItemRow>();
                 if (itemRow != null)
                 {
+                    itemRow.descriptionTextTarget = playerMenuToastText;
+
                     Sprite icon = null;
                     if (!string.IsNullOrEmpty(item.Sprite))
                         icon = GameAssetRegistry.Instance.GetSprite(item.Sprite);
@@ -473,6 +492,9 @@ namespace PocketSquire.Unity.UI
 
         public void Open()
         {
+            if (playerMenuToastText != null)
+                playerMenuToastText.text = string.Empty;
+
             // Ensure visuals are on if we are calling Open
             if (menuParent != null && !menuParent.activeSelf)
             {
@@ -527,6 +549,9 @@ namespace PocketSquire.Unity.UI
 
         public void Close()
         {            
+            if (playerMenuToastText != null)
+                playerMenuToastText.text = string.Empty;
+
             // Even if we think it's closed, ensure the visuals are off
             if (menuParent != null && menuParent.activeSelf)
             {
@@ -542,6 +567,11 @@ namespace PocketSquire.Unity.UI
                 
             isOpen = false;
             
+            if (acquiredPerkList != null)
+            {
+                acquiredPerkList.Close();
+            }
+
             // Clear selection when closing to prevent ghost inputs
             EventSystem.current.SetSelectedGameObject(null);
             

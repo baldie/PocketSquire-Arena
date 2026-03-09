@@ -8,8 +8,5 @@ namespace PocketSquire.Arena.Core.LevelUp
     {
         /// <summary>No gameplay effect (cosmetic/tracking perks).</summary>
         None,
-
-        /// <summary>Expands the player's inventory slot and stack capacity.</summary>
-        InventoryExpansion,
     }
 }

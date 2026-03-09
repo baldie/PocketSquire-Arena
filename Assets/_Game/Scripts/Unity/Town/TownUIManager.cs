@@ -150,8 +150,6 @@ namespace PocketSquire.Arena.Unity.Town
             {
                 townMapPanel.SetActive(true);
             }
-
-            Debug.Log("[TownUIManager] Returned to town map");
         }
 
         /// <summary>
@@ -225,6 +223,16 @@ namespace PocketSquire.Arena.Unity.Town
         /// </summary>
         public void ReturnToTownWithTransition()
         {
+            var toastObj = GameObject.Find("InteriorToast");
+            if (toastObj != null)
+            {
+                var textComponent = toastObj.GetComponent<TMP_Text>();
+                if (textComponent != null)
+                {
+                    textComponent.text = string.Empty;
+                }
+            }
+
             StartCoroutine(TransitionToTownCoroutine());
         }
 

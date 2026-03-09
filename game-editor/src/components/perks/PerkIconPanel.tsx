@@ -77,7 +77,7 @@ export default function PerkIconPanel({ perk, onUpdate }: Props) {
             if (dataUrl) {
                 setImageUrl(dataUrl);
                 // Only update the perk's icon field — parent owns saving the perk list
-                onUpdate({ ...perk, icon: `${perk.id}.png` });
+                onUpdate({ ...perk, icon: perk.id });
             }
         } finally {
             setIsGenerating(false);
@@ -109,7 +109,7 @@ export default function PerkIconPanel({ perk, onUpdate }: Props) {
                     await writable.close();
                     setImageUrl(dataUrl);
                     // Only update icon field — parent owns saving the perk list
-                    onUpdate({ ...perk, icon: `${perk.id}.png` });
+                    onUpdate({ ...perk, icon: perk.id });
                     dispatch({
                         type: "ADD_GENERATION_HISTORY",
                         payload: {

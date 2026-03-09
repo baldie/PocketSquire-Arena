@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b102f50b123e384da4b5e35a4348662, type: 3}
-  m_Name: SatchelTier1
+  m_Name: HighRollerPerk
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.LevelUp.PerkNode
-  id: satchel_tier_1
-  displayName: Satchel
-  description: A bag with 3 slots
+  id: high_roller
+  displayName: High Roller
+  description: Reroll powerups
   minLevel: 0
-  price: 1
-  effectType: 1
-  icon: {fileID: 21300000, guid: ad25249e67aa58546a26910dcc955cef, type: 3}
+  price: 800
+  effectType: 0
+  icon: {fileID: 21300000, guid: 28061b0e65070d64b8c5e8597ef0d176, type: 3}
   prerequisites: []
   allowedClasses: 
