@@ -259,6 +259,44 @@ namespace PocketSquire.Arena.Core
 
         // --- Arena Perk Methods ---
 
+        public bool CanActivateArenaPerk(string perkToRemove, ArenaPerk perkToActivate)
+        {
+            if (perkToActivate == null) return false;
+
+            // 1. Check prerequisites explicitly on the perk itself
+            if (perkToActivate.Prerequisites != null)
+            {
+                if (Level < perkToActivate.Prerequisites.MinLevel) return false;
+                
+                if (!string.IsNullOrEmpty(perkToActivate.Prerequisites.ClassName))
+                {
+                    if (Class.ToString() != perkToActivate.Prerequisites.ClassName) return false;
+                }
+
+                if (perkToActivate.Prerequisites.RequiredPerks != null)
+                {
+                    foreach (var requiredPerkId in perkToActivate.Prerequisites.RequiredPerks)
+                    {
+                        if (!AcquiredPerks.Contains(requiredPerkId)) return false;
+                    }
+                }
+            }
+
+            var futurePerkIds = new List<string>(ActiveArenaPerkIds);
+            if (!string.IsNullOrEmpty(perkToRemove)) futurePerkIds.Remove(perkToRemove);
+            futurePerkIds.Add(perkToActivate.Id);
+
+            // 2. Check if there are multiple active satchel perks
+            int activeSatchels = futurePerkIds.Count(id => id == "satchel_tier_1" || id == "satchel_tier_2" || id == "satchel_tier_3");
+            if (activeSatchels > 1) return false;
+
+            // 3. Ensure we don't drop MaxSlots below our currently filled inventory
+            var futurePerks = futurePerkIds.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
+            int futureMaxSlots = Inventory.CalculateCapacity(futurePerks);
+            
+            return Inventory.Slots.Count <= futureMaxSlots;
+        }
+
         public bool TryPurchaseArenaPerk(ArenaPerk perk)
         {
             if (perk == null) throw new ArgumentNullException(nameof(perk));

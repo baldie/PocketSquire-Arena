@@ -35,6 +35,14 @@ namespace PocketSquire.Arena.Core
 
         public List<InventorySlot> Slots = new();
 
+        public static int CalculateCapacity(List<ArenaPerk> activePerks)
+        {
+            if (activePerks.Any(p => p != null && p.Id == SatchelTier3)) return 5;
+            if (activePerks.Any(p => p != null && p.Id == SatchelTier2)) return 4;
+            if (activePerks.Any(p => p != null && p.Id == SatchelTier1)) return 3;
+            return BaseMaxSlots;
+        }
+
         /// <summary>
         /// Recalculates capacity from the player's active perks.
         /// Call this whenever a satchel perk is granted so the inventory
@@ -42,22 +50,12 @@ namespace PocketSquire.Arena.Core
         /// </summary>
         public void UpdateCapacity(List<ArenaPerk> activePerks)
         {
-            if (activePerks.Any(p => p != null && p.Id == SatchelTier3))
-            {
-                MaxSlots = 5; MaxStackSize = 5;
-            }
-            else if (activePerks.Any(p => p != null && p.Id == SatchelTier2))
-            {
-                MaxSlots = 4; MaxStackSize = 4;
-            }
-            else if (activePerks.Any(p => p != null && p.Id == SatchelTier1))
-            {
-                MaxSlots = 3; MaxStackSize = 3;
-            }
-            else
-            {
-                MaxSlots = BaseMaxSlots; MaxStackSize = BaseMaxStack;
-            }
+            MaxSlots = CalculateCapacity(activePerks);
+            
+            if (MaxSlots == 5) MaxStackSize = 5;
+            else if (MaxSlots == 4) MaxStackSize = 4;
+            else if (MaxSlots == 3) MaxStackSize = 3;
+            else MaxStackSize = BaseMaxStack;
         }
 
         /// <summary>

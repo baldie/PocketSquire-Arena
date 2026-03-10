@@ -95,6 +95,97 @@ namespace PocketSquire.Arena.Tests
             Assert.Throws<ArgumentNullException>(() => player.TryPurchaseArenaPerk(null!));
         }
 
+        // --- CanActivateArenaPerk ---
+
+        [Test]
+        public void CanActivateArenaPerk_AllowsSwap_WhenInventoryBelowFutureCapacity()
+        {
+            var player = MakeSquireWithGold();
+            var perkToRemove = "satchel_tier_1";
+            var perkToActivate = MakePerk("satchel_tier_2"); // Going to a bigger bag
+
+            player.Inventory.AddItem(1, 1);
+            player.Inventory.AddItem(2, 1);
+
+            bool canSwap = player.CanActivateArenaPerk(perkToRemove, perkToActivate);
+
+            Assert.That(canSwap, Is.True);
+        }
+
+        [Test]
+        public void CanActivateArenaPerk_BlocksSwap_WhenInventoryAboveFutureCapacity()
+        {
+            var player = MakeSquireWithGold();
+            
+            // Assume the player currently has tier 1 and tier 1 gives 3 slots.
+            player.ActiveArenaPerkIds.Add("satchel_tier_1");
+            player.Inventory.UpdateCapacity(player.GetActivePerks());
+            
+            // Fill 3 slots
+            player.Inventory.AddItem(1, 1);
+            player.Inventory.AddItem(2, 1);
+            player.Inventory.AddItem(3, 1);
+
+            // Removing tier 1 will drop max capacity to base (2).
+            
+            // For dropping capacity on removal, PerkUI handles the explicit check.
+            // But if we test CanActivateArenaPerk, we can simulate swapping from tier 1 to a non-bag perk.
+            var perkToActivate = MakePerk("combat_perk_1");
+            bool canSwap = player.CanActivateArenaPerk("satchel_tier_1", perkToActivate);
+
+            Assert.That(canSwap, Is.False, "Should prevent removing bag when inventory has 3 slots filled.");
+        }
+
+        [Test]
+        public void CanActivateArenaPerk_AllowsSwap_SmallerToLarger_WhenCurrentAreFull()
+        {
+            var player = MakeSquireWithGold();
+            
+            // Assume the player currently has tier 1 and tier 1 gives 3 slots.
+            player.ActiveArenaPerkIds.Add("satchel_tier_1");
+            player.Inventory.UpdateCapacity(player.GetActivePerks());
+            
+            // Fill 3 slots
+            player.Inventory.AddItem(1, 1);
+            player.Inventory.AddItem(2, 1);
+            player.Inventory.AddItem(3, 1);
+
+            // Upgrading from tier 1 (3 slots) to tier 2 (4 slots).
+            var perkToActivate = MakePerk("satchel_tier_2");
+            bool canSwap = player.CanActivateArenaPerk("satchel_tier_1", perkToActivate);
+
+            Assert.That(canSwap, Is.True, "Should allow upgrading bag from 3 to 4 slots even when 3 are filled.");
+        }
+
+        [Test]
+        public void CanActivateArenaPerk_BlocksMultipleActiveSatchels_WhenAddingNewSatchel()
+        {
+            var player = MakeSquireWithGold();
+            
+            player.ActiveArenaPerkIds.Add("satchel_tier_1");
+            player.Inventory.UpdateCapacity(player.GetActivePerks());
+
+            var perkToActivate = MakePerk("satchel_tier_2");
+            bool canSwap = player.CanActivateArenaPerk(null, perkToActivate);
+
+            Assert.That(canSwap, Is.False, "Should prevent having both tier 1 and tier 2 satchels active at the same time.");
+        }
+
+        [Test]
+        public void CanActivateArenaPerk_AllowsSwap_WhenReplacingSatchelWithAnotherSatchel()
+        {
+            var player = MakeSquireWithGold();
+            
+            player.ActiveArenaPerkIds.Add("satchel_tier_1");
+            player.Inventory.UpdateCapacity(player.GetActivePerks());
+
+            // Swapping out the existing satchel for another one (which is also an upgrade so capacity is fine).
+            var perkToActivate = MakePerk("satchel_tier_2");
+            bool canSwap = player.CanActivateArenaPerk("satchel_tier_1", perkToActivate);
+
+            Assert.That(canSwap, Is.True, "Should allow swapping a satchel for another satchel.");
+        }
+
         // --- TryActivateArenaPerk ---
 
         [Test]

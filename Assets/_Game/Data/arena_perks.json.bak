@@ -514,7 +514,7 @@
             },
             "procPercent": 100,
             "value": 0,
-            "icon": "satchel_tier_1.png",
+            "icon": "satchel_tier_1",
             "effect": "InventoryExpansion"
         },
         {
@@ -531,7 +531,7 @@
             },
             "procPercent": 100,
             "value": 0,
-            "icon": "satchel_tier_2.png",
+            "icon": "satchel_tier_2",
             "effect": "InventoryExpansion"
         },
         {
@@ -547,7 +547,7 @@
             },
             "procPercent": 100,
             "value": 0,
-            "icon": "satchel_tier_3.png",
+            "icon": "satchel_tier_3",
             "effect": "InventoryExpansion"
         },
         {

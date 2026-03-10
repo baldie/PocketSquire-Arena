@@ -38,6 +38,22 @@ namespace PocketSquire.Arena.Tests
             Assert.That(slot.CanStack(9), Is.False);
         }
 
+        // ─── CalculateCapacity ────────────────────────────────────────────────
+
+        [Test]
+        public void CalculateCapacity_BaseValues_WithNoPerks()
+        {
+            int maxSlots = Inventory.CalculateCapacity(new List<ArenaPerk>());
+            Assert.That(maxSlots, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void CalculateCapacity_Tier1_Expands()
+        {
+            int maxSlots = Inventory.CalculateCapacity(new List<ArenaPerk> { new ArenaPerk { Id = "satchel_tier_1" } });
+            Assert.That(maxSlots, Is.EqualTo(3));
+        }
+
         // ─── UpdateCapacity ───────────────────────────────────────────────────
 
         [Test]

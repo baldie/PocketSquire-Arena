@@ -10,6 +10,7 @@ namespace PocketSquire.Arena.Unity.UI
     /// <summary>
     /// Manages the AcquiredPerkList panel — a scrollable overlay that lets the player
     /// swap a perk slot. Opened by a PerkUI slot button; closed after selection.
+    /// The audio for selection or denied is played by the PerkUI slot button.
     /// </summary>
     public class AcquiredPerkListController : MonoBehaviour
     {
@@ -17,7 +18,6 @@ namespace PocketSquire.Arena.Unity.UI
         [Tooltip("The 'Content' RectTransform inside the ScrollRect")]
         [SerializeField] private Transform scrollContent;
         [SerializeField] private ScrollRect scrollRect;
-        [SerializeField] private AudioSource audioSource;
         
         public TextMeshProUGUI descriptionTextTarget;
 
@@ -159,16 +159,6 @@ namespace PocketSquire.Arena.Unity.UI
                 layoutElement.minHeight = 100f;
                 layoutElement.preferredHeight = 100f;
                 layoutElement.flexibleWidth = 1f;
-            }
-
-            if (audioSource != null)
-            {
-                var menuButtonSound = go.GetComponent<MenuButtonSound>();
-                if (menuButtonSound != null)
-                {
-                    menuButtonSound.source = audioSource;
-                    menuButtonSound.clickSound = GameAssetRegistry.Instance.GetSound("selection_made");
-                }
             }
         }
     }

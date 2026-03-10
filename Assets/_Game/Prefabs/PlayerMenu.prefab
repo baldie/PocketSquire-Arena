@@ -1031,7 +1031,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -730}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3274534726901048715
 MonoBehaviour:
@@ -2995,8 +2995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PocketSquire.Arena.Unity.UI.AcquiredPerkListController
   scrollContent: {fileID: 7987555524615170818}
   scrollRect: {fileID: 2544759252946791252}
-  audioSource: {fileID: 0}
-  descriptionTextTarget: {fileID: 0}
+  descriptionTextTarget: {fileID: 6282243298360692281}
 --- !u!1 &7030313673651124877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4341,6 +4340,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
       objectReference: {fileID: 6282243298360692281}
@@ -4494,6 +4497,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
@@ -4649,6 +4656,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
       objectReference: {fileID: 6282243298360692281}
@@ -4802,6 +4813,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
@@ -4957,6 +4972,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
       objectReference: {fileID: 6282243298360692281}
@@ -5110,6 +5129,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
@@ -5265,6 +5288,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
       objectReference: {fileID: 6282243298360692281}
@@ -5419,6 +5446,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
       objectReference: {fileID: 6282243298360692281}
@@ -5568,6 +5599,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 
@@ -5836,6 +5871,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
+      propertyPath: perkListPanel
+      value: 
+      objectReference: {fileID: 6321610815881006936}
     - target: {fileID: 6559653177029391312, guid: 625fe494b907c1d419f981647385a4a9, type: 3}
       propertyPath: perkDescriptionText
       value: 

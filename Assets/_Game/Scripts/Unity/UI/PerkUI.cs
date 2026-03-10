@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 using TMPro;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.Perks;
+using System.Collections.Generic;
+using System.Linq;      
 
 namespace PocketSquire.Arena.Unity.UI
 {
@@ -17,18 +19,14 @@ namespace PocketSquire.Arena.Unity.UI
         [SerializeField] private Image perkIcon;
         [SerializeField] private Button button;
         [SerializeField] private AcquiredPerkListController perkListPanel;
+        [SerializeField] private AudioSource audioSource;
 
         // Optional: shown while hovering — can be wired from PlayerMenuController.
         public TextMeshProUGUI perkDescriptionText;
-
-
-
         private ArenaPerk _loadedPerk;
         private string _assignedPerkId; // null/empty = empty slot
 
         public bool HasAssignedPerk => !string.IsNullOrEmpty(_assignedPerkId);
-
-        private AudioSource _audioSource;
 
         private void Awake()
         {
@@ -41,11 +39,6 @@ namespace PocketSquire.Arena.Unity.UI
 
             if (button == null)
                 button = GetComponent<Button>();
-
-            // Find audio source — self, parent, or a known UI audio GO.
-            _audioSource = GetComponent<AudioSource>()
-                ?? GetComponentInParent<AudioSource>()
-                ?? GameObject.Find("UIAudio")?.GetComponent<AudioSource>();
 
             if (button != null)
                 button.onClick.AddListener(OnSlotClicked);
@@ -69,7 +62,6 @@ namespace PocketSquire.Arena.Unity.UI
                 if (sprite != null)
                 {
                     perkIcon.sprite = sprite;
-                    perkIcon.color = Color.white;
                     return;
                 }
             }
@@ -91,7 +83,6 @@ namespace PocketSquire.Arena.Unity.UI
 
             var emptySprite = GameAssetRegistry.Instance.GetSprite("empty");
             perkIcon.sprite = emptySprite;
-            perkIcon.color = Color.white; // Not dimmed — slot is open but still interactive.
         }
 
         /// <summary>
@@ -127,7 +118,6 @@ namespace PocketSquire.Arena.Unity.UI
             if (perkIcon != null)
             {
                 perkIcon.material = null;
-                perkIcon.color = Color.white;
             }
         }
 
@@ -153,31 +143,66 @@ namespace PocketSquire.Arena.Unity.UI
             var player = GameState.Player;
             if (player == null) return;
 
-            // 1. Deactivate whatever is currently in this slot.
-            if (!string.IsNullOrEmpty(_assignedPerkId))
-                player.TryDeactivateArenaPerk(_assignedPerkId);
+            // 1. Validate if the action is allowed
+            if (string.IsNullOrEmpty(perkId))
+            {
+                var futurePerkIds = new List<string>(player.ActiveArenaPerkIds);
+                if (!string.IsNullOrEmpty(_assignedPerkId)) futurePerkIds.Remove(_assignedPerkId);
+                
+                var futurePerks = futurePerkIds.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
+                if (player.Inventory.Slots.Count > Inventory.CalculateCapacity(futurePerks))
+                {
+                    Debug.LogWarning($"Cannot remove perk {_assignedPerkId} due to inventory bounds. Current perks: {string.Join(", ", player.ActiveArenaPerkIds)}");
+                    PlayDenied();
+                    return;
+                }
+            }
+            else
+            {
+                var perkToActivate = GameWorld.GetArenaPerkById(perkId);
+                if (!player.CanActivateArenaPerk(_assignedPerkId, perkToActivate))
+                {
+                    Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActiveArenaPerkIds)}");
+                    PlayDenied();
+                    return;
+                }
+            }
 
-            // 2. Remove path.
+            // 2. Deactivate whatever is currently in this slot
+            if (!string.IsNullOrEmpty(_assignedPerkId))
+            {
+                if (!player.TryDeactivateArenaPerk(_assignedPerkId))
+                {
+                    Debug.LogWarning($"Failed to deactivate currently assigned perk: {_assignedPerkId}");
+                    return;
+                }
+            }
+
+            // 3. Apply new state
             if (string.IsNullOrEmpty(perkId))
             {
                 LoadEmpty();
-                SaveGame();
-                return;
             }
-
-            // 3. TryActivateArenaPerk enforces slot cap and will later enforce perk restrictions.
-            bool activated = player.TryActivateArenaPerk(perkId);
-            if (!activated)
+            else
             {
-                PlayDenied();
-                // Restore the perk that was here before.
-                if (!string.IsNullOrEmpty(_assignedPerkId))
-                    player.TryActivateArenaPerk(_assignedPerkId);
-                return;
+                if (!player.TryActivateArenaPerk(perkId))
+                {
+                    Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActiveArenaPerkIds)}");
+                    PlayDenied();
+                    
+                    // Restore the previous perk if activation failed
+                    if (!string.IsNullOrEmpty(_assignedPerkId))
+                    {
+                        player.TryActivateArenaPerk(_assignedPerkId);
+                    }
+                    return;
+                }
+
+                LoadPerk(GameWorld.GetArenaPerkById(perkId));
             }
 
-            var perk = GameWorld.GetArenaPerkById(perkId);
-            LoadPerk(perk);
+            // 4. Finalize
+            PlaySelectionMade();
             SaveGame();
         }
 
@@ -226,10 +251,18 @@ namespace PocketSquire.Arena.Unity.UI
 
         private void PlayDenied()
         {
-            if (_audioSource == null) return;
+            if (audioSource == null) return;
             var clip = GameAssetRegistry.Instance.GetSound("denied");
             if (clip != null)
-                _audioSource.PlayOneShot(clip);
+                audioSource.PlayOneShot(clip);
+        }
+
+        private void PlaySelectionMade()
+        {
+            if (audioSource == null) return;
+            var clip = GameAssetRegistry.Instance.GetSound("selection_made");
+            if (clip != null)
+                audioSource.PlayOneShot(clip);
         }
 
         private void SaveGame()
