@@ -1,8 +1,8 @@
-#nullable enable
 using System.Collections.Generic;
+using PocketSquire.Arena.Core.Perks;
+#nullable enable
 
-namespace PocketSquire.Arena.Core.LevelUp
-{
+namespace PocketSquire.Arena.Core.LevelUp {
     /// <summary>
     /// A collection of perks that can be drawn from dynamically.
     /// Tag is used to identify the pool (e.g., "Tier1", "Combat").

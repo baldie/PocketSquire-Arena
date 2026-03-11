@@ -12,7 +12,7 @@ namespace PocketSquire.Arena.Unity.UI
     /// <summary>
     /// Represents a single perk slot in the PerksContainer.
     /// Clicking opens AcquiredPerkList so the player can swap the perk.
-    /// Slots beyond MaxArenaPerkSlots are visually locked and non-interactive.
+    /// Slots beyond MaxPerkSlots are visually locked and non-interactive.
     /// </summary>
     public class PerkUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
@@ -23,7 +23,7 @@ namespace PocketSquire.Arena.Unity.UI
 
         // Optional: shown while hovering — can be wired from PlayerMenuController.
         public TextMeshProUGUI perkDescriptionText;
-        private ArenaPerk _loadedPerk;
+        private Perk _loadedPerk;
         private string _assignedPerkId; // null/empty = empty slot
 
         public bool HasAssignedPerk => !string.IsNullOrEmpty(_assignedPerkId);
@@ -49,7 +49,7 @@ namespace PocketSquire.Arena.Unity.UI
         // -----------------------------------------------------------------------
 
         /// <summary>Loads and displays a specific perk in this slot.</summary>
-        public void LoadPerk(ArenaPerk perk)
+        public void LoadPerk(Perk perk)
         {
             _loadedPerk = perk;
             _assignedPerkId = perk?.Id;
@@ -108,7 +108,7 @@ namespace PocketSquire.Arena.Unity.UI
 
         /// <summary>
         /// Controls whether this slot is interactive.
-        /// Pass false for slots beyond the player's MaxArenaPerkSlots.
+        /// Pass false for slots beyond the player's MaxPerkSlots.
         /// </summary>
         public void SetInteractable(bool interactable)
         {
@@ -146,23 +146,22 @@ namespace PocketSquire.Arena.Unity.UI
             // 1. Validate if the action is allowed
             if (string.IsNullOrEmpty(perkId))
             {
-                var futurePerkIds = new List<string>(player.ActiveArenaPerkIds);
-                if (!string.IsNullOrEmpty(_assignedPerkId)) futurePerkIds.Remove(_assignedPerkId);
-                
-                var futurePerks = futurePerkIds.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
+                var futurePerks = new List<Perk>(player.ActivePerks);
+                if (!string.IsNullOrEmpty(_assignedPerkId)) futurePerks.RemoveAll(p => p.Id == _assignedPerkId);
+
                 if (player.Inventory.Slots.Count > Inventory.CalculateCapacity(futurePerks))
                 {
-                    Debug.LogWarning($"Cannot remove perk {_assignedPerkId} due to inventory bounds. Current perks: {string.Join(", ", player.ActiveArenaPerkIds)}");
+                    Debug.LogWarning($"Cannot remove perk {_assignedPerkId} due to inventory bounds. Current perks: {string.Join(", ", player.ActivePerks.Select(p => p.Id))}");
                     PlayDenied();
                     return;
                 }
             }
             else
             {
-                var perkToActivate = GameWorld.GetArenaPerkById(perkId);
-                if (!player.CanActivateArenaPerk(_assignedPerkId, perkToActivate))
+                var perkToActivate = GameWorld.GetPerkById(perkId);
+                if (!player.CanActivatePerk(_assignedPerkId, perkToActivate))
                 {
-                    Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActiveArenaPerkIds)}");
+                    Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActivePerks.Select(p => p.Id))}");
                     PlayDenied();
                     return;
                 }
@@ -171,7 +170,7 @@ namespace PocketSquire.Arena.Unity.UI
             // 2. Deactivate whatever is currently in this slot
             if (!string.IsNullOrEmpty(_assignedPerkId))
             {
-                if (!player.TryDeactivateArenaPerk(_assignedPerkId))
+                if (!player.TryDeactivatePerk(_assignedPerkId))
                 {
                     Debug.LogWarning($"Failed to deactivate currently assigned perk: {_assignedPerkId}");
                     return;
@@ -185,20 +184,20 @@ namespace PocketSquire.Arena.Unity.UI
             }
             else
             {
-                if (!player.TryActivateArenaPerk(perkId))
+                if (!player.TryActivatePerk(perkId))
                 {
-                    Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActiveArenaPerkIds)}");
+                    Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActivePerks.Select(p => p.Id))}");
                     PlayDenied();
                     
                     // Restore the previous perk if activation failed
                     if (!string.IsNullOrEmpty(_assignedPerkId))
                     {
-                        player.TryActivateArenaPerk(_assignedPerkId);
+                        player.TryActivatePerk(_assignedPerkId);
                     }
                     return;
                 }
 
-                LoadPerk(GameWorld.GetArenaPerkById(perkId));
+                LoadPerk(GameWorld.GetPerkById(perkId));
             }
 
             // 4. Finalize

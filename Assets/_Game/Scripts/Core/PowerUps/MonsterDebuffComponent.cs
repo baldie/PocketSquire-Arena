@@ -21,7 +21,7 @@ namespace PocketSquire.Arena.Core.PowerUps
 
         public DebuffType TargetAttribute { get; private set; }
 
-        public Rarity Rarity { get; private set; }
+        // Rarity inherits from PowerUpComponent
 
         public override string UniqueKey => $"DEBUFF_{TargetAttribute.ToString().ToUpper()}";
 

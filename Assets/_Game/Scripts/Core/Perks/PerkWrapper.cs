@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 namespace PocketSquire.Arena.Core.Perks
 {
     // arena_perks.json is wrapped in { "perks": [...] } — not a raw array.
-    public class ArenaPerkWrapper
+    public class PerkWrapper
     {
         [JsonProperty("perks")]
-        public List<ArenaPerk> Perks { get; set; } = new List<ArenaPerk>();
+        public List<Perk> Perks { get; set; } = new List<Perk>();
     }
 }

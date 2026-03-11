@@ -10,7 +10,7 @@ namespace PocketSquire.Arena.Tests
     /// Tests for arena perk data loading and GameWorld helpers.
     /// </summary>
     [TestFixture]
-    public class ArenaPerkLoadingTests
+    public class PerkLoadingTests
     {
         private static string GetProjectRoot()
         {
@@ -31,19 +31,19 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void LoadArenaPerks_Loads32Perks()
+        public void LoadPerks_Loads32Perks()
         {
-            Assert.That(GameWorld.AllArenaPerks.Count, Is.EqualTo(32),
+            Assert.That(GameWorld.AllPerks.Count, Is.EqualTo(32),
                 "Expected 32 arena perks");
         }
 
         [Test]
         public void KeenEye_Passive_FieldsCorrect()
         {
-            var perk = GameWorld.GetArenaPerkById("keen_eye");
+            var perk = GameWorld.GetPerkById("keen_eye");
             Assert.That(perk, Is.Not.Null);
             Assert.That(perk!.DisplayName, Is.EqualTo("Keen Eye"));
-            Assert.That(perk.PerkType, Is.EqualTo(ArenaPerkType.Passive));
+            Assert.That(perk.PerkType, Is.EqualTo(PerkType.Passive));
             Assert.That(perk.Vendor, Is.EqualTo(VendorType.Shopkeeper));
             Assert.That(perk.Cost, Is.EqualTo(100));
             Assert.That(perk.Price, Is.EqualTo(100)); // IMerchandise delegates to Cost
@@ -55,12 +55,12 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void SecondWind_Triggered_FieldsCorrect()
         {
-            var perk = GameWorld.GetArenaPerkById("second_wind");
+            var perk = GameWorld.GetPerkById("second_wind");
             Assert.That(perk, Is.Not.Null);
             Assert.That(perk!.DisplayName, Is.EqualTo("Second Wind"));
-            Assert.That(perk.PerkType, Is.EqualTo(ArenaPerkType.Triggered));
+            Assert.That(perk.PerkType, Is.EqualTo(PerkType.Triggered));
             Assert.That(perk.TriggerEvent, Is.EqualTo(PerkTriggerEvent.HPBelowThreshold));
-            Assert.That(perk.Effect, Is.EqualTo(ArenaPerkEffectType.RestoreHP));
+            Assert.That(perk.Effect, Is.EqualTo(PerkEffectType.RestoreHP));
             Assert.That(perk.Value, Is.EqualTo(15));
             Assert.That(perk.IsPercent, Is.True);
             Assert.That(perk.OncePerBattle, Is.True);
@@ -70,47 +70,47 @@ namespace PocketSquire.Arena.Tests
         [Test]
         public void WarriorsResolve_ClassRestricted_FieldsCorrect()
         {
-            var perk = GameWorld.GetArenaPerkById("warriors_resolve");
+            var perk = GameWorld.GetPerkById("warriors_resolve");
             Assert.That(perk, Is.Not.Null);
             Assert.That(perk!.Vendor, Is.EqualTo(VendorType.FightersBlacksmith));
             Assert.That(perk.Prerequisites?.ClassName, Is.EqualTo("Fighter"));
             Assert.That(perk.Prerequisites?.MinLevel, Is.EqualTo(5));
-            Assert.That(perk.Effect, Is.EqualTo(ArenaPerkEffectType.StackDamageBuff));
+            Assert.That(perk.Effect, Is.EqualTo(PerkEffectType.StackDamageBuff));
             Assert.That(perk.MaxStacks, Is.EqualTo(5));
             Assert.That(perk.ResetOn, Is.EqualTo(PerkTriggerEvent.PlayerMissedMonster));
         }
 
         [Test]
-        public void GetArenaPerkById_Unknown_ReturnsNull()
+        public void GetPerkById_Unknown_ReturnsNull()
         {
-            Assert.That(GameWorld.GetArenaPerkById("nonexistent_perk"), Is.Null);
+            Assert.That(GameWorld.GetPerkById("nonexistent_perk"), Is.Null);
         }
 
         [Test]
-        public void GetArenaPerksByVendor_Shopkeeper_Returns10()
+        public void GetPerksByVendor_Shopkeeper_Returns10()
         {
-            var shopkeeperPerks = GameWorld.GetArenaPerksByVendor(VendorType.Shopkeeper);
+            var shopkeeperPerks = GameWorld.GetPerksByVendor(VendorType.Shopkeeper);
             Assert.That(shopkeeperPerks.Count, Is.EqualTo(10));
         }
 
         [Test]
-        public void GetArenaPerksByVendor_Wizard_Returns8()
+        public void GetPerksByVendor_Wizard_Returns8()
         {
-            var wizardPerks = GameWorld.GetArenaPerksByVendor(VendorType.Wizard);
+            var wizardPerks = GameWorld.GetPerksByVendor(VendorType.Wizard);
             Assert.That(wizardPerks.Count, Is.EqualTo(8));
         }
 
         [Test]
-        public void GetArenaPerksByVendor_FightersBlacksmith_Returns8()
+        public void GetPerksByVendor_FightersBlacksmith_Returns8()
         {
-            var perks = GameWorld.GetArenaPerksByVendor(VendorType.FightersBlacksmith);
+            var perks = GameWorld.GetPerksByVendor(VendorType.FightersBlacksmith);
             Assert.That(perks.Count, Is.EqualTo(8));
         }
 
         [Test]
-        public void GetArenaPerksByVendor_ArcheryTrainer_Returns6()
+        public void GetPerksByVendor_ArcheryTrainer_Returns6()
         {
-            var perks = GameWorld.GetArenaPerksByVendor(VendorType.ArcheryTrainer);
+            var perks = GameWorld.GetPerksByVendor(VendorType.ArcheryTrainer);
             Assert.That(perks.Count, Is.EqualTo(6));
         }
 

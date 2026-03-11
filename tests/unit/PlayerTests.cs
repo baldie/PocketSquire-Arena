@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Tests
 {
@@ -202,8 +203,7 @@ namespace PocketSquire.Arena.Tests
             // Arrange
             var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(200);
-            var perk = new PocketSquire.Arena.Core.LevelUp.Perk("satchel_tier1", "Satchel", "Bigger bag", 1, null,
-                new System.Collections.Generic.List<PlayerClass.ClassName>(), price: 100);
+            var perk = new Perk { Id = "satchel_tier1", DisplayName = "Satchel", Description = "Bigger bag", Cost = 100 };
 
             // Act
             var result = player.TryPurchasePerk(perk);
@@ -211,7 +211,7 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(result, Is.True);
             Assert.That(player.Gold, Is.EqualTo(100));
-            Assert.That(player.AcquiredPerks.Contains("satchel_tier1"), Is.True);
+            Assert.That(player.AcquiredPerks.Any(p => p.Id == "satchel_tier1"), Is.True);
         }
 
         [Test]
@@ -220,8 +220,7 @@ namespace PocketSquire.Arena.Tests
             // Arrange
             var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(50);
-            var perk = new PocketSquire.Arena.Core.LevelUp.Perk("satchel_tier1", "Satchel", "Bigger bag", 1, null,
-                new System.Collections.Generic.List<PlayerClass.ClassName>(), price: 100);
+            var perk = new Perk { Id = "satchel_tier1", DisplayName = "Satchel", Description = "Bigger bag", Cost = 100 };
 
             // Act
             var result = player.TryPurchasePerk(perk);
@@ -229,7 +228,7 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(result, Is.False);
             Assert.That(player.Gold, Is.EqualTo(50), "Gold should not change on failed purchase");
-            Assert.That(player.AcquiredPerks.Contains("satchel_tier1"), Is.False);
+            Assert.That(player.AcquiredPerks.Any(p => p.Id == "satchel_tier1"), Is.False);
         }
 
         [Test]
@@ -238,8 +237,7 @@ namespace PocketSquire.Arena.Tests
             // Arrange
             var player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             player.GainGold(500);
-            var perk = new PocketSquire.Arena.Core.LevelUp.Perk("satchel_tier1", "Satchel", "Bigger bag", 1, null,
-                new System.Collections.Generic.List<PlayerClass.ClassName>(), price: 100);
+            var perk = new Perk { Id = "satchel_tier1", DisplayName = "Satchel", Description = "Bigger bag", Cost = 100 };
 
             // Buy it once
             player.TryPurchasePerk(perk);

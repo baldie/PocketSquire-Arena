@@ -1,8 +1,9 @@
 namespace PocketSquire.Arena.Core.Perks
 {
     // Separate from LevelUp/PerkEffectType.cs — that only covers LevelUp perks.
-    public enum ArenaPerkEffectType
+    public enum PerkEffectType
     {
+        None,
         RestoreHP,
         RestoreMP,
         DamageBuff,

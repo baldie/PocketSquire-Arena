@@ -7,7 +7,7 @@ namespace PocketSquire.Arena.Core.Perks
     /// <summary>
     /// Stateless, static processor for arena perks.
     /// Callers pass in the player and a context; this class reads active perk definitions
-    /// from GameWorld and runtime state from Player.ArenaPerkStates, then returns a result.
+    /// from GameWorld and runtime state from Player.PerkStates, then returns a result.
     /// No event bus — action classes call ProcessEvent() directly.
     /// </summary>
     public static class PerkProcessor
@@ -18,26 +18,26 @@ namespace PocketSquire.Arena.Core.Perks
 
         /// <summary>
         /// Processes all triggered perks that subscribe to <paramref name="triggerEvent"/> for the player.
-        /// Updates ArenaPerkState in-place and returns aggregated results.
+        /// Updates PerkState in-place and returns aggregated results.
         /// </summary>
         public static PerkProcessResult ProcessEvent(PerkTriggerEvent triggerEvent, Player player, PerkContext context)
         {
             var result = new PerkProcessResult();
             if (player == null) return result;
 
-            foreach (var perkId in player.ActiveArenaPerkIds)
+            foreach (var perk in player.ActivePerks)
             {
-                var perk = GameWorld.GetArenaPerkById(perkId);
-                if (perk == null || perk.PerkType != ArenaPerkType.Triggered) continue;
+                var perkId = perk.Id;
+                if (perk == null || perk.PerkType != PerkType.Triggered) continue;
                 if (perk.TriggerEvent != triggerEvent) continue;
 
                 // Also reset consecutive if we hit a ResetOn event match
                 // (handled separately by the reset-event overload for cleanness)
 
-                if (!player.ArenaPerkStates.TryGetValue(perkId, out var state))
+                if (!player.PerkStates.TryGetValue(perkId, out var state))
                 {
-                    state = new ArenaPerkState { PerkId = perkId };
-                    player.ArenaPerkStates[perkId] = state;
+                    state = new PerkState { PerkId = perkId };
+                    player.PerkStates[perkId] = state;
                 }
 
                 // Gate: once-per-battle
@@ -75,12 +75,12 @@ namespace PocketSquire.Arena.Core.Perks
             }
 
             // Handle ResetOn events — iterate perks that reset when THIS event fires
-            foreach (var perkId in player.ActiveArenaPerkIds)
+            foreach (var perk in player.ActivePerks)
             {
-                var perk = GameWorld.GetArenaPerkById(perkId);
+                var perkId = perk.Id;
                 if (perk?.ResetOn == triggerEvent)
                 {
-                    if (player.ArenaPerkStates.TryGetValue(perkId, out var state))
+                    if (player.PerkStates.TryGetValue(perkId, out var state))
                         state.ConsecutiveCounter = 0;
                 }
             }
@@ -97,29 +97,29 @@ namespace PocketSquire.Arena.Core.Perks
             var result = new PerkProcessResult();
             if (player == null) return result;
 
-            foreach (var perkId in player.ActiveArenaPerkIds)
+            foreach (var perk in player.ActivePerks)
             {
-                var perk = GameWorld.GetArenaPerkById(perkId);
-                if (perk == null || perk.PerkType != ArenaPerkType.Passive || !perk.Effect.HasValue) continue;
+                var perkId = perk.Id;
+                if (perk == null || perk.PerkType != PerkType.Passive || !perk.Effect.HasValue) continue;
 
                 switch (perk.Effect.Value)
                 {
-                    case ArenaPerkEffectType.IncreaseHitChance:
+                    case PerkEffectType.IncreaseHitChance:
                         result.HitChanceBonusPercent += perk.Value;
                         break;
-                    case ArenaPerkEffectType.IncreaseCritChance:
+                    case PerkEffectType.IncreaseCritChance:
                         result.CritChanceBonusPercent += perk.Value;
                         break;
-                    case ArenaPerkEffectType.DamageBuff:
+                    case PerkEffectType.DamageBuff:
                         result.DamageBuffMultiplier *= (1f + perk.Value / 100f);
                         break;
-                    case ArenaPerkEffectType.DamageReduction:
+                    case PerkEffectType.DamageReduction:
                         result.DamageReductionMultiplier *= (1f - perk.Value / 100f);
                         break;
-                    case ArenaPerkEffectType.ReduceShopPrices:
+                    case PerkEffectType.ReduceShopPrices:
                         result.ReduceShopPrices *= (1f - perk.Value / 100f);
                         break;
-                    case ArenaPerkEffectType.IncreaseGoldGain:
+                    case PerkEffectType.IncreaseGoldGain:
                         result.GoldGainMultiplier *= (1f + perk.Value / 100f);
                         break;
                 }
@@ -132,7 +132,7 @@ namespace PocketSquire.Arena.Core.Perks
         public static void ResetPerksForBattle(Player player)
         {
             if (player == null) return;
-            foreach (var state in player.ArenaPerkStates.Values)
+            foreach (var state in player.PerkStates.Values)
                 state.ResetForBattle();
         }
 
@@ -140,7 +140,7 @@ namespace PocketSquire.Arena.Core.Perks
         public static void ResetPerksForRun(Player player)
         {
             if (player == null) return;
-            foreach (var state in player.ArenaPerkStates.Values)
+            foreach (var state in player.PerkStates.Values)
                 state.ResetForRun();
         }
 
@@ -148,7 +148,7 @@ namespace PocketSquire.Arena.Core.Perks
         public static void TickDuration(Player player)
         {
             if (player == null) return;
-            foreach (var state in player.ArenaPerkStates.Values)
+            foreach (var state in player.PerkStates.Values)
             {
                 if (state.RemainingDuration > 0)
                     state.RemainingDuration--;
@@ -159,13 +159,13 @@ namespace PocketSquire.Arena.Core.Perks
         // Private helpers
         // -------------------------------------------------------------------
 
-        private static void ApplyEffect(ArenaPerk perk, ArenaPerkState state, PerkContext context, PerkProcessResult result, Player player)
+        private static void ApplyEffect(Perk perk, PerkState state, PerkContext context, PerkProcessResult result, Player player)
         {
             if (!perk.Effect.HasValue) return;
 
             switch (perk.Effect.Value)
             {
-                case ArenaPerkEffectType.RestoreHP:
+                case PerkEffectType.RestoreHP:
                 {
                     int healAmt = perk.IsPercent
                         ? (int)(player.MaxHealth * (perk.Value / 100f))
@@ -175,14 +175,14 @@ namespace PocketSquire.Arena.Core.Perks
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Healed player for {healAmt} HP.");
                     break;
                 }
-                case ArenaPerkEffectType.RestoreMP:
+                case PerkEffectType.RestoreMP:
                 {
                     result.RestoreMpAmount += perk.Value;
                     player.RestoreMana(perk.Value);
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Restored {perk.Value} MP.");
                     break;
                 }
-                case ArenaPerkEffectType.DamageBuff:
+                case PerkEffectType.DamageBuff:
                 {
                     float mult = 1f + perk.Value / 100f;
                     result.DamageBuffMultiplier *= mult;
@@ -190,7 +190,7 @@ namespace PocketSquire.Arena.Core.Perks
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Damage buff x{mult:F2} for {perk.Duration} turns.");
                     break;
                 }
-                case ArenaPerkEffectType.DamageReduction:
+                case PerkEffectType.DamageReduction:
                 {
                     float mult = 1f - perk.Value / 100f;
                     result.DamageReductionMultiplier *= mult;
@@ -198,7 +198,7 @@ namespace PocketSquire.Arena.Core.Perks
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Damage reduction x{mult:F2} for {perk.Duration} turns.");
                     break;
                 }
-                case ArenaPerkEffectType.StackDamageBuff:
+                case PerkEffectType.StackDamageBuff:
                 {
                     if (state.CurrentStacks < perk.MaxStacks)
                         state.CurrentStacks++;
@@ -207,7 +207,7 @@ namespace PocketSquire.Arena.Core.Perks
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Stack {state.CurrentStacks}/{perk.MaxStacks}, buff x{mult:F2}.");
                     break;
                 }
-                case ArenaPerkEffectType.StackDodgeBuff:
+                case PerkEffectType.StackDodgeBuff:
                 {
                     if (state.CurrentStacks < perk.MaxStacks)
                         state.CurrentStacks++;
@@ -216,7 +216,7 @@ namespace PocketSquire.Arena.Core.Perks
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Dodge stack {state.CurrentStacks}, dodge boost {perk.Value * state.CurrentStacks}%.");
                     break;
                 }
-                case ArenaPerkEffectType.BonusDamage:
+                case PerkEffectType.BonusDamage:
                 {
                     int bonus = perk.IsPercent
                         ? (int)(context.Damage * (perk.Value / 100f))
@@ -225,30 +225,30 @@ namespace PocketSquire.Arena.Core.Perks
                     Console.WriteLine($"[Perk] {perk.DisplayName}: +{bonus} bonus damage.");
                     break;
                 }
-                case ArenaPerkEffectType.DoubleDamage:
+                case PerkEffectType.DoubleDamage:
                     result.ShouldDoubleDamage = true;
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Double damage!");
                     break;
-                case ArenaPerkEffectType.GuaranteedHit:
+                case PerkEffectType.GuaranteedHit:
                     result.GuaranteedHit = true;
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Next attack guaranteed to hit.");
                     break;
-                case ArenaPerkEffectType.NullifyDamage:
+                case PerkEffectType.NullifyDamage:
                     result.NullifyDamage = true;
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Damage nullified!");
                     break;
-                case ArenaPerkEffectType.SurviveFatalBlow:
+                case PerkEffectType.SurviveFatalBlow:
                     result.SurviveFatalBlow = true;
                     // Health is set to 1 by Entity.TakeDamage when the wouldDieCheck callback returns true.
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Survived fatal blow with 1 HP!");
                     break;
-                case ArenaPerkEffectType.IncreaseMaxHP:
+                case PerkEffectType.IncreaseMaxHP:
                 {
                     player.MaxHealth += perk.Value;
                     Console.WriteLine($"[Perk] {perk.DisplayName}: MaxHP +{perk.Value}.");
                     break;
                 }
-                case ArenaPerkEffectType.YieldBonus:
+                case PerkEffectType.YieldBonus:
                     result.YieldChanceBonus += perk.YieldChanceBonus;
                     if (perk.HpRestore > 0)
                     {
@@ -260,11 +260,11 @@ namespace PocketSquire.Arena.Core.Perks
                     }
                     Console.WriteLine($"[Perk] {perk.DisplayName}: Yield bonus +{perk.YieldChanceBonus}%.");
                     break;
-                case ArenaPerkEffectType.ReduceCooldown:
+                case PerkEffectType.ReduceCooldown:
                     // Cooldown is a Unity-side concept; result carries the value for the Unity layer.
                     Console.WriteLine($"[Perk] {perk.DisplayName}: ReduceCooldown by {perk.Value}.");
                     break;
-                case ArenaPerkEffectType.RefundMPCost:
+                case PerkEffectType.RefundMPCost:
                     result.RestoreMpAmount += perk.Value;
                     Console.WriteLine($"[Perk] {perk.DisplayName}: MP refunded.");
                     break;

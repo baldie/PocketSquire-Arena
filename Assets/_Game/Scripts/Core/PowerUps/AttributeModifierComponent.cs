@@ -19,7 +19,7 @@ namespace PocketSquire.Arena.Core.PowerUps
             Defense
         }
 
-        public Rarity Rarity { get; private set; }
+        // Rarity inherits from PowerUpComponent
 
         public AttributeType TargetAttribute { get; private set; }
 

@@ -343,7 +343,7 @@ namespace PocketSquire.Unity.UI
         /// <summary>
         /// Reflects the player's active arena perks in the PerksContainer slots.
         /// Slots with an active perk show its icon; empty slots show the 'empty' sprite.
-        /// Slots beyond MaxArenaPerkSlots are greyed out and non-interactive.
+        /// Slots beyond MaxPerkSlots are greyed out and non-interactive.
         /// </summary>
         private void RefreshPerks(Player player)
         {
@@ -367,7 +367,7 @@ namespace PocketSquire.Unity.UI
                 // PerkUI already has its own grayscaleMaterial field; we only need to set
                 // interactability and perk data here.
 
-                bool isAvailable = i < player.MaxArenaPerkSlots;
+                bool isAvailable = i < player.MaxPerkSlots;
                 slot.SetInteractable(isAvailable);
 
                 if (!isAvailable)
@@ -376,9 +376,9 @@ namespace PocketSquire.Unity.UI
                     continue;
                 }
 
-                if (i < player.ActiveArenaPerkIds.Count)
+                if (i < player.ActivePerks.Count)
                 {
-                    var perk = GameWorld.GetArenaPerkById(player.ActiveArenaPerkIds[i]);
+                    var perk = player.ActivePerks[i];
                     if (perk != null)
                     {
                         slot.LoadPerk(perk);

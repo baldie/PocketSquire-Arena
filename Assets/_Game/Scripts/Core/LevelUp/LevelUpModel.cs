@@ -1,9 +1,10 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
+using PocketSquire.Arena.Core.Perks;
 
-namespace PocketSquire.Arena.Core.LevelUp
-{
+#nullable enable
+
+namespace PocketSquire.Arena.Core.LevelUp {
     public class LevelUpModel : ILevelUpModel
     {
         private Dictionary<string, int> _startingAttributes;

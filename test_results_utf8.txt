@@ -1,0 +1,411 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+  PocketSquire.Arena.Tests -> C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll
+Test run for C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll
+NUnit Adapter 5.0.0.0: Test execution started
+Running all tests in C:\Users\David\PocketSquire-Arena\tests\unit\bin\Debug\net10.0\PocketSquire.Arena.Tests.dll
+   NUnit3TestExecutor discovered 218 of 218 NUnit test cases using Current Discovery mode, Non-Explicit run
+  Passed DecrementDefenseAttribute_ShouldIncreaseAvailablePoints_AndDecreaseDefense [2 ms]
+  Passed GetEligiblePerks_ShouldFilterAlreadyUnlocked [1 ms]
+  Passed GetEligiblePerks_ShouldFilterByLevel [6 ms]
+  Passed GetEligiblePerks_ShouldFilterByPrerequisites [< 1 ms]
+  Passed IncrementAttribute_ShouldDecreaseAvailablePoints_AndIncreaseAttribute [< 1 ms]
+  Passed IncrementDefenseAttribute_ShouldDecreaseAvailablePoints_AndIncreaseDefense [< 1 ms]
+  Passed Initialization_ShouldSetCorrectValues [< 1 ms]
+  Passed SelectPerk_ShouldNotUnlock_IfNotPending [< 1 ms]
+  Passed SelectPerk_ShouldUnlockPerk_IfPending [< 1 ms]
+  Passed Select_ShouldExcludeAlreadyUnlocked [1 ms]
+  Passed Select_ShouldExcludeBelowMinLevel [< 1 ms]
+  Passed Select_ShouldRespectCountLimit [< 1 ms]
+  Passed Select_ShouldRespectPrerequisites [< 1 ms]
+  Passed GetXpToReachLevel_ShouldMatchLogic [< 1 ms]
+  Passed SimulateRun_ShouldLevelUpCorrectly [< 1 ms]
+  Passed GetLevelForExperience_ShouldReturnCorrectLevel [< 1 ms]
+  Passed GetXpToNextLevel_ShouldReturnCorrectDelta [< 1 ms]
+  Passed IsValid_ShouldReturnFalse_WhenNextLevelXPisLowerThanCurrent [< 1 ms]
+  Passed IsValid_ShouldReturnTrue_WhenRequirementsAreMonotonic [< 1 ms]
+  Passed Generate_LinearCurve_ShouldAccumulateLinearly [< 1 ms]
+  Passed Generate_QuadraticCurve_ShouldAccumulateQuadratically [< 1 ms]
+  Passed Generate_ShouldStartAtZero [< 1 ms]
+  Passed AttributeModifier_Apply_IncreasesPlayerStat [< 1 ms]
+  Passed LootModifier_FlatBonus_ReturnsBaseValue [< 1 ms]
+  Passed LootModifier_GetBonusValue_ReturnsPercentage [< 1 ms]
+  Passed MonsterDebuff_Apply_ReducesMonsterStat_ClampedAtOne [< 1 ms]
+  Passed PowerUp_IncrementRank_UpgradesRank [< 1 ms]
+  Passed PowerUpCollection_Add_RanksUpExisting [< 1 ms]
+  Passed UtilityHeal_Apply_RestoresPercentHealth [< 1 ms]
+  Passed Generate_AllMaxRank_ReturnsCoinFallback [2 ms]
+  Passed Generate_ExistingPowerUp_RanksUp [< 1 ms]
+  Passed Generate_HighLuck_MoreRarePowerUps [1 ms]
+  Passed Generate_LowHealth_BoostsHealWeight [1 ms]
+  Passed Generate_ReturnsThreeDistinctPowerUps [< 1 ms]
+  Passed ComputeValue_HigherArenaLevel_GrowsSubLinearly [< 1 ms]
+  Passed ComputeValue_Level1_CommonRankI_ReturnsBaseValue [< 1 ms]
+TestEntity attacked TestEntity but missed!
+
+  Passed ComputeValue_RarityAndRank_Multiply [< 1 ms]
+  Passed RollRarity_HighLuck_ShiftsDistribution [1 ms]
+  Passed RollRarity_ZeroLuck_MostlyCommon [< 1 ms]
+  Passed AttackAction_ApplyEffect_DoesNotThrow_OnMiss [1 ms]
+  Standard Output Messages:
+ TestEntity attacked TestEntity but missed!
+
+
+  Passed AttackAction_CritHit_DamageIs1Point5xBaseDamage [< 1 ms]
+  Passed AttackAction_HighDexAdvantage_HitsAndDealsPositiveDamage [< 1 ms]
+  Passed AttackAction_HitChance_ClampedAtMax99 [< 1 ms]
+  Passed AttackAction_MissedAttack_DamageIsZero [< 1 ms]
+  Passed AttackAction_ZeroDex_Attacker_MissesWithLowSeed [< 1 ms]
+Changing turns
+Changing turns
+
+Changing turns
+Changing turns
+
+  Passed Attributes_CanSetAllAttributes [< 1 ms]
+  Passed Attributes_InitializesWithDefaultValues [< 1 ms]
+  Passed Entity_InitializesWithDefenseAttribute [< 1 ms]
+  Passed Monster_InitializesWithDefenseAttribute [< 1 ms]
+  Passed Player_InitializesWithDefenseAttribute [< 1 ms]
+  Passed Battle_ChangeTurns_ResetsDefendingState [1 ms]
+  Standard Output Messages:
+ Changing turns
+ Changing turns
+
+
+  Passed Battle_ChangeTurns_SwitchesActor [< 1 ms]
+  Standard Output Messages:
+ Changing turns
+ Changing turns
+
+
+  Passed Battle_HandleActionComplete_ReturnsChangeTurnsAction [1 ms]
+  Passed Battle_HandleActionComplete_ReturnsWinAction_WhenMonsterDies [< 1 ms]
+  Passed Battle_Initialization_PlayerGoesFirst [< 1 ms]
+  Passed Battle_IsOver_WhenMonsterDies [< 1 ms]
+  Passed Battle_IsOver_WhenPlayerDies [< 1 ms]
+  Passed DefeatSoundId_CanBeSetAndRetrieved [< 1 ms]
+  Passed GetActionSoundId_ReturnsEmptyStringByDefault [< 1 ms]
+  Passed GetHitSoundId_ReturnsEmptyStringByDefault [< 1 ms]
+  Passed Heal_CannotExceedMaxHealth [< 1 ms]
+  Passed Heal_IncreasesHealth [< 1 ms]
+  Passed OnDeath_InvokedWhenHealthReachesZero [< 1 ms]
+Player health reset to 20
+
+  Passed TakeDamage_CannotGoBelowZero [< 1 ms]
+  Passed TakeDamage_ReducesDamageWhenDefending [< 1 ms]
+  Passed TakeDamage_ReducesHealth [< 1 ms]
+  Passed TakeDamage_RoundingWhenDefending_RoundsUp [< 1 ms]
+  Passed CreateNewGame_Female_CreatesPlayerWithFemaleGender [13 ms]
+  Passed CreateNewGame_GivesPlayerStartingHealthPotion [< 1 ms]
+  Passed CreateNewGame_Male_CreatesPlayerWithMaleGender [< 1 ms]
+  Standard Output Messages:
+ Player health reset to 20
+
+
+  Passed CreateNewGame_SetsCorrectSlotAndDates [< 1 ms]
+  Passed FindMostRecentSave_ReturnsLatestSave [< 1 ms]
+Loaded Player: Test Player
+
+Loaded Player: m_squire
+
+  Passed FindMostRecentSave_WithEmptyArray_ReturnsNull [< 1 ms]
+  Passed FindMostRecentSave_WithNullElements_IgnoresThem [< 1 ms]
+  Passed GetSaveData_ReturnsCorrectData [< 1 ms]
+  Passed LoadFromSaveData_SetsCorrectValues [< 1 ms]
+  Standard Output Messages:
+ Loaded Player: Test Player
+
+
+  Passed RegisterSaveSlot_SetsSlotAndDates_PlayerIsNull [< 1 ms]
+  Passed SaveLoadRoundtrip_PreservesInventory [< 1 ms]
+  Standard Output Messages:
+ Loaded Player: m_squire
+
+
+  Passed GetClassTemplate_ReturnsCorrectPlayer [11 ms]
+  Passed GetMonsterByName_ReturnsCorrectMonster [1 ms]
+  Passed GetMonsterByName_ReturnsNullForUnknownName [1 ms]
+  Passed Load_ShouldLoadClassTemplatesFromFile [1 ms]
+  Passed Load_ShouldLoadMonstersFromFile [1 ms]
+  Passed ResetAllMonsters_ShouldRestoreHealthToMax [< 1 ms]
+  Passed AddItem_AddsNewSlot_WhenItemNotPresent [< 1 ms]
+  Passed AddItem_CreatesNewStack_WhenFirstStackFull [< 1 ms]
+  Passed AddItem_PartialAdd_WhenSomeUnitsFit [< 1 ms]
+  Passed AddItem_ReturnsFalse_WhenAllSlotsFull [< 1 ms]
+  Passed AddItem_ReturnsFalse_WhenAllSlotsFullAndStackLimitReached [< 1 ms]
+  Passed AddItem_StacksOntoExistingSlot_BeforeOpeningNewSlot [< 1 ms]
+  Passed AddItem_SupportsMultipleItemTypes_WithExpandedCapacity [< 1 ms]
+  Passed CalculateCapacity_BaseValues_WithNoPerks [< 1 ms]
+  Passed CalculateCapacity_Tier1_Expands [< 1 ms]
+  Passed GetItemCount_ReturnsCorrectQuantity [< 1 ms]
+  Passed GetItemCount_ReturnsZero_WhenItemNotPresent [< 1 ms]
+  Passed HasItem_ReturnsFalse_WhenItemNotPresent [< 1 ms]
+  Passed HasItem_ReturnsTrue_WhenItemPresent [< 1 ms]
+  Passed HasRoom_ReturnsFalse_WhenAllSlotsFullAndAtMaxStack [< 1 ms]
+  Passed HasRoom_ReturnsTrue_WhenEmptySlotAvailable [< 1 ms]
+  Passed HasRoom_ReturnsTrue_WhenSlotCanStack [< 1 ms]
+  Passed InventorySlot_CanStack_ReturnsFalse_ForDifferentItem [< 1 ms]
+  Passed InventorySlot_CanStack_ReturnsTrue_ForMatchingItem [< 1 ms]
+  Passed InventorySlot_IsFull_ReturnsFalse_WhenBelowLimit [< 1 ms]
+  Passed InventorySlot_IsFull_ReturnsTrue_WhenAtLimit [< 1 ms]
+  Passed RemoveItem_DecreasesQuantity [< 1 ms]
+  Passed RemoveItem_RemovesSlot_WhenQuantityReachesZero [< 1 ms]
+  Passed RemoveItem_ReturnsFalse_WhenInsufficientQuantity [< 1 ms]
+  Passed RemoveItem_ReturnsFalse_WhenItemNotPresent [< 1 ms]
+  Passed UpdateCapacity_BaseValues_WithNoPerks [< 1 ms]
+  Passed UpdateCapacity_DoesNotLoseExistingItems [< 1 ms]
+  Passed UpdateCapacity_HigherTierOverridesLower [< 1 ms]
+  Passed UpdateCapacity_Tier1_Expands [< 1 ms]
+  Passed UpdateCapacity_Tier2_Expands [< 1 ms]
+  Passed UpdateCapacity_Tier3_Expands [< 1 ms]
+  Passed Item_DefaultValues_AreCorrect [< 1 ms]
+  Passed Item_Initialization_SetsPropertiesCorrectly [< 1 ms]
+  Passed Item_TargetEnum_SupportsEnemyTarget [< 1 ms]
+  Passed LoseAction_ApplyEffect_ExecutesWithoutError [< 1 ms]
+  Passed LoseAction_Properties_CorrectlySet [< 1 ms]
+  Passed DetermineAction_ReturnsAttackOrSpecialAttack [< 1 ms]
+  Passed GetActionSoundId_ReturnsConfiguredSoundIds [< 1 ms]
+  Passed GetActionSoundId_ReturnsEmptyForUnknownAction [< 1 ms]
+  Passed GetActionSoundId_ReturnsEmptyForYield [< 1 ms]
+  Passed GetActionSoundId_ReturnsSpecialAttackSound [< 1 ms]
+  Passed GetHitSoundId_ReturnsConfiguredHitSound [< 1 ms]
+  Passed Monster_SpriteIds_ReturnCorrectFormattedStrings [< 1 ms]
+  Passed GetMaxPerkSlots_AllTiers_Correct [1 ms]
+  Passed GetPerkById_Unknown_ReturnsNull [1 ms]
+  Passed GetPerksByVendor_ArcheryTrainer_Returns6 [1 ms]
+  Passed GetPerksByVendor_FightersBlacksmith_Returns8 [1 ms]
+  Passed GetPerksByVendor_Shopkeeper_Returns10 [1 ms]
+  Passed GetPerksByVendor_Wizard_Returns8 [1 ms]
+  Passed GetTier_AllClasses_CorrectTiers [1 ms]
+  Passed KeenEye_Passive_FieldsCorrect [1 ms]
+  Passed LoadPerks_Loads32Perks [1 ms]
+  Passed SecondWind_Triggered_FieldsCorrect [1 ms]
+  Passed WarriorsResolve_ClassRestricted_FieldsCorrect [1 ms]
+  Passed CanActivatePerk_AllowsSwap_SmallerToLarger_WhenCurrentAreFull [5 ms]
+  Passed CanActivatePerk_AllowsSwap_WhenInventoryBelowFutureCapacity [1 ms]
+  Passed CanActivatePerk_AllowsSwap_WhenReplacingSatchelWithAnotherSatchel [1 ms]
+  Passed CanActivatePerk_BlocksMultipleActiveSatchels_WhenAddingNewSatchel [2 ms]
+  Passed CanActivatePerk_BlocksSwap_WhenInventoryAboveFutureCapacity [1 ms]
+  Passed InitializePerkStates_RebuildsStatesFromIds [1 ms]
+  Passed MaxPerkSlots_ChangesWithClass [1 ms]
+  Failed SaveLoad_UnlockedAndActivePerks_Survive [13 ms]
+  Error Message:
+     Assert.That(reloaded.AcquiredPerks.Any(p => p.Id == perk.Id), Is.True)
+  Expected: True
+  But was:  False
+
+  Stack Trace:
+     at PocketSquire.Arena.Tests.PerkPlayerTests.SaveLoad_UnlockedAndActivePerks_Survive() in C:\Users\David\PocketSquire-Arena\tests\unit\ArenaPerkPlayerTests.cs:line 317
+
+1)    at PocketSquire.Arena.Tests.PerkPlayerTests.SaveLoad_UnlockedAndActivePerks_Survive() in C:\Users\David\PocketSquire-Arena\tests\unit\ArenaPerkPlayerTests.cs:line 317
+
+
+  Passed TryActivatePerk_AlreadyActive_ReturnsFalse [1 ms]
+  Passed TryActivatePerk_NotOwned_ReturnsFalse [1 ms]
+  Passed TryActivatePerk_Squire_CapIs2_ThirdActivationFails [1 ms]
+  Passed TryActivatePerk_Success_AddsToActiveAndCreatesState [1 ms]
+  Passed TryDeactivatePerk_NotActive_ReturnsFalse [1 ms]
+  Passed TryDeactivatePerk_Success_RemovesFromActiveAndState [1 ms]
+  Passed TryPurchasePerk_AlreadyOwned_ReturnsFalse [1 ms]
+  Passed TryPurchasePerk_InsufficientGold_ReturnsFalse [1 ms]
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+[Perk] Lucky Strike: Double damage!
+
+[Perk] Phoenix Heart: Survived fatal blow with 1 HP!
+
+[Perk] Phoenix Heart: Survived fatal blow with 1 HP!
+
+[Perk] Precision Strike: +5 bonus damage.
+
+  Passed TryPurchasePerk_NullPerk_ThrowsArgumentNull [1 ms]
+  Passed TryPurchasePerk_Success_GoldDeductedAndIdAdded [1 ms]
+  Passed GetPassiveModifiers_NoPerks_DefaultValues [1 ms]
+  Passed GetPassiveModifiers_TreasureHunter_GoldGainIncreased [1 ms]
+  Passed ProcessEvent_LuckyStrike_ProcChance5Percent_SometimesDoubles [2 ms]
+  Standard Output Messages:
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+ [Perk] Lucky Strike: Double damage!
+
+
+  Passed ProcessEvent_PhoenixHeart_OncePerRun_SecondCallIgnored [1 ms]
+  Standard Output Messages:
+ [Perk] Phoenix Heart: Survived fatal blow with 1 HP!
+
+
+  Passed ProcessEvent_PhoenixHeart_ReturnsSurviveFatalBlow [1 ms]
+  Standard Output Messages:
+ [Perk] Phoenix Heart: Survived fatal blow with 1 HP!
+
+
+  Passed ProcessEvent_PrecisionStrike_TriggersAfter3ConsecutiveHits [1 ms]
+  Standard Output Messages:
+ [Perk] Precision Strike: +5 bonus damage.
+
+
+  Passed ProcessEvent_SecondWind_DoesNotTriggerAboveThreshold [1 ms]
+[Perk] Second Wind: Healed player for 15 HP.
+
+[Perk] Second Wind: Healed player for 15 HP.
+
+[Perk] Warrior's Resolve: Stack 1/5, buff x1.03.
+
+  Passed ProcessEvent_SecondWind_OncePerBattle_SecondCallIgnored [1 ms]
+  Standard Output Messages:
+ [Perk] Second Wind: Healed player for 15 HP.
+
+
+  Passed ProcessEvent_SecondWind_RestoresHPWhenBelowThreshold [1 ms]
+  Standard Output Messages:
+ [Perk] Second Wind: Healed player for 15 HP.
+
+
+  Passed ProcessEvent_WarriorsResolve_ResetsOnMiss [1 ms]
+  Passed ProcessEvent_WarriorsResolve_StacksIncrease [1 ms]
+  Standard Output Messages:
+ [Perk] Warrior's Resolve: Stack 1/5, buff x1.03.
+
+
+  Passed ResetPerksForBattle_ClearsOncePerBattleFlag [1 ms]
+  Passed TakeDamage_WouldDieCheck_NotFiredWhenDamageBelowHealth [1 ms]
+  Passed TakeDamage_WouldDieCheck_SetsHealthTo1WhenCallbackReturnsTrue [1 ms]
+  Passed TickDuration_DecrementsDuration [1 ms]
+  Passed TickDuration_DoesNotGoBelowZero [1 ms]
+  Passed GainExperience_IncreasesExperience [< 1 ms]
+  Passed GainGold_IncreasesGold [< 1 ms]
+  Passed Player_HasEmptyInventory_ByDefault [< 1 ms]
+  Passed Player_Initialization_SetsStatsCorrectly [< 1 ms]
+  Passed Player_Inventory_PersistsItemsCorrectly [< 1 ms]
+  Passed Player_SpriteIds_ReturnCorrectFormattedStrings [< 1 ms]
+  Passed SpendGold_ReducesGold [< 1 ms]
+  Passed SpendGold_Throws_WhenInsufficientGold [< 1 ms]
+  Passed TryPurchaseItem_AddsItemToInventory [< 1 ms]
+  Passed TryPurchaseItem_Fails_WhenInventoryFull [< 1 ms]
+  Passed TryPurchaseItem_Fails_WithInsufficientGold [< 1 ms]
+  Passed TryPurchaseItem_Succeeds_WithEnoughGold [< 1 ms]
+  Passed TryPurchasePerk_Fails_WhenAlreadyOwned [< 1 ms]
+  Passed TryPurchasePerk_Fails_WithInsufficientGold [< 1 ms]
+  Passed TryPurchasePerk_Succeeds_WithEnoughGold [< 1 ms]
+  Passed AccumulatePlaytime_MultipleSessions_AccumulatesCorrectly [< 1 ms]
+  Passed AccumulatePlaytime_WithExistingPlayTime_AddsSessionDuration [< 1 ms]
+  Passed AccumulatePlaytime_WithNullPlayTime_InitializesToZero [< 1 ms]
+Loaded Player: 
+
+Loaded Player: m_squire
+
+Test Monster uses a special attack on Test Player for 10 damage!
+
+Test Monster used a special attack on Test Player but missed!
+
+  Passed AccumulatePlaytime_WithZeroDuration_DoesNotChangePlayTime [< 1 ms]
+  Passed CreateNewGame_InitializesPlayTimeToZero [< 1 ms]
+  Passed GetSaveData_IncludesPlayTimeTicks [< 1 ms]
+  Passed LoadFromSaveData_RestoresPlayTime [< 1 ms]
+  Standard Output Messages:
+ Loaded Player: 
+
+
+  Passed PlayTime_RoundTrip_PreservesValue [< 1 ms]
+  Standard Output Messages:
+ Loaded Player: m_squire
+
+
+  Passed SpecialAttackAction_Actor_IsCorrectlySet [< 1 ms]
+  Passed SpecialAttackAction_ApplyEffect_DealsDamageToTarget_WhenHit [< 1 ms]
+  Standard Output Messages:
+ Test Monster uses a special attack on Test Player for 10 damage!
+
+
+  Passed SpecialAttackAction_ApplyEffect_NoHPChange_OnMiss [< 1 ms]
+  Standard Output Messages:
+ Test Monster used a special attack on Test Player but missed!
+
+
+  Passed SpecialAttackAction_Constructor_ThrowsOnNullActor [< 1 ms]
+  Passed SpecialAttackAction_Constructor_ThrowsOnNullTarget [< 1 ms]
+  Passed SpecialAttackAction_Damage_MinimumIsOne_WhenHit [< 1 ms]
+  Passed SpecialAttackAction_Target_IsCorrectlySet [1 ms]
+  Passed SpecialAttackAction_Type_IsSpecialAttack [< 1 ms]
+  Passed SpecialAttackAction_WhenHit_Damage_UsesStrength [< 1 ms]
+  Passed DialogueAction_HasExpectedValues [< 1 ms]
+  Passed DialogueOption_Constructor_SetsProperties [< 1 ms]
+  Passed DialogueOption_DefaultStruct_HasNoneAction [< 1 ms]
+  Passed DialogueOption_Leave_Factory_CreatesCorrectOption [< 1 ms]
+Using item: Small Health Potion
+Healed TestPlayer for 25 HP. Current HP: 75/100
+Removed 1x Small Health Potion from inventory
+
+Using item: Small Health Potion
+Healed TestPlayer for 25 HP. Current HP: 100/100
+Failed to remove item 1 from inventory
+
+Using item: Small Health Potion
+Healed TestPlayer for 25 HP. Current HP: 100/100
+Removed 1x Small Health Potion from inventory
+
+Using item: Small Health Potion
+Healed TestPlayer for 25 HP. Current HP: 100/100
+Removed 1x Small Health Potion from inventory
+
+  Passed DialogueOption_Prepare_Factory_CreatesCorrectOption [< 1 ms]
+  Passed DialogueOption_Shop_Factory_CreatesCorrectOption [< 1 ms]
+  Passed DialogueOption_Train_Factory_CreatesCorrectOption [< 1 ms]
+  Passed ApplyEffect_ShouldHealPlayer_WhenUsingHealthPotion [< 1 ms]
+  Standard Output Messages:
+ Using item: Small Health Potion
+ Healed TestPlayer for 25 HP. Current HP: 75/100
+ Removed 1x Small Health Potion from inventory
+
+
+  Passed ApplyEffect_ShouldLogWarning_IfItemNotInInventory [< 1 ms]
+  Standard Output Messages:
+ Using item: Small Health Potion
+ Healed TestPlayer for 25 HP. Current HP: 100/100
+ Failed to remove item 1 from inventory
+
+
+  Passed ApplyEffect_ShouldRemoveItemFromInventory [< 1 ms]
+  Standard Output Messages:
+ Using item: Small Health Potion
+ Healed TestPlayer for 25 HP. Current HP: 100/100
+ Removed 1x Small Health Potion from inventory
+
+
+  Passed ApplyEffect_ShouldUseCorrectActor [< 1 ms]
+  Standard Output Messages:
+ Using item: Small Health Potion
+ Healed TestPlayer for 25 HP. Current HP: 100/100
+ Removed 1x Small Health Potion from inventory
+
+
+  Passed Constructor_ShouldSetItemData_UsingId [< 1 ms]
+  Passed Constructor_ShouldThrow_IfItemNotFound [< 1 ms]
+NUnit Adapter 5.0.0.0: Test execution complete
+  Passed WinAction_ApplyEffect_ExecutesWithoutError [< 1 ms]
+  Passed WinAction_Properties_CorrectlySet [< 1 ms]
+
+Total tests: 218
+     Passed: 217
+     Failed: 1
+ Total time: 0.4879 Seconds

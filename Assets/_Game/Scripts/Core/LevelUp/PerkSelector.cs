@@ -1,10 +1,10 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PocketSquire.Arena.Core.Perks;
+#nullable enable
 
-namespace PocketSquire.Arena.Core.LevelUp
-{
+namespace PocketSquire.Arena.Core.LevelUp {
     public static class PerkSelector
     {
         public class SelectionContext

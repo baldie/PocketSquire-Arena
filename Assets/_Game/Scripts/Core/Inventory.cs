@@ -35,7 +35,7 @@ namespace PocketSquire.Arena.Core
 
         public List<InventorySlot> Slots = new();
 
-        public static int CalculateCapacity(List<ArenaPerk> activePerks)
+        public static int CalculateCapacity(List<Perk> activePerks)
         {
             if (activePerks.Any(p => p != null && p.Id == SatchelTier3)) return 5;
             if (activePerks.Any(p => p != null && p.Id == SatchelTier2)) return 4;
@@ -48,7 +48,7 @@ namespace PocketSquire.Arena.Core
         /// Call this whenever a satchel perk is granted so the inventory
         /// immediately reflects the new limits without losing existing items.
         /// </summary>
-        public void UpdateCapacity(List<ArenaPerk> activePerks)
+        public void UpdateCapacity(List<Perk> activePerks)
         {
             MaxSlots = CalculateCapacity(activePerks);
             

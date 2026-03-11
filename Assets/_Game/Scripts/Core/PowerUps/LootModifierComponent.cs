@@ -22,7 +22,7 @@ namespace PocketSquire.Arena.Core.PowerUps
         /// </summary>
         public bool IsFlatBonus { get; private set; }
 
-        public Rarity Rarity { get; private set; }
+        // Rarity inherits from PowerUpComponent
 
         public override string UniqueKey => IsFlatBonus ? "COIN_FALLBACK" : $"LOOT_{TargetLoot.ToString().ToUpper()}";
 

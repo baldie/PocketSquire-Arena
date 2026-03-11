@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using PocketSquire.Arena.Core.Perks;
 
-namespace PocketSquire.Arena.Core.LevelUp
-{
+namespace PocketSquire.Arena.Core.LevelUp {
     public interface ILevelUpModel
     {
         int AvailablePoints { get; }
@@ -14,7 +14,7 @@ namespace PocketSquire.Arena.Core.LevelUp
         int GetStartingAttributeValue(string attributeKey);
         void IncrementAttribute(string attributeKey);
         void DecrementAttribute(string attributeKey);
-        
+
         List<Perk> GetEligiblePerks(List<Perk> pool);
         void SelectPerk(string perkId);
         bool IsPerkUnlocked(string perkId);

@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core.LevelUp;
+using PocketSquire.Arena.Core.LevelUp;
+using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Core;
-
 namespace PocketSquire.Arena.Unity.LevelUp
 {
     [CreateAssetMenu(fileName = "ProgressionSchedule", menuName = "PocketSquire/LevelUp/ProgressionSchedule")]
@@ -33,7 +34,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
             // If empty, it's "Global". Otherwise, only these classes get this reward.
             public List<PlayerClass.ClassName> ValidClasses = new List<PlayerClass.ClassName>(); 
             public int statPoints;
-            public List<PerkNode> perkChoices = new List<PerkNode>();
+            public List<Perk> perkChoices = new List<Perk>();
             public string perkPoolTag = String.Empty;
             public int perkPoolDrawCount = 3;
         }
@@ -42,7 +43,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
         public class PerkPoolEntry
         {
             public string tag = string.Empty;
-            public List<PerkNode> perks = new List<PerkNode>();
+            public List<Perk> perks = new List<Perk>();
         }
 
         public Dictionary<string, PerkPool> RuntimePerkPools { get; private set; } = new Dictionary<string, PerkPool>();
@@ -73,10 +74,8 @@ namespace PocketSquire.Arena.Unity.LevelUp
             foreach (var poolEntry in perkPools)
             {
                 if (string.IsNullOrEmpty(poolEntry.tag)) continue;
-                
                 var corePerks = poolEntry.perks
-                    .Where(p => p != null)
-                    .Select(p => p.ToCorePerk())
+                    .Where(p => p != null && !string.IsNullOrEmpty(p.Id))
                     .ToList();
                 
                 var pool = new PerkPool(poolEntry.tag, corePerks);
@@ -91,7 +90,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
             {
                 Level = r.level,
                 StatPoints = r.statPoints,
-                FixedPerkIds = r.perkChoices.Where(p => p != null).Select(p => p.Id).ToList(),
+                FixedPerkIds = r.perkChoices.Where(p => p != null && !string.IsNullOrEmpty(p.Id)).Select(p => p.Id).ToList(),
                 PerkPoolTag = r.perkPoolTag,
                 PerkPoolDrawCount = r.perkPoolDrawCount
             }).ToList();
@@ -114,7 +113,7 @@ namespace PocketSquire.Arena.Unity.LevelUp
             {
                 Level = entry.level,
                 StatPoints = entry.statPoints,
-                FixedPerkIds = entry.perkChoices.Where(p => p != null).Select(p => p.Id).ToList(),
+                FixedPerkIds = entry.perkChoices.Where(p => p != null && !string.IsNullOrEmpty(p.Id)).Select(p => p.Id).ToList(),
                 PerkPoolTag = entry.perkPoolTag,
                 PerkPoolDrawCount = entry.perkPoolDrawCount
             };

@@ -20,28 +20,35 @@ namespace PocketSquire.Arena.Core
         [JsonProperty("class")]
         public PlayerClass.ClassName Class { get; private set; } = PlayerClass.ClassName.Squire;
 
-        public System.Collections.Generic.HashSet<string> AcquiredPerks { get; set; } = new System.Collections.Generic.HashSet<string>();
+        [JsonIgnore]
+        public List<Perk> AcquiredPerks { get; set; } = new List<Perk>();
+
+        [JsonProperty("AcquiredPerks")]
+        public string[] SerializedAcquiredPerks
+        {
+            get => AcquiredPerks.Select(p => p.Id).ToArray();
+            set => AcquiredPerks = value?.Select(id => GameWorld.GetPerkById(id)).Where(p => p != null).ToList() ?? new List<Perk>();
+        }
+
         public System.Collections.Generic.HashSet<string> UnlockedClasses { get; set; } = new System.Collections.Generic.HashSet<string> { PlayerClass.ClassName.Squire.ToString() };
 
-        // Arena Perk state — AcquiredPerks and ActiveArenaPerkIds are serialised.
-        // ArenaPerkStates is runtime-only and rebuilt by InitializeArenaPerkStates() after load.
-        public List<string> ActiveArenaPerkIds { get; set; } = new();
+        // Arena Perk state — AcquiredPerks and ActivePerks are serialised.
+        // PerkStates is runtime-only and rebuilt by InitializePerkStates() after load.
+        [JsonIgnore]
+        public List<Perk> ActivePerks { get; set; } = new List<Perk>();
 
-        public List<ArenaPerk> GetActivePerks()
+        [JsonProperty("ActivePerkIds")]
+        public string[] SerializedActivePerks
         {
-            return ActiveArenaPerkIds.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
-        }
-
-        public List<ArenaPerk> GetAcquiredPerks()
-        {
-            return AcquiredPerks.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
+            get => ActivePerks.Select(p => p.Id).ToArray();
+            set => ActivePerks = value?.Select(id => GameWorld.GetPerkById(id)).Where(p => p != null).ToList() ?? new List<Perk>();
         }
 
         [JsonIgnore]
-        public Dictionary<string, ArenaPerkState> ArenaPerkStates { get; set; } = new();
+        public Dictionary<string, PerkState> PerkStates { get; set; } = new();
 
         [JsonIgnore]
-        public int MaxArenaPerkSlots => PlayerClass.GetMaxPerkSlots(Class);
+        public int MaxPerkSlots => PlayerClass.GetMaxPerkSlots(Class);
 
         public override string SpriteId {
             get
@@ -160,45 +167,6 @@ namespace PocketSquire.Arena.Core
             return true;
         }
 
-        public bool TryPurchasePerk(LevelUp.Perk perk)
-        {
-            if (perk == null)
-            {
-                throw new ArgumentNullException(nameof(perk));
-            }
-
-            // Perks are one-time purchases
-            if (AcquiredPerks.Contains(perk.Id))
-            {
-                return false;
-            }
-
-            if (Gold < perk.Price)
-            {
-                return false;
-            }
-
-            SpendGold(perk.Price);
-            AcquiredPerks.Add(perk.Id);
-
-            // Dispatch effect based on the perk's configured EffectType
-            ApplyPerkEffect(perk);
-
-            return true;
-        }
-
-        private void ApplyPerkEffect(LevelUp.Perk perk)
-        {
-            switch (perk.EffectType)
-            {
-                case LevelUp.PerkEffectType.None:
-                default:
-                    // Tracking or un-implemented mechanic
-                    break;
-                    // Tracking or un-implemented mechanic
-                    break;
-            }
-        }
 
         public void AcceptNewLevel() {
             if (GameWorld.Progression != null) {
@@ -259,7 +227,7 @@ namespace PocketSquire.Arena.Core
 
         // --- Arena Perk Methods ---
 
-        public bool CanActivateArenaPerk(string perkToRemove, ArenaPerk perkToActivate)
+        public bool CanActivatePerk(string perkToRemove, Perk perkToActivate)
         {
             if (perkToActivate == null) return false;
 
@@ -277,64 +245,68 @@ namespace PocketSquire.Arena.Core
                 {
                     foreach (var requiredPerkId in perkToActivate.Prerequisites.RequiredPerks)
                     {
-                        if (!AcquiredPerks.Contains(requiredPerkId)) return false;
+                        if (!AcquiredPerks.Any(p => p.Id == requiredPerkId)) return false;
                     }
                 }
             }
 
-            var futurePerkIds = new List<string>(ActiveArenaPerkIds);
-            if (!string.IsNullOrEmpty(perkToRemove)) futurePerkIds.Remove(perkToRemove);
-            futurePerkIds.Add(perkToActivate.Id);
+            var futurePerks = new List<Perk>(ActivePerks);
+            if (!string.IsNullOrEmpty(perkToRemove)) 
+            {
+                futurePerks.RemoveAll(p => p.Id == perkToRemove);
+            }
+            futurePerks.Add(perkToActivate);
 
             // 2. Check if there are multiple active satchel perks
-            int activeSatchels = futurePerkIds.Count(id => id == "satchel_tier_1" || id == "satchel_tier_2" || id == "satchel_tier_3");
+            int activeSatchels = futurePerks.Count(p => p.Id == "satchel_tier_1" || p.Id == "satchel_tier_2" || p.Id == "satchel_tier_3");
             if (activeSatchels > 1) return false;
 
             // 3. Ensure we don't drop MaxSlots below our currently filled inventory
-            var futurePerks = futurePerkIds.Select(id => GameWorld.GetArenaPerkById(id)).ToList();
             int futureMaxSlots = Inventory.CalculateCapacity(futurePerks);
             
             return Inventory.Slots.Count <= futureMaxSlots;
         }
 
-        public bool TryPurchaseArenaPerk(ArenaPerk perk)
+        public bool TryPurchasePerk(Perk perk)
         {
             if (perk == null) throw new ArgumentNullException(nameof(perk));
-            if (AcquiredPerks.Contains(perk.Id)) return false;
+            if (AcquiredPerks.Any(p => p.Id == perk.Id)) return false;
             if (Gold < perk.Cost) return false;
             SpendGold(perk.Cost);
-            AcquiredPerks.Add(perk.Id);
+            AcquiredPerks.Add(perk);
             return true;
         }
 
-        public bool TryActivateArenaPerk(string perkId)
+        public bool TryActivatePerk(string perkId)
         {
-            if (!AcquiredPerks.Contains(perkId)) return false;
-            if (ActiveArenaPerkIds.Contains(perkId)) return false;
-            if (ActiveArenaPerkIds.Count >= MaxArenaPerkSlots) return false;
-            ActiveArenaPerkIds.Add(perkId);
-            ArenaPerkStates[perkId] = new ArenaPerkState { PerkId = perkId };
-            Inventory.UpdateCapacity(GetActivePerks());
+            var perk = AcquiredPerks.FirstOrDefault(p => p.Id == perkId);
+            if (perk == null) return false;
+            if (ActivePerks.Any(p => p.Id == perkId)) return false;
+            if (ActivePerks.Count >= MaxPerkSlots) return false;
+            ActivePerks.Add(perk);
+            PerkStates[perkId] = new PerkState { PerkId = perkId };
+            Inventory.UpdateCapacity(ActivePerks);
             return true;
         }
 
-        public bool TryDeactivateArenaPerk(string perkId)
+        public bool TryDeactivatePerk(string perkId)
         {
-            if (!ActiveArenaPerkIds.Remove(perkId)) return false;
-            ArenaPerkStates.Remove(perkId);
-            Inventory.UpdateCapacity(GetActivePerks());
+            var perkToRemove = ActivePerks.FirstOrDefault(p => p.Id == perkId);
+            if (perkToRemove == null || !ActivePerks.Remove(perkToRemove)) return false;
+            PerkStates.Remove(perkId);
+            Inventory.UpdateCapacity(ActivePerks);
             return true;
         }
 
         /// <summary>
-        /// Rebuilds runtime ArenaPerkStates from the serialised ActiveArenaPerkIds list.
+        /// Rebuilds runtime PerkStates from the serialised ActivePerks list.
         /// Call after loading a save file.
         /// </summary>
-        public void InitializeArenaPerkStates()
+        public void InitializePerkStates()
         {
-            ArenaPerkStates.Clear();
-            foreach (var id in ActiveArenaPerkIds)
-                ArenaPerkStates[id] = new ArenaPerkState { PerkId = id };
+            PerkStates.Clear();
+            foreach (var perk in ActivePerks)
+                PerkStates[perk.Id] = new PerkState { PerkId = perk.Id };
         }
     }
 }

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core.LevelUp;
-using System.Collections.Generic;
+using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Core;
 
 namespace PocketSquire.Arena.Core.Tests.LevelUp
@@ -51,8 +51,8 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void GetEligiblePerks_ShouldFilterByLevel()
         {
-            var lowLevelPerk = new Perk("p1", "Low", "Desc", 1, null, NoClasses());
-            var highLevelPerk = new Perk("p2", "High", "Desc", 10, null, NoClasses());
+            var lowLevelPerk = new Perk { Id = "p1", DisplayName = "Low", Description = "Desc", Prerequisites = new PerkPrerequisites { MinLevel = 1 } };
+            var highLevelPerk = new Perk { Id = "p2", DisplayName = "High", Description = "Desc", Prerequisites = new PerkPrerequisites { MinLevel = 10 } };
 
             var result = _model.GetEligiblePerks(new List<Perk> { lowLevelPerk, highLevelPerk });
 
@@ -63,7 +63,7 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void GetEligiblePerks_ShouldFilterAlreadyUnlocked()
         {
-            var perk = new Perk("p1", "Unlocked", "Desc", 1, null, NoClasses());
+            var perk = new Perk { Id = "p1", DisplayName = "Unlocked", Description = "Desc", Prerequisites = new PerkPrerequisites { MinLevel = 1 } };
             _model.UnlockPerk("p1");
 
             var result = _model.GetEligiblePerks(new List<Perk> { perk });
@@ -74,8 +74,8 @@ namespace PocketSquire.Arena.Core.Tests.LevelUp
         [Test]
         public void GetEligiblePerks_ShouldFilterByPrerequisites()
         {
-            var prereq = new Perk("prereq", "Prereq", "Desc", 1, null, NoClasses());
-            var lockedPerk = new Perk("locked", "Locked", "Desc", 1, new List<string> { "prereq" }, NoClasses());
+            var prereq = new Perk { Id = "prereq", DisplayName = "Prereq", Description = "Desc", Prerequisites = new PerkPrerequisites { MinLevel = 1 } };
+            var lockedPerk = new Perk { Id = "locked", DisplayName = "Locked", Description = "Desc", Prerequisites = new PerkPrerequisites { MinLevel = 1, RequiredPerks = new List<string> { "prereq" } } };
 
             // Case 1: Prerequisite NOT unlocked
             var result = _model.GetEligiblePerks(new List<Perk> { lockedPerk });

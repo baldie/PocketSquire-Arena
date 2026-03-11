@@ -92,7 +92,7 @@ public class LootScript : MonoBehaviour
 
     private void GenerateAndPopulatePowerUps(bool autoSelectFirst)
     {
-        bool hasHighRoller = GameState.Player?.ActiveArenaPerkIds?.Contains("high_roller") ?? false;
+        bool hasHighRoller = GameState.Player?.ActivePerks?.Any(p => p.Id == "high_roller") ?? false;
 
         if (rerollPowerUpButton != null)
         {

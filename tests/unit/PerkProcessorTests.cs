@@ -36,9 +36,10 @@ namespace PocketSquire.Arena.Tests
 
         private void UnlockAndActivate(Player player, string perkId)
         {
-            player.AcquiredPerks.Add(perkId);
-            player.ActiveArenaPerkIds.Add(perkId);
-            player.ArenaPerkStates[perkId] = new ArenaPerkState { PerkId = perkId };
+            var perk = GameWorld.GetPerkById(perkId) ?? new Perk { Id = perkId };
+            player.AcquiredPerks.Add(perk);
+            player.ActivePerks.Add(perk);
+            player.PerkStates[perkId] = new PerkState { PerkId = perkId };
         }
 
         // --- RestoreHP (flat and percent) ---
@@ -138,7 +139,7 @@ namespace PocketSquire.Arena.Tests
             var ctx = new PerkContext { Player = player, PlayerHpPercent = 100, Rng = new System.Random(0) };
 
             var r1 = PerkProcessor.ProcessEvent(PerkTriggerEvent.PlayerHitMonster, player, ctx);
-            var state = player.ArenaPerkStates["warriors_resolve"];
+            var state = player.PerkStates["warriors_resolve"];
 
             // After first hit: stacks should have gone to 1 (but state was reset because we re-process)
             Assert.That(state.CurrentStacks, Is.GreaterThanOrEqualTo(0));
@@ -149,7 +150,7 @@ namespace PocketSquire.Arena.Tests
         {
             var player = MakePlayer();
             UnlockAndActivate(player, "warriors_resolve");
-            var state = player.ArenaPerkStates["warriors_resolve"];
+            var state = player.PerkStates["warriors_resolve"];
             state.CurrentStacks = 3;
 
             var ctx = new PerkContext { Player = player, PlayerHpPercent = 100, Rng = new System.Random(0) };
@@ -255,7 +256,7 @@ namespace PocketSquire.Arena.Tests
         public void TickDuration_DecrementsDuration()
         {
             var player = MakePlayer();
-            player.ArenaPerkStates["some_perk"] = new ArenaPerkState
+            player.PerkStates["some_perk"] = new PerkState
             {
                 PerkId = "some_perk",
                 RemainingDuration = 3
@@ -263,14 +264,14 @@ namespace PocketSquire.Arena.Tests
 
             PerkProcessor.TickDuration(player);
 
-            Assert.That(player.ArenaPerkStates["some_perk"].RemainingDuration, Is.EqualTo(2));
+            Assert.That(player.PerkStates["some_perk"].RemainingDuration, Is.EqualTo(2));
         }
 
         [Test]
         public void TickDuration_DoesNotGoBelowZero()
         {
             var player = MakePlayer();
-            player.ArenaPerkStates["zeroed_perk"] = new ArenaPerkState
+            player.PerkStates["zeroed_perk"] = new PerkState
             {
                 PerkId = "zeroed_perk",
                 RemainingDuration = 0
@@ -278,7 +279,7 @@ namespace PocketSquire.Arena.Tests
 
             PerkProcessor.TickDuration(player);
 
-            Assert.That(player.ArenaPerkStates["zeroed_perk"].RemainingDuration, Is.EqualTo(0));
+            Assert.That(player.PerkStates["zeroed_perk"].RemainingDuration, Is.EqualTo(0));
         }
 
         // --- ResetForBattle ---
@@ -287,7 +288,7 @@ namespace PocketSquire.Arena.Tests
         public void ResetPerksForBattle_ClearsOncePerBattleFlag()
         {
             var player = MakePlayer();
-            player.ArenaPerkStates["battle_perk"] = new ArenaPerkState
+            player.PerkStates["battle_perk"] = new PerkState
             {
                 PerkId = "battle_perk",
                 HasTriggeredThisBattle = true,
@@ -296,7 +297,7 @@ namespace PocketSquire.Arena.Tests
 
             PerkProcessor.ResetPerksForBattle(player);
 
-            var state = player.ArenaPerkStates["battle_perk"];
+            var state = player.PerkStates["battle_perk"];
             Assert.That(state.HasTriggeredThisBattle, Is.False);
             Assert.That(state.CurrentStacks, Is.EqualTo(0));
         }

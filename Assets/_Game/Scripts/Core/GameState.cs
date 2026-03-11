@@ -86,8 +86,8 @@ namespace PocketSquire.Arena.Core
             // so it must be recalculated from the player's unlocked perks after every load.
             if (Player != null)
             {
-                Player.Inventory.UpdateCapacity(Player.GetActivePerks());
-                Player.InitializeArenaPerkStates();
+                Player.Inventory.UpdateCapacity(Player.ActivePerks);
+                Player.InitializePerkStates();
             }
             Console.WriteLine("Loaded Player: " + Player?.Name);
         }

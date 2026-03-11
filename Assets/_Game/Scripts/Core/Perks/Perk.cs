@@ -8,7 +8,8 @@ namespace PocketSquire.Arena.Core.Perks
     /// Represents a purchasable arena perk loaded from arena_perks.json.
     /// Implements IMerchandise so it can be displayed in ShopController with no extra plumbing.
     /// </summary>
-    public class ArenaPerk : PocketSquire.Arena.Core.IMerchandise
+    [System.Serializable]
+    public class Perk : PocketSquire.Arena.Core.IMerchandise
     {
         [JsonProperty("id")]
         public string Id { get; set; } = string.Empty;
@@ -25,7 +26,7 @@ namespace PocketSquire.Arena.Core.Perks
 
         [JsonProperty("type")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public ArenaPerkType PerkType { get; set; }
+        public PerkType PerkType { get; set; }
 
         // IMerchandise.Price delegates to Cost
         [JsonProperty("cost")]
@@ -40,7 +41,7 @@ namespace PocketSquire.Arena.Core.Perks
         public int Tier { get; set; }
 
         [JsonProperty("prerequisites")]
-        public ArenaPerkPrerequisites? Prerequisites { get; set; }
+        public PerkPrerequisites? Prerequisites { get; set; }
 
         // Triggered-perk fields — nullable because Passive perks omit them
         [JsonProperty("event")]
@@ -49,7 +50,7 @@ namespace PocketSquire.Arena.Core.Perks
 
         [JsonProperty("effect")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public ArenaPerkEffectType? Effect { get; set; }
+        public PerkEffectType? Effect { get; set; }
 
         [JsonProperty("perkTarget")]
         public string? PerkTarget { get; set; }
@@ -93,5 +94,41 @@ namespace PocketSquire.Arena.Core.Perks
 
         [JsonProperty("hpRestore")]
         public int HpRestore { get; set; }
+
+        // --- Helpers for LevelUp compatibility ---
+        public int MinLevel => Prerequisites?.MinLevel ?? 1;
+
+        private List<PlayerClass.ClassName>? _allowedClasses;
+        public List<PlayerClass.ClassName> AllowedClasses 
+        {
+            get 
+            {
+                if (_allowedClasses == null)
+                {
+                    _allowedClasses = new List<PlayerClass.ClassName>();
+                    if (Prerequisites != null && !string.IsNullOrEmpty(Prerequisites.ClassName))
+                    {
+                        if (System.Enum.TryParse<PlayerClass.ClassName>(Prerequisites.ClassName, true, out var c))
+                        {
+                            _allowedClasses.Add(c);
+                        }
+                    }
+                }
+                return _allowedClasses;
+            }
+        }
+
+        private List<string>? _prerequisitePerkIds;
+        public List<string> PrerequisitePerkIds 
+        {
+            get 
+            {
+                if (_prerequisitePerkIds == null)
+                {
+                    _prerequisitePerkIds = Prerequisites?.RequiredPerks ?? new List<string>();
+                }
+                return _prerequisitePerkIds;
+            }
+        }
     }
 }

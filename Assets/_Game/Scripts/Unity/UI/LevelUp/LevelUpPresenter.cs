@@ -242,7 +242,7 @@ public void SetOnAccept(Action callback)
                 var context = new PerkSelector.SelectionContext
                 {
                     PlayerLevel = level,
-                    UnlockedPerkIds = GameState.Player.AcquiredPerks
+                    UnlockedPerkIds = GameState.Player.AcquiredPerks.Select(p => p.Id).ToHashSet()
                 };
                 
                 // Use default Random for now (or improve with seeded logic later)

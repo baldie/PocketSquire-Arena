@@ -134,14 +134,15 @@ namespace PocketSquire.Arena.Unity.UI
             // Populate arena perks from runtime JSON data
             if (location.VendorType.HasValue)
             {
-                var ownedArenaPerks = GameState.Player?.AcquiredPerks ?? new System.Collections.Generic.HashSet<string>();
-                var available = GameWorld.GetArenaPerksByVendor(location.VendorType.Value)
-                    .Where(p => !ownedArenaPerks.Contains(p.Id));
+                // Remove already owned perks
+                var ownedPerks = GameState.Player?.AcquiredPerks.Select(p => p.Id).ToHashSet() ?? new System.Collections.Generic.HashSet<string>();
+                var available = GameWorld.GetPerksByVendor(location.VendorType.Value)
+                    .Where(p => !ownedPerks.Contains(p.Id));
 
-                foreach (var arenaPerk in available)
+                foreach (var Perk in available)
                 {
                     // Capture loop variable for the closure
-                    var captured = arenaPerk;
+                    var captured = Perk;
                     Sprite icon = null;
                     if (!string.IsNullOrEmpty(captured.Icon))
                     {
@@ -154,8 +155,8 @@ namespace PocketSquire.Arena.Unity.UI
                     {
                         Debug.LogWarning($"[ShopController] Arena perk has no icon field. Id='{captured.Id}'");
                     }
-                    CreateMerchandiseRow(captured, icon, () => OnArenaPerkPurchased(captured),
-                        $"ArenaPerkRow_{captured.Id}");
+                    CreateMerchandiseRow(captured, icon, () => OnPerkPurchased(captured),
+                        $"PerkRow_{captured.Id}");
                 }
             }
 
@@ -354,7 +355,7 @@ namespace PocketSquire.Arena.Unity.UI
             RemoveRow($"PerkRow_{perkNode.Id}");
         }
 
-        private void OnArenaPerkPurchased(ArenaPerk arenaPerk)
+        private void OnPerkPurchased(Perk Perk)
         {
             if (GameState.Player == null)
             {
@@ -362,7 +363,7 @@ namespace PocketSquire.Arena.Unity.UI
                 return;
             }
 
-            if (!GameState.Player.TryPurchaseArenaPerk(arenaPerk))
+            if (!GameState.Player.TryPurchasePerk(Perk))
             {
                 PlayDeniedSound();
                 interiorToast.ShowToast("Not enough gold");
@@ -373,7 +374,7 @@ namespace PocketSquire.Arena.Unity.UI
             UpdateGoldDisplay();
 
             // Remove row so it can't be purchased again this session
-            RemoveRow($"ArenaPerkRow_{arenaPerk.Id}");
+            RemoveRow($"PerkRow_{Perk.Id}");
         }
 
         /// <summary>

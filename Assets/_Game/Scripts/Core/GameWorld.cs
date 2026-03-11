@@ -16,7 +16,7 @@ namespace PocketSquire.Arena.Core
         public static List<Monster> AllMonsters { get; set; } = new List<Monster>();
         public static List<Player> ClassTemplates { get; set; } = new List<Player>();
         public static List<Item> Items { get; set; } = new List<Item>();
-        public static List<ArenaPerk> AllArenaPerks { get; set; } = new List<ArenaPerk>();
+        public static List<Perk> AllPerks { get; set; } = new List<Perk>();
         public static ProgressionLogic? Progression { get; set; }
         public static Dictionary<string, PerkPool> PerkPools { get; set; } = new Dictionary<string, PerkPool>();
 
@@ -25,7 +25,7 @@ namespace PocketSquire.Arena.Core
             LoadMonsters(rootPath);
             LoadClassTemplates(rootPath);
             LoadItems(rootPath);
-            LoadArenaPerks(rootPath);
+            LoadPerks(rootPath);
         }
 
         private static void LoadClassTemplates(string? rootPath = null)
@@ -156,7 +156,7 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-        private static void LoadArenaPerks(string? rootPath = null)
+        private static void LoadPerks(string? rootPath = null)
         {
             string root = rootPath ?? Environment.CurrentDirectory;
             string filePath = Path.Combine(root, "Assets/_Game/Data/arena_perks.json");
@@ -167,10 +167,10 @@ namespace PocketSquire.Arena.Core
             string jsonContent = File.ReadAllText(filePath);
             try
             {
-                var wrapper = JsonConvert.DeserializeObject<ArenaPerkWrapper>(jsonContent);
-                AllArenaPerks.Clear();
+                var wrapper = JsonConvert.DeserializeObject<PerkWrapper>(jsonContent);
+                AllPerks.Clear();
                 if (wrapper?.Perks != null)
-                    AllArenaPerks.AddRange(wrapper.Perks);
+                    AllPerks.AddRange(wrapper.Perks);
             }
             catch (Exception ex)
             {
@@ -179,10 +179,10 @@ namespace PocketSquire.Arena.Core
             }
         }
 
-        public static ArenaPerk? GetArenaPerkById(string id)
-            => AllArenaPerks.Find(p => p.Id == id);
+        public static Perk? GetPerkById(string id)
+            => AllPerks.Find(p => p.Id == id);
 
-        public static List<ArenaPerk> GetArenaPerksByVendor(VendorType vendor)
-            => AllArenaPerks.FindAll(p => p.Vendor == vendor);
+        public static List<Perk> GetPerksByVendor(VendorType vendor)
+            => AllPerks.FindAll(p => p.Vendor == vendor);
     }
 }

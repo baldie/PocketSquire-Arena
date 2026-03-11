@@ -2,9 +2,9 @@ namespace PocketSquire.Arena.Core.Perks
 {
     /// <summary>
     /// Runtime (non-serialised) state for one active arena perk.
-    /// Rebuilt from Player.ActiveArenaPerkIds on game load.
+    /// Rebuilt from Player.ActivePerkIds on game load.
     /// </summary>
-    public class ArenaPerkState
+    public class PerkState
     {
         public string PerkId { get; set; } = string.Empty;
         public int CurrentStacks { get; set; }

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace PocketSquire.Arena.Core.Perks
 {
-    public class ArenaPerkPrerequisites
+    public class PerkPrerequisites
     {
         [JsonProperty("minLevel")]
         public int MinLevel { get; set; } = 1;

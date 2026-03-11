@@ -68,9 +68,9 @@ namespace PocketSquire.Arena.Unity.UI
             SpawnCustomRow(topRowLabel, null, prefab);
 
             // --- One row per acquired perk that is not currently active ---
-            foreach (var perk in player.GetAcquiredPerks())
+            foreach (var perk in player.AcquiredPerks)
             {
-                if (player.ActiveArenaPerkIds.Contains(perk.Id)) continue;
+                if (player.ActivePerks.Any(p => p.Id == perk.Id)) continue; // skip active
 
                 Sprite icon = null;
                 if (!string.IsNullOrEmpty(perk.Icon))
@@ -114,7 +114,7 @@ namespace PocketSquire.Arena.Unity.UI
             });
         }
 
-        private void SpawnPerkRow(ArenaPerk perk, Sprite icon, GameObject prefab)
+        private void SpawnPerkRow(Perk perk, Sprite icon, GameObject prefab)
         {
             var go = Instantiate(prefab, scrollContent);
             SetupRowGameObject(go);
