@@ -37,6 +37,9 @@ public class LootScript : MonoBehaviour
     private Button chestButton;
     private PowerUp _selectedPowerUp;
 
+    private const int HEIGHT_WITH_REROLL_OPTION = 260;
+    private const int HEIGHT_WITHOUT_REROLL_OPTION = 384;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -134,7 +137,7 @@ public class LootScript : MonoBehaviour
             if (rectTransform != null)
             {
                 var offsetMin = rectTransform.offsetMin;
-                offsetMin.y = hasHighRoller ? 260 : 384;
+                offsetMin.y = hasHighRoller ? HEIGHT_WITH_REROLL_OPTION : HEIGHT_WITHOUT_REROLL_OPTION;
                 rectTransform.offsetMin = offsetMin;
             }
         }

@@ -210,6 +210,7 @@ namespace PocketSquire.Arena.Core
             switch(actionType)
             {
                 case ActionType.Attack:
+                case ActionType.SpecialAttack:
                     return !string.IsNullOrEmpty(AttackSoundId) ? AttackSoundId : "player_attack";
                 case ActionType.Item:
                     return "player_item";

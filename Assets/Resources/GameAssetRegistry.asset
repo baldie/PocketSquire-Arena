@@ -197,6 +197,8 @@ MonoBehaviour:
     asset: {fileID: 21300000, guid: f8896ea7ea451a94aaf840ac7e29e8d5, type: 3}
   - id: sharpshooter
     asset: {fileID: 21300000, guid: 0a7ee6f1813a111428fabc0a4585aecc, type: 3}
+  - id: special_attack
+    asset: {fileID: 21300000, guid: 6d12b302e53b57849a6658dd199370c0, type: 3}
   - id: spell_surge
     asset: {fileID: 21300000, guid: 6d9a5c735fd81574988b35a63dba2cc7, type: 3}
   - id: tactical_retreat

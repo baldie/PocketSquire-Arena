@@ -26,6 +26,7 @@ namespace PocketSquire.Arena.Core.Perks
         IncreaseGoldGain,
         ReduceDamage,
         KeepMoney,
-        InventoryExpansion
+        InventoryExpansion,
+        SpecialAttack
     }
 }

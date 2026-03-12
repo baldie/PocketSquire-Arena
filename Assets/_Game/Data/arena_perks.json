@@ -564,6 +564,21 @@
             "procPercent": 100,
             "value": 0,
             "icon": "high_roller"
+        },
+        {
+            "id": "special_attack",
+            "name": "Special Attack",
+            "description": "Enables a special attack",
+            "type": "Passive",
+            "soldBy": "Shopkeeper",
+            "cost": 100,
+            "tier": 0,
+            "prerequisites": {
+                "minLevel": 1
+            },
+            "procPercent": 100,
+            "value": 0,
+            "icon": "special_attack"
         }
     ],
     "metadata": {

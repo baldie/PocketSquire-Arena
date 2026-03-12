@@ -5,6 +5,7 @@ using PocketSquire.Arena.Unity.UI;
 using TMPro;
 using DG.Tweening; // For animations
 using UnityEngine.EventSystems;
+using System.Linq;
 
 namespace PocketSquire.Unity
 {
@@ -12,13 +13,20 @@ namespace PocketSquire.Unity
     {
         [Header("UI References")]
         [SerializeField] private GameObject battleMenuUI;
+        [SerializeField] private Button specialButton;
         [SerializeField] private Button attackButton;
+        [SerializeField] private Button defendButton;
+        [SerializeField] private Button itemButton;
+        [SerializeField] private Button yieldButton;
         [SerializeField] private Button firstSelectedButton;
         [SerializeField] private ItemSelectionDialog itemSelectionDialog; // Added dialog reference
         
         [Header("Action Queue")]
         [Tooltip("Reference to the ActionQueueProcessor in the scene")]
         public ActionQueueProcessor actionQueueProcessor;
+
+        private const int HEIGHT_WITH_SPECIAL_ATTACK = 580;
+        private const int HEIGHT_WITHOUT_SPECIAL_ATTACK = 478;
 
         void Start()
         {
@@ -52,7 +60,28 @@ namespace PocketSquire.Unity
             var uiAudio = GameObject.Find("UIAudio");
             var audioSource = uiAudio != null ? uiAudio.GetComponent<AudioSource>() : null;
 
-            attackButton = battleMenuUI.transform.Find("AttackButton")?.GetComponent<Button>();
+            var rectTransform = battleMenuUI.GetComponent<RectTransform>();
+            if (GameState.Player?.ActivePerks?.Any(p => p.Id == "special_attack") ?? false)
+            {
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, HEIGHT_WITH_SPECIAL_ATTACK);
+                specialButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, HEIGHT_WITHOUT_SPECIAL_ATTACK);
+                specialButton.gameObject.SetActive(false);
+            }
+
+            if (specialButton != null)
+            {
+                specialButton.onClick.RemoveAllListeners();
+                specialButton.onClick.AddListener(Special);
+                if (firstSelectedButton == null) firstSelectedButton = specialButton;
+
+                var sound = specialButton.GetComponent<MenuButtonSound>();
+                if (sound != null && audioSource != null) sound.source = audioSource;
+            }
+
             if (attackButton != null)
             {
                 attackButton.onClick.RemoveAllListeners();
@@ -63,7 +92,16 @@ namespace PocketSquire.Unity
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
 
-            var defendButton = battleMenuUI.transform.Find("DefendButton")?.GetComponent<Button>();
+            if (attackButton != null)
+            {
+                attackButton.onClick.RemoveAllListeners();
+                attackButton.onClick.AddListener(Attack);
+                if (firstSelectedButton == null) firstSelectedButton = attackButton;
+
+                var sound = attackButton.GetComponent<MenuButtonSound>();
+                if (sound != null && audioSource != null) sound.source = audioSource;
+            }
+
             if (defendButton != null)
             {
                 defendButton.onClick.RemoveAllListeners();
@@ -73,7 +111,6 @@ namespace PocketSquire.Unity
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
 
-            var itemButton = battleMenuUI.transform.Find("ItemButton")?.GetComponent<Button>();
             if (itemButton != null)
             {
                 itemButton.onClick.RemoveAllListeners();
@@ -83,7 +120,6 @@ namespace PocketSquire.Unity
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
 
-            var yieldButton = battleMenuUI.transform.Find("YieldButton")?.GetComponent<Button>();
             if (yieldButton != null)
             {
                 yieldButton.onClick.RemoveAllListeners();
@@ -119,6 +155,24 @@ namespace PocketSquire.Unity
         public void HideMenu()
         {
             if (battleMenuUI != null) battleMenuUI.SetActive(false);
+        }
+
+        public void Special()
+        {
+            Debug.Log("Special");
+            HideMenu();
+
+            if (actionQueueProcessor != null && GameState.Battle != null)
+            {
+                var player = GameState.Player;
+                
+                if (player != null)
+                {
+                    var specialAttackAction = new SpecialAttackAction(player, GameState.Battle.CurrentTurn.Target);
+                    // Wait 0.1 seconds before enqueuing the action to allow the menu selection sfx to play
+                    DOTween.Sequence().AppendInterval(0.4f).AppendCallback(() => actionQueueProcessor.EnqueueAction(specialAttackAction));
+                }
+            }
         }
 
         public void Attack()
