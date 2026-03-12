@@ -1,6 +1,8 @@
 #nullable enable
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PocketSquire.Arena.Core.Perks
 {

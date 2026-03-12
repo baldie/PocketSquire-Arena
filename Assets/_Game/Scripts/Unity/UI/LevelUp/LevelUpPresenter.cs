@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using PocketSquire.Arena.Core.LevelUp;
 using PocketSquire.Arena.Core;
 using DG.Tweening;

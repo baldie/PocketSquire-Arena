@@ -45,7 +45,10 @@ public class MenuButtonSound : MonoBehaviour, ISelectHandler, IPointerEnterHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        PlayClick();
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            PlayClick();
+        }
     }
 
     private void PlayHover()

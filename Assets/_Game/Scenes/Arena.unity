@@ -1179,6 +1179,18 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 6409434896978504560, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6409434896978504560, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6409434896978504560, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8104066903052508543, guid: f3ff8f8a214575945810aae2885a7cf4, type: 3}
       propertyPath: source
       value: 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine.EventSystems;
 using PocketSquire.Arena.Core;
@@ -15,7 +16,7 @@ public class LootScript : MonoBehaviour
     public Sprite closedChestSprite;
     public Sprite highlightedChestSprite;
     public GameObject powerupSelectionDialog;
-    public GameObject rerollPowerUpButton;
+    public Button rerollPowerUpButton;
     public Image playerImage;
     public ParticleSystem powerUpParticles;
 
@@ -85,20 +86,48 @@ public class LootScript : MonoBehaviour
         GenerateAndPopulatePowerUps(true);
     }
 
-    public void Reroll()
-    {
-        GenerateAndPopulatePowerUps(false);
-    }
-
+    /// <summary>
+    /// Generates and populates power-up options.
+    /// </summary>
+    /// <param name="autoSelectFirst">Whether to auto-select the first option.</param>
     private void GenerateAndPopulatePowerUps(bool autoSelectFirst)
     {
         bool hasHighRoller = GameState.Player?.ActivePerks?.Any(p => p.Id == "high_roller") ?? false;
-
+        
         if (rerollPowerUpButton != null)
         {
-            rerollPowerUpButton.SetActive(hasHighRoller);
+            rerollPowerUpButton.gameObject.SetActive(hasHighRoller);
+            rerollPowerUpButton.onClick.RemoveAllListeners();
+            rerollPowerUpButton.onClick.AddListener(() =>
+            {
+                Reroll();
+                rerollPowerUpButton.interactable = false;
+
+                var rt = rerollPowerUpButton.GetComponent<RectTransform>();
+                var cg = rerollPowerUpButton.GetComponent<CanvasGroup>();
+                var seq = DOTween.Sequence();
+                seq.Append(rt.DOPunchScale(Vector3.one * 0.3f, 0.2f, 5, 0.5f));
+                seq.Append(rt.DOScale(0f, 0.3f).SetEase(Ease.InBack));
+                seq.Join(cg.DOFade(0f, 0.3f));
+                seq.OnComplete(() => {
+                    rerollPowerUpButton.gameObject.SetActive(false);
+                    ResizeDialog(false);
+                });
+            });
         }
 
+        ResizeDialog(hasHighRoller);
+        Reroll();
+
+        // Auto-select first option
+        if (autoSelectFirst && EventSystem.current != null && powerUpOptionA != null)
+        {
+            EventSystem.current.SetSelectedGameObject(powerUpOptionA.gameObject);
+        }
+    }
+
+    private void ResizeDialog(bool hasHighRoller)
+    {
         if (powerupSelectionDialog != null)
         {
             var rectTransform = powerupSelectionDialog.GetComponent<RectTransform>();
@@ -109,7 +138,10 @@ public class LootScript : MonoBehaviour
                 rectTransform.offsetMin = offsetMin;
             }
         }
+    }
 
+    public void Reroll()
+    {
         // Generate PowerUps
         var context = new PowerUpFactory.PowerUpGenerationContext
         {
@@ -127,12 +159,6 @@ public class LootScript : MonoBehaviour
             if (powerUpOptionA != null) powerUpOptionA.LoadPowerUp(choices[0], SelectPowerUp);
             if (powerUpOptionB != null) powerUpOptionB.LoadPowerUp(choices[1], SelectPowerUp);
             if (powerUpOptionC != null) powerUpOptionC.LoadPowerUp(choices[2], SelectPowerUp);
-        }
-
-        // Auto-select first option
-        if (autoSelectFirst && EventSystem.current != null && powerUpOptionA != null)
-        {
-            EventSystem.current.SetSelectedGameObject(powerUpOptionA.gameObject);
         }
     }
 

@@ -114,23 +114,6 @@ namespace PocketSquire.Arena.Unity.UI
                 }
             }
 
-            // Populate shop perks — skip any the player already owns
-            if (location.ShopPerkNodes != null && location.ShopPerkNodes.Count > 0)
-            {
-                var ownedPerks = GameState.Player?.AcquiredPerks ?? new System.Collections.Generic.HashSet<string>();
-
-                foreach (var perkNode in location.ShopPerkNodes)
-                {
-                    if (perkNode == null) continue;
-
-                    // Hide perks the player already has
-                    if (ownedPerks.Contains(perkNode.Id)) continue;
-
-                    var corePerk = perkNode.ToCorePerk();
-                    CreateMerchandiseRow(corePerk, perkNode.Icon, () => OnPerkPurchased(perkNode), $"PerkRow_{perkNode.Id}");
-                }
-            }
-
             // Populate arena perks from runtime JSON data
             if (location.VendorType.HasValue)
             {
@@ -142,21 +125,21 @@ namespace PocketSquire.Arena.Unity.UI
                 foreach (var Perk in available)
                 {
                     // Capture loop variable for the closure
-                    var captured = Perk;
+                    var perkForSale = Perk;
                     Sprite icon = null;
-                    if (!string.IsNullOrEmpty(captured.Icon))
+                    if (!string.IsNullOrEmpty(perkForSale.Icon))
                     {
                         // Registry keys use the filename without extension (e.g. "keen_eye" not "keen_eye.png")
-                        icon = GameAssetRegistry.Instance.GetSprite(captured.Icon);
+                        icon = GameAssetRegistry.Instance.GetSprite(perkForSale.Icon);
                         if (icon == null)
-                            Debug.LogWarning($"[ShopController] Arena perk icon not found in registry. Id='{captured.Id}' IconField='{captured.Icon}' LookupKey='{captured.Icon}'");
+                            Debug.LogWarning($"[ShopController] Arena perk icon not found in registry. Id='{perkForSale.Id}' IconField='{perkForSale.Icon}' LookupKey='{perkForSale.Icon}'");
                     }
                     else
                     {
-                        Debug.LogWarning($"[ShopController] Arena perk has no icon field. Id='{captured.Id}'");
+                        Debug.LogWarning($"[ShopController] Arena perk has no icon field. Id='{perkForSale.Id}'");
                     }
-                    CreateMerchandiseRow(captured, icon, () => OnPerkPurchased(captured),
-                        $"PerkRow_{captured.Id}");
+                    CreateMerchandiseRow(perkForSale, icon, () => OnPerkPurchased(perkForSale),
+                        $"PerkRow_{perkForSale.Id}");
                 }
             }
 
@@ -326,15 +309,13 @@ namespace PocketSquire.Arena.Unity.UI
             UpdateInventoryDisplay(item);
         }
 
-        private void OnPerkPurchased(PerkNode perkNode)
+        private void OnPerkPurchased(Perk perk)
         {
             if (GameState.Player == null)
             {
                 Debug.LogWarning("[ShopController] Cannot purchase perk - no player");
                 return;
             }
-
-            var perk = perkNode.ToCorePerk();
 
             if (!GameState.Player.TryPurchasePerk(perk))
             {
@@ -352,29 +333,7 @@ namespace PocketSquire.Arena.Unity.UI
             playerMenu?.Refresh();
 
             // Remove the purchased perk row so it cannot be bought again this session
-            RemoveRow($"PerkRow_{perkNode.Id}");
-        }
-
-        private void OnPerkPurchased(Perk Perk)
-        {
-            if (GameState.Player == null)
-            {
-                Debug.LogWarning("[ShopController] Cannot purchase arena perk - no player");
-                return;
-            }
-
-            if (!GameState.Player.TryPurchasePerk(Perk))
-            {
-                PlayDeniedSound();
-                interiorToast.ShowToast("Not enough gold");
-                return;
-            }
-
-            PlayCoinSound();
-            UpdateGoldDisplay();
-
-            // Remove row so it can't be purchased again this session
-            RemoveRow($"PerkRow_{Perk.Id}");
+            RemoveRow($"PerkRow_{perk.Id}");
         }
 
         /// <summary>

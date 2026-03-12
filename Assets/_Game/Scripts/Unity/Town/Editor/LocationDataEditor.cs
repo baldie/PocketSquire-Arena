@@ -63,16 +63,13 @@ namespace PocketSquire.Arena.Unity.Town.Editor
         {
             serializedObject.Update();
 
-            // Iterate all serialized properties. Intercept shopPerkNodes for custom icon rendering.
+            // Iterate all serialized properties.
             SerializedProperty prop = serializedObject.GetIterator();
             prop.NextVisible(true); // skip script field
 
             while (prop.NextVisible(false))
             {
-                if (prop.name == "shopPerkNodes")
-                    DrawPerkNodesWithIcons(prop);
-                else
-                    EditorGUILayout.PropertyField(prop, true);
+                EditorGUILayout.PropertyField(prop, true);
             }
 
             EditorGUILayout.Space();
@@ -155,57 +152,6 @@ namespace PocketSquire.Arena.Unity.Town.Editor
             if (GUILayout.Button("Refresh Item List")) LoadItems();
 
             serializedObject.ApplyModifiedProperties();
-        }
-
-        /// <summary>
-        /// Draws the shopPerkNodes list with a 32x32 icon preview beside each entry,
-        /// matching the item row visual style.
-        /// </summary>
-        private void DrawPerkNodesWithIcons(SerializedProperty perkNodesProp)
-        {
-            EditorGUILayout.LabelField("Shop Perk Nodes", EditorStyles.boldLabel);
-
-            for (int i = 0; i < perkNodesProp.arraySize; i++)
-            {
-                SerializedProperty element = perkNodesProp.GetArrayElementAtIndex(i);
-                PerkNode perkNode = element.objectReferenceValue as PerkNode;
-
-                EditorGUILayout.BeginHorizontal();
-
-                // Icon preview — 32x32, matching item sprite previews
-                if (perkNode != null && perkNode.Icon != null)
-                {
-                    Texture2D texture = AssetPreview.GetAssetPreview(perkNode.Icon);
-                    if (texture != null)
-                        GUILayout.Label(texture, GUILayout.Width(32), GUILayout.Height(32));
-                    else
-                        GUILayout.Label("", GUILayout.Width(32), GUILayout.Height(32));
-                }
-                else
-                {
-                    GUILayout.Label("", GUILayout.Width(32), GUILayout.Height(32));
-                }
-
-                // Object field for drag-and-drop assignment
-                EditorGUILayout.ObjectField(element, typeof(PerkNode), GUIContent.none);
-
-                if (GUILayout.Button("-", GUILayout.Width(25)))
-                {
-                    perkNodesProp.DeleteArrayElementAtIndex(i);
-                    break;
-                }
-
-                EditorGUILayout.EndHorizontal();
-            }
-
-            EditorGUILayout.Space(2);
-            if (GUILayout.Button("Add Perk Node"))
-            {
-                perkNodesProp.InsertArrayElementAtIndex(perkNodesProp.arraySize);
-                perkNodesProp.GetArrayElementAtIndex(perkNodesProp.arraySize - 1).objectReferenceValue = null;
-            }
-
-            EditorGUILayout.Space();
         }
     }
 }

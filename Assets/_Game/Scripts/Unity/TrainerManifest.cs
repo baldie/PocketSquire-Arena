@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Core.LevelUp;
 using PocketSquire.Arena.Unity.LevelUp;
 
@@ -18,7 +19,7 @@ public class TrainerManifest : ScriptableObject
     [Serializable]
     public class TrainerProduct
     {
-        public PerkNode perk;
+        public Perk perk;
         public int goldCost;
         
         // This allows you to hide "Sniper" perks until they are actually that class

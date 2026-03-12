@@ -3,5 +3,6 @@
     "allow": [
       "Bash(dotnet test:*)"
     ]
-  }
+  },
+  "apiKeyHelper": "$env:ANTHROPIC_API_KEY"
 }

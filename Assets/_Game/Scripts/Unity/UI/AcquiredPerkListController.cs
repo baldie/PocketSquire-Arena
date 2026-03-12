@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.Perks;
+using System.Linq;
 
 namespace PocketSquire.Arena.Unity.UI
 {

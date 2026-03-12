@@ -30,7 +30,6 @@ namespace PocketSquire.Arena.Unity.Town
 
         [Header("Shop")]
         [HideInInspector] [SerializeField] private List<int> shopItemIds = new List<int>();
-        [SerializeField] private List<PerkNode> shopPerkNodes = new List<PerkNode>();
 
         [Header("Arena Perks")]
         [SerializeField] private bool hasVendorType;
@@ -44,7 +43,6 @@ namespace PocketSquire.Arena.Unity.Town
         public string InitialGreeting => initialGreeting;
         public IReadOnlyList<DialogueOption> DialogueOptions => dialogueOptions;
         public IReadOnlyList<int> ShopItemIds => shopItemIds;
-        public IReadOnlyList<PerkNode> ShopPerkNodes => shopPerkNodes;
 
         /// <summary>
         /// The vendor type for arena perks. Null if this location doesn't sell arena perks.
