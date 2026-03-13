@@ -46,10 +46,10 @@ namespace PocketSquire.Arena.Core
                 Player = JsonConvert.DeserializeObject<Player>(json);
                 if (Player != null)
                 {
-                    Player.MaxHealth = 20;
-                    Player.Health = 20;
                     Player.Gold = 1000;
                     Player.Attributes = Attributes.GetDefaultAttributes();
+                    Player.RecalculateMaxHealth();
+                    Player.Health = Player.MaxHealth;
                     // Give starting item: 1 Small Health Potion
                     Player.Inventory.AddItem(1, 1);
                 }
@@ -86,6 +86,10 @@ namespace PocketSquire.Arena.Core
             // so it must be recalculated from the player's unlocked perks after every load.
             if (Player != null)
             {
+                if (Player.Mana > Player.MaxMana)
+                {
+                    Player.Mana = Player.MaxMana;
+                }
                 Player.Inventory.UpdateCapacity(Player.ActivePerks);
                 Player.InitializePerkStates();
             }

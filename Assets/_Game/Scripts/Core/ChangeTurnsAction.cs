@@ -46,6 +46,10 @@ namespace PocketSquire.Arena.Core
             if (player1 is Player p)
             {
                 PerkProcessor.TickDuration(p);
+                if (p.UsesMana)
+                {
+                    p.RestoreMana(p.ManaRegenPerTurn);
+                }
 
                 // Fire PlayerTurnStarted / PlayerTurnEnded
                 var ctx = new PerkContext { Player = p };

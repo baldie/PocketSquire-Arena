@@ -75,7 +75,7 @@ namespace PocketSquire.Arena.Core
         {
             if (IsDefending)
             {
-                amount = (int)Math.Ceiling(amount * 0.5f); // 50% damage reduction, rounded up
+                amount = (int)Math.Ceiling(amount * (1f - CombatCalculator.CalculateDefendDamageReduction(this)));
             }
 
             // Allow a perk (e.g. Phoenix Heart) to intercept a killing blow before damage is applied.

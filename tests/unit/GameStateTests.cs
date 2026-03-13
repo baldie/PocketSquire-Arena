@@ -52,6 +52,8 @@ public class GameStateTests
         // Assert
         Assert.That(GameState.Player, Is.Not.Null);
         Assert.That(GameState.Player!.Gender, Is.EqualTo(Player.Genders.m));
+        Assert.That(GameState.Player.MaxHealth, Is.EqualTo(38));
+        Assert.That(GameState.Player.Health, Is.EqualTo(GameState.Player.MaxHealth));
     }
 
     [Test]
@@ -208,6 +210,7 @@ public class GameStateTests
         Assert.That(GameState.Player, Is.Not.Null);
         Assert.That(GameState.Player!.Inventory, Is.Not.Null);
         Assert.That(GameState.Player.Inventory.GetItemCount(1), Is.EqualTo(1), "Player should start with 1 Small Health Potion (id=1)");
+        Assert.That(GameState.Player.MaxHealth, Is.EqualTo(38), "New game HP should come from Squire base HP plus default CON.");
     }
 
     [Test]

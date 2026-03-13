@@ -75,31 +75,31 @@ namespace PocketSquire.Arena.Tests
             Assert.That(wasCalled, Is.True);
         }
     [Test]
-        public void TakeDamage_ReducesDamageWhenDefending()
+        public void TakeDamage_ReducesDamageWhenDefendingBasedOnDefense()
         {
             // Arrange
-            var entity = new Entity("Test", 100, 100, new Attributes());
+            var entity = new Entity("Test", 100, 100, new Attributes { Defense = 5 });
             entity.IsDefending = true;
 
             // Act
             entity.TakeDamage(10);
 
             // Assert
-            Assert.That(entity.Health, Is.EqualTo(95), "Damage should be reduced by 50%");
+            Assert.That(entity.Health, Is.EqualTo(95), "Defense 5 should reduce a 10-damage hit to 5 after the ceiling step.");
         }
 
         [Test]
-        public void TakeDamage_RoundingWhenDefending_RoundsUp()
+        public void TakeDamage_RoundingWhenDefending_RoundsUpWithScaledReduction()
         {
             // Arrange
-            var entity = new Entity("Test", 100, 100, new Attributes());
+            var entity = new Entity("Test", 100, 100, new Attributes { Defense = 20 });
             entity.IsDefending = true;
 
-            // Act - 5 / 2 = 2.5 -> Ceil(2.5) should be 3 damage taken
-            entity.TakeDamage(5);
+            // Act - 7 damage at 66% reduction leaves 2.38 damage, which ceilings to 3.
+            entity.TakeDamage(7);
 
             // Assert
-            Assert.That(entity.Health, Is.EqualTo(97), "Defending damage of 5 should result in 3 damage taken (2.5 rounded up)");
+            Assert.That(entity.Health, Is.EqualTo(97), "Defending should still round up fractional damage after the scaled reduction.");
         }
     [Test]
         public void GetActionSoundId_ReturnsEmptyStringByDefault()

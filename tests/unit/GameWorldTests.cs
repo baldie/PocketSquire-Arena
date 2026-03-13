@@ -39,6 +39,7 @@ namespace PocketSquire.Arena.Tests
             Assert.That(firstMonster.Name, Is.Not.Null.And.Not.Empty, "Monster should have a name");
             Assert.That(firstMonster.MaxHealth, Is.GreaterThan(0), "Monster should have positive MaxHealth");
             Assert.That(firstMonster.Attributes, Is.Not.Null, "Monster should have Attributes");
+            Assert.That(firstMonster.AttackStyle, Is.EqualTo(PlayerClass.AttackStyle.Physical), "Monster attack style should deserialize from JSON.");
         }
 
         [Test]

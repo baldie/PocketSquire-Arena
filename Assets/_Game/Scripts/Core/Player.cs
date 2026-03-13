@@ -50,6 +50,15 @@ namespace PocketSquire.Arena.Core
         [JsonIgnore]
         public int MaxPerkSlots => PlayerClass.GetMaxPerkSlots(Class);
 
+        [JsonIgnore]
+        public bool UsesMana => PlayerClass.GetManaProfile(Class).UsesMana;
+
+        [JsonIgnore]
+        public int SpecialAttackManaCost => PlayerClass.GetManaProfile(Class).BaseManaCost;
+
+        [JsonIgnore]
+        public int ManaRegenPerTurn => PlayerClass.GetManaProfile(Class).RegenPerTurn;
+
         public override string SpriteId {
             get
             {
@@ -174,14 +183,40 @@ namespace PocketSquire.Arena.Core
             }
         }
 
+        public void RecalculateMaxHealth()
+        {
+            MaxHealth = CombatCalculator.CalculateMaxHealth(
+                CombatCalculator.GetClassBaseHP(Class),
+                Attributes.Constitution);
+        }
+
+        public bool CanAffordSpecialAttack()
+        {
+            return !UsesMana || Mana >= SpecialAttackManaCost;
+        }
+
+        public bool TrySpendManaForSpecialAttack()
+        {
+            if (!UsesMana)
+            {
+                return true;
+            }
+
+            if (Mana < SpecialAttackManaCost)
+            {
+                return false;
+            }
+
+            Mana -= SpecialAttackManaCost;
+            return true;
+        }
+
         public void ChangeClass(PlayerClass.ClassName newClass)
         {
             this.Class = newClass;
             var template = GameWorld.GetClassTemplate(this.Gender, newClass);
             if (template != null)
             {
-                this.Health = this.MaxHealth;
-                Console.WriteLine($"Player health reset to {this.Health}");
                 this.Attributes = new Attributes
                 {
                     Strength = template.Attributes.Strength,
@@ -197,6 +232,12 @@ namespace PocketSquire.Arena.Core
                 this.HitSoundId = template.HitSoundId;
                 this.DefeatSoundId = template.DefeatSoundId;
                 this.SpecialAttackSoundId = template.SpecialAttackSoundId;
+                this.Mana = template.Mana;
+                this.MaxMana = template.MaxMana;
+                RecalculateMaxHealth();
+                this.Health = this.MaxHealth;
+                this.Mana = this.MaxMana;
+                Console.WriteLine($"Player health reset to {this.Health}");
             }
         }
 

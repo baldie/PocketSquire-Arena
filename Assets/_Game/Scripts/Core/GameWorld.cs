@@ -101,17 +101,7 @@ namespace PocketSquire.Arena.Core
 
                 if (!File.Exists(filePath))
                 {
-                    // Items are critical, but maybe not present yet. Log and return or throw based on preference.
-                    // For now, let's treat it as non-fatal but log it, or init an empty list.
-                    // Actually, let's follow the pattern and throw/catch.
-                    // But maybe items.json doesn't exist yet for existing projects.
-                    // Let's assume it should exist if we are supporting items.
-                    if (!File.Exists(filePath)) 
-                    {
-                         // If file missing, just empty list is fine for now to avoid breaking existing setups without it
-                         // But we created items.json in previous turns.
-                         throw new FileNotFoundException($"Item data file not found at: {filePath}");
-                    }
+                    throw new FileNotFoundException($"Item data file not found at: {filePath}");
                 }
 
                 string jsonContent = File.ReadAllText(filePath);

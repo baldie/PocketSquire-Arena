@@ -1,9 +1,13 @@
 using System;
+using Newtonsoft.Json;
 namespace PocketSquire.Arena.Core
 {
     [Serializable]
     public class Monster : Entity
     {
+        [JsonProperty("attackStyle")]
+        public PlayerClass.AttackStyle AttackStyle { get; set; } = PlayerClass.AttackStyle.Physical;
+
         public Monster() : base() 
         { 
         }

@@ -4,6 +4,30 @@ namespace PocketSquire.Arena.Core
 {
     public class PlayerClass
     {
+        public readonly struct ManaProfile
+        {
+            public ManaProfile(bool usesMana, int baseManaCost, int regenPerTurn)
+            {
+                UsesMana = usesMana;
+                BaseManaCost = baseManaCost;
+                RegenPerTurn = regenPerTurn;
+            }
+
+            public bool UsesMana { get; }
+            public int BaseManaCost { get; }
+            public int RegenPerTurn { get; }
+        }
+
+        public enum AttackStyle
+        {
+            Physical,
+            Ranged,
+            Magic,
+            HybridPhysRanged,
+            HybridMagicRanged,
+            HybridPhysMagic
+        }
+
         public enum ClassName
         {
             // Tier 0
@@ -88,6 +112,60 @@ namespace PocketSquire.Arena.Core
                 case ClassName.Paladin: return "One who has forsaken his earthly soul for divine powers.";
                 default: return "An unknown hero.";
             }
+        }
+
+        public static AttackStyle GetAttackStyle(ClassName className)
+        {
+            switch (className)
+            {
+                case ClassName.Bowman:
+                case ClassName.Archer:
+                case ClassName.Marksman:
+                case ClassName.Sniper:
+                    return AttackStyle.Ranged;
+
+                case ClassName.SpellCaster:
+                case ClassName.Mage:
+                case ClassName.Wizard:
+                case ClassName.Sorcerer:
+                    return AttackStyle.Magic;
+
+                case ClassName.Hunter:
+                case ClassName.Ranger:
+                    return AttackStyle.HybridPhysRanged;
+
+                case ClassName.Druid:
+                case ClassName.Archdruid:
+                case ClassName.Warden:
+                    return AttackStyle.HybridMagicRanged;
+
+                case ClassName.Paladin:
+                    return AttackStyle.HybridPhysMagic;
+
+                case ClassName.Squire:
+                case ClassName.Fighter:
+                case ClassName.Warrior:
+                case ClassName.Knight:
+                case ClassName.Sentinel:
+                default:
+                    return AttackStyle.Physical;
+            }
+        }
+
+        public static ManaProfile GetManaProfile(ClassName className)
+        {
+            return className switch
+            {
+                ClassName.SpellCaster => new ManaProfile(true, 8, 4),
+                ClassName.Mage => new ManaProfile(true, 12, 5),
+                ClassName.Druid => new ManaProfile(true, 10, 4),
+                ClassName.Wizard => new ManaProfile(true, 16, 6),
+                ClassName.Archdruid => new ManaProfile(true, 14, 5),
+                ClassName.Sorcerer => new ManaProfile(true, 20, 7),
+                ClassName.Warden => new ManaProfile(true, 12, 5),
+                ClassName.Paladin => new ManaProfile(true, 10, 4),
+                _ => new ManaProfile(false, 0, 0)
+            };
         }
     }
 }

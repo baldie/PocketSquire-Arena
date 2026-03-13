@@ -1,137 +1,143 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.Perks;
+using System;
+using System.IO;
 
 namespace PocketSquire.Arena.Tests
 {
     [TestFixture]
     public class AttackActionTests
     {
-        private static Entity MakeEntity(int str, int dex, int luck)
+        private static string GetProjectRoot()
         {
-            var e = new Monster("TestEntity", 100, 100, new Attributes
+            string current = Environment.CurrentDirectory;
+            while (!Directory.Exists(Path.Combine(current, "Assets")) && Directory.GetParent(current) != null)
             {
-                Strength = str, Dexterity = dex, Luck = luck
+                var parent = Directory.GetParent(current);
+                if (parent == null) break;
+                current = parent.FullName;
+            }
+
+            return current;
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            GameWorld.Load(GetProjectRoot());
+        }
+
+        private static Monster MakeMonster(int str, int dex, int luck, int mag = 0, int def = 0)
+        {
+            return new Monster("TestEntity", 100, 100, new Attributes
+            {
+                Strength = str,
+                Dexterity = dex,
+                Luck = luck,
+                Magic = mag,
+                Defense = def
             });
-            return e;
         }
 
-        // Seed 0: .Next(100) returns 55 on first call — so 80% hit chance means this should HIT
-        // We need to pick seeds carefully for our tests.
-
-        [Test]
-        public void AttackAction_HighDexAdvantage_HitsAndDealsPositiveDamage()
+        private static Player MakePlayer(int hp = 100, int maxHp = 100)
         {
-            var attacker = MakeEntity(str: 10, dex: 15, luck: 5);
-            var target   = MakeEntity(str: 5,  dex: 5,  luck: 1);
-            // hitChance = 80 + (15-5)*2 = 100 -> clamped to 99. Always hits.
-            var rng = new System.Random(0);
-            var action = new AttackAction(attacker, target, rng);
-
-            Assert.That(action.DidHit, Is.True);
-            Assert.That(action.Damage, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void AttackAction_ZeroDex_Attacker_MissesWithLowSeed()
-        {
-            var attacker = MakeEntity(str: 10, dex: 0, luck: 1);
-            var target   = MakeEntity(str: 5,  dex: 20, luck: 1);
-            // hitChance = 80 + (0-20)*2 = 40. rng.Next(100) with seed=42 starts with 0
-            // We need a seed where rng.Next(100) >= 40 to miss.
-            // Seed=42: first call rng.Next(100) = 0 — that means 0 < 40, so it HITS.
-            // Let's use seed that gives value >= 40.
-            // Seed=1: first Next(100) = 24 -> hits (24<40).
-            // Let's test with hitChance=5 (minimum clamped) to guarantee miss possibility
-            var attacker2 = MakeEntity(str: 10, dex: 0, luck: 1);
-            var target2   = MakeEntity(str: 5,  dex: 40, luck: 1);
-            // hitChance clamped to 5. Need seed where first Next(100) >= 5.
-            // seed=99: let's just verify clamping behavior
-            int hitChance = 80 + (0 - 40) * 2; // -0, raw = 0
-            Assert.That(System.Math.Clamp(hitChance, 5, 99), Is.EqualTo(5), "Should clamp to 5% min");
-        }
-
-        [Test]
-        public void AttackAction_MissedAttack_DamageIsZero()
-        {
-            // Force a miss: hitChance = 5% (minimum). Use seed that gives rng.Next(100) >= 5.
-            var attacker = MakeEntity(str: 10, dex: 0,  luck: 1);
-            var target   = MakeEntity(str: 5,  dex: 40, luck: 1);
-
-            // Try seeds until we find one that misses
-            bool foundMiss = false;
-            for (int seed = 0; seed < 1000; seed++)
+            return new Player("Hero", hp, maxHp, new Attributes
             {
-                var rng = new System.Random(seed);
-                var action = new AttackAction(attacker, target, rng);
-                if (!action.DidHit)
+                Strength = 5,
+                Constitution = 5,
+                Magic = 5,
+                Dexterity = 5,
+                Luck = 5,
+                Defense = 5
+            }, Player.Genders.m);
+        }
+
+        private static void UnlockAndActivate(Player player, string perkId)
+        {
+            var perk = GameWorld.GetPerkById(perkId) ?? new Perk { Id = perkId };
+            player.AcquiredPerks.Add(perk);
+            player.ActivePerks.Add(perk);
+            player.PerkStates[perkId] = new PerkState { PerkId = perkId };
+        }
+
+        [Test]
+        public void AttackAction_HitAppliesFinalDamageAfterDefenseReduction()
+        {
+            var attacker = MakeMonster(str: 10, dex: 50, luck: 0);
+            var target = MakeMonster(str: 5, dex: 0, luck: 0, def: 20);
+
+            AttackAction? action = null;
+            for (int seed = 0; seed < 200; seed++)
+            {
+                var candidate = new AttackAction(attacker, target, new Random(seed));
+                if (candidate.DidHit && !candidate.IsCrit)
                 {
-                    Assert.That(action.Damage, Is.EqualTo(0), $"Missed attack with seed {seed} should have 0 damage");
-                    foundMiss = true;
+                    action = candidate;
                     break;
                 }
             }
-            Assert.That(foundMiss, Is.True, "Should find at least one miss across 1000 seeds with 5% hit chance");
+
+            Assert.That(action, Is.Not.Null, "Expected to find a deterministic hit without a crit.");
+            int hpBefore = target.Health;
+
+            action!.ApplyEffect();
+
+            Assert.That(hpBefore - target.Health, Is.EqualTo(action.FinalDamage));
+            Assert.That(action.FinalDamage, Is.EqualTo(CombatCalculator.ApplyDefenseReduction(action.Damage, target)));
         }
 
         [Test]
-        public void AttackAction_CritHit_DamageIs1Point5xBaseDamage()
+        public void AttackAction_MissedAttack_DoesNotChangeTargetHealth()
         {
-            var attacker = MakeEntity(str: 10, dex: 15, luck: 50); // Guaranteed hit +high luck
-            var target   = MakeEntity(str: 5,  dex: 5,  luck: 1);
-            // critChance = 5 + max(0, 50-5) = 50. Find a seed that crits.
-
-            bool foundCrit = false;
-            for (int seed = 0; seed < 500; seed++)
-            {
-                var rng = new System.Random(seed);
-                var action = new AttackAction(attacker, target, rng);
-                if (action.DidHit && action.IsCrit)
-                {
-                    int expectedDamage = (int)(attacker.Attributes.Strength * 1.5f);
-                    Assert.That(action.Damage, Is.EqualTo(expectedDamage), "Crit should deal 1.5x damage");
-                    foundCrit = true;
-                    break;
-                }
-            }
-            Assert.That(foundCrit, Is.True, "Should find a crit with 50% crit chance");
-        }
-
-        [Test]
-        public void AttackAction_HitChance_ClampedAtMax99()
-        {
-            // Very high dex advantage
-            var attacker = MakeEntity(str: 5, dex: 100, luck: 1);
-            var target   = MakeEntity(str: 5, dex: 0,   luck: 1);
-            // raw = 80 + 100*2 = 280 -> clamped to 99
-            // Should always hit regardless of rng
-            int hitCount = 0;
-            for (int s = 0; s < 100; s++)
-            {
-                var action = new AttackAction(attacker, target, new System.Random(s));
-                if (action.DidHit) hitCount++;
-            }
-            Assert.That(hitCount, Is.GreaterThan(90), "99% hit chance should hit almost always");
-        }
-
-        [Test]
-        public void AttackAction_ApplyEffect_DoesNotThrow_OnMiss()
-        {
-            var attacker = MakeEntity(str: 10, dex: 0, luck: 1);
-            var target   = MakeEntity(str: 5, dex: 40, luck: 1);
+            var attacker = MakeMonster(str: 10, dex: 0, luck: 1);
+            var target = MakeMonster(str: 5, dex: 100, luck: 100);
 
             for (int seed = 0; seed < 1000; seed++)
             {
-                var rng = new System.Random(seed);
+                var rng = new Random(seed);
                 var action = new AttackAction(attacker, target, rng);
                 if (!action.DidHit)
                 {
                     int hpBefore = target.Health;
-                    Assert.DoesNotThrow(() => action.ApplyEffect());
-                    Assert.That(target.Health, Is.EqualTo(hpBefore), "Miss should not change target HP");
+                    action.ApplyEffect();
+                    Assert.That(action.Damage, Is.EqualTo(0));
+                    Assert.That(action.FinalDamage, Is.EqualTo(0));
+                    Assert.That(target.Health, Is.EqualTo(hpBefore), $"Missed attack with seed {seed} should not change HP");
                     return;
                 }
             }
-            Assert.Ignore("Could not find a miss seed; test skipped.");
+
+            Assert.Fail("Expected at least one miss across 1000 seeds.");
+        }
+
+        [Test]
+        public void AttackAction_MonsterHitPlayer_CanBeNullifiedByPerk()
+        {
+            var attacker = MakeMonster(str: 12, dex: 80, luck: 0);
+            var player = MakePlayer();
+            var perk = new Perk
+            {
+                Id = "test_nullify",
+                DisplayName = "Test Nullify",
+                PerkType = PerkType.Triggered,
+                TriggerEvent = PerkTriggerEvent.MonsterAttackHitPlayer,
+                Effect = PerkEffectType.NullifyDamage,
+                ProcPercent = 100
+            };
+            player.AcquiredPerks.Add(perk);
+            player.ActivePerks.Add(perk);
+            player.PerkStates[perk.Id] = new PerkState { PerkId = perk.Id };
+
+            var action = new AttackAction(attacker, player, new Random(0));
+
+            Assert.That(action.DidHit, Is.True, "Seed should produce a hit for the nullify-perk test.");
+            int hpBefore = player.Health;
+
+            action.ApplyEffect();
+
+            Assert.That(player.Health, Is.EqualTo(hpBefore), "Arcane Shield should nullify the incoming hit.");
+            Assert.That(action.FinalDamage, Is.EqualTo(0));
         }
     }
 }

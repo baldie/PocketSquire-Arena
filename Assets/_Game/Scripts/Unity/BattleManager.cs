@@ -11,6 +11,9 @@ namespace PocketSquire.Unity
 {
     public class BattleManager : MonoBehaviour
     {
+        private static readonly Color SpecialAvailableColor = Color.white;
+        private static readonly Color SpecialUnavailableColor = new Color(0.55f, 0.7f, 1f, 1f);
+
         [Header("UI References")]
         [SerializeField] private GameObject battleMenuUI;
         [SerializeField] private Button specialButton;
@@ -92,16 +95,6 @@ namespace PocketSquire.Unity
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
 
-            if (attackButton != null)
-            {
-                attackButton.onClick.RemoveAllListeners();
-                attackButton.onClick.AddListener(Attack);
-                if (firstSelectedButton == null) firstSelectedButton = attackButton;
-
-                var sound = attackButton.GetComponent<MenuButtonSound>();
-                if (sound != null && audioSource != null) sound.source = audioSource;
-            }
-
             if (defendButton != null)
             {
                 defendButton.onClick.RemoveAllListeners();
@@ -128,6 +121,8 @@ namespace PocketSquire.Unity
                 var sound = yieldButton.GetComponent<MenuButtonSound>();
                 if (sound != null && audioSource != null) sound.source = audioSource;
             }
+
+            RefreshSpecialButtonState();
         }
 
         public void ShowMenu()
@@ -141,6 +136,7 @@ namespace PocketSquire.Unity
             if (isPlayerTurn && !isProcessing)
             {
                 battleMenuUI.SetActive(true);
+                RefreshSpecialButtonState();
                 if (firstSelectedButton != null)
                 {
                     EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
@@ -160,6 +156,14 @@ namespace PocketSquire.Unity
         public void Special()
         {
             Debug.Log("Special");
+
+            if (GameState.Player != null && !GameState.Player.CanAffordSpecialAttack())
+            {
+                Debug.LogWarning("Special attack attempted without sufficient mana — this should not be reachable.");
+                ShowMenu();
+                return;
+            }
+
             HideMenu();
 
             if (actionQueueProcessor != null && GameState.Battle != null)
@@ -172,6 +176,40 @@ namespace PocketSquire.Unity
                     // Wait 0.1 seconds before enqueuing the action to allow the menu selection sfx to play
                     DOTween.Sequence().AppendInterval(0.4f).AppendCallback(() => actionQueueProcessor.EnqueueAction(specialAttackAction));
                 }
+            }
+        }
+
+        private void RefreshSpecialButtonState()
+        {
+            if (specialButton == null || battleMenuUI == null)
+            {
+                return;
+            }
+
+            var player = GameState.Player;
+            bool hasSpecialAttackPerk = player?.ActivePerks?.Any(p => p.Id == "special_attack") ?? false;
+
+            var rectTransform = battleMenuUI.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.sizeDelta = new Vector2(
+                    rectTransform.sizeDelta.x,
+                    hasSpecialAttackPerk ? HEIGHT_WITH_SPECIAL_ATTACK : HEIGHT_WITHOUT_SPECIAL_ATTACK);
+            }
+
+            specialButton.gameObject.SetActive(hasSpecialAttackPerk);
+            if (!hasSpecialAttackPerk || player == null)
+            {
+                return;
+            }
+
+            bool canUseSpecial = player.CanAffordSpecialAttack();
+            specialButton.interactable = canUseSpecial;
+
+            var buttonImage = specialButton.image;
+            if (buttonImage != null)
+            {
+                buttonImage.color = canUseSpecial ? SpecialAvailableColor : SpecialUnavailableColor;
             }
         }
 

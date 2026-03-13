@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.Perks;
+using System.Linq;
 
 namespace PocketSquire.Arena.Tests
 {
@@ -248,6 +249,42 @@ namespace PocketSquire.Arena.Tests
             // Assert
             Assert.That(result, Is.False, "Cannot purchase the same perk twice");
             Assert.That(player.Gold, Is.EqualTo(400), "Gold should only be spent once");
+        }
+
+        [Test]
+        public void RecalculateMaxHealth_UsesClassBaseHpAndConstitution()
+        {
+            var player = new Player("Squire", 10, 10, new Attributes
+            {
+                Constitution = 8
+            }, Player.Genders.m);
+
+            player.RecalculateMaxHealth();
+
+            Assert.That(player.MaxHealth, Is.EqualTo(50));
+        }
+
+        [Test]
+        public void ChangeClass_RecalculatesMaxHealthAndHealsToFull()
+        {
+            GameWorld.ClassTemplates.Clear();
+            GameWorld.ClassTemplates.Add(new Player("m_knight", 30, 30, new Attributes
+            {
+                Strength = 8,
+                Constitution = 9,
+                Magic = 2,
+                Dexterity = 4,
+                Luck = 3,
+                Defense = 7
+            }, Player.Genders.m));
+
+            var player = new Player("Squire", 10, 10, Attributes.GetDefaultAttributes(), Player.Genders.m);
+
+            player.ChangeClass(PlayerClass.ClassName.Knight);
+
+            Assert.That(player.Attributes.Constitution, Is.EqualTo(9));
+            Assert.That(player.MaxHealth, Is.EqualTo(66));
+            Assert.That(player.Health, Is.EqualTo(player.MaxHealth));
         }
 
     }

@@ -27,8 +27,8 @@ namespace PocketSquire.Arena.Core.Perks
 
             foreach (var perk in player.ActivePerks)
             {
-                var perkId = perk.Id;
                 if (perk == null || perk.PerkType != PerkType.Triggered) continue;
+                var perkId = perk.Id;
                 if (perk.TriggerEvent != triggerEvent) continue;
 
                 // Also reset consecutive if we hit a ResetOn event match

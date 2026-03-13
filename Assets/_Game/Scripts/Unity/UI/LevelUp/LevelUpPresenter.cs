@@ -119,9 +119,11 @@ public void SetOnAccept(Action callback)
         {
             acceptButton.interactable = false;
             Debug.Log("Accept button clicked");
+            bool appliedImmediately = false;
             if (GameState.Player != null)
             {
                 ApplyChangesToPlayer(GameState.Player);
+                appliedImmediately = true;
                 Debug.Log("Player stats updated.");
             }
             else
@@ -140,6 +142,11 @@ public void SetOnAccept(Action callback)
             DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() => {
                 Debug.Log("Invoking onAccept which is " + (_onAccept == null ? "null" : "not null"));
                 _onAccept?.Invoke();
+                if (!appliedImmediately && GameState.Player != null)
+                {
+                    ApplyChangesToPlayer(GameState.Player);
+                    Debug.Log("Player stats updated after deferred player creation.");
+                }
                 _onAccept = null;
             });
         }
@@ -159,8 +166,6 @@ public void SetOnAccept(Action callback)
 
         private void ApplyChangesToPlayer(Player player)
         {
-            player.AcceptNewLevel();
-
             // Map back from model to player attributes
             //TODO: send _model into player.AcceptNewLevel and apply the changes there instead of here
             player.Attributes.Strength = _model.GetAttributeValue("STR");
@@ -169,6 +174,8 @@ public void SetOnAccept(Action callback)
             player.Attributes.Dexterity = _model.GetAttributeValue("DEX");
             player.Attributes.Luck = _model.GetAttributeValue("LCK");
             player.Attributes.Defense = _model.GetAttributeValue("DEF");
+            player.AcceptNewLevel();
+            player.RecalculateMaxHealth();
 
             // Check the class eveolution tree for options
             if (evolutionTree == null) return;

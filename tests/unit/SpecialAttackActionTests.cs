@@ -30,7 +30,7 @@ namespace PocketSquire.Arena.Tests
                 var action = new SpecialAttackAction(attacker, target, rng);
                 if (action.DidHit && !action.IsCrit)
                 {
-                    Assert.That(action.Damage, Is.EqualTo(7));
+                    Assert.That(action.Damage, Is.EqualTo(33));
                     return;
                 }
             }
@@ -72,7 +72,7 @@ namespace PocketSquire.Arena.Tests
                 {
                     target.Health = 100;
                     action.ApplyEffect();
-                    Assert.That(target.Health, Is.EqualTo(90), $"Expected 90 HP with seed {seed}");
+                    Assert.That(target.Health, Is.EqualTo(100 - action.FinalDamage), $"Expected HP to reflect the resolved final damage with seed {seed}");
                     return;
                 }
             }

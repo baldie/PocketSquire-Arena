@@ -38,6 +38,11 @@ public class ActionQueueProcessor : MonoBehaviour
     public TextMeshProUGUI experienceGainedText;
     public TextMeshProUGUI goldGainedText;
 
+    [Header("Mana Bar")]
+    public Image playerManaBarActual;
+    public Image playerManaBarFill;
+    public GameObject manaBarContainer;
+
     [Header("Audio")]
     public AudioClip crowd_pleased;
     public AudioClip crowd_displeased;
@@ -91,6 +96,17 @@ public class ActionQueueProcessor : MonoBehaviour
         // Make the healthbars snap to their current values
         UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameState.Battle.Player1.Health, GameState.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
         UpdateHealth(monsterHealthBarActual, monsterHealthBarGhost, GameState.Battle.Player2.Health, GameState.Battle.Player2.MaxHealth, HealthBarAnimationType.Snap);
+
+        bool playerUsesMana = (GameState.Battle?.Player1 as Player)?.UsesMana ?? false;
+        if (manaBarContainer != null)
+        {
+            manaBarContainer.SetActive(playerUsesMana);
+        }
+
+        if (playerUsesMana)
+        {
+            UpdateManaBar(snap: true);
+        }
 
         // Update points to be gained
         if (experienceGainedText != null){
@@ -152,13 +168,13 @@ public class ActionQueueProcessor : MonoBehaviour
 
             if (action is AttackAction atk)
             {
-                damage = atk.Damage;
+                damage = atk.FinalDamage;
                 didHit = atk.DidHit;
                 isCrit = atk.IsCrit;
             }
             else if (action is SpecialAttackAction spAtk)
             {
-                damage = spAtk.Damage;
+                damage = spAtk.FinalDamage;
                 didHit = spAtk.DidHit;
                 isCrit = spAtk.IsCrit;
             }
@@ -196,6 +212,12 @@ public class ActionQueueProcessor : MonoBehaviour
                 EnqueueAction(result);
             }
         }
+
+        if (manaBarContainer != null && manaBarContainer.activeSelf)
+        {
+            UpdateManaBar(snap: true);
+        }
+
         currentActionCoroutine = null;
 
         // If no more actions are queued, notify listeners (e.g., BattleManager to show menu)
@@ -214,6 +236,11 @@ public class ActionQueueProcessor : MonoBehaviour
         AudioClip clip = !string.IsNullOrEmpty(soundId) ? assetRegistry?.GetSound(soundId) : null;
         
         if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
+
+        if (action is SpecialAttackAction && action.Actor is Player playerActor && playerActor.UsesMana && playerEffectText != null)
+        {
+            ShowTextEffect(playerEffectText, $"-{playerActor.SpecialAttackManaCost} MP", new Color(0.35f, 0.75f, 1f, 1f));
+        }
 
         // Animation / Visuals
         TriggerVisuals(action.Actor, action.Type, action);
@@ -278,7 +305,7 @@ public class ActionQueueProcessor : MonoBehaviour
                 HandleSpriteSwap(imgComponent, entity.AttackSpriteId, 0.25f);
                 break;
             case ActionType.SpecialAttack:
-                HandleSpriteSwap(imgComponent, entity.SpecialAttackSpriteId, 0.25f);
+                HandleSpecialAttackVisuals(go, imgComponent, entity, action);
                 break;
             case ActionType.Defend:
                 HandleSpriteSwap(imgComponent, entity.DefendSpriteId, 2.0f);
@@ -425,6 +452,39 @@ public class ActionQueueProcessor : MonoBehaviour
             .SetTarget(img.material);
     }
 
+    private void HandleSpecialAttackVisuals(GameObject go, Image img, Entity entity, IGameAction action)
+    {
+        Sprite attackSprite = assetRegistry.GetSprite(entity.AttackSpriteId);
+        if (attackSprite == null) return;
+
+        Sprite idleSprite = img.sprite;
+        var rect = go.GetComponent<RectTransform>();
+        Vector2 originalPos = rect.anchoredPosition;
+        float direction = entity is Player ? 1f : -1f;
+
+        // Resolve hit state up front so the callback can close over it
+        bool didHit = action is SpecialAttackAction spAtk ? spAtk.DidHit : true;
+
+        DOTween.Sequence()
+            .Append(img.DOColor(new Color(0.4f, 0.6f, 1f), 0.1f))
+            .Join(rect.DOAnchorPosX(originalPos.x - (20f * direction), 0.1f))
+            .AppendCallback(() => img.sprite = attackSprite)
+            .Append(rect.DOAnchorPosX(originalPos.x + (60f * direction), 0.12f).SetEase(Ease.InExpo))
+            .Join(rect.DOPunchScale(Vector3.one * 0.25f, 0.2f, 5, 0.5f))
+            .AppendCallback(() => {
+                if (didHit)  // only shake opponent if the attack connected
+                {
+                    var targetGO = entity is Player ? _monsterGO : _playerGO;
+                    targetGO?.GetComponent<RectTransform>()
+                            ?.DOShakeAnchorPos(0.35f, 20f, 25, 90f);
+                }
+            })
+            .Append(rect.DOAnchorPosX(originalPos.x, 0.2f).SetEase(Ease.OutQuad))
+            .Join(img.DOColor(Color.white, 0.15f))
+            .OnComplete(() => img.sprite = idleSprite)
+            .SetTarget(img);
+    }
+
     private void UpdateHealth(Image healthBarActual, Image healthBarGhost, int currentHealth, int maxHealth, HealthBarAnimationType animationType)
     {
         float targetFill = (float)currentHealth / maxHealth;
@@ -454,6 +514,35 @@ public class ActionQueueProcessor : MonoBehaviour
         {
             // If healing, just snap the ghost bar to match
             healthBarGhost.fillAmount = targetFill;
+        }
+    }
+
+    private void UpdateManaBar(bool snap)
+    {
+        if (GameState.Battle?.Player1 is not Player player || player.MaxMana <= 0)
+        {
+            return;
+        }
+
+        float targetFill = player.Mana / (float)player.MaxMana;
+        if (playerManaBarActual != null)
+        {
+            playerManaBarActual.fillAmount = targetFill;
+        }
+
+        if (playerManaBarFill == null)
+        {
+            return;
+        }
+
+        if (snap)
+        {
+            playerManaBarFill.fillAmount = targetFill;
+        }
+        else
+        {
+            playerManaBarFill.DOKill(false);
+            playerManaBarFill.DOFillAmount(targetFill, 0.15f).SetEase(Ease.OutQuad);
         }
     }
 
