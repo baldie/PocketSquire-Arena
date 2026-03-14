@@ -30,6 +30,43 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
+        public void LoseAction_ApplyEffect_RemovesHalfThePlayersGoldByDefault()
+        {
+            var actor = new Player("Loser", 10, 10, new Attributes(), Player.Genders.m);
+            actor.Gold = 100;
+            var target = new Monster("Winner", 10, 10, new Attributes());
+            var action = new LoseAction(actor, target);
+
+            action.ApplyEffect();
+
+            Assert.That(actor.Gold, Is.EqualTo(50));
+        }
+
+        [Test]
+        public void LoseAction_ApplyEffect_KeepMoneyPassiveReducesGoldLost()
+        {
+            var actor = new Player("Loser", 10, 10, new Attributes(), Player.Genders.m);
+            actor.Gold = 100;
+            var target = new Monster("Winner", 10, 10, new Attributes());
+            var perk = new Perk
+            {
+                Id = "keep_the_change_test",
+                DisplayName = "Keep the Change",
+                PerkType = PerkType.Passive,
+                Effect = PerkEffectType.KeepMoney,
+                Value = 15
+            };
+
+            actor.AcquiredPerks.Add(perk);
+            actor.ActivePerks.Add(perk);
+
+            var action = new LoseAction(actor, target);
+            action.ApplyEffect();
+
+            Assert.That(actor.Gold, Is.EqualTo(65));
+        }
+
+        [Test]
         public void LoseAction_ApplyEffect_TriggersBattleLostPerks()
         {
             var actor = new Player("Loser", 0, 10, new Attributes(), Player.Genders.m);

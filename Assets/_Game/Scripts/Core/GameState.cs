@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Newtonsoft.Json;
 namespace PocketSquire.Arena.Core

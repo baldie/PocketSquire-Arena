@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace PocketSquire.Arena.Core.Perks
 {
     /// <summary>
@@ -27,6 +29,7 @@ namespace PocketSquire.Arena.Core.Perks
         public float DamageReductionMultiplier { get; set; } = 1f;
         public float ReduceShopPrices { get; set; } = 1f;
         public float GoldGainMultiplier { get; set; } = 1f;
+        public int KeepMoneyPercent { get; set; }
 
         // --- Yield ---
         public int YieldChanceBonus { get; set; }
@@ -39,6 +42,6 @@ namespace PocketSquire.Arena.Core.Perks
             GuaranteedHit || NullifyDamage || SurviveFatalBlow ||
             HealAmount > 0 || RestoreMpAmount > 0 ||
             HitChanceBonusPercent != 0 || CritChanceBonusPercent != 0 ||
-            YieldChanceBonus != 0;
+            YieldChanceBonus != 0 || KeepMoneyPercent != 0;
     }
 }

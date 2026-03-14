@@ -27,7 +27,7 @@ namespace PocketSquire.Arena.Core
         public string[] SerializedAcquiredPerks
         {
             get => AcquiredPerks.Select(p => p.Id).ToArray();
-            set => AcquiredPerks = value?.Select(id => GameWorld.GetPerkById(id)).Where(p => p != null).ToList() ?? new List<Perk>();
+            set => AcquiredPerks = value?.Select(id => GameWorld.GetPerkById(id)).OfType<Perk>().ToList() ?? new List<Perk>();
         }
 
         public System.Collections.Generic.HashSet<string> UnlockedClasses { get; set; } = new System.Collections.Generic.HashSet<string> { PlayerClass.ClassName.Squire.ToString() };
@@ -41,7 +41,7 @@ namespace PocketSquire.Arena.Core
         public string[] SerializedActivePerks
         {
             get => ActivePerks.Select(p => p.Id).ToArray();
-            set => ActivePerks = value?.Select(id => GameWorld.GetPerkById(id)).Where(p => p != null).ToList() ?? new List<Perk>();
+            set => ActivePerks = value?.Select(id => GameWorld.GetPerkById(id)).OfType<Perk>().ToList() ?? new List<Perk>();
         }
 
         [JsonIgnore]
@@ -269,44 +269,81 @@ namespace PocketSquire.Arena.Core
 
         // --- Arena Perk Methods ---
 
-        public bool CanActivatePerk(string perkToRemove, Perk perkToActivate)
+        public PerkActivationAttemptResult CanActivatePerk(PerkActivationRequest request)
         {
-            if (perkToActivate == null) return false;
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var perkToActivate = request.PerkToActivate;
+            if (perkToActivate == null)
+            {
+                return PerkActivationAttemptResult.Failure("Perk could not be found.");
+            }
+
+            if (!AcquiredPerks.Any(p => p.Id == perkToActivate.Id))
+            {
+                return PerkActivationAttemptResult.Failure("You do not own this perk.");
+            }
+
+            if (ActivePerks.Any(p => p.Id == perkToActivate.Id && p.Id != request.PerkToRemoveId))
+            {
+                return PerkActivationAttemptResult.Failure("That perk is already active.");
+            }
 
             // 1. Check prerequisites explicitly on the perk itself
             if (perkToActivate.Prerequisites != null)
             {
-                if (Level < perkToActivate.Prerequisites.MinLevel) return false;
-                
+                if (Level < perkToActivate.Prerequisites.MinLevel)
+                {
+                    return PerkActivationAttemptResult.Failure($"Requires Lv{perkToActivate.Prerequisites.MinLevel}.");
+                }
+
                 if (!string.IsNullOrEmpty(perkToActivate.Prerequisites.ClassName))
                 {
-                    if (Class.ToString() != perkToActivate.Prerequisites.ClassName) return false;
+                    if (Class.ToString() != perkToActivate.Prerequisites.ClassName)
+                    {
+                        return PerkActivationAttemptResult.Failure($"Requires {perkToActivate.Prerequisites.ClassName}.");
+                    }
                 }
 
                 if (perkToActivate.Prerequisites.RequiredPerks != null)
                 {
-                    foreach (var requiredPerkId in perkToActivate.Prerequisites.RequiredPerks)
+                    var missingRequiredPerks = perkToActivate.Prerequisites.RequiredPerks
+                        .Where(requiredPerkId => !AcquiredPerks.Any(p => p.Id == requiredPerkId))
+                        .Select(GetPerkRequirementLabel)
+                        .ToList();
+
+                    if (missingRequiredPerks.Count > 0)
                     {
-                        if (!AcquiredPerks.Any(p => p.Id == requiredPerkId)) return false;
+                        return PerkActivationAttemptResult.Failure($"Requires {string.Join(", ", missingRequiredPerks)}.");
                     }
                 }
             }
 
             var futurePerks = new List<Perk>(ActivePerks);
-            if (!string.IsNullOrEmpty(perkToRemove)) 
+            if (!string.IsNullOrEmpty(request.PerkToRemoveId))
             {
-                futurePerks.RemoveAll(p => p.Id == perkToRemove);
+                futurePerks.RemoveAll(p => p.Id == request.PerkToRemoveId);
             }
             futurePerks.Add(perkToActivate);
 
             // 2. Check if there are multiple active satchel perks
-            int activeSatchels = futurePerks.Count(p => p.Id == "satchel_tier_1" || p.Id == "satchel_tier_2" || p.Id == "satchel_tier_3");
-            if (activeSatchels > 1) return false;
+            int activeSatchels = futurePerks.Count(p => IsSatchelPerk(p.Id));
+            if (activeSatchels > 1)
+            {
+                return PerkActivationAttemptResult.Failure("Only one satchel perk can be active.");
+            }
 
             // 3. Ensure we don't drop MaxSlots below our currently filled inventory
             int futureMaxSlots = Inventory.CalculateCapacity(futurePerks);
-            
-            return Inventory.Slots.Count <= futureMaxSlots;
+            if (Inventory.Slots.Count > futureMaxSlots)
+            {
+                return PerkActivationAttemptResult.Failure("Not enough inventory space to activate this perk.");
+            }
+
+            return PerkActivationAttemptResult.Success();
         }
 
         public bool TryPurchasePerk(Perk perk)
@@ -323,12 +360,32 @@ namespace PocketSquire.Arena.Core
         {
             var perk = AcquiredPerks.FirstOrDefault(p => p.Id == perkId);
             if (perk == null) return false;
-            if (ActivePerks.Any(p => p.Id == perkId)) return false;
             if (ActivePerks.Count >= MaxPerkSlots) return false;
+            var activationAttempt = CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToActivate = perk
+            });
+            if (!activationAttempt.Succeeded) return false;
             ActivePerks.Add(perk);
             PerkStates[perkId] = new PerkState { PerkId = perkId };
             Inventory.UpdateCapacity(ActivePerks);
             return true;
+        }
+
+        private static bool IsSatchelPerk(string perkId)
+        {
+            return perkId == "satchel_tier_1" || perkId == "satchel_tier_2" || perkId == "satchel_tier_3";
+        }
+
+        private static string GetPerkRequirementLabel(string perkId)
+        {
+            var requiredPerk = GameWorld.GetPerkById(perkId);
+            if (requiredPerk != null && !string.IsNullOrEmpty(requiredPerk.DisplayName))
+            {
+                return requiredPerk.DisplayName;
+            }
+
+            return perkId;
         }
 
         public bool TryDeactivatePerk(string perkId)

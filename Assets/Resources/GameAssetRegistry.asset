@@ -964,6 +964,8 @@ MonoBehaviour:
     asset: {fileID: 8300000, guid: 93246f4655305ed4b8fa51c2cb81468a, type: 3}
   - id: menu_tick
     asset: {fileID: 8300000, guid: 3b6ea49b05504154c9137c02a84d112e, type: 3}
+  - id: payment
+    asset: {fileID: 8300000, guid: 076c28d2583569d448ae2c1d4d3bdeda, type: 3}
   - id: player_lose
     asset: {fileID: 8300000, guid: 450149720bbcdb24588983f4abb956c1, type: 3}
   - id: player_win

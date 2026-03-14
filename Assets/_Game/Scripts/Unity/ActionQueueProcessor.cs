@@ -31,6 +31,9 @@ public class ActionQueueProcessor : MonoBehaviour
     public Image monsterHealthBarActual;
     public Image monsterHealthBarGhost;
     public Image playerUsedItemSprite;
+    public GameObject cashMoneyPanel;
+    public TextMeshProUGUI currentMoneyText;
+    public TextMeshProUGUI percentageLostText;
     public Canvas arenaMenuPanel;
     public ConfirmationDialog confirmationDialog;
     public GameObject levelUpBackground;
@@ -48,11 +51,17 @@ public class ActionQueueProcessor : MonoBehaviour
     public AudioClip crowd_displeased;
     public AudioClip player_win;
     public AudioClip player_lose;
+
+    private const int ArenaGoldLossPaymentTickCount = 15;
+    private const float ArenaGoldLossPanelHoldDuration = 1.5f;
+    private const float ArenaGoldLossPanelFadeDuration = 1.4f;
+    private const float ArenaGoldLossPercentageFadeDuration = 1.6f;
         
     private Queue<IGameAction> actionQueue = new Queue<IGameAction>();
     private Coroutine currentActionCoroutine = null;
     private bool _isWaitingForUser = false;
     private bool _yieldCancelled = false;
+    private bool _isArenaLossSequenceActive = false;
     private enum HealthBarAnimationType { Snap, Shake, None }
     private GameAssetRegistry assetRegistry;
 
@@ -258,8 +267,152 @@ public class ActionQueueProcessor : MonoBehaviour
             ShowTextEffect(playerEffectText, $"-{playerActor.SpecialAttackManaCost} MP", new Color(0.35f, 0.75f, 1f, 1f));
         }
 
+        if (action is LoseAction loseAction && loseAction.Actor is Player losingPlayer && loseAction.GoldLost > 0)
+        {
+            OnArenaGoldLost(losingPlayer, loseAction.GoldLost);
+        }
+
         // Animation / Visuals
         TriggerVisuals(action.Actor, action.Type, action);
+    }
+
+    private void OnArenaGoldLost(Player player, int goldLost)
+    {
+        if (cashMoneyPanel == null || player == null || goldLost <= 0)
+        {
+            return;
+        }
+
+        cashMoneyPanel.gameObject.SetActive(true);
+
+        int currentGold = Mathf.Max(0, player.Gold);
+        int startingGold = currentGold + goldLost;
+        int percentLost = startingGold > 0
+            ? Mathf.RoundToInt((goldLost / (float)startingGold) * 100f)
+            : 0;
+
+        _isArenaLossSequenceActive = true;
+        AnimateArenaGoldLoss(startingGold, currentGold, percentLost);
+    }
+
+    private void AnimateArenaGoldLoss(int startingGold, int endingGold, int percentLost)
+    {
+        if (currentMoneyText == null)
+        {
+            _isArenaLossSequenceActive = false;
+            Debug.LogWarning("[ActionQueueProcessor] Current money label is not wired to a TextMeshProUGUI component.");
+            return;
+        }
+
+        var panelCanvasGroup = GetOrAddCashMoneyCanvasGroup();
+        cashMoneyPanel.SetActive(true);
+        cashMoneyPanel.transform.DOKill(true);
+        panelCanvasGroup.DOKill(true);
+        panelCanvasGroup.alpha = 1f;
+
+        currentMoneyText.DOKill(true);
+        currentMoneyText.transform.DOKill(true);
+        currentMoneyText.gameObject.SetActive(true);
+        currentMoneyText.alpha = 1f;
+
+        int displayedGold = startingGold;
+        currentMoneyText.text = FormatGoldAmount(displayedGold);
+
+        float countdownDuration = Mathf.Clamp((startingGold - endingGold) / 500f, 0.85f, 2.1f);
+        Tween goldCountdownTween = DOTween.To(() => displayedGold, value =>
+            {
+                displayedGold = value;
+                currentMoneyText.text = FormatGoldAmount(displayedGold);
+            }, endingGold, countdownDuration)
+            .SetEase(Ease.OutQuad);
+
+        Sequence paymentSequence = CreateArenaGoldLossPaymentSequence(countdownDuration);
+
+        if (percentageLostText == null)
+        {
+            DOTween.Sequence()
+                .Append(goldCountdownTween)
+                .Join(paymentSequence)
+                .AppendInterval(ArenaGoldLossPanelHoldDuration)
+                .Append(panelCanvasGroup.DOFade(0f, ArenaGoldLossPanelFadeDuration))
+                .OnComplete(CompleteArenaGoldLossSequence)
+                .SetLink(cashMoneyPanel);
+            return;
+        }
+
+        percentageLostText.DOKill(true);
+        percentageLostText.transform.DOKill(true);
+        percentageLostText.gameObject.SetActive(true);
+        percentageLostText.alpha = 1f;
+        percentageLostText.text = $"-{percentLost}%";
+
+        Vector3 originalPosition = percentageLostText.transform.localPosition;
+        Sequence percentageSequence = DOTween.Sequence()
+            .AppendInterval(0.15f)
+            .Append(percentageLostText.transform.DOLocalMoveY(originalPosition.y + 35f, 0.6f).SetEase(Ease.OutQuad))
+            .Join(percentageLostText.DOFade(0f, ArenaGoldLossPercentageFadeDuration))
+            .OnComplete(() =>
+            {
+                percentageLostText.transform.localPosition = originalPosition;
+                percentageLostText.alpha = 0f;
+            });
+
+        DOTween.Sequence()
+            .Append(goldCountdownTween)
+            .Join(paymentSequence)
+            .Join(percentageSequence)
+            .AppendInterval(ArenaGoldLossPanelHoldDuration)
+            .Append(panelCanvasGroup.DOFade(0f, ArenaGoldLossPanelFadeDuration))
+            .OnComplete(CompleteArenaGoldLossSequence)
+            .SetLink(cashMoneyPanel);
+    }
+
+    private Sequence CreateArenaGoldLossPaymentSequence(float countdownDuration)
+    {
+        Sequence sequence = DOTween.Sequence();
+        AudioClip paymentClip = assetRegistry?.GetSound("payment") ?? assetRegistry?.GetSound("coin_spend");
+        if (paymentClip == null || audioSource == null)
+        {
+            return sequence;
+        }
+
+        int paymentTickCount = Mathf.Max(1, ArenaGoldLossPaymentTickCount);
+        float tickInterval = countdownDuration / paymentTickCount;
+
+        for (int i = 0; i < paymentTickCount; i++)
+        {
+            if (i > 0)
+            {
+                sequence.AppendInterval(tickInterval);
+            }
+
+            sequence.AppendCallback(() => audioSource.PlayOneShot(paymentClip));
+        }
+
+        return sequence;
+    }
+
+    private CanvasGroup GetOrAddCashMoneyCanvasGroup()
+    {
+        var canvasGroup = cashMoneyPanel.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = cashMoneyPanel.AddComponent<CanvasGroup>();
+        }
+
+        return canvasGroup;
+    }
+
+    private void CompleteArenaGoldLossSequence()
+    {
+        _isArenaLossSequenceActive = false;
+        cashMoneyPanel.SetActive(false);
+        showArenaMenu(false);
+    }
+
+    private static string FormatGoldAmount(int goldAmount)
+    {
+        return $"{goldAmount:n0}g";
     }
 
     private void PlayHitEffects(Entity target, int damage, Color? damageColor = null)
@@ -419,6 +572,11 @@ public class ActionQueueProcessor : MonoBehaviour
             audioSource.PlayOneShot(crowd_displeased);
         }
 
+        if (entity is Player && _isArenaLossSequenceActive)
+        {
+            return;
+        }
+
         showArenaMenu(false);
     }
 
@@ -470,8 +628,11 @@ public class ActionQueueProcessor : MonoBehaviour
 
     private void HandleSpecialAttackVisuals(GameObject go, Image img, Entity entity, IGameAction action)
     {
-        Sprite attackSprite = assetRegistry.GetSprite(entity.AttackSpriteId);
-        if (attackSprite == null) return;
+        Sprite attackSprite = ResolveSpecialAttackSprite(entity);
+        if (attackSprite == null)
+        {
+            return;
+        }
 
         Sprite idleSprite = img.sprite;
         var rect = go.GetComponent<RectTransform>();
@@ -499,6 +660,35 @@ public class ActionQueueProcessor : MonoBehaviour
             .Join(img.DOColor(Color.white, 0.15f))
             .OnComplete(() => img.sprite = idleSprite)
             .SetTarget(img);
+    }
+
+    private Sprite ResolveSpecialAttackSprite(Entity entity)
+    {
+        if (entity == null || assetRegistry == null)
+        {
+            return null;
+        }
+
+        if (!string.IsNullOrWhiteSpace(entity.SpecialAttackSpriteId))
+        {
+            Sprite specialSprite = assetRegistry.GetSprite(entity.SpecialAttackSpriteId);
+            if (specialSprite != null)
+            {
+                return specialSprite;
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(entity.AttackSpriteId))
+        {
+            Sprite attackSprite = assetRegistry.GetSprite(entity.AttackSpriteId);
+            if (attackSprite != null)
+            {
+                return attackSprite;
+            }
+        }
+
+        Debug.LogWarning($"[ActionQueueProcessor] No special or attack sprite found for {entity.Name}.");
+        return null;
     }
 
     private void UpdateHealth(Image healthBarActual, Image healthBarGhost, int currentHealth, int maxHealth, HealthBarAnimationType animationType)

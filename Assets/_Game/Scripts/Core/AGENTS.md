@@ -1,242 +1,93 @@
-\# AGENTS.md — Battle System
+# AGENTS.md - Battle System
 
+**Location:** `Assets/_Game/Scripts/Core/`
 
+## Purpose
 
-\*\*Location:\*\* `Assets/\_Game/Scripts/Core/`
+This folder owns the framework-agnostic battle model. The system is action-based and queue-driven:
 
+- Core code creates `IGameAction` instances and mutates state through them.
+- The Unity layer consumes the queue, plays presentation, and should not be the source of truth for battle state.
+- After each action resolves, `Battle.DetermineNextAction()` decides what happens next until a win or loss action ends the loop.
 
+## Core Invariants
 
-\---
+### `IGameAction`
 
+Every action exposes `Type`, `Actor`, `Target`, and `ApplyEffect()`.
 
+- Put observable state changes in `ApplyEffect()`.
+- Constructors may pre-resolve data that must stay stable while the action waits in the queue.
+- If queue-time data is snapshotted, make sure delayed execution cannot make it misleading.
 
-\## Architecture Overview
+### `Battle`
 
+`Battle` owns the combatants and current turn.
 
+- `DetermineNextAction()` is the battle flow controller.
+- `CurrentTurn = null` means the battle is over.
+- Let the queue processor drive progression; do not short-circuit the flow from arbitrary callers.
 
-The battle system is \*\*action-based and queue-driven\*\*. All game state changes happen in discrete `IGameAction` objects. The Unity layer (`ActionQueueProcessor`) consumes the queue and plays visuals/audio; it never mutates game state directly.
+### `Turn`
 
+`Turn` is intentionally lightweight: `Actor` acts on `Target`, and `IsPlayerTurn` is derived from the acting entity.
 
+## Responsibility Boundaries
 
-The flow is:
+### Combat math
 
-```
+Keep combat formulas in `CombatCalculator`.
 
-Player input → BattleManager creates IGameAction → ActionQueueProcessor enqueues it
+- Damage, hit chance, crit chance, defense, and defend reduction belong there.
+- If combat needs effective stats, read them through `CombatUtilities` so temporary modifiers stay centralized.
+- If tuning changes, prefer shared helpers or constants over action-specific math.
 
-→ ApplyEffect() mutates state → Battle.DetermineNextAction() returns the next action
+### Entities
 
-→ repeat until Win/Lose
+`Entity` owns shared combat state such as HP, mana, inventory, attributes, and defending state.
 
-```
+- `Player` adds progression, class-driven behavior, perks, and special-attack affordability.
+- `Monster` adds AI-specific behavior and combat identity.
+- `Entity.TakeDamage()` is the correct interception point for fatal-blow handling and similar last-second effects.
 
+### Resources
 
+- Mana is a caster-only concern. Physical classes should behave as if mana does not exist.
+- Max health derives from class/base health plus Constitution. Recalculate when those inputs change, but avoid overwriting serialized state on load unless that load path is intentionally rebuilding it.
 
-\---
+## Action Families
 
+The current action set covers the full battle loop:
 
+- Attack and special attack actions resolve shared combat flow, then fire the relevant perk events.
+- Defend, item, and yield actions mutate state and publish their own trigger points.
+- Turn-change actions advance the loop and handle upkeep such as perk durations and mana regen.
+- Win and loss actions handle battle-end consequences and events.
 
-\## Key Contracts
+Preserve this pattern when extending the system: core owns intent and state, Unity owns presentation, and cross-system hooks stay explicit.
 
+## Attack Flow
 
+Attack-style actions should keep this order of responsibility:
 
-\### `IGameAction`
+1. Gather perk or passive modifiers that affect resolution.
+2. Use `CombatCalculator` to resolve the combat outcome.
+3. In `ApplyEffect()`, publish hit/miss and follow-up events.
+4. Route damage through `Entity.TakeDamage()` so defend logic and fatal-blow interception stay centralized.
 
-Every action implements three properties and one method:
+## Extending The System
 
-\- `ActionType Type` — used by the Unity layer to look up sprites/audio
+When adding a new action:
 
-\- `Entity Actor` — who is performing the action
+1. Add or update the `IGameAction` implementation in `Assets/_Game/Scripts/Core/`.
+2. Extend `ActionType` if Unity needs a distinct presentation path.
+3. Keep state mutation in `ApplyEffect()`.
+4. Fire any needed `PerkTriggerEvent` values from the action itself.
+5. Update Unity-side visuals in `ActionQueueProcessor` or the equivalent presentation hook.
 
-\- `Entity Target` — who is receiving the action
+## Common Mistakes
 
-\- `void ApplyEffect()` — \*\*all game state changes live here\*\*
-
-
-
-\*\*Rule:\*\* Constructors may snapshot or pre-resolve data that should stay stable while the action sits in the queue, but observable state changes belong in `ApplyEffect()`.
-
-
-
-\### `Battle`
-
-Owns `Player1`, `Player2`, and `CurrentTurn`. After each action completes, `Battle.DetermineNextAction(action)` decides what fires next — monster AI, turn changes, win/lose. Setting `CurrentTurn = null` signals the battle is over.
-
-
-
-\### `Turn`
-
-A lightweight struct. `Actor` is who acts, `Target` is who they act on. `IsPlayerTurn` is true when `Actor` is a `Player`.
-
-
-
-\---
-
-
-
-\## Action Reference
-
-
-
-| Class | ActionType | What it does |
-
-|---|---|---|
-
-| `AttackAction` | Attack | Regular attack action built on the shared resolved-attack flow. Uses `CombatCalculator` and fires the relevant attack perk events. |
-
-| `SpecialAttackAction` | SpecialAttack | Special attack built on the same shared resolved-attack flow, with higher damage / lower accuracy and optional mana spend for mana-using classes. |
-
-| `DefendAction` | Defend | Sets `IsDefending = true` on actor. Fires `PlayerDefended` perk event. |
-
-| `ItemAction` | Item | Applies item effect, removes item from inventory. Fires `PlayerUsedItem` perk event. |
-
-| `YieldAction` | Yield | Fires `PlayerAttemptedYield` perk event. Unity layer handles the confirmation dialog. |
-
-| `ChangeTurnsAction` | ChangeTurns | Flips the active turn. Ticks perk durations. Regenerates caster mana. Fires `PlayerTurnStarted`/`Ended` events. |
-
-| `WinAction` | Win | Awards rewards, applies post-battle utility effects, advances arena rank, and fires `BattleWon`. |
-
-| `LoseAction` | Lose | Fires `BattleLost` so loss-reactive perks can run. |
-
-
-
-\---
-
-
-
-\## Combat Math (`CombatCalculator.cs`)
-
-
-
-All core combat formulas live in `CombatCalculator`. Keep damage, hit, crit, defense, and defend math centralized there.
-
-
-
-The calculator determines attack style, base damage, hit chance, crit chance, defense reduction, and defend reduction. It also reads effective combat stats through `CombatUtilities`, so player power-up attribute bonuses are folded into combat math centrally rather than in individual action classes.
-
-
-
-All tuning values are exposed as named constants in `CombatCalculator.cs`. Adjust those constants rather than spreading formula tweaks across multiple actions.
-
-
-
-\---
-
-
-
-\## Damage Pipeline (Attack)
-
-
-
-```
-
-shared attack constructor resolves outcome
-
-&#x20;   → passive / pre-hit triggered perk modifiers are gathered
-
-&#x20;   → `CombatCalculator` resolves damage, hit, crit, and defense reduction
-
-&#x20;   → `ApplyEffect()` handles hit or miss events
-
-&#x20;   → incoming monster-hit perks may reduce or nullify player damage
-
-&#x20;   → `Entity.TakeDamage()` applies defend reduction and `WouldDie` handling
-
-```
-
-
-
-\---
-
-
-
-\## Entities
-
-
-
-`Entity` is the base class for both `Player` and `Monster`. It owns HP, mana, inventory, attributes, and the `IsDefending` flag.
-
-
-
-\- `Player` adds: Level, Class, Gender, Perks, mana cost/regen helpers, `CanAffordSpecialAttack()`
-
-\- `Monster` adds: `AttackStyle`, `DetermineAction()` (\~25% special attack), sprite ID conventions
-
-
-
-`Entity.TakeDamage()` accepts an optional `wouldDieCheck` callback — this is how the Phoenix Heart perk intercepts a killing blow before HP reaches 0.
-
-
-
-\---
-
-
-
-\## Mana
-
-
-
-Mana is \*\*only relevant for caster classes\*\*. Physical classes have `MaxMana = 0` and are never affected.
-
-
-
-\- Defined per-class in `PlayerClass.GetManaProfile()`: pool size (from `classes.json`), cost per special, regen per turn
-
-\- `ChangeTurnsAction` regenerates mana each turn for casters
-
-\- `SpecialAttackAction` spends mana via `Player.TrySpendManaForSpecialAttack()` in `ApplyEffect()`
-
-\- `BattleManager` greys out the special button if `!player.CanAffordSpecialAttack()`
-
-\- The mana bar UI is hidden entirely for physical class players
-
-
-
-\---
-
-
-
-\## Health and CON
-
-
-
-`MaxHealth = classBaseHP + (CON \* 4)`. Each class tier has a base HP value defined in `CombatCalculator.GetClassBaseHP()`. Call `player.RecalculateMaxHealth()` whenever CON changes (level up, class change). Do \*\*not\*\* call it on load — the serialized value is the ground truth.
-
-
-
-\---
-
-
-
-\## Adding a New Action
-
-
-
-1\. Create a class implementing `IGameAction` in `Assets/\_Game/Scripts/Core/`
-
-2\. Add the new value to the `ActionType` enum
-
-3\. Resolve all randomness (hit/crit) in the constructor; mutate state in `ApplyEffect()`
-
-4\. Fire relevant `PerkTriggerEvent` values at the appropriate moments in `ApplyEffect()`
-
-5\. Handle the new `ActionType` in `ActionQueueProcessor.TriggerVisuals()` for Unity-side visuals
-
-
-
-\---
-
-
-
-\## Common Mistakes
-
-
-
-\- \*\*Don't read mutable global state in constructors unless the action is intentionally snapshotting queue-time state.\*\* Some actions do capture actor/target or resolved combat results up front; if you do this, make sure delayed execution cannot make the snapshot invalid.
-
-\- \*\*Don't put combat formulas outside `CombatCalculator`\*\* — the next developer will thank you.
-
-\- \*\*Don't call `Battle.DetermineNextAction()` manually\*\* — it's called by `ActionQueueProcessor` after each action completes via the `OnActionComplete` event.
-
-\- \*\*Perk events must be fired even on miss\*\* — many perks track consecutive misses or react to missed attacks. Don't skip perk calls when `!DidHit`.
-
+- Do not spread combat formulas across action classes.
+- Do not mutate battle state from Unity presentation code.
+- Do not call `Battle.DetermineNextAction()` from arbitrary code paths; let the queue lifecycle control it.
+- Do not skip perk or event hooks just because an attack missed; misses are still meaningful state transitions.

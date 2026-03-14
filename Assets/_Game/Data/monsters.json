@@ -13,11 +13,11 @@
         "hitSoundId": "GenericHit",
         "defeatSoundId": "GenericDefeat",
         "attributes": {
-            "Strength": 1,
-            "Constitution": 10,
-            "Magic": 1,
-            "Dexterity": 1,
-            "Luck": 1,
+            "Strength": 5,
+            "Constitution": 5,
+            "Magic": 5,
+            "Dexterity": 5,
+            "Luck": 5,
             "Defense": 1
         }
     },
@@ -56,12 +56,12 @@
         "hitSoundId": "GenericHit",
         "defeatSoundId": "GenericDefeat",
         "attributes": {
-            "Strength": 3,
-            "Constitution": 10,
-            "Magic": 3,
-            "Dexterity": 3,
-            "Luck": 2,
-            "Defense": 2
+            "Strength": 15,
+            "Constitution": 15,
+            "Magic": 15,
+            "Dexterity": 15,
+            "Luck": 15,
+            "Defense": 15
         }
     }
 ]

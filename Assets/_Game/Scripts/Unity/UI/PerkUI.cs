@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Core.Perks;
+using PocketSquire.Unity.UI;
 using System.Collections.Generic;
 using System.Linq;      
 
@@ -142,6 +143,7 @@ namespace PocketSquire.Arena.Unity.UI
         {
             var player = GameState.Player;
             if (player == null) return;
+            Perk perkToActivate = null;
 
             // 1. Validate if the action is allowed
             if (string.IsNullOrEmpty(perkId))
@@ -152,16 +154,24 @@ namespace PocketSquire.Arena.Unity.UI
                 if (player.Inventory.Slots.Count > Inventory.CalculateCapacity(futurePerks))
                 {
                     Debug.LogWarning($"Cannot remove perk {_assignedPerkId} due to inventory bounds. Current perks: {string.Join(", ", player.ActivePerks.Select(p => p.Id))}");
+                    ShowFailureReason(_loadedPerk, "Not enough inventory space to unequip this perk.");
                     PlayDenied();
                     return;
                 }
             }
             else
             {
-                var perkToActivate = GameWorld.GetPerkById(perkId);
-                if (!player.CanActivatePerk(_assignedPerkId, perkToActivate))
+                perkToActivate = GameWorld.GetPerkById(perkId);
+                var activationAttempt = player.CanActivatePerk(new PerkActivationRequest
+                {
+                    PerkToRemoveId = _assignedPerkId,
+                    PerkToActivate = perkToActivate
+                });
+
+                if (!activationAttempt.Succeeded)
                 {
                     Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActivePerks.Select(p => p.Id))}");
+                    ShowFailureReason(perkToActivate, activationAttempt.FailureReason);
                     PlayDenied();
                     return;
                 }
@@ -187,6 +197,7 @@ namespace PocketSquire.Arena.Unity.UI
                 if (!player.TryActivatePerk(perkId))
                 {
                     Debug.LogWarning($"Cannot activate perk {perkId}. Current perks: {string.Join(", ", player.ActivePerks.Select(p => p.Id))}");
+                    ShowFailureReason(perkToActivate, "Unable to activate this perk.");
                     PlayDenied();
                     
                     // Restore the previous perk if activation failed
@@ -201,6 +212,7 @@ namespace PocketSquire.Arena.Unity.UI
             }
 
             // 4. Finalize
+            RefreshPlayerMenu();
             PlaySelectionMade();
             SaveGame();
         }
@@ -268,6 +280,27 @@ namespace PocketSquire.Arena.Unity.UI
         {
             if (GameState.SelectedSaveSlot != SaveSlots.Unknown)
                 SaveSystem.SaveGame(GameState.SelectedSaveSlot);
+        }
+
+        private void RefreshPlayerMenu()
+        {
+            var playerMenu = GetComponentInParent<PlayerMenuController>(includeInactive: true);
+            if (playerMenu == null)
+            {
+                playerMenu = FindFirstObjectByType<PlayerMenuController>();
+            }
+
+            playerMenu?.Refresh();
+        }
+
+        private void ShowFailureReason(Perk perk, string failureReason)
+        {
+            if (perkDescriptionText == null || string.IsNullOrEmpty(failureReason))
+            {
+                return;
+            }
+
+            perkDescriptionText.text = $"Cannot activate: {failureReason}";
         }
     }
 }

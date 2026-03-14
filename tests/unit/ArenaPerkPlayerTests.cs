@@ -103,13 +103,18 @@ namespace PocketSquire.Arena.Tests
             var player = MakeSquireWithGold();
             var perkToRemove = "satchel_tier_1";
             var perkToActivate = MakePerk("satchel_tier_2"); // Going to a bigger bag
+            player.AcquiredPerks.Add(perkToActivate);
 
             player.Inventory.AddItem(1, 1);
             player.Inventory.AddItem(2, 1);
 
-            bool canSwap = player.CanActivatePerk(perkToRemove, perkToActivate);
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToRemoveId = perkToRemove,
+                PerkToActivate = perkToActivate
+            });
 
-            Assert.That(canSwap, Is.True);
+            Assert.That(result.Succeeded, Is.True);
         }
 
         [Test]
@@ -131,9 +136,16 @@ namespace PocketSquire.Arena.Tests
             // For dropping capacity on removal, PerkUI handles the explicit check.
             // But if we test CanActivatePerk, we can simulate swapping from tier 1 to a non-bag perk.
             var perkToActivate = MakePerk("combat_perk_1");
-            bool canSwap = player.CanActivatePerk("satchel_tier_1", perkToActivate);
+            player.AcquiredPerks.Add(perkToActivate);
 
-            Assert.That(canSwap, Is.False, "Should prevent removing bag when inventory has 3 slots filled.");
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToRemoveId = "satchel_tier_1",
+                PerkToActivate = perkToActivate
+            });
+
+            Assert.That(result.Succeeded, Is.False, "Should prevent removing bag when inventory has 3 slots filled.");
+            Assert.That(result.FailureReason, Is.EqualTo("Not enough inventory space to activate this perk."));
         }
 
         [Test]
@@ -152,9 +164,14 @@ namespace PocketSquire.Arena.Tests
 
             // Upgrading from tier 1 (3 slots) to tier 2 (4 slots).
             var perkToActivate = MakePerk("satchel_tier_2");
-            bool canSwap = player.CanActivatePerk("satchel_tier_1", perkToActivate);
+            player.AcquiredPerks.Add(perkToActivate);
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToRemoveId = "satchel_tier_1",
+                PerkToActivate = perkToActivate
+            });
 
-            Assert.That(canSwap, Is.True, "Should allow upgrading bag from 3 to 4 slots even when 3 are filled.");
+            Assert.That(result.Succeeded, Is.True, "Should allow upgrading bag from 3 to 4 slots even when 3 are filled.");
         }
 
         [Test]
@@ -166,9 +183,14 @@ namespace PocketSquire.Arena.Tests
             player.Inventory.UpdateCapacity(player.ActivePerks);
 
             var perkToActivate = MakePerk("satchel_tier_2");
-            bool canSwap = player.CanActivatePerk(null, perkToActivate);
+            player.AcquiredPerks.Add(perkToActivate);
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToActivate = perkToActivate
+            });
 
-            Assert.That(canSwap, Is.False, "Should prevent having both tier 1 and tier 2 satchels active at the same time.");
+            Assert.That(result.Succeeded, Is.False, "Should prevent having both tier 1 and tier 2 satchels active at the same time.");
+            Assert.That(result.FailureReason, Is.EqualTo("Only one satchel perk can be active."));
         }
 
         [Test]
@@ -181,9 +203,51 @@ namespace PocketSquire.Arena.Tests
 
             // Swapping out the existing satchel for another one (which is also an upgrade so capacity is fine).
             var perkToActivate = MakePerk("satchel_tier_2");
-            bool canSwap = player.CanActivatePerk("satchel_tier_1", perkToActivate);
+            player.AcquiredPerks.Add(perkToActivate);
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToRemoveId = "satchel_tier_1",
+                PerkToActivate = perkToActivate
+            });
 
-            Assert.That(canSwap, Is.True, "Should allow swapping a satchel for another satchel.");
+            Assert.That(result.Succeeded, Is.True, "Should allow swapping a satchel for another satchel.");
+        }
+
+        [Test]
+        public void CanActivatePerk_BlocksWhenLevelTooLow_ReturnsReadableReason()
+        {
+            var player = MakeSquireWithGold();
+            var perkToActivate = MakePerk("level_locked");
+            perkToActivate.Prerequisites = new PerkPrerequisites { MinLevel = 5 };
+            player.AcquiredPerks.Add(perkToActivate);
+
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToActivate = perkToActivate
+            });
+
+            Assert.That(result.Succeeded, Is.False);
+            Assert.That(result.FailureReason, Is.EqualTo("Requires Lv5."));
+        }
+
+        [Test]
+        public void CanActivatePerk_BlocksWhenRequiredPerkMissing_ReturnsReadableReason()
+        {
+            var player = MakeSquireWithGold();
+            var perkToActivate = MakePerk("requires_keen_eye");
+            perkToActivate.Prerequisites = new PerkPrerequisites
+            {
+                RequiredPerks = new System.Collections.Generic.List<string> { "keen_eye" }
+            };
+            player.AcquiredPerks.Add(perkToActivate);
+
+            var result = player.CanActivatePerk(new PerkActivationRequest
+            {
+                PerkToActivate = perkToActivate
+            });
+
+            Assert.That(result.Succeeded, Is.False);
+            Assert.That(result.FailureReason, Is.EqualTo("Requires Keen Eye."));
         }
 
         // --- TryActivatePerk ---
@@ -241,6 +305,40 @@ namespace PocketSquire.Arena.Tests
             bool second = player.TryActivatePerk(perk.Id);
 
             Assert.That(second, Is.False);
+        }
+
+        [Test]
+        public void TryActivatePerk_PrerequisitesNotMet_ReturnsFalse()
+        {
+            var player = MakeSquireWithGold();
+            var perk = MakePerk("locked_by_level");
+            perk.Prerequisites = new PerkPrerequisites { MinLevel = 5 };
+            player.TryPurchasePerk(perk);
+
+            bool result = player.TryActivatePerk(perk.Id);
+
+            Assert.That(result, Is.False);
+            Assert.That(player.ActivePerks.Any(p => p.Id == perk.Id), Is.False);
+        }
+
+        [Test]
+        public void TryActivatePerk_Satchel_UpdatesInventoryCapacityImmediately()
+        {
+            var player = MakeSquireWithGold();
+            var satchel = MakePerk("satchel_tier_1");
+            player.TryPurchasePerk(satchel);
+
+            bool activated = player.TryActivatePerk(satchel.Id);
+
+            Assert.That(activated, Is.True);
+            Assert.That(player.Inventory.MaxSlots, Is.EqualTo(3));
+            Assert.That(player.Inventory.MaxStackSize, Is.EqualTo(3));
+
+            bool deactivated = player.TryDeactivatePerk(satchel.Id);
+
+            Assert.That(deactivated, Is.True);
+            Assert.That(player.Inventory.MaxSlots, Is.EqualTo(2));
+            Assert.That(player.Inventory.MaxStackSize, Is.EqualTo(2));
         }
 
         [Test]
@@ -306,7 +404,8 @@ namespace PocketSquire.Arena.Tests
         {
             var player = MakeSquireWithGold(1000);
             var perk = GameWorld.GetPerkById("satchel_tier_1");
-            player.TryPurchasePerk(perk);
+            Assert.That(perk, Is.Not.Null);
+            player.TryPurchasePerk(perk!);
             player.TryActivatePerk(perk.Id);
 
             // Serialise + deserialise

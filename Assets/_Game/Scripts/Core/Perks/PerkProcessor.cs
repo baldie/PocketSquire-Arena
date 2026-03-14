@@ -122,6 +122,9 @@ namespace PocketSquire.Arena.Core.Perks
                     case PerkEffectType.IncreaseGoldGain:
                         result.GoldGainMultiplier *= (1f + perk.Value / 100f);
                         break;
+                    case PerkEffectType.KeepMoney:
+                        result.KeepMoneyPercent += perk.Value;
+                        break;
                 }
             }
 

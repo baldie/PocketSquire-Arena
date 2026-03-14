@@ -1,341 +1,111 @@
-\# AGENTS.md — Power-Ups System
+# AGENTS.md - Power-Ups System
 
+**Location:** `Assets/_Game/Scripts/Core/PowerUps/`
 
+## Purpose
 
-\*\*Location:\*\* `Assets/\_Game/Scripts/Core/PowerUps/`
+Power-ups are run-scoped upgrades offered after arena victories. They are distinct from:
 
+- Perks, which are purchased and persist across runs.
+- Stat points, which are permanent progression choices.
 
+Power-ups belong to the current `Run`, not the base `Player`, and should be treated as temporary modifiers layered on top of core progression.
 
-\---
+## Mental Model
 
+The system is component-driven:
 
+- A `PowerUp` wraps a single `PowerUpComponent`.
+- The component defines the actual effect.
+- A `UniqueKey` identifies the effect family for duplicate detection and rank-up handling.
 
-\## What Power-Ups Are
+Current power-ups mainly fall into four buckets:
 
+- Attribute modifiers that improve the player for the run.
+- Loot modifiers that change rewards.
+- Utility effects that apply after battle.
+- Monster debuffs that apply at battle start.
 
+## Core Invariants
 
-Power-ups are \*\*procedurally generated, run-scoped upgrades\*\* presented as card choices after arena victories. They are distinct from Perks (purchased from vendors, persist across runs) and stat points (permanent, from level-up).
+- Power-ups are generated at runtime, not authored as static JSON content.
+- Offers should contain distinct choices.
+- Re-selecting the same power-up family should rank it up instead of storing duplicate effects.
+- Rank and rarity are behavioral inputs, not cosmetic labels.
 
+## Ownership Boundaries
 
+### `PowerUpCollection`
 
-Key characteristics:
+`Run.PowerUps` is the source of truth for the current run.
 
-\- \*\*Exist only for the duration of one run.\*\* They are stored in `Run.PowerUps` (`PowerUpCollection`), not on `Player`.
+- It owns acquisition, duplicate handling, and lookups.
+- It is also the main API for applying battle-start debuffs, post-battle utility effects, and reward modifiers.
 
-\- \*\*Generated at runtime\*\*, not defined in JSON. The factory selects from templates, rolls rarity, and assigns rank.
+Call into the collection instead of re-implementing ownership or rank logic at the call site.
 
-\- \*\*Three choices offered at a time.\*\* The player picks one. Picking the same type twice upgrades its rank (I → II → III).
+### `PowerUpFactory`
 
-\- \*\*Apply their effects externally\*\* — they are wired into battle start, combat stat resolution, reward calculation, and loot selection flows rather than being stored permanently on `Player`.
+`PowerUpFactory` owns offer generation.
 
+- It should produce the offer set and apply weighting rules.
+- Context such as arena level, player luck, health state, and already-owned power-ups belongs in the generation input.
+- New power-up families should usually be introduced by extending the template list, not by rewriting the factory flow.
 
+### Scaling
 
-\---
+Keep scaling logic centralized.
 
+- Rank, rarity, and arena progression should flow through shared scaling helpers.
+- If numbers need retuning, change the scaling rules in one place instead of hardcoding adjustments into components or callers.
 
+### Effective player stats
 
-\## Component Architecture
+Power-ups should not permanently mutate base player progression data.
 
+- Use `PlayerWithPowerUps` or `CombatUtilities` to read effective run-time attributes.
+- Treat run bonuses as overlays, not writes into `Player.Attributes`.
 
+## Integration Points
 
-Power-ups follow a \*\*component pattern\*\*. A `PowerUp` is a wrapper around a single `PowerUpComponent`. The component defines the actual effect.
+Power-ups affect the game by being read at the right time:
 
+- Battle setup applies monster debuffs.
+- Combat math reads effective player attributes.
+- Reward resolution reads gold or XP modifiers.
+- Post-battle flow applies utility effects.
 
+This system is intentionally pull-based: owning a power-up does nothing unless the relevant caller reads and applies it.
 
-```
+## Generation Guidance
 
-PowerUp
+When changing offer generation:
 
-&#x20; └── PowerUpComponent (abstract base)
+- Keep the contract simple and predictable: generate a small set of distinct choices.
+- Let generation context influence weighting, not downstream mutation.
+- Exclude or gracefully handle options that are already maxed out.
+- Keep a safe fallback path so offer generation never fails outright.
 
-&#x20;       ├── AttributeModifierComponent   — boosts a player stat
+## Extending The System
 
-&#x20;       ├── LootModifierComponent        — increases gold or XP rewards
+When adding a new power-up type:
 
-&#x20;       ├── UtilityComponent             — heals player after each battle
+1. Decide whether it fits an existing `PowerUpComponent` subclass.
+2. If not, add a new component type with the behavior and metadata it needs.
+3. Add a new factory or template entry so it can appear in offers.
+4. Wire its effect into the correct gameplay read point.
+5. If it changes how effective stats are computed, keep that logic centralized.
 
-&#x20;       └── MonsterDebuffComponent       — reduces a monster stat at fight start
+## Persistence
 
-```
+Power-ups are run-scoped. Do not assume they survive outside the current run unless explicit run persistence is added.
 
+If persistence is introduced later, keep subtype serialization and collection reconstruction as first-class design concerns rather than bolting them on informally.
 
+## Common Mistakes
 
-Each component type has a `UniqueKey` (e.g., `"ATTR\_STRENGTH"`, `"LOOT\_GOLD"`). This key is how `PowerUpCollection` identifies duplicates for rank-up handling.
-
-
-
-\---
-
-
-
-\## Rank and Rarity
-
-
-
-Every power-up has two scaling axes:
-
-
-
-\*\*Rank\*\* (`PowerUpRank`): I, II, III
-
-\- Gained by picking the same power-up type again
-
-\- Rank multipliers: I = 1.0×, II = 1.5×, III = 2.0×
-
-
-
-\*\*Rarity\*\* (`Rarity`): Common, Rare, Epic, Legendary
-
-\- Rolled at generation time based on player Luck stat
-
-\- Rarity multipliers: Common = 1.0×, Rare = 1.5×, Epic = 2.0×, Legendary = 3.0×
-
-
-
-\*\*Scaling formula\*\* (in `PowerUpScaling.ComputeValue()`):
-
-```
-
-value = BaseValue × RarityMultiplier × RankMultiplier × (1 + ln(arenaLevel + 1))
-
-```
-
-
-
-The `arenaLevel` factor gives power-ups that grow with the run's difficulty without becoming overwhelming (logarithmic, not linear).
-
-
-
-All multiplier constants live in `PowerUpScaling.cs`. Change values there only.
-
-
-
-\---
-
-
-
-\## `PowerUpCollection`
-
-
-
-Stored on `Run.PowerUps`. This is the authoritative list of what the player has for this run.
-
-
-
-Key methods:
-
-\- `Add(powerUp)` — if the player already owns this `UniqueKey`, increments rank instead of adding a duplicate
-
-\- `Has(uniqueKey)` — check ownership
-
-\- `GetRank(uniqueKey)` — returns current rank or null
-
-\- `HasAtMaxRank(uniqueKey)` — returns true if at Rank III
-
-\- `ApplyMonsterDebuffs(monster, arenaLevel)` — call this before each battle starts, passing the upcoming monster
-
-\- `ApplyUtilityEffects(player, arenaLevel)` — call this after each battle ends
-
-\- `GetGoldBonusPercent(arenaLevel)` / `GetXpBonusPercent(arenaLevel)` — read these in `WinAction` or wherever rewards are calculated
-
-
-
-\---
-
-
-
-\## `PowerUpFactory` — Generation
-
-
-
-`PowerUpFactory.Generate(context, rng)` returns exactly 3 `PowerUp` choices. Never returns duplicates within the same offer.
-
-
-
-\*\*`PowerUpGenerationContext`\*\* carries:
-
-\- `ArenaLevel` — affects scaling and is passed to `ComputeValue`
-
-\- `PlayerLuck` — shifts rarity distribution toward rarer tiers
-
-\- `PlayerHealthPercent` — used for context-aware weighting (low HP boosts `UtilityComponent` heal weight)
-
-\- `OwnedPowerUps` — used to determine rank-up vs new acquisition, and to exclude maxed-out types from the offer
-
-
-
-\*\*Template system:\*\* `\_templates` is a static list of `ComponentTemplate` entries, each with a `UniqueKey`, a `BaseWeight`, and a `Factory` lambda. The factory creates the component with the rolled rarity and rank. To add a new power-up type, add an entry to this list — no other factory changes needed.
-
-
-
-\*\*Context-aware weighting:\*\* Currently only one rule exists — `UTIL\_PARTIALHEAL` weight is tripled when player HP is below 25%. Add new contextual rules in `SelectWeightedTemplate()` following the same pattern.
-
-
-
-\*\*Fallback:\*\* If 10 reroll attempts all fail (e.g., every template is maxed out), the factory returns a Single Coin — a flat +1 gold `LootModifierComponent`. This should be extremely rare in practice.
-
-
-
-\---
-
-
-
-\## Component Reference
-
-
-
-\### `AttributeModifierComponent`
-
-Boosts one of: Strength, Constitution, Magic, Dexterity, Luck, Defense.
-
-
-
-Applied via `PlayerWithPowerUps.EffectiveAttributes` — it computes a modified `Attributes` struct without mutating the base `Player`. Use this wrapper class when passing player stats into combat calculations during a run.
-
-
-
-`UniqueKey` format: `"ATTR\_STRENGTH"`, `"ATTR\_DEXTERITY"`, etc.
-
-
-
-\### `LootModifierComponent`
-
-Increases gold or XP rewards by a percentage (or flat +1 if `IsFlatBonus = true` for the fallback coin).
-
-
-
-Read via `PowerUpCollection.GetGoldBonusPercent(arenaLevel)` and `GetXpBonusPercent(arenaLevel)`. Apply in `WinAction.ApplyEffect()`:
-
-```
-
-int goldGained = (int)(Target.Gold \* (1f + run.PowerUps.GetGoldBonusPercent(arenaLevel) / 100f));
-
-```
-
-
-
-`UniqueKey` format: `"LOOT\_GOLD"`, `"LOOT\_EXPERIENCE"`, `"COIN\_FALLBACK"`.
-
-
-
-\### `UtilityComponent`
-
-Currently only one type: `PartialHeal` — restores a percentage of max HP after each battle.
-
-
-
-Normal recurring behavior is wired in `WinAction.ApplyEffect()` via `PowerUpCollection.ApplyUtilityEffects(player, arenaLevel)`.
-
-Additionally, if the player selects a new utility power-up from the loot screen after a win, the newly selected power-up is also applied immediately in `LootScript` so the heal is felt before the next battle begins.
-
-
-
-`UniqueKey` format: `"UTIL\_PARTIALHEAL"`.
-
-
-
-\### `MonsterDebuffComponent`
-
-Reduces one monster attribute at the start of a fight. The reduction has diminishing returns via `ComputeValue` and is floored at 1 (monsters can never have 0 in any stat).
-
-
-
-Monster debuffs are currently wired inside the `Battle` constructor. Do not pre-apply them before creating `Battle`, or the monster will be debuffed twice.
-
-
-
-`UniqueKey` format: `"DEBUFF\_STRENGTH"`, `"DEBUFF\_DEFENSE"`, etc.
-
-
-
-\---
-
-
-
-\## `PlayerWithPowerUps`
-
-
-
-A \*\*non-mutating wrapper\*\* around `Player` that computes effective attributes with all `AttributeModifierComponent` bonuses applied. It does not change the base `Player.Attributes`.
-
-
-
-Usage pattern:
-
-```
-
-var attrs = CombatUtilities.GetEffectiveAttributes(entity);
-
-// Combat code should read effective attributes through CombatUtilities.
-// Instantiate PlayerWithPowerUps directly only if you specifically need the wrapper.
-
-```
-
-
-
-The result is cached. Call `InvalidateCache()` if power-ups change mid-calculation (this should not happen in normal flow, but the method exists for safety).
-
-
-
-\*\*Do not\*\* permanently write power-up bonuses into `Player.Attributes`. They are run-scoped and must not persist to saves.
-
-
-
-\---
-
-
-
-\## Adding a New Power-Up Type
-
-
-
-1\. Decide if it fits an existing `PowerUpComponent` subclass. If yes, just add a template entry to `PowerUpFactory.\_templates`.
-
-2\. If the effect is genuinely new, create a new subclass of `PowerUpComponent`:
-
-&#x20;  - Implement all abstract properties: `UniqueKey`, `IconId`, `DisplayName`, `Description`
-
-&#x20;  - Add the effect logic (apply to monster, apply to player, or expose a computed value)
-
-&#x20;  - Add a new `PowerUpComponentType` enum value
-
-3\. Add the template entry to `PowerUpFactory.\_templates` with an appropriate `BaseWeight`
-
-4\. Wire the effect into the game loop — see the "where to call" notes in each component section above
-
-
-
-\---
-
-
-
-\## Persistence
-
-
-
-Power-ups live on `Run`, which is \*\*not currently serialized to a save file\*\*. A run is started fresh each time. If run persistence is added in the future:
-
-\- `PowerUpCollection` is `\[Serializable]` on the class but `\_powerUps` is a `Dictionary` — a custom JSON converter will be needed since Newtonsoft handles dictionaries but the abstract `PowerUpComponent` subtype requires a type discriminator
-
-\- Until run saves are implemented, do not rely on power-up state surviving an app restart
-
-
-
-\---
-
-
-
-\## Common Mistakes
-
-
-
-\- \*\*Don't mutate `Player.Attributes` with power-up values.\*\* Use `PlayerWithPowerUps` to compute effective stats for battle. The base player stats are a permanent record; run bonuses are transient.
-
-\- \*\*Don't manually pre-apply `ApplyMonsterDebuffs` before creating `Battle`.\*\* The `Battle` constructor already applies monster debuffs once for the current run. Calling it yourself as well will double-debuff the monster.
-
-\- \*\*Don't cache `PlayerWithPowerUps` across arena levels.\*\* `arenaLevel` affects scaling. Create a new instance for each battle.
-
-\- \*\*`PowerUpCollection.Add()` handles rank-up automatically.\*\* Do not check `Has()` before calling `Add()` — the collection manages this itself. Just call `Add` with the chosen power-up.
-
-\- \*\*`Rarity` and `Rank` are live inputs to `ComputeValue()`.\*\* They are not cosmetic-only fields. Mutating them after construction will change both behavior and display, so treat generated power-up components as immutable except for the intentional rank-up flow inside `PowerUpCollection.Add()`.
-
+- Do not write power-up bonuses into permanent player stats.
+- Do not pre-apply battle-start debuffs if battle setup already owns that responsibility.
+- Do not bypass `PowerUpCollection.Add()` with manual duplicate checks; rank-up behavior should stay centralized.
+- Do not treat rank or rarity as display-only fields if scaling depends on them.
+- Do not cache effective-attribute wrappers across contexts where arena level or owned power-ups may have changed.

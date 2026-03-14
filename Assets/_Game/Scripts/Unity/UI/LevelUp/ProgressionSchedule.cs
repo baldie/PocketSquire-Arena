@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PocketSquire.Arena.Core.LevelUp;
-using PocketSquire.Arena.Core.LevelUp;
 using PocketSquire.Arena.Core.Perks;
 using PocketSquire.Arena.Core;
 namespace PocketSquire.Arena.Unity.LevelUp

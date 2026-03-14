@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using PocketSquire.Arena.Core.Town;
+using PocketSquire.Arena.Core;
 using PocketSquire.Arena.Unity.UI;
 using DG.Tweening;
 using System.Collections;
@@ -234,6 +235,9 @@ namespace PocketSquire.Arena.Unity.Town
             }
 
             StartCoroutine(TransitionToTownCoroutine());
+
+            // Save the game in case the player bought anything in the shop
+            SaveSystem.SaveGame(GameState.SelectedSaveSlot);
         }
 
         private IEnumerator TransitionToTownCoroutine()

@@ -1,179 +1,119 @@
-# AGENTS.md — Perks System
+# AGENTS.md - Perks System
 
 **Location:** `Assets/_Game/Scripts/Core/Perks/`
 
----
+## Purpose
 
-## What Perks Are
+Perks are persistent upgrades the player acquires in town and activates into limited slots. They are distinct from:
 
-Perks are **persistent, purchasable upgrades** the player buys from vendors in town and equips to active slots. Their definitions live in `Assets/_Game/Data/arena_perks.json` and are loaded into `GameWorld.AllPerks`. Effect resolution is centered in `PerkProcessor`, while event wiring and activation rules live in the surrounding core and Unity flow.
+- Power-ups, which are run-scoped and generated after arena wins.
+- Stat points, which are permanent progression allocations.
 
-Perks are distinct from **Power-Ups** (run-based procedural cards) and **stat points** (level-up allocations). See the PowerUps AGENTS.md for the other system.
+Perk definitions live in `Assets/_Game/Data/arena_perks.json`, runtime state lives on `Player`, and effect resolution is centered in `PerkProcessor`.
 
----
+## Mental Model
 
-## Two Perk Types
+There are two perk categories:
 
-### `Passive`
-Always-on modifiers. Read once per action via `PerkProcessor.GetPassiveModifiers(player)`. No trigger event, no state tracking. Examples: `keen_eye` (+hit chance), `battle_hardened` (damage reduction), `treasure_hunter` (+gold gain).
+- `Passive`: always-on modifiers that are read when a system asks for them.
+- `Triggered`: effects that listen for a `PerkTriggerEvent` and rely on runtime state such as duration, stacks, or once-per-battle/run flags.
 
-### `Triggered`
-Fire in response to a specific `PerkTriggerEvent`. Have full state tracking (stacks, duration, once-per-battle flags). Examples: `second_wind` (heal at low HP), `warriors_resolve` (stack damage on consecutive hits), `phoenix_heart` (survive killing blow once per run).
+Treat perks as a mostly data-driven system with explicit wiring. Data defines what a perk wants to do, but code still decides when events fire, how effects are applied, and where returned results are consumed.
 
----
+## Ownership Boundaries
 
-## Data Model (`Perk.cs`)
+### `PerkProcessor`
 
-Every perk is a flat JSON object. Key fields:
+`PerkProcessor` is the central resolver.
 
-| Field | Purpose |
-|---|---|
-| `id` | Unique string key. Used everywhere as the canonical reference. |
-| `type` | `"Passive"` or `"Triggered"` |
-| `soldBy` | Which vendor sells it: `Shopkeeper`, `Wizard`, `FightersBlacksmith`, `ArcheryTrainer` |
-| `event` | `PerkTriggerEvent` that activates this perk (Triggered only) |
-| `effect` | `PerkEffectType` describing what happens when triggered |
-| `value` | Numeric magnitude of the effect |
-| `isPercent` | If true, `value` is treated as a percentage of max HP/damage rather than a flat amount |
-| `procPercent` | 0–100 chance the effect fires when triggered. 100 = always. |
-| `threshold` | HP% ceiling — perk only fires when player HP is below this value |
-| `oncePerBattle` | Effect fires at most once per battle |
-| `oncePerRun` | Effect fires at most once per run |
-| `consumeOnUse` | Effect is consumed after firing (like a one-shot) |
-| `maxStacks` | Maximum number of stacks for stack-based effects |
-| `consecutiveCount` | How many consecutive triggers required before the effect fires |
-| `resetOn` | `PerkTriggerEvent` that resets the consecutive counter |
-| `duration` | How many turns a buff/debuff effect lasts |
-| `prerequisites.minLevel` | Player must be at least this level to activate the perk |
-| `prerequisites.class` | Class restriction checked by activation logic |
-| `prerequisites.requiredPerks` | List of perk IDs the player must already own |
+- It is stateless; long-lived perk state does not live there.
+- It reads `player.ActivePerks` and `Player.PerkStates`.
+- It applies some immediate effects directly and returns a `PerkProcessResult` for callers to honor.
 
----
+### `PerkState`
 
-## Perk Lifecycle
+`PerkState` is runtime-only and exists per active perk.
 
-```
-Player buys perk (TryPurchasePerk)
-    → added to Player.AcquiredPerks (owned, not yet active)
+- Use it for stacks, durations, consecutive counters, once-per-battle/run flags, and other transient activation state.
+- Rebuild it from active perks after loading save data via `InitializePerkStates()`.
 
-Player activates perk (TryActivatePerk)
-    → added to Player.ActivePerks
-    → PerkState created in Player.PerkStates[perkId]
-    → Inventory capacity recalculated (satchel perks)
+### `PerkProcessResult`
 
-Battle starts
-    → `Battle` setup resets battle-scoped perk state
+`PerkProcessResult` is the contract between perk resolution and callers.
 
-Each action fires
-    → PerkProcessor.ProcessEvent(triggerEvent, player, context)
-    → PerkProcessor.GetPassiveModifiers(player) where passive reads are needed
+- Use it for values the caller must still apply, such as combat modifiers, reward modifiers, or damage-interception flags.
+- If Unity or another caller needs to react to a perk result, add a field here rather than bypassing the processor contract.
 
-Turn changes
-    → PerkProcessor.TickDuration() — decrements RemainingDuration on all states
+### `PerkContext`
 
-Run ends (player returns home)
-    → PerkProcessor.ResetPerksForRun() — clears run-scoped state including HasTriggeredThisRun
+Create a fresh `PerkContext` per `ProcessEvent()` call.
 
-Save load
-    → `GameState.LoadFromSaveData()` rebuilds runtime perk state via `InitializePerkStates()`
-```
+- It should carry only the action-specific data needed for gating or resolution.
+- Do not reuse a context instance across separate events.
 
----
+## Lifecycle
 
-## `PerkProcessor.cs` — Central Effect Resolution
+The high-level perk flow is:
 
-`PerkProcessor` is a **stateless static class**. It reads active perk definitions and runtime state from the player and returns aggregated results while also applying certain immediate effects directly to the player. It never owns long-lived state itself.
+1. Purchase adds a perk to owned/acquired data.
+2. Activation moves it into the active set and creates runtime state.
+3. Battle setup resets battle-scoped state.
+4. Actions and turn changes fire events into `PerkProcessor`.
+5. Returning home resets run-scoped state.
+6. Loading a save must rebuild runtime state from active perks.
 
-### `ProcessEvent(triggerEvent, player, context)`
-Iterates `player.ActivePerks`, finds Triggered perks matching `triggerEvent`, runs all gate checks, then calls `ApplyEffect()` for those that pass. Returns a `PerkProcessResult` aggregating all effects from this call.
+## Activation Rules
 
-**Gate checks run in this order:**
-1. Perk type must be `Triggered`
-2. `TriggerEvent` must match
-3. `OncePerBattle` — skip if already triggered this battle
-4. `OncePerRun` — skip if already triggered this run
-5. `ConsumeOnUse` — skip if already consumed this battle
-6. `Threshold` — skip if player HP% is not below threshold
-7. `ConsecutiveCount` — increment counter; skip if not yet reached
-8. `ProcPercent` — random roll; skip if fails
+Keep activation checks in player-facing APIs such as `Player.CanActivatePerk()` and `TryActivatePerk()`, not in UI code.
 
-### `GetPassiveModifiers(player)`
-Iterates `player.ActivePerks`, collects all Passive perk contributions into a single `PerkProcessResult`. It is used by combat resolution and other reward / economy flows that need passive modifiers.
+Important boundaries:
 
----
+- Slot limits are class-tier driven.
+- Satchel-style perks affect inventory capacity, not perk slot count.
+- Prerequisites such as level, class, or required perks should be enforced through the player/perk activation flow, not duplicated ad hoc.
 
-## `PerkProcessResult`
+## Event Processing
 
-The return value of any `PerkProcessor` call. Some effects are applied immediately inside `PerkProcessor` itself (for example healing, mana restore, or max-health changes), while other flags are returned for callers to honor during combat and reward resolution.
+`ProcessEvent()` should stay predictable:
 
-Key fields agents should know:
-- `SurviveFatalBlow` — checked inside `Entity.TakeDamage()` callback
-- `NullifyDamage` — checked in the attack action before calling `TakeDamage`
-- `GuaranteedHit` — checked during shared attack resolution before hit roll
-- `DamageBuffMultiplier` / `DamageReductionMultiplier` — applied to damage before `TakeDamage`
-- `GoldGainMultiplier` — applied in `WinAction` when awarding gold
-- `HitChanceBonusPercent` / `CritChanceBonusPercent` — added to calculated values in `CombatCalculator`
+- Match the correct perk type and trigger event first.
+- Then apply gating such as once-per-battle, once-per-run, consumed state, thresholds, streak requirements, and proc chance.
+- Finally apply the perk effect and aggregate the result.
 
----
+The exact set of events can evolve. What matters is that events are fired by the surrounding battle/action flow, not invented silently inside `PerkProcessor`.
 
-## `PerkState`
+## Wiring Rules
 
-Runtime-only (never serialized). One exists per active perk in `Player.PerkStates`. Rebuilt from `Player.ActivePerks` by `InitializePerkStates()` on game load.
+- Passive effects must be explicitly read by the systems that care about them.
+- Triggered effects only matter if some caller fires the relevant `PerkTriggerEvent`.
+- Adding a new perk effect often requires changes in more than one place: data, enum values if needed, processor handling, event firing, and caller-side consumption of the returned result.
 
-Fields: `CurrentStacks`, `RemainingDuration`, `HasTriggeredThisBattle`, `HasTriggeredThisRun`, `ConsecutiveCounter`, `ConsumedThisBattle`.
+## Data Guidance
 
----
+The JSON schema should stay focused on durable concepts:
 
-## `PerkContext`
+- Identity and vendor/source.
+- Passive vs triggered behavior.
+- Effect type and value data.
+- Gating and activation rules such as thresholds, proc chance, and prerequisites.
+- Optional runtime behaviors such as stacks, durations, streaks, or single-use flags.
 
-Passed into every `ProcessEvent` call. Carries contextual data the processor needs:
-- `Damage` — damage relevant to this action
-- `PlayerHpPercent` — current HP as 0–100 integer (used for threshold checks)
-- `DidHit`, `IsCrit` — attack resolution results
-- `Rng` — injectable random for deterministic testing
-- `Player`, `Target` — the entities involved
+If a new perk needs behavior that cannot be expressed with the existing schema, extend the code path deliberately instead of overloading unrelated fields.
 
-Always construct a fresh `PerkContext` per `ProcessEvent` call. Do not reuse across multiple calls.
+## Extending The System
 
----
+When adding a new perk:
 
-## Event Wiring
-
-Events are fired by the surrounding action flow, not by `PerkProcessor` itself.
-
-Currently wired core events include:
-- shared attack-resolution events such as `PlayerAttackedMonster`, `PlayerHitMonster`, `PlayerMissedMonster`, `MonsterMissedPlayer`, `MonsterAttackHitPlayer`, `SpecialAttackLanded`, `SpecialAttackMissed`, and `WouldDie`
-- action-driven events such as `PlayerDefended`, `PlayerUsedItem`, `PlayerAttemptedYield`, `BattleWon`, `BattleLost`, `PlayerTurnStarted`, and `PlayerTurnEnded`
-
-Other enum values may exist for future content, but they do nothing until some caller explicitly fires them.
-
----
-
-## Perk Slot Limits
-
-Slot count is driven by class tier: `(tier + 1) * 2`. Squire = 2 slots, Prestige = 10 slots. Satchel perks expand **inventory** capacity, not perk slots. These are separate limits.
-
-`Player.CanActivatePerk()` / `TryActivatePerk()` enforce prerequisites, slot limits, and satchel conflict rules (only one satchel perk active at a time). Use the player APIs rather than duplicating those checks in UI code.
-
----
-
-## Adding a New Perk
-
-1. Add an entry to `arena_perks.json` following the existing schema
-2. If the effect type is new, add a value to `PerkEffectType` enum
-3. If the trigger event is new, add a value to `PerkTriggerEvent` enum and fire it from the appropriate action class
-4. Add a `case` to `PerkProcessor.ApplyEffect()` for the new `PerkEffectType`
-5. If it's a passive modifier, add a `case` to `PerkProcessor.GetPassiveModifiers()` as well
-6. If it affects a value the Unity layer needs to display (e.g., shop price reduction), add a field to `PerkProcessResult` and read it in the Unity layer
-
-Many perks are data-driven, but new behavior still requires the surrounding wiring to exist: a fired trigger event, a handled effect type, and any caller-side consumption of returned result fields.
-
----
+1. Add or update the perk data in `arena_perks.json`.
+2. Add enum values only if the effect or trigger is genuinely new.
+3. Teach `PerkProcessor` how to apply the new effect.
+4. Fire the corresponding trigger event from the correct battle/action location.
+5. If the caller must honor the result, expose that through `PerkProcessResult`.
 
 ## Common Mistakes
 
-- **Don't read `perk.Id` before the null check.** The null guard `if (perk == null) continue` must come before any property access on the perk.
-- **Don't create perks with both `oncePerBattle` and `consumeOnUse`.** They overlap in intent and the interaction is untested. Pick one.
-- **Don't fire `WouldDie` directly** — it's fired via a callback inside `Entity.TakeDamage()`. Pass the callback from the attack action; don't call `ProcessEvent(WouldDie)` yourself.
-- **`GetPassiveModifiers` is not cached.** It iterates all active perks on every call. Don't call it in a tight loop — call it once per action resolution and store the result.
-- **`PerkStates` must be rebuilt after load.** After deserializing a Player, always call `InitializePerkStates()`. Without it, triggered perk gate checks will fail silently.
+- Do not treat `PerkProcessor` as stateful; runtime state belongs on the player.
+- Do not fire `WouldDie` or similar late-stage events from arbitrary code paths if the damage pipeline already owns that hook.
+- Do not call `GetPassiveModifiers()` repeatedly inside tight loops; resolve once per action or flow where possible.
+- Do not forget to rebuild `PerkStates` after loading a player, or triggered perks will behave inconsistently.
+- Do not duplicate activation or prerequisite checks in UI code when player APIs already own them.
