@@ -26,14 +26,29 @@ namespace PocketSquire.Arena.Core
         {
             if (Actor is Player player)
             {
-                player.GainExperience(Target.Experience);
-
-                // Apply passive gold gain multiplier (e.g. Treasure Hunter perk)
+                var run = GameState.CurrentRun;
                 var passives = PerkProcessor.GetPassiveModifiers(player);
-                int goldGained = (int)(Target.Gold * passives.GoldGainMultiplier);
+
+                float xpMultiplier = 1f;
+                if (run != null)
+                {
+                    xpMultiplier += run.PowerUps.GetXpBonusPercent(run.ArenaRank) / 100f;
+                }
+                player.GainExperience((int)(Target.Experience * xpMultiplier));
+
+                float goldMultiplier = passives.GoldGainMultiplier;
+                if (run != null)
+                {
+                    goldMultiplier *= 1f + (run.PowerUps.GetGoldBonusPercent(run.ArenaRank) / 100f);
+                }
+                int goldGained = (int)(Target.Gold * goldMultiplier);
                 player.GainGold(goldGained);
 
-                // Fire BattleWon event (e.g. Pious perk increases MaxHP)
+                if (run != null)
+                {
+                    run.PowerUps.ApplyUtilityEffects(player, run.ArenaRank);
+                }
+
                 var context = new PerkContext { Player = player, Target = Target };
                 PerkProcessor.ProcessEvent(PerkTriggerEvent.BattleWon, player, context);
             }

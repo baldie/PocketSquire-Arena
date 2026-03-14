@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Tests
 {
@@ -25,8 +26,32 @@ namespace PocketSquire.Arena.Tests
             var target = new Monster("Winner", 10, 10, new Attributes());
             var action = new LoseAction(actor, target);
 
-            // Currently ApplyEffect is a placeholder, so we just ensure it doesn't throw.
             Assert.DoesNotThrow(() => action.ApplyEffect());
+        }
+
+        [Test]
+        public void LoseAction_ApplyEffect_TriggersBattleLostPerks()
+        {
+            var actor = new Player("Loser", 0, 10, new Attributes(), Player.Genders.m);
+            var target = new Monster("Winner", 10, 10, new Attributes());
+            var perk = new Perk
+            {
+                Id = "battle_lost_test",
+                DisplayName = "Battle Lost Test",
+                PerkType = PerkType.Triggered,
+                TriggerEvent = PerkTriggerEvent.BattleLost,
+                Effect = PerkEffectType.IncreaseMaxHP,
+                Value = 5
+            };
+
+            actor.AcquiredPerks.Add(perk);
+            actor.ActivePerks.Add(perk);
+            actor.PerkStates[perk.Id] = new PerkState { PerkId = perk.Id };
+
+            var action = new LoseAction(actor, target);
+            action.ApplyEffect();
+
+            Assert.That(actor.MaxHealth, Is.EqualTo(15));
         }
     }
 }

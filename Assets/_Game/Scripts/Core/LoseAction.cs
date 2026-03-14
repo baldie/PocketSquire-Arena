@@ -1,4 +1,5 @@
 using System;
+using PocketSquire.Arena.Core.Perks;
 
 namespace PocketSquire.Arena.Core
 {
@@ -21,7 +22,11 @@ namespace PocketSquire.Arena.Core
 
         public void ApplyEffect()
         {
-            // TODO: handle penalty for losing
+            if (Actor is Player player)
+            {
+                var context = new PerkContext { Player = player, Target = Target };
+                PerkProcessor.ProcessEvent(PerkTriggerEvent.BattleLost, player, context);
+            }
         }
     }
 }

@@ -112,11 +112,12 @@ namespace PocketSquire.Arena.Tests
         }
 
         [Test]
-        public void ResetAllMonsters_ShouldRestoreHealthToMax()
+        public void ResetAllMonsters_ShouldRestoreHealthAndAttributes()
         {
             // Arrange - use synthetic data, not JSON
             GameWorld.AllMonsters.Clear();
-            var monster = new Monster("Test Monster", 5, 10, new Attributes());
+            var monster = new Monster("Test Monster", 5, 10, new Attributes { Defense = 8 });
+            monster.Attributes.Defense = 1;
             GameWorld.AllMonsters.Add(monster);
 
             // Act
@@ -124,6 +125,7 @@ namespace PocketSquire.Arena.Tests
 
             // Assert
             Assert.That(monster.Health, Is.EqualTo(10));
+            Assert.That(monster.Attributes.Defense, Is.EqualTo(8));
         }
     }
 }

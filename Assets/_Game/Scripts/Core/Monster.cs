@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Newtonsoft.Json;
 namespace PocketSquire.Arena.Core
@@ -5,6 +6,8 @@ namespace PocketSquire.Arena.Core
     [Serializable]
     public class Monster : Entity
     {
+        private Attributes? _baseAttributes;
+
         [JsonProperty("attackStyle")]
         public PlayerClass.AttackStyle AttackStyle { get; set; } = PlayerClass.AttackStyle.Physical;
 
@@ -14,6 +17,7 @@ namespace PocketSquire.Arena.Core
         
         public Monster(string name, int health, int maxHealth, Attributes attributes) : base(name, health, maxHealth, attributes)
         {
+            _baseAttributes = attributes.Clone();
         }
 
         public override string SpriteId {
@@ -64,6 +68,20 @@ namespace PocketSquire.Arena.Core
         public override string ToString()
         {
             return $"{Name} (Rank: {Rank}, Health: {Health}/{MaxHealth})";
+        }
+
+        public void CaptureBaseAttributes()
+        {
+            _baseAttributes ??= Attributes.Clone();
+        }
+
+        public void ResetForRun()
+        {
+            Health = MaxHealth;
+            if (_baseAttributes != null)
+            {
+                Attributes = _baseAttributes.Clone();
+            }
         }
     }
 }

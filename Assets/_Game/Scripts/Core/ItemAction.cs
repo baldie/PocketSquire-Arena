@@ -10,6 +10,10 @@ namespace PocketSquire.Arena.Core
     /// </summary>
     public class ItemAction : IGameAction
     {
+        private const int SmallHealthPotionId = 1;
+        private const int MediumHealthPotionId = 2;
+        private const int LargeHealthPotionId = 3;
+
         public ActionType Type => ActionType.Item;
         public Entity Actor { get; }
         public Entity Target { get; }
@@ -55,13 +59,13 @@ namespace PocketSquire.Arena.Core
 
             switch (ItemId)
             {
-                case 1: //TODO: make these magic numbers into named consts
+                case SmallHealthPotionId:
                     healAmount = (int)(actor.MaxHealth * 0.25f);
                     break;
-                case 2:
+                case MediumHealthPotionId:
                     healAmount = (int)(actor.MaxHealth * 0.50f);
                     break;
-                case 3:
+                case LargeHealthPotionId:
                     healAmount = (int)(actor.MaxHealth * 0.75f);
                     break;
             }

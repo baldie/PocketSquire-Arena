@@ -74,10 +74,11 @@ namespace PocketSquire.Arena.Core
 
         public static int CalculateBaseDamage(Entity actor, PlayerClass.AttackStyle style)
         {
-            int strength = actor.Attributes.Strength;
-            int dexterity = actor.Attributes.Dexterity;
-            int magic = actor.Attributes.Magic;
-            int luck = actor.Attributes.Luck;
+            var actorAttributes = CombatUtilities.GetEffectiveAttributes(actor);
+            int strength = actorAttributes.Strength;
+            int dexterity = actorAttributes.Dexterity;
+            int magic = actorAttributes.Magic;
+            int luck = actorAttributes.Luck;
 
             int damage = style switch
             {
@@ -95,36 +96,41 @@ namespace PocketSquire.Arena.Core
 
         public static int CalculateHitChance(Entity actor, Entity target, PlayerClass.AttackStyle style, int actorLevel = 1)
         {
+            var actorAttributes = CombatUtilities.GetEffectiveAttributes(actor);
+            var targetAttributes = CombatUtilities.GetEffectiveAttributes(target);
+
             float actorAimStat = style == PlayerClass.AttackStyle.Magic
-                ? actor.Attributes.Magic * ActorMagHitWeight
-                : actor.Attributes.Dexterity * ActorDexHitWeight;
+                ? actorAttributes.Magic * ActorMagHitWeight
+                : actorAttributes.Dexterity * ActorDexHitWeight;
 
             float hitChance =
                 BaseHitChance +
                 actorAimStat +
                 (actorLevel * ActorLevelHitWeight) +
-                (actor.Attributes.Luck * ActorLckHitWeight) -
-                (target.Attributes.Dexterity * TargetDexDodgeWeight) -
-                (target.Attributes.Luck * TargetLckDodgeWeight);
+                (actorAttributes.Luck * ActorLckHitWeight) -
+                (targetAttributes.Dexterity * TargetDexDodgeWeight) -
+                (targetAttributes.Luck * TargetLckDodgeWeight);
 
             return Math.Clamp((int)Math.Floor(hitChance), 5, 97);
         }
 
         public static int CalculateCritChance(Entity actor, PlayerClass.AttackStyle style, int actorLevel = 1)
         {
+            var actorAttributes = CombatUtilities.GetEffectiveAttributes(actor);
+
             float critChance =
                 BaseCritChance +
-                (actor.Attributes.Luck * ActorLckCritWeight) +
+                (actorAttributes.Luck * ActorLckCritWeight) +
                 (actorLevel * ActorLevelCritWeight);
 
             critChance += style switch
             {
-                PlayerClass.AttackStyle.Ranged => actor.Attributes.Dexterity * RangedDexCritWeight,
-                PlayerClass.AttackStyle.Magic => actor.Attributes.Magic * MagicMagCritWeight,
-                PlayerClass.AttackStyle.Physical => actor.Attributes.Strength * PhysicalStrCritWeight,
-                PlayerClass.AttackStyle.HybridPhysRanged => ((actor.Attributes.Strength * PhysicalStrCritWeight) + (actor.Attributes.Dexterity * RangedDexCritWeight)) / 2f,
-                PlayerClass.AttackStyle.HybridMagicRanged => ((actor.Attributes.Magic * MagicMagCritWeight) + (actor.Attributes.Dexterity * RangedDexCritWeight)) / 2f,
-                PlayerClass.AttackStyle.HybridPhysMagic => ((actor.Attributes.Strength * PhysicalStrCritWeight) + (actor.Attributes.Magic * MagicMagCritWeight)) / 2f,
+                PlayerClass.AttackStyle.Ranged => actorAttributes.Dexterity * RangedDexCritWeight,
+                PlayerClass.AttackStyle.Magic => actorAttributes.Magic * MagicMagCritWeight,
+                PlayerClass.AttackStyle.Physical => actorAttributes.Strength * PhysicalStrCritWeight,
+                PlayerClass.AttackStyle.HybridPhysRanged => ((actorAttributes.Strength * PhysicalStrCritWeight) + (actorAttributes.Dexterity * RangedDexCritWeight)) / 2f,
+                PlayerClass.AttackStyle.HybridMagicRanged => ((actorAttributes.Magic * MagicMagCritWeight) + (actorAttributes.Dexterity * RangedDexCritWeight)) / 2f,
+                PlayerClass.AttackStyle.HybridPhysMagic => ((actorAttributes.Strength * PhysicalStrCritWeight) + (actorAttributes.Magic * MagicMagCritWeight)) / 2f,
                 _ => 0f
             };
 
@@ -152,13 +158,15 @@ namespace PocketSquire.Arena.Core
                 return 0;
             }
 
-            float defenseMultiplier = 100f / (100f + (target.Attributes.Defense * DefDiminishingReturnsK));
+            var targetAttributes = CombatUtilities.GetEffectiveAttributes(target);
+            float defenseMultiplier = 100f / (100f + (targetAttributes.Defense * DefDiminishingReturnsK));
             return Math.Max(1, (int)Math.Floor(rawDamage * defenseMultiplier));
         }
 
         public static float CalculateDefendDamageReduction(Entity defender)
         {
-            float reductionPercent = DefendBaseReduction + (defender.Attributes.Defense * DefendDefBonusPerPoint);
+            var defenderAttributes = CombatUtilities.GetEffectiveAttributes(defender);
+            float reductionPercent = DefendBaseReduction + (defenderAttributes.Defense * DefendDefBonusPerPoint);
             return Math.Clamp(reductionPercent, DefendBaseReduction, DefendMaxReduction);
         }
 

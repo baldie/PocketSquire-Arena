@@ -13,7 +13,7 @@ namespace PocketSquire.Arena.Core
     public class Run
     {
         public enum RunState {
-            NoStarted,
+            NotStarted,
             Ongoing
         }
 
@@ -58,7 +58,7 @@ namespace PocketSquire.Arena.Core
                 PerkProcessor.ResetPerksForRun(GameState.Player);
             }
             GameWorld.ResetAllMonsters();
-            State = RunState.NoStarted;
+            State = RunState.NotStarted;
         }
     }
 }

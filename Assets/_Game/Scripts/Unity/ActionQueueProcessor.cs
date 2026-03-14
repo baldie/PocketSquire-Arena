@@ -117,6 +117,22 @@ public class ActionQueueProcessor : MonoBehaviour
         }
     }
 
+    public void RefreshBattleHud()
+    {
+        if (GameState.Battle == null)
+        {
+            return;
+        }
+
+        UpdateHealth(playerHealthBarActual, playerHealthBarGhost, GameState.Battle.Player1.Health, GameState.Battle.Player1.MaxHealth, HealthBarAnimationType.Snap);
+        UpdateHealth(monsterHealthBarActual, monsterHealthBarGhost, GameState.Battle.Player2.Health, GameState.Battle.Player2.MaxHealth, HealthBarAnimationType.Snap);
+
+        if (manaBarContainer != null && manaBarContainer.activeSelf)
+        {
+            UpdateManaBar(snap: true);
+        }
+    }
+
     void Update()
     {
         // If not processing and queue has items, start processing the next action

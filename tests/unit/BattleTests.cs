@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.PowerUps;
 using System;
 
 namespace PocketSquire.Arena.Tests
@@ -15,6 +16,8 @@ namespace PocketSquire.Arena.Tests
         {
             _player = new Player("Squire", 10, 10, new Attributes(), Player.Genders.m);
             _monster = new Monster("Training Dummy", 10, 10, new Attributes());
+            GameState.CurrentRun = null;
+            GameState.Battle = null;
         }
 
         [Test]
@@ -120,6 +123,25 @@ namespace PocketSquire.Arena.Tests
             // Player's defend should now reset.
             battle.AdvanceTurn();
             Assert.That(_player.IsDefending, Is.False, "Defending state should be reset when turn starts again");
+        }
+
+        [Test]
+        public void Battle_Initialization_AppliesMonsterDebuffsFromCurrentRun()
+        {
+            GameWorld.AllMonsters.Clear();
+            GameState.CurrentRun = Run.StartNewRun();
+            GameState.CurrentRun.PowerUps.Add(new PowerUp(
+                new MonsterDebuffComponent(
+                    MonsterDebuffComponent.DebuffType.Defense,
+                    5f,
+                    Rarity.Common,
+                    PowerUpRank.I)));
+
+            _monster.Attributes.Defense = 10;
+
+            _ = new Battle(_player, _monster);
+
+            Assert.That(_monster.Attributes.Defense, Is.LessThan(10));
         }
     }
 }

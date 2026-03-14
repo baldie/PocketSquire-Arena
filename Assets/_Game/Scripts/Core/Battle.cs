@@ -25,6 +25,13 @@ namespace PocketSquire.Arena.Core
             // Reset arena perk states (once-per-battle flags, stacks, duration, etc.)
             if (player1 is Player p)
                 PerkProcessor.ResetPerksForBattle(p);
+
+            var run = GameState.CurrentRun;
+            if (run != null && player2 is Monster monster)
+            {
+                monster.CaptureBaseAttributes();
+                run.PowerUps.ApplyMonsterDebuffs(monster, run.ArenaRank);
+            }
         }
 
         public bool IsOver()

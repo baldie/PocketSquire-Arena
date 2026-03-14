@@ -24,5 +24,18 @@ namespace PocketSquire.Arena.Core
                 Defense = 5
             };
         }
+
+        public Attributes Clone()
+        {
+            return new Attributes
+            {
+                Strength = Strength,
+                Constitution = Constitution,
+                Magic = Magic,
+                Dexterity = Dexterity,
+                Luck = Luck,
+                Defense = Defense
+            };
+        }
     }
 }

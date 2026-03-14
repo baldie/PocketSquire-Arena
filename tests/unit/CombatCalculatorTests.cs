@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using PocketSquire.Arena.Core;
+using PocketSquire.Arena.Core.PowerUps;
 using System;
 
 namespace PocketSquire.Arena.Tests
@@ -7,6 +8,12 @@ namespace PocketSquire.Arena.Tests
     [TestFixture]
     public class CombatCalculatorTests
     {
+        [SetUp]
+        public void Setup()
+        {
+            GameState.CurrentRun = null;
+        }
+
         private static Entity MakeEntity(int str, int dex, int mag, int luck, int def = 0)
         {
             return new Monster("Test", 100, 100, new Attributes
@@ -82,6 +89,34 @@ namespace PocketSquire.Arena.Tests
 
             Assert.That(squireHp, Is.EqualTo(38));
             Assert.That(wizardHp, Is.EqualTo(58));
+        }
+
+        [Test]
+        public void CalculateBaseDamage_UsesPowerUpAdjustedPlayerAttributes()
+        {
+            var player = new Player("Hero", 100, 100, new Attributes
+            {
+                Strength = 10,
+                Dexterity = 5,
+                Magic = 5,
+                Luck = 5,
+                Defense = 5
+            }, Player.Genders.m);
+
+            int baseDamage = CombatCalculator.CalculateBaseDamage(player, CombatCalculator.GetAttackStyle(player));
+
+            GameWorld.AllMonsters.Clear();
+            GameState.CurrentRun = Run.StartNewRun();
+            GameState.CurrentRun.PowerUps.Add(new PowerUp(
+                new AttributeModifierComponent(
+                    AttributeModifierComponent.AttributeType.Strength,
+                    5f,
+                    Rarity.Common,
+                    PowerUpRank.I)));
+
+            int boostedDamage = CombatCalculator.CalculateBaseDamage(player, CombatCalculator.GetAttackStyle(player));
+
+            Assert.That(boostedDamage, Is.GreaterThan(baseDamage));
         }
     }
 }

@@ -142,7 +142,7 @@ namespace PocketSquire.Arena.Core
         {
             foreach (var monster in AllMonsters)
             {
-                monster.Health = monster.MaxHealth;
+                monster.ResetForRun();
             }
         }
 

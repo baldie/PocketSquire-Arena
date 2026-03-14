@@ -221,7 +221,31 @@ public class LootScript : MonoBehaviour
         _chestIsOpen = false;
         chestImage.sprite = closedChestSprite;
 
+        ApplyImmediateSelectionEffects();
         ApplyPowerUpEffect();
+    }
+
+    private void ApplyImmediateSelectionEffects()
+    {
+        if (_selectedPowerUp?.Component is not UtilityComponent utilityComponent)
+        {
+            return;
+        }
+
+        if (GameState.Player == null || GameState.CurrentRun == null)
+        {
+            return;
+        }
+
+        // Loot is selected after a win and before the next battle starts, so utility
+        // power-ups should pay out immediately for the battle that just ended.
+        utilityComponent.ApplyToPlayer(GameState.Player, GameState.CurrentRun.ArenaRank);
+
+        var actionQueueProcessor = FindFirstObjectByType<ActionQueueProcessor>();
+        if (actionQueueProcessor != null)
+        {
+            actionQueueProcessor.RefreshBattleHud();
+        }
     }
 
     public void ApplyPowerUpEffect()
